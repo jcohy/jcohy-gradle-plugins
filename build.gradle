@@ -2,19 +2,6 @@ plugins {
 	id "java-gradle-plugin"
 }
 
-repositories {
-	//加上阿里云镜像
-	maven { url 'https://maven.aliyun.com/repository/central' }
-	maven { url 'https://maven.aliyun.com/repository/public' }
-	maven { url "https://maven.aliyun.com/repository/spring" }
-	mavenCentral()
-	gradlePluginPortal()
-	maven { url "https://repo.spring.io/release" }
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 dependencies {
 	implementation("org.springframework.boot:spring-boot-gradle-plugin:2.4.5")
 	implementation("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
@@ -34,6 +21,37 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
 }
 
+configure(allprojects) { abjects ->
+
+	apply plugin: 'java'
+
+	version "1.0.0"
+	group "jcohy-gradle-plugins"
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+
+	dependencies {
+
+	}
+	dependencies {
+
+	}
+	repositories {
+		//加上阿里云镜像
+		maven { url 'https://maven.aliyun.com/repository/central' }
+		maven { url 'https://maven.aliyun.com/repository/public' }
+		maven { url "https://maven.aliyun.com/repository/spring" }
+		mavenCentral()
+		gradlePluginPortal()
+		maven { url "https://repo.spring.io/release" }
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+
+}
 
 gradlePlugin {
 	plugins {
@@ -54,8 +72,4 @@ gradlePlugin {
 			implementationClass = "com.jcohy.gradle.plugins.optional.OptionalDependenciesPlugin"
 		}
 	}
-}
-
-test {
-	useJUnitPlatform()
 }
