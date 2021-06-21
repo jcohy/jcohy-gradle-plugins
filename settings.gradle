@@ -14,5 +14,8 @@ pluginManagement {
 		}
 	}
 }
+include 'jcohy-java-convention'
+include 'jcohy-java-checkstyle'
+
 include 'jcohy-java-checkstyle'
 

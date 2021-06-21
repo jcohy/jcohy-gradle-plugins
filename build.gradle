@@ -47,10 +47,11 @@ configure(allprojects) { abjects ->
 		maven { url "https://repo.spring.io/release" }
 	}
 
-	test {
-		useJUnitPlatform()
-	}
+}
 
+
+test {
+	useJUnitPlatform()
 }
 
 gradlePlugin {

@@ -23,8 +23,10 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.quality.CheckstyleExtension;
 import org.gradle.api.plugins.quality.CheckstylePlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
@@ -242,13 +244,13 @@ class JavaConventions {
 		project.getPlugins().apply(SpringJavaFormatPlugin.class);
 		project.getTasks().withType(FormatTask.class,(formatTask -> formatTask.setEncoding("UTF-8")));
 
-//		project.getPlugins().apply(CheckstylePlugin.class);
-//		CheckstyleExtension checkstyle = project.getExtensions().getByType(CheckstyleExtension.class);
-//		checkstyle.setToolVersion("8.29");
-//		checkstyle.getConfigDirectory().set(project.getRootProject().file("src/checkstyle"));
-//
-//		String version = SpringJavaFormatPlugin.class.getPackage().getImplementationVersion();
-//		DependencySet dependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
-//		dependencies.add(project.getDependencies().create("io.spring.javaformat:spring-javaformat-checkstyle:" + version));
+		project.getPlugins().apply(CheckstylePlugin.class);
+		CheckstyleExtension checkstyle = project.getExtensions().getByType(CheckstyleExtension.class);
+		checkstyle.setToolVersion("8.29");
+		checkstyle.getConfigDirectory().set(project.getRootProject().file("src/checkstyle"));
+
+		String version = SpringJavaFormatPlugin.class.getPackage().getImplementationVersion();
+		DependencySet dependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
+		dependencies.add(project.getDependencies().create("io.spring.javaformat:spring-javaformat-checkstyle:" + version));
 	}
 }

@@ -24,10 +24,9 @@ import com.puppycrawl.tools.checkstyle.ThreadModeSettings;
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.RootModule;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.ParameterResolver;
-import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.xml.sax.InputSource;
 
 /**
@@ -41,7 +40,8 @@ import org.xml.sax.InputSource;
  * @version 1.0.0 2021/6/21:17:15
  * @since 1.0.0
  */
-@ExtendWith(ParameterResolver.class)
+//@ExtendWith(ParameterResolver.class)
+@RunWith(Parameterized.class)
 public class SpringChecksTests {
 
 	private static final boolean RUNNING_ON_WINDOWS = System.getProperty("os.name").toLowerCase().contains("win");
@@ -110,7 +110,8 @@ public class SpringChecksTests {
 		}
 	}
 
-	@ParameterizedTest(name = "{0}")
+//	@ParameterizedTest(name = "{0}")
+	@Parameterized.Parameters(name = "{0}")
 	public static Collection<Parameter> files() throws IOException {
 		return Arrays.stream(SOURCES_DIR.list((dir, name) -> !name.startsWith("."))).sorted().map(Parameter::new)
 				.collect(Collectors.toList());

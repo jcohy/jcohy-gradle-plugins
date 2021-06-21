@@ -38,8 +38,6 @@ public class SpringConfigurationLoader {
 	}
 
 	public Collection<FileSetCheck> load(PropertyResolver propertyResolver) {
-		Class<? extends SpringConfigurationLoader> aClass = getClass();
-		InputStream resourceAsStream = getClass().getResourceAsStream("jcohy-checkstyle.xml");
 		Configuration config = loadConfiguration(getClass().getResourceAsStream("jcohy-checkstyle.xml"),
 				propertyResolver);
 		return Arrays.stream(config.getChildren()).filter(this.moduleFactory::nonFiltered).map(this::load)

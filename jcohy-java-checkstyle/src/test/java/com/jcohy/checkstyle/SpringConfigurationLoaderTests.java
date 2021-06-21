@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
 
-import com.jcohy.checkstyle.FilteredModuleFactory;
-import com.jcohy.checkstyle.SpringConfigurationLoader;
 import com.jcohy.checkstyle.check.SpringHeaderCheck;
 import com.jcohy.checkstyle.check.SpringImportOrderCheck;
 import com.puppycrawl.tools.checkstyle.DefaultContext;
@@ -16,7 +14,7 @@ import com.puppycrawl.tools.checkstyle.PropertyResolver;
 import com.puppycrawl.tools.checkstyle.TreeWalker;
 import com.puppycrawl.tools.checkstyle.api.FileSetCheck;
 import org.assertj.core.extractor.Extractors;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,0 +1,2 @@
++2 errors
++Lambda block is unnecessary
