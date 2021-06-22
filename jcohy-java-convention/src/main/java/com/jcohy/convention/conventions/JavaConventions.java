@@ -247,8 +247,9 @@ class JavaConventions {
 		checkstyle.setToolVersion("8.29");
 		checkstyle.getConfigDirectory().set(project.getRootProject().file("src/checkstyle"));
 
-		String version = SpringJavaFormatPlugin.class.getPackage().getImplementationVersion();
+//		String version = SpringJavaFormatPlugin.class.getPackage().getImplementationVersion();
 		DependencySet dependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
-		dependencies.add(project.getDependencies().create("io.spring.javaformat:spring-javaformat-checkstyle:" + version));
+		dependencies.add(project.getDependencies().module(":jcohy-java-convention"));
+//		dependencies.add(project.getDependencies().create("io.spring.javaformat:spring-javaformat-checkstyle:" + version));
 	}
 }

@@ -37,7 +37,7 @@ public class SpringConfigurationLoaderTests {
 		assertThat(checks).hasSize(3);
 		TreeWalker treeWalker = (TreeWalker) checks.toArray()[2];
 		Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
-		assertThat(ordinaryChecks).hasSize(60);
+		assertThat(ordinaryChecks).hasSize(61);
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class SpringConfigurationLoaderTests {
 		assertThat(checks).hasSize(3);
 		TreeWalker treeWalker = (TreeWalker) checks.toArray()[2];
 		Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
-		assertThat(ordinaryChecks).hasSize(59);
+		assertThat(ordinaryChecks).hasSize(60);
 	}
 
 	private Collection<FileSetCheck> load(Set<String> excludes) {

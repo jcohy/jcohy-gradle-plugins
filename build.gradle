@@ -2,8 +2,8 @@ configure(allprojects) { abjects ->
 
 	apply plugin: 'java'
 
-	version "1.0.0"
-	group "jcohy-gradle-plugins"
+	version "0.0.1"
+	group "com.jcohy.gradle.plugins"
 
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
@@ -17,7 +17,6 @@ configure(allprojects) { abjects ->
 		gradlePluginPortal()
 		maven { url "https://repo.spring.io/release" }
 	}
-
 }
 
 

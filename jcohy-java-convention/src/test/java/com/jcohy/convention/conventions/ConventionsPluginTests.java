@@ -204,7 +204,6 @@ public class ConventionsPluginTests {
 		assertThat(noticeContent).doesNotContain("${");
 	}
 
-
 	private BuildResult runGradle(String... args) {
 		return runGradle(Collections.emptyMap(), args);
 	}
