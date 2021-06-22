@@ -17,7 +17,7 @@
 /**
  * Javadoc with a bad author tag.
  *
- * @author pwebb
+ * @author p
  */
 public class JavadocAuthorWithoutSpace {
 
