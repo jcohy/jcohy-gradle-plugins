@@ -21,3 +21,10 @@ configure(allprojects) { abjects ->
 }
 
 
+def getRepositoryUsername() {
+	return System.getenv('NEXUS_OSS_USER_NAME') ?: NEXUS_OSS_USER_NAME
+}
+
+def getRepositoryPassword() {
+	return System.getenv('NEXUS_OSS_PASS_WORD') ?: NEXUS_OSS_PASS_WORD
+}

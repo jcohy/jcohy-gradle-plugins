@@ -18,7 +18,7 @@ public class SpringImportOrderCheck extends ImportOrderCheck {
 	/**
 	 * The default root package.
 	 */
-	public static final String DEFAULT_PROJECT_ROOT_PACKAGE = "com.flight";
+	public static final String DEFAULT_PROJECT_ROOT_PACKAGE = "com.jcohy";
 
 	public SpringImportOrderCheck() {
 		setProjectRootPackage(DEFAULT_PROJECT_ROOT_PACKAGE);

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck;
 
 /**
  * Copyright: Copyright (c) 2021

@@ -1,0 +1,62 @@
+apply plugin: "maven-publish"
+
+publishing {
+
+	repositories {
+		maven {
+			credentials {
+				username ""
+				password getRepositoryPassword()
+			}
+			url version.endsWith('SNAPSHOT') ? REPOSITORY_URL_SNAPSHOT : REPOSITORY_URL_RELEASE
+		}
+	}
+
+
+	publications {
+		mavenJava(MavenPublication) {
+			pom {
+				afterEvaluate {
+					name = POM_NAME
+					description = POM_DESCRIPTION
+				}
+				url = GIT_URL
+				organization {
+					name = POM_ORGANIZATION_NAME
+					url = POM_ORGANIZATION_URL
+				}
+				licenses {
+					license {
+						name = LICENSE_NAME
+						url = LICENSE_URL
+						distribution = DEVELOPER_NAME
+					}
+				}
+				scm {
+					url = GIT_URL
+					connection = GIT_SCM_CONNECTION
+					developerConnection = GIT_SCM_DEVELOPER_CONNECTION
+				}
+				developers {
+					developer {
+						id = DEVELOPER_NAME
+						name = DEVELOPER_NAME
+						email = DEVELOPER_EMAIL
+					}
+				}
+				issueManagement {
+					system = ISSUE_SYSTEM
+					url = ISSUE_URL
+				}
+			}
+			versionMapping {
+				usage('java-api') {
+					fromResolutionResult()
+				}
+				usage('java-runtime') {
+					fromResolutionResult()
+				}
+			}
+		}
+	}
+}

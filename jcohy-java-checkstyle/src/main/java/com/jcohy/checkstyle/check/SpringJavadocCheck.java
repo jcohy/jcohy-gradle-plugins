@@ -25,14 +25,11 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * 可配置的接口字段，枚举构造函数
  * <ul>
  *     <li>禁止使用 @soundtrack 注解.</li>
- *     <li>@param,@throws,@return 不应该以大写字母开头.</li>
+ *     <li>@param,@throws,@return 的描述不应该以大写字母开头.</li>
  *     <li>@since 不应该在私有的接口，类，枚举，注解上使用.</li>
  *     <li>@since 在非私有的接口，类，枚举，注解上使用.</li>
  *     <li>方法上的 Javadoc 在标签前不应该有空行.</li>
  *     <li>注释不能包含 \"(non-Javadoc)\".</li>
- *     <li></li>
- *     <li></li>
- *     <li></li>
  * </ul>
  * @author jiac
  * @version 1.0.0 2021/6/21:15:44
