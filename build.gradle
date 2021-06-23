@@ -1,9 +1,23 @@
-configure(allprojects) { abjects ->
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+	id 'signing'
+}
+
+ext {
+	set('signing.keyId',System.getenv('signing.keyId'))
+	set('signing.password',System.getenv('signing.password'))
+	set('signing.secretKeyRingFile',System.getenv('signing.secretKeyRingFile'))
+	set('deployUsername',System.getenv('NEXUS_OSS_USER_NAME'))
+	set('deployPassword',System.getenv('NEXUS_OSS_PASS_WORD'))
+}
+
+configure(allprojects) { project ->
 
 	apply plugin: 'java'
 
-	version "0.0.1"
-	group "com.jcohy.gradle.plugins"
+	version = VERSION
+	group = GROUPID
 
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
@@ -19,11 +33,24 @@ configure(allprojects) { abjects ->
 	}
 }
 
+configure(subprojects) { project ->
 
-def getRepositoryUsername() {
-	return System.getenv('NEXUS_OSS_USER_NAME') ?: NEXUS_OSS_USER_NAME
-}
+	apply from: "${rootDir}/gradle/publications.gradle"
 
-def getRepositoryPassword() {
-	return System.getenv('NEXUS_OSS_PASS_WORD') ?: NEXUS_OSS_PASS_WORD
+	javadoc {
+		description = "Generates project-level javadoc for use in -javadoc jar"
+
+		options.encoding = "UTF-8"
+		options.charSet = "UTF-8"
+		options.memberLevel = JavadocMemberLevel.PROTECTED
+		options.author = true
+		options.header = project.name
+		options.use = true
+		options.addStringOption("Xdoclint:none", "-quiet")
+
+		// Suppress warnings due to cross-module @see and @link references.
+		// Note that global 'api' task does display all warnings.
+		logging.captureStandardError LogLevel.INFO
+		logging.captureStandardOutput LogLevel.INFO  // suppress "## warnings" message
+	}
 }

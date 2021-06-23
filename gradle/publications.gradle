@@ -1,20 +1,17 @@
-apply plugin: "maven-publish"
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+
+java {
+	withJavadocJar()
+	withSourcesJar()
+}
 
 publishing {
-
-	repositories {
-		maven {
-			credentials {
-				username ""
-				password getRepositoryPassword()
-			}
-			url version.endsWith('SNAPSHOT') ? REPOSITORY_URL_SNAPSHOT : REPOSITORY_URL_RELEASE
-		}
-	}
-
-
 	publications {
 		mavenJava(MavenPublication) {
+			from components.java
 			pom {
 				afterEvaluate {
 					name = POM_NAME
@@ -35,7 +32,7 @@ publishing {
 				scm {
 					url = GIT_URL
 					connection = GIT_SCM_CONNECTION
-					developerConnection = GIT_SCM_DEVELOPER_CONNECTION
+					developerConnection = GIT_SCM_DEVELOPE_CONNECTION
 				}
 				developers {
 					developer {
@@ -59,4 +56,24 @@ publishing {
 			}
 		}
 	}
+	repositories {
+		maven {
+			credentials {
+				username deployUsername
+				password deployPassword
+			}
+			url version.endsWith('SNAPSHOT') ? REPOSITORY_URL_SNAPSHOT : REPOSITORY_URL_RELEASE
+		}
+	}
 }
+
+signing {
+	sign publishing.publications.mavenJava
+}
+
+
+//javadoc {
+//	if(JavaVersion.current().isJava9Compatible()) {
+//		options.addBooleanOption('html5', true)
+//	}
+//}
