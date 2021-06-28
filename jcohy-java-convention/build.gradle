@@ -1,7 +1,7 @@
 plugins {
     id "java-gradle-plugin"
     id "maven-publish"
-    id "checkstyle"
+//    id "checkstyle"
 }
 
 dependencies {
