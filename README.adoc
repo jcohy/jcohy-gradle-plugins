@@ -1,3 +1,11 @@
 == Jcohy Gradle Plugins
 
 最后，调用 `publishToSonatype` 和 `closeAndReleaseSonatypeStagingRepository` 就可以分别发布到Sonatype和关闭并发布到中央仓库了。
+
+git pull http://3b7t671894.zicp.vip/jiac/jcohy-gradle-plugins.git
+
+git push xw master
+git push origin master
+
+git pull xw master
+git push origin master

@@ -11,6 +11,8 @@ ext {
 	set('signing.secretKeyRingFile',System.getenv('signing.secretKeyRingFile'))
 	set('deployUsername',System.getenv('NEXUS_OSS_USER_NAME'))
 	set('deployPassword',System.getenv('NEXUS_OSS_PASS_WORD'))
+
+	moduleProjects = subprojects.findAll { it.name.startsWith("jcohy-java") }
 }
 
 nexusPublishing {
@@ -43,7 +45,7 @@ configure(allprojects) { project ->
 	}
 }
 
-configure(subprojects) { project ->
+configure(moduleProjects) { project ->
 
 	apply from: "${rootDir}/gradle/publications.gradle"
 
