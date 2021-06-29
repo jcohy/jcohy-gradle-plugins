@@ -100,11 +100,6 @@
 		</module>
 		<!-- 同一行不能有多个声明 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MultipleVariableDeclarationsCheck" />
-		<!-- 检查代码是否使用了“this.”. checkMethods: 是否检查方法调用.validateOnlyOverlapping 是否检查变量或参数的重叠 -->
-		<module name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
-			<property name="checkMethods" value="false" />
-			<property name="validateOnlyOverlapping" value="false" />
-		</module>
 		<!-- 检查每行是否只有一个语句。 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.OneStatementPerLineCheck" />
 
@@ -236,5 +231,18 @@
 		<module name="com.jcohy.checkstyle.check.SpringMethodOrderCheck" />
 		<!--  -->
 		<module name="com.jcohy.checkstyle.check.SpringMethodVisibilityCheck" />
+		<module name="com.jcohy.checkstyle.filter.RequiresOuterThisFilter" />
+		<module name="com.jcohy.checkstyle.filter.IdentCheckFilter">
+			<property name="names" value="logger" />
+			<!-- 检查代码是否使用了“this.”. checkMethods: 是否检查方法调用.validateOnlyOverlapping 是否检查变量或参数的重叠 -->
+			<module name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
+				<property name="checkMethods" value="false" />
+				<property name="validateOnlyOverlapping" value="false" />
+			</module>
+		</module>
+		<module name="com.jcohy.checkstyle.check.SpringNoThisCheck">
+			<property name="names" value="logger" />
+		</module>
+
 	</module>
 </module>
