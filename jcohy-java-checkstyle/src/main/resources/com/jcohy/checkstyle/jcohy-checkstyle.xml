@@ -67,12 +67,19 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.CovariantEqualsCheck" />
 		<!-- 检查空语句。 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck" />
+		<!-- 检查 equals 语句，文字位于左侧，变量在右侧。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EqualsAvoidNullCheck" />
 		<!-- 检查在重写了equals方法后是否重写了hashCode方法 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck" />
 		<!-- 检查子表达式中是否有赋值语句 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.InnerAssignmentCheck" />
+		<!-- 检查子表达式中是否有赋值语句 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.NoEnumTrailingCommaCheck" />
 		<!-- 检查是否有魔法值 -->
-		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck" />
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck" >
+			<property name="ignoreHashCodeMethod" value="true" />
+			<property name="ignoreAnnotationElementDefaults" value="true" />
+		</module>
 		<!-- 检查是否有过于复杂的布尔表达式。 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck" />
 		<!-- 检查是否有过于复杂的布尔类型 return 语句 -->

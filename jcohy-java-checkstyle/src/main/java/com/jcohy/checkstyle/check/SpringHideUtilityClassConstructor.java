@@ -13,7 +13,7 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  *
  * <p>
- * Description: 扩展  {@link HideUtilityClassConstructorCheck}
+ * Description: 扩展  {@link HideUtilityClassConstructorCheck} 确保工具类（在 API 中只有静态方法和字段的类）没有任何公有构造器。
  *
  * @author jiac
  * @version 1.0.0 2021/6/21:15:40

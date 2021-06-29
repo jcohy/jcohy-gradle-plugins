@@ -20,9 +20,11 @@ public class SpringImportOrderCheck extends ImportOrderCheck {
 	 */
 	public static final String DEFAULT_PROJECT_ROOT_PACKAGE = "com.jcohy";
 
+	private boolean ordered = true;
+
 	public SpringImportOrderCheck() {
 		setProjectRootPackage(DEFAULT_PROJECT_ROOT_PACKAGE);
-		setOrdered(true);
+		setOrdered(ordered);
 		setSeparated(true);
 		setOption("bottom");
 		setSortStaticImportsAlphabetically(true);
@@ -30,5 +32,10 @@ public class SpringImportOrderCheck extends ImportOrderCheck {
 
 	public void setProjectRootPackage(String projectRootPackage) {
 		setGroups("java", "/^javax?\\./", "*", projectRootPackage);
+	}
+
+	@Override
+	public void setOrdered(boolean ordered) {
+		this.ordered = ordered;
 	}
 }
