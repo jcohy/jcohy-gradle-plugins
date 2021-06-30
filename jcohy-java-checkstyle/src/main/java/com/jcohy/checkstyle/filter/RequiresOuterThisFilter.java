@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.puppycrawl.tools.checkstyle.TreeWalkerAuditEvent;
 import com.puppycrawl.tools.checkstyle.TreeWalkerFilter;
-import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
+import com.puppycrawl.tools.checkstyle.api.Violation;
 
 /**
  * Copyright: Copyright (c) 2021
@@ -25,7 +25,7 @@ public class RequiresOuterThisFilter implements TreeWalkerFilter {
 
 	@Override
 	public boolean accept(TreeWalkerAuditEvent event) {
-		LocalizedMessage message = event.getLocalizedMessage();
+		Violation message = event.getViolation();
 		if ("require.this.variable".equals(message.getKey())) {
 			Object[] args = getArgs(message);
 			String prefex = (args.length > 1 ? Objects.toString(args[1]) : null);
@@ -36,7 +36,7 @@ public class RequiresOuterThisFilter implements TreeWalkerFilter {
 		return true;
 	}
 
-	private Object[] getArgs(LocalizedMessage message) {
+	private Object[] getArgs(Violation message) {
 		if (ARGS_FIELD == null) {
 			throw new IllegalStateException("Unable to extract message args");
 		}
@@ -50,7 +50,7 @@ public class RequiresOuterThisFilter implements TreeWalkerFilter {
 
 	private static Field getArgsField() {
 		try {
-			Field field = LocalizedMessage.class.getDeclaredField("args");
+			Field field = Violation.class.getDeclaredField("args");
 			field.setAccessible(true);
 			return field;
 		}

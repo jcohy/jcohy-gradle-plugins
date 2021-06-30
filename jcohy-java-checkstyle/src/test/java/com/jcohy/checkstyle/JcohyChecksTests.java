@@ -42,7 +42,7 @@ import org.xml.sax.InputSource;
  */
 //@ExtendWith(ParameterResolver.class)
 @RunWith(Parameterized.class)
-public class SpringChecksTests {
+public class JcohyChecksTests {
 
 	private static final boolean RUNNING_ON_WINDOWS = System.getProperty("os.name").toLowerCase().contains("win");
 
@@ -56,7 +56,7 @@ public class SpringChecksTests {
 
 	private final Parameter parameter;
 
-	public SpringChecksTests(Parameter parameter) throws Exception {
+	public JcohyChecksTests(Parameter parameter) throws Exception {
 		this.parameter = parameter;
 	}
 

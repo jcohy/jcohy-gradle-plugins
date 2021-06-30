@@ -12,7 +12,7 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.Context;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
+import com.puppycrawl.tools.checkstyle.api.Violation;
 
 /**
  * Copyright: Copyright (c) 2021
@@ -90,14 +90,14 @@ public class CheckFilter extends AbstractCheck {
 	}
 
 	@Override
-	public SortedSet<LocalizedMessage> getMessages() {
-		return this.check.getMessages();
+	public SortedSet<Violation> getViolations() {
+		return this.check.getViolations();
 	}
 
 	@Override
 	public void beginTree(DetailAST rootAST) {
 		this.check.setFileContents(getFileContents());
-		this.check.clearMessages();
+		this.check.clearViolations();
 		this.check.beginTree(rootAST);
 	}
 

@@ -1,5 +1,5 @@
 dependencies {
-	implementation "com.puppycrawl.tools:checkstyle:8.29"
+	implementation "com.puppycrawl.tools:checkstyle:8.44"
 	testImplementation "junit:junit:4.13.1"
 	testImplementation "org.assertj:assertj-core:3.8.0"
 	testImplementation "org.mockito:mockito-core:3.6.28"

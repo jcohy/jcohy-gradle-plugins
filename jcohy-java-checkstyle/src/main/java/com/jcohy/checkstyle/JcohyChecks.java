@@ -24,7 +24,7 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.ExternalResourceHolder;
 import com.puppycrawl.tools.checkstyle.api.FileSetCheck;
 import com.puppycrawl.tools.checkstyle.api.FileText;
-import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
+import com.puppycrawl.tools.checkstyle.api.Violation;
 import com.puppycrawl.tools.checkstyle.filters.SuppressFilterElement;
 
 /**
@@ -38,7 +38,7 @@ import com.puppycrawl.tools.checkstyle.filters.SuppressFilterElement;
  * @version 1.0.0 2021/6/21:10:50
  * @since 1.0.0
  */
-public class SpringChecks extends AbstractFileSetCheck implements ExternalResourceHolder {
+public class JcohyChecks extends AbstractFileSetCheck implements ExternalResourceHolder {
 
 	private ClassLoader classLoader;
 
@@ -49,6 +49,8 @@ public class SpringChecks extends AbstractFileSetCheck implements ExternalResour
 	private String headerType = SpringHeaderCheck.DEFAULT_HEADER_TYPE;
 
 	private String headerCopyrightPattern = SpringHeaderCheck.DEFAULT_HEADER_COPYRIGHT_PATTERN;
+
+	private String style;
 
 	private String headerFile;
 
@@ -64,6 +66,10 @@ public class SpringChecks extends AbstractFileSetCheck implements ExternalResour
 	 */
 	public void setClassLoader(ClassLoader classLoader) {
 		this.classLoader = classLoader;
+	}
+
+	public void setStyle(String style) {
+		this.style = style;
 	}
 
 	/**
@@ -89,7 +95,8 @@ public class SpringChecks extends AbstractFileSetCheck implements ExternalResour
 		put(properties, "projectRootPackage", this.projectRootPackage);
 		put(properties, "avoidStaticImportExcludes",
 				this.avoidStaticImportExcludes.stream().collect(Collectors.joining(",")));
-		this.checks = new SpringConfigurationLoader(context, moduleFactory).load(new PropertiesExpander(properties));
+		String checkStyleFile = ChecksStyle.getPath(this.style);
+		this.checks = new JcohyConfigurationLoader(context, moduleFactory).load(new PropertiesExpander(properties),checkStyleFile);
 	}
 
 	private void put(Properties properties, String name, Object value) {
@@ -100,11 +107,11 @@ public class SpringChecks extends AbstractFileSetCheck implements ExternalResour
 
 	@Override
 	protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
-		SortedSet<LocalizedMessage> messages = new TreeSet<>();
+		SortedSet<Violation> messages = new TreeSet<>();
 		for (FileSetCheck check : this.checks) {
 			messages.addAll(check.process(file, fileText));
 		}
-		addMessages(messages);
+		addViolations(messages);
 	}
 
 	@Override

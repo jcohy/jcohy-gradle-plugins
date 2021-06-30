@@ -23,13 +23,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  *
  * <p>
- * Description:  {@link SpringConfigurationLoader}.
+ * Description:  {@link JcohyConfigurationLoader}.
  *
  * @author jiac
  * @version 1.0.0 2021/6/21:17:36
  * @since 1.0.0
  */
-public class SpringConfigurationLoaderTests {
+public class JcohyConfigurationLoaderTests {
 
 	@Test
 	public void loadShouldLoadChecks() {
@@ -37,7 +37,7 @@ public class SpringConfigurationLoaderTests {
 		assertThat(checks).hasSize(3);
 		TreeWalker treeWalker = (TreeWalker) checks.toArray()[2];
 		Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
-		assertThat(ordinaryChecks).hasSize(61);
+		assertThat(ordinaryChecks).hasSize(64);
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class SpringConfigurationLoaderTests {
 		assertThat(checks).hasSize(3);
 		TreeWalker treeWalker = (TreeWalker) checks.toArray()[2];
 		Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
-		assertThat(ordinaryChecks).hasSize(60);
+		assertThat(ordinaryChecks).hasSize(63);
 	}
 
 	private Collection<FileSetCheck> load(Set<String> excludes) {
@@ -56,8 +56,9 @@ public class SpringConfigurationLoaderTests {
 		FilteredModuleFactory filteredModuleFactory = new FilteredModuleFactory(
 				new PackageObjectFactory(getClass().getPackage().getName(), getClass().getClassLoader()), excludes);
 		context.add("moduleFactory", filteredModuleFactory);
-		Collection<FileSetCheck> checks = new SpringConfigurationLoader(context, filteredModuleFactory)
-				.load(getPropertyResolver());
+		String checkStyleFile = ChecksStyle.getPath("spring");
+		Collection<FileSetCheck> checks = new JcohyConfigurationLoader(context, filteredModuleFactory)
+				.load(getPropertyResolver(),checkStyleFile);
 		return checks;
 	}
 

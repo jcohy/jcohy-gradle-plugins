@@ -1,1 +1,1 @@
-+ImportOrderCustomPackageOrderedInvalid.java:22: Wrong order for 'com.example.util.MyUtils1' import. [SpringImportOrder]
++ImportOrderCustomPackageOrderedInvalid.java:22:1: Wrong order for 'com.example.util.MyUtils1' import. [SpringImportOrder]

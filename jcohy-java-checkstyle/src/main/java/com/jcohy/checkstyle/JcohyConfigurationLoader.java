@@ -26,19 +26,19 @@ import org.xml.sax.InputSource;
  * @version 1.0.0 2021/6/21:15:08
  * @since 1.0.0
  */
-public class SpringConfigurationLoader {
+public class JcohyConfigurationLoader {
 
 	private final Context context;
 
 	private final FilteredModuleFactory moduleFactory;
 
-	public SpringConfigurationLoader(Context context, FilteredModuleFactory moduleFactory) {
+	public JcohyConfigurationLoader(Context context, FilteredModuleFactory moduleFactory) {
 		this.context = context;
 		this.moduleFactory = moduleFactory;
 	}
 
-	public Collection<FileSetCheck> load(PropertyResolver propertyResolver) {
-		Configuration config = loadConfiguration(getClass().getResourceAsStream("jcohy-checkstyle.xml"),
+	public Collection<FileSetCheck> load(PropertyResolver propertyResolver,String checkstyleFilePath) {
+		Configuration config = loadConfiguration(getClass().getResourceAsStream(checkstyleFilePath),
 				propertyResolver);
 		return Arrays.stream(config.getChildren()).filter(this.moduleFactory::nonFiltered).map(this::load)
 				.collect(Collectors.toList());
