@@ -20,11 +20,11 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * @version 1.0.0 2021/6/30:11:22
  * @since 1.0.0
  */
-public class JcohyConstantName extends ConstantNameCheck {
+public class JcohyConstantNameCheck extends ConstantNameCheck {
 
 	private Set<String> excludes;
 
-	public JcohyConstantName() {
+	public JcohyConstantNameCheck() {
 		setApplyToPublic(true);
 		setFormat(Pattern.compile("^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"));
 	}

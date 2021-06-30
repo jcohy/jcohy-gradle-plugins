@@ -245,5 +245,10 @@
 			<property name="names" value="logger" />
 		</module>
 
+		<module name="com.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
+			<property name="allowedAbbreviationLength" value="0" />
+			<property name="suffix" value="DT" />
+		</module>
+
 	</module>
 </module>

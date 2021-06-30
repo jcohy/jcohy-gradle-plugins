@@ -13,7 +13,7 @@ import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
  * @version 1.0.0 2021/6/21:15:13
  * @since 1.0.0
  */
-abstract class AbstractSpringCheck extends AbstractCheck {
+public abstract class AbstractSpringCheck extends AbstractCheck {
 
 	public static final int[] NO_REQUIRED_TOKENS = {};
 
