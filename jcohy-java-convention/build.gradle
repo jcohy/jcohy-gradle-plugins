@@ -1,50 +1,50 @@
 plugins {
-    id "java-gradle-plugin"
-    id "maven-publish"
+	id "java-gradle-plugin"
+	id "maven-publish"
 //    id "checkstyle"
 }
 
 dependencies {
-    implementation(project(":jcohy-java-checkstyle"))
-    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.4.5")
-    implementation("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.11.4")
-    implementation("commons-codec:commons-codec:1.13")
-    implementation("org.apache.maven:maven-embedder:3.6.2")
-    implementation("org.asciidoctor:asciidoctor-gradle-jvm:3.0.0")
-    implementation("org.asciidoctor:asciidoctor-gradle-jvm-pdf:3.0.0")
-    implementation("org.gradle:test-retry-gradle-plugin:1.1.9")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31")
-    implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.4.31")
-    implementation("org.springframework:spring-core:5.2.2.RELEASE")
-    implementation("org.springframework:spring-web:5.2.2.RELEASE")
-    implementation("io.spring.javaformat:spring-javaformat-gradle-plugin:${javaFormatVersion}")
-    testImplementation("org.assertj:assertj-core:3.11.1")
-    testImplementation("org.apache.logging.log4j:log4j-core:2.12.1")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
+	implementation(project(":jcohy-java-checkstyle"))
+	implementation("org.springframework.boot:spring-boot-gradle-plugin:2.4.5")
+	implementation("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.11.4")
+	implementation("commons-codec:commons-codec:1.13")
+	implementation("org.apache.maven:maven-embedder:3.6.2")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm:3.0.0")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm-pdf:3.0.0")
+	implementation("org.gradle:test-retry-gradle-plugin:1.1.9")
+	implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31")
+	implementation("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.4.31")
+	implementation("org.springframework:spring-core:5.2.2.RELEASE")
+	implementation("org.springframework:spring-web:5.2.2.RELEASE")
+	implementation("io.spring.javaformat:spring-javaformat-gradle-plugin:${javaFormatVersion}")
+	testImplementation("org.assertj:assertj-core:3.11.1")
+	testImplementation("org.apache.logging.log4j:log4j-core:2.12.1")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
 }
 
 test {
-    useJUnitPlatform()
+	useJUnitPlatform()
 }
 
 gradlePlugin {
-    plugins {
-        deployedPlugin {
-            id = "com.jcohy.convention.deployed"
-            implementationClass = "com.jcohy.convention.deployed.DeployedPlugin"
-        }
-        conventionsPlugin {
-            id = "com.jcohy.convention.conventions"
-            implementationClass = "com.jcohy.convention.conventions.ConventionsPlugin"
-        }
-        testFailuresPlugin {
-            id = "com.jcohy.gradle.plugins.test-failures"
-            implementationClass = "com.jcohy.convention.testing.TestFailuresPlugin"
-        }
-        optionalDependenciesPlugin {
-            id = "com.jcohy.convention.optional-dependencies"
-            implementationClass = "com.jcohy.convention.optional.OptionalDependenciesPlugin"
-        }
-    }
+	plugins {
+		deployedPlugin {
+			id = "com.jcohy.convention.deployed"
+			implementationClass = "com.jcohy.convention.deployed.DeployedPlugin"
+		}
+		conventionsPlugin {
+			id = "com.jcohy.convention.conventions"
+			implementationClass = "com.jcohy.convention.conventions.ConventionsPlugin"
+		}
+		testFailuresPlugin {
+			id = "com.jcohy.gradle.plugins.test-failures"
+			implementationClass = "com.jcohy.convention.testing.TestFailuresPlugin"
+		}
+		optionalDependenciesPlugin {
+			id = "com.jcohy.convention.optional-dependencies"
+			implementationClass = "com.jcohy.convention.optional.OptionalDependenciesPlugin"
+		}
+	}
 }

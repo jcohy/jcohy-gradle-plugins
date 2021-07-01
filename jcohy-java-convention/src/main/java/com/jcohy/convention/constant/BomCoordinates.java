@@ -14,7 +14,9 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
  * @since 1.0.0
  */
 public interface BomCoordinates {
-	String SpringBomCoordinates = SpringBootPlugin.BOM_COORDINATES;
-	String AliYunBomCoordinates = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
-	String AliCloudBomCoordinates = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE";
+    String SpringBomCoordinates = SpringBootPlugin.BOM_COORDINATES;
+    
+    String AliYunBomCoordinates = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
+    
+    String AliCloudBomCoordinates = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE";
 }

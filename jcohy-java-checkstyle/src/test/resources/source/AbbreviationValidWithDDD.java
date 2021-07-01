@@ -27,7 +27,7 @@ package com.jcohy.checkstyle;
  * @version 1.0.0 2021/6/30:15:57
  * @since 1.0.0
  */
-public class AbbreviationAsWordInNameDT {
+public class AbbreviationValidWithDDD {
 
     private String name;
 

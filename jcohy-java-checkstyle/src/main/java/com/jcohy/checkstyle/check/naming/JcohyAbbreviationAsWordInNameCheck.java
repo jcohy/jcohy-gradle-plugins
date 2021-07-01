@@ -27,20 +27,20 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
     private static final Set<Integer> OTHER_LEVEL_TYPES;
     
     static {
-        Set<Integer> topLevelTypes = new HashSet<Integer>();
-        topLevelTypes.add(TokenTypes.METHOD_DEF);
-        topLevelTypes.add(TokenTypes.PARAMETER_DEF);
-        topLevelTypes.add(TokenTypes.VARIABLE_DEF);
-        TOP_LEVEL_TYPES = Collections.unmodifiableSet(topLevelTypes);
+        Set<Integer> otherLevelTypes = new HashSet<Integer>();
+        otherLevelTypes.add(TokenTypes.METHOD_DEF);
+        otherLevelTypes.add(TokenTypes.PARAMETER_DEF);
+        otherLevelTypes.add(TokenTypes.VARIABLE_DEF);
+        OTHER_LEVEL_TYPES = Collections.unmodifiableSet(otherLevelTypes);
     }
     
     static {
-        Set<Integer> otherLevelTypes = new HashSet<Integer>();
-        otherLevelTypes.add(TokenTypes.INTERFACE_DEF);
-        otherLevelTypes.add(TokenTypes.CLASS_DEF);
-        otherLevelTypes.add(TokenTypes.ENUM_DEF);
-        otherLevelTypes.add(TokenTypes.ANNOTATION_DEF);
-        OTHER_LEVEL_TYPES = Collections.unmodifiableSet(otherLevelTypes);
+        Set<Integer> topLevelTypes = new HashSet<Integer>();
+        topLevelTypes.add(TokenTypes.INTERFACE_DEF);
+        topLevelTypes.add(TokenTypes.CLASS_DEF);
+        topLevelTypes.add(TokenTypes.ENUM_DEF);
+        topLevelTypes.add(TokenTypes.ANNOTATION_DEF);
+        TOP_LEVEL_TYPES = Collections.unmodifiableSet(topLevelTypes);
     }
     
     private final Set<String> suffixes = new HashSet<>(Arrays.asList("DO", "BO", "DTO", "VO", "AO"));

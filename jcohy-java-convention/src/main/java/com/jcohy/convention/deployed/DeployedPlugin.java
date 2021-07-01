@@ -25,34 +25,34 @@ import org.gradle.api.tasks.bundling.Jar;
  * @since 1.0.0
  */
 public class DeployedPlugin implements Plugin<Project> {
-	@Override
-	public void apply(Project project) {
-		PluginContainer plugins = project.getPlugins();
-		plugins.apply(MavenPublishPlugin.class);
-		PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
-		MavenPublication mavenPublication = publishing.getPublications().create("maven", MavenPublication.class);
-
-		publishing.getRepositories().maven(mavenRepository -> {
-			Repository repository = Repository.of(ReleaseStatus.ofProject(project));
-			mavenRepository.setUrl(repository.getUrl());
-			mavenRepository.setName(repository.getName());
-			mavenRepository.credentials( (passwordCredentials -> {
-				passwordCredentials.setUsername(PomConstant.NEXUS_USER_NAME);
-				passwordCredentials.setPassword(PomConstant.NEXUS_PASSWORD);
-			}));
-		});
-
-		project.afterEvaluate((evaluated) -> {
-			project.getPlugins().withType(JavaPlugin.class).all((javaPlugin) -> {
-				if (((Jar) project.getTasks().getByName(JavaPlugin.JAR_TASK_NAME)).isEnabled()) {
-					project.getComponents().matching((component) -> component.getName().equals("java"))
-							.all((javaComponent) -> mavenPublication.from(javaComponent));
-				}
-			});
-		});
-		project.getPlugins().withType(JavaPlatformPlugin.class)
-				.all((javaPlugin) -> project.getComponents()
-						.matching((component) -> component.getName().equals("javaPlatform"))
-						.all((javaComponent) -> mavenPublication.from(javaComponent)));
-	}
+    @Override
+    public void apply(Project project) {
+        PluginContainer plugins = project.getPlugins();
+        plugins.apply(MavenPublishPlugin.class);
+        PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
+        MavenPublication mavenPublication = publishing.getPublications().create("maven", MavenPublication.class);
+        
+        publishing.getRepositories().maven(mavenRepository -> {
+            Repository repository = Repository.of(ReleaseStatus.ofProject(project));
+            mavenRepository.setUrl(repository.getUrl());
+            mavenRepository.setName(repository.getName());
+            mavenRepository.credentials((passwordCredentials -> {
+                passwordCredentials.setUsername(PomConstant.NEXUS_USER_NAME);
+                passwordCredentials.setPassword(PomConstant.NEXUS_PASSWORD);
+            }));
+        });
+        
+        project.afterEvaluate((evaluated) -> {
+            project.getPlugins().withType(JavaPlugin.class).all((javaPlugin) -> {
+                if (((Jar) project.getTasks().getByName(JavaPlugin.JAR_TASK_NAME)).isEnabled()) {
+                    project.getComponents().matching((component) -> component.getName().equals("java"))
+                            .all((javaComponent) -> mavenPublication.from(javaComponent));
+                }
+            });
+        });
+        project.getPlugins().withType(JavaPlatformPlugin.class)
+                .all((javaPlugin) -> project.getComponents()
+                        .matching((component) -> component.getName().equals("javaPlatform"))
+                        .all((javaComponent) -> mavenPublication.from(javaComponent)));
+    }
 }

@@ -1,0 +1,2 @@
++AbbreviationInValidDT.java:30:14: abbreviation.as.word [JcohyAbbreviationAsWordInName]
++1 error

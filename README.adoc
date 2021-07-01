@@ -6,7 +6,11 @@
 
 [source,groovy]
 ----
-implementation "jcohy-gradle-plugins:jcohy-java-checkstyle:0.0.1"
+plugins {
+	id "checkstyle"
+}
+
+checkstyle "jcohy-gradle-plugins:jcohy-java-checkstyle:0.0.1"
 ----
 
 == Checks
@@ -174,7 +178,7 @@ public class CatchWord {
 ====
 关于 headerType 的使用
 
-会检查每个文件的头部是否具有 headerFile 指定的文件的头部信息。如果给定的文件为空，会读取  header-{type}.txt 文件。默认值为 apache2,则默认会读取 header-{apache2}.txt
+会检查每个文件的头部是否具有 headerFile 指定的文件的头部信息。如果给定的文件为空，会读取 header-{type}.txt 文件。默认值为 apache2,则默认会读取 header-{apache2}.txt
 
 另外提供了两个可选项 `unchecked` 和 `none`
 
@@ -498,7 +502,8 @@ package com.example; // OK
 
 === HideUtilityClassConstructorCheck
 
-扩展  CheckStyle 的 `HideUtilityClassConstructorCheck`. 对指定的类排除规则检查。目前支持对以下注解忽略检查
+扩展 CheckStyle 的 `HideUtilityClassConstructorCheck`.
+对指定的类排除规则检查。目前支持对以下注解忽略检查
 
 * org.springframework.context.annotation.Configuration
 * org.springframework.boot.autoconfigure.SpringBootApplication
@@ -596,7 +601,7 @@ public class HideUtilityClassConstructorSpringConfiguration {
 
 === SpringImportOrderCheck
 
-检查导入顺序是否遵循 jcohy 约定.  定义了 `projectRootPackage` 属性。配置项目的根包。默认为 `com.jcohy`.定义了如下属性。
+检查导入顺序是否遵循 jcohy 约定. 定义了 `projectRootPackage` 属性。配置项目的根包。默认为 `com.jcohy`.定义了如下属性。
 
 |===
 |属性 |描述 |类型 |默认值
@@ -738,7 +743,6 @@ public final class ImportOrderCustomPackageValid {
 * 注释不能包含 \"(non-Javadoc)\".
 
 此 Checker 提供了以下属性
-
 
 |===
 |属性 |默认值 |说明
@@ -2172,7 +2176,7 @@ public class NewlineAtEndOfFile {
 
 === SpringNoThisCheck
 
-检查某些字段是否需要  `'this.'`  引用.提供两个可选属性 `names` 和 `allowAssignment`.`allowAssignment` 默认为 `true`
+检查某些字段是否需要 `'this.'` 引用.提供两个可选属性 `names` 和 `allowAssignment`.`allowAssignment` 默认为 `true`
 
 ==== 示例
 
@@ -2244,8 +2248,7 @@ public class NotThis {
 
 === SpringTernaryCheck
 
-检查三元操作是否遵循 Spring 约定。 所有三元测试都应该有括号。 应使用不等于而不是等于作为对空值的测试。
-提供了 `equalsTest` 属性。有三个值:
+检查三元操作是否遵循 Spring 约定。 所有三元测试都应该有括号。 应使用不等于而不是等于作为对空值的测试。 提供了 `equalsTest` 属性。有三个值:
 
 .equalsTest 属性值
 |===
@@ -2260,7 +2263,6 @@ public class NotThis {
 | never_for_nulls
 | Equals tests 不能使用对 null 的检查
 |===
-
 
 ==== 示例
 
@@ -2457,6 +2459,7 @@ public class TernaryInArray {
 	<module name="com.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
+
 则:
 
 [source,java]
@@ -2647,6 +2650,195 @@ public class TernaryParensValid { // OK
 		return this.test ? 1 : 2;
 	}
 
+}
+----
+
+=== JcohyAbbreviationAsWordInNameCheck
+
+检查类，接口，枚举是否符合驼峰命名，但以下情形例外：DO / BO / DTO / VO / AO。并提供 `suffix` 属性，可以设置指定的后缀:
+
+==== 示例
+
+===== Example 1:
+
+给定如下 Check 配置:
+
+[source,xml]
+.default-checkstyle-configuration.xml
+----
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+		"https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="com.puppycrawl.tools.checkstyle.Checker">
+	<module name="com.jcohy.checkstyle.JcohyChecks"/>
+</module>
+----
+
+则:
+
+[source,java]
+----
+// header ignore
+
+package com.jcohy.checkstyle;
+
+/**
+ * Copyright: Copyright (c) 2021.
+ * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
+ *
+ * <p>
+ * Description:
+ *
+ * @author jiac
+ * @version 1.0.0 2021/6/30:15:57
+ * @since 1.0.0
+ */
+public class AbbreviationInValidDT { // violation, abbreviation.as.word
+
+    private String name;
+
+    private String label;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+}
+----
+
+===== Example 2:
+
+给定如下 Check 配置:
+
+[source,xml]
+.default-checkstyle-configuration.xml
+----
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+		"https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="com.puppycrawl.tools.checkstyle.Checker">
+	<module name="com.jcohy.checkstyle.JcohyChecks"/>
+</module>
+----
+
+则:
+
+[source,java]
+----
+// header ignore
+
+package com.jcohy.checkstyle;
+
+/**
+ * Copyright: Copyright (c) 2021.
+ * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
+ *
+ * <p>
+ * Description:
+ *
+ * @author jiac
+ * @version 1.0.0 2021/6/30:15:57
+ * @since 1.0.0
+ */
+public class AbbreviationValidDTO { // OK
+
+    private String name;
+
+    private String label;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+}
+
+----
+
+===== Example 3:
+
+给定如下 Check 配置:
+
+[source,xml]
+.AbbreviationValidWithDDD.xml
+----
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+		"https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="com.puppycrawl.tools.checkstyle.Checker">
+	<!-- TreeWalker Checks -->
+	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
+		<module name="com.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
+			<property name="suffix" value="DDD" />
+		</module>
+	</module>
+</module>
+----
+
+则:
+
+[source,java]
+----
+// header ignore
+
+package com.jcohy.checkstyle;
+
+/**
+ * Copyright: Copyright (c) 2021.
+ * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
+ *
+ * <p>
+ * Description:
+ *
+ * @author jiac
+ * @version 1.0.0 2021/6/30:15:57
+ * @since 1.0.0
+ */
+public class AbbreviationValidWithDDD { // OK
+
+    private String name;
+
+    private String label;
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }
 ----
 
@@ -2955,14 +3147,13 @@ public class FiltersToSkipThis {
 	</module>
 </module>
 ----
+
 =
 
 最后，调用 `publishToSonatype` 和 `closeAndReleaseSonatypeStagingRepository` 就可以分别发布到Sonatype和关闭并发布到中央仓库了。
 
 git pull http://3b7t671894.zicp.vip/jiac/jcohy-gradle-plugins.git
 
-git push xw master
-git push origin master
+git push xw master git push origin master
 
-git pull xw master
-git push origin master
+git pull xw master git push origin master

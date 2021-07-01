@@ -15,9 +15,9 @@ import org.gradle.api.Project;
  * @since 1.0.0
  */
 public class ConventionsPlugin implements Plugin<Project> {
-	@Override
-	public void apply(Project project) {
-		new JavaConventions().apply(project);
-		new MavenPublishingConventions().apply(project);
-	}
+    @Override
+    public void apply(Project project) {
+        new JavaConventions().apply(project);
+        new MavenPublishingConventions().apply(project);
+    }
 }

@@ -24,61 +24,61 @@ import org.gradle.tooling.events.OperationCompletionListener;
  * @since 1.0.0
  */
 public abstract class TestResultsOverview
-		implements BuildService<BuildServiceParameters.None>, OperationCompletionListener, AutoCloseable {
-
-	private final Map<Test, List<TestFailure>> testFailures = new TreeMap<>(
-			(one, two) -> one.getPath().compareTo(two.getPath()));
-
-	private final Object monitor = new Object();
-
-	void addFailures(Test test, List<TestDescriptor> failureDescriptors) {
-		List<TestFailure> testFailures = failureDescriptors.stream().map(TestFailure::new).sorted()
-				.collect(Collectors.toList());
-		synchronized (this.monitor) {
-			this.testFailures.put(test, testFailures);
-		}
-	}
-
-	@Override
-	public void onFinish(FinishEvent event) {
-		// OperationCompletionListener is implemented to defer close until the build ends
-	}
-
-	@Override
-	public void close() {
-		synchronized (this.monitor) {
-			if (this.testFailures.isEmpty()) {
-				return;
-			}
-			System.err.println();
-			System.err.println("Found test failures in " + this.testFailures.size() + " test task"
-					+ ((this.testFailures.size() == 1) ? ":" : "s:"));
-			this.testFailures.forEach((task, failures) -> {
-				System.err.println();
-				System.err.println(task.getPath());
-				failures.forEach((failure) -> System.err
-						.println("    " + failure.descriptor.getClassName() + " > " + failure.descriptor.getName()));
-			});
-		}
-	}
-
-	private static final class TestFailure implements Comparable<TestFailure> {
-
-		private final TestDescriptor descriptor;
-
-		private TestFailure(TestDescriptor descriptor) {
-			this.descriptor = descriptor;
-		}
-
-		@Override
-		public int compareTo(TestFailure other) {
-			int comparison = this.descriptor.getClassName().compareTo(other.descriptor.getClassName());
-			if (comparison == 0) {
-				comparison = this.descriptor.getName().compareTo(other.descriptor.getName());
-			}
-			return comparison;
-		}
-
-	}
-
+        implements BuildService<BuildServiceParameters.None>, OperationCompletionListener, AutoCloseable {
+    
+    private final Map<Test, List<TestFailure>> testFailures = new TreeMap<>(
+            (one, two) -> one.getPath().compareTo(two.getPath()));
+    
+    private final Object monitor = new Object();
+    
+    void addFailures(Test test, List<TestDescriptor> failureDescriptors) {
+        List<TestFailure> testFailures = failureDescriptors.stream().map(TestFailure::new).sorted()
+                .collect(Collectors.toList());
+        synchronized (this.monitor) {
+            this.testFailures.put(test, testFailures);
+        }
+    }
+    
+    @Override
+    public void onFinish(FinishEvent event) {
+        // OperationCompletionListener is implemented to defer close until the build ends
+    }
+    
+    @Override
+    public void close() {
+        synchronized (this.monitor) {
+            if (this.testFailures.isEmpty()) {
+                return;
+            }
+            System.err.println();
+            System.err.println("Found test failures in " + this.testFailures.size() + " test task"
+                    + ((this.testFailures.size() == 1) ? ":" : "s:"));
+            this.testFailures.forEach((task, failures) -> {
+                System.err.println();
+                System.err.println(task.getPath());
+                failures.forEach((failure) -> System.err
+                        .println("    " + failure.descriptor.getClassName() + " > " + failure.descriptor.getName()));
+            });
+        }
+    }
+    
+    private static final class TestFailure implements Comparable<TestFailure> {
+        
+        private final TestDescriptor descriptor;
+        
+        private TestFailure(TestDescriptor descriptor) {
+            this.descriptor = descriptor;
+        }
+        
+        @Override
+        public int compareTo(TestFailure other) {
+            int comparison = this.descriptor.getClassName().compareTo(other.descriptor.getClassName());
+            if (comparison == 0) {
+                comparison = this.descriptor.getName().compareTo(other.descriptor.getName());
+            }
+            return comparison;
+        }
+        
+    }
+    
 }

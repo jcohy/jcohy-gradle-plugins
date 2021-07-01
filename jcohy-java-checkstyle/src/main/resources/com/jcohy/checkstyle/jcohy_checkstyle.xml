@@ -201,6 +201,9 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.naming.AbstractClassNameCheck">
 			<property name="format" value="^(Abstract|Base).+$"/>
 		</module>
+		<module name="com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck">
+			<property name="format" value="^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+		</module>
 
 
 		<!-- Regexp -->
@@ -251,9 +254,6 @@
 		<!-- 检查指定标记的周围是否有空格 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
 
-
-
-
 		<!-- Spring Conventions -->
 		<!--  -->
 		<module name="com.jcohy.checkstyle.check.SpringAvoidStaticImportCheck">
@@ -287,9 +287,8 @@
 		<module name="com.jcohy.checkstyle.check.SpringNoThisCheck">
 			<property name="names" value="logger"/>
 		</module>
-
 		<module name="com.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
-			<property name="allowedAbbreviationLength" value="2"/>
+			<property name="allowedAbbreviationLength" value="0"/>
 		</module>
 
 	</module>

@@ -1,0 +1,3 @@
++ConstantNameInValid.java:34:22: Name 'logMYSELF' must match pattern '^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'. [ConstantName]
++ConstantNameInValid.java:36:22: Name 'loggerMYSELF' must match pattern '^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'. [ConstantName]
++ConstantNameInValid.java:39:22: Name 'myselfConstant' must match pattern '^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'. [ConstantName]

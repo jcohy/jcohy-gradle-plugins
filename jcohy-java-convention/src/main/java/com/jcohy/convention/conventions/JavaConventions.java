@@ -70,186 +70,187 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * @since 1.0.0
  */
 class JavaConventions {
-	void apply(Project project) {
-		project.getPlugins().withType(JavaBasePlugin.class, (java) -> {
-			// 此插件用于生成测试失败报告
-			project.getPlugins().apply(TestFailuresPlugin.class);
-			// 为插件配置 SpringJavaFromat
-			configureSpringJavaFormat(project);
-			project.setProperty("sourceCompatibility", "1.8");
-			configureJavaCompileConventions(project);
-			configureJavadocConventions(project);
-			configureTestConventions(project);
-			configureJarManifestConventions(project);
-			configureDependencyManagement(project);
-			configureToolchain(project);
-		});
-	}
-
-	private void configureToolchain(Project project) {
-		project.getPlugins().apply(ToolchainPlugin.class);
-	}
-
-	/**
-	 * 配置项目依赖
-	 * @param project project
-	 */
-	private void configureDependencyManagement(Project project) {
-		ConfigurationContainer configurations = project.getConfigurations();
-		Configuration dependencyManagement = configurations.create("dependencyManagement", (configuration) -> {
-			configuration.setVisible(false);
-			configuration.setCanBeConsumed(false);
-			configuration.setCanBeResolved(false);
-		});
-		project.getPlugins().apply(DependencyManagementPlugin.class);
-		DependencyManagementExtension dependencyManagementExtension = project.getExtensions().getByType(DependencyManagementExtension.class);
-		dependencyManagementExtension.imports( (importsHandler -> {
-			importsHandler.mavenBom(BomCoordinates.SpringBomCoordinates);
-			importsHandler.mavenBom(BomCoordinates.AliYunBomCoordinates);
-			importsHandler.mavenBom(BomCoordinates.AliCloudBomCoordinates);
-		}));
-
-
-		configurations
-				.matching( (configuration) ->
-					configuration.getName().endsWith("Classpath") || JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME.equals(configuration.getName()))
-				.all((configuration) ->{
-					configuration.extendsFrom(dependencyManagement);
-				});
+    void apply(Project project) {
+        project.getPlugins().withType(JavaBasePlugin.class, (java) -> {
+            // 此插件用于生成测试失败报告
+            project.getPlugins().apply(TestFailuresPlugin.class);
+            // 为插件配置 SpringJavaFromat
+            configureSpringJavaFormat(project);
+            project.setProperty("sourceCompatibility", "1.8");
+            configureJavaCompileConventions(project);
+            configureJavadocConventions(project);
+            configureTestConventions(project);
+            configureJarManifestConventions(project);
+            configureDependencyManagement(project);
+            configureToolchain(project);
+        });
+    }
+    
+    private void configureToolchain(Project project) {
+        project.getPlugins().apply(ToolchainPlugin.class);
+    }
+    
+    /**
+     * 配置项目依赖
+     * @param project project
+     */
+    private void configureDependencyManagement(Project project) {
+        ConfigurationContainer configurations = project.getConfigurations();
+        Configuration dependencyManagement = configurations.create("dependencyManagement", (configuration) -> {
+            configuration.setVisible(false);
+            configuration.setCanBeConsumed(false);
+            configuration.setCanBeResolved(false);
+        });
+        project.getPlugins().apply(DependencyManagementPlugin.class);
+        DependencyManagementExtension dependencyManagementExtension = project.getExtensions().getByType(DependencyManagementExtension.class);
+        dependencyManagementExtension.imports((importsHandler -> {
+            importsHandler.mavenBom(BomCoordinates.SpringBomCoordinates);
+            importsHandler.mavenBom(BomCoordinates.AliYunBomCoordinates);
+            importsHandler.mavenBom(BomCoordinates.AliCloudBomCoordinates);
+        }));
+        
+        
+        configurations
+                .matching((configuration) ->
+                        configuration.getName().endsWith("Classpath") || JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME.equals(configuration.getName()))
+                .all((configuration) -> {
+                    configuration.extendsFrom(dependencyManagement);
+                });
 
 //		Dependency flightFrameworkParent = project.getDependencies().enforcedPlatform(project.getDependencies()
 //				.project(Collections.singletonMap("path", ":jcohy-framework-bom")));
 //		dependencyManagement.getDependencies().add(flightFrameworkParent);
-		project.getPlugins().withType(OptionalDependenciesPlugin.class, (optionalDependencies) -> configurations
-				.getByName(OptionalDependenciesPlugin.OPTIONAL_CONFIGURATION_NAME).extendsFrom(dependencyManagement));
-	}
-
-	/**
-	 * 配置生成的 Jar 清单文件
-	 * @param project project
-	 */
-	private void configureJarManifestConventions(Project project) {
-
-		ExtractResources extractLegalResources = project.getTasks().create("extractLegalResources", ExtractResources.class);
-		extractLegalResources.getDestinationDirectory().set(project.getLayout().getBuildDirectory().dir("legal"));
-		extractLegalResources.setResourcesNames(Arrays.asList("LICENSE.txt", "NOTICE.txt","README.txt"));
-		extractLegalResources.property("version",project.getVersion().toString());
-		extractLegalResources.property("copyright",DateTimeFormatter.ofPattern("yyyy").format(LocalDateTime.now()));
-		SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
-
-		Set<String> sourceJarTaskNames = sourceSets.stream().map(SourceSet::getSourcesJarTaskName).collect(Collectors.toSet());
-		Set<String> javadocJarTaskNames = sourceSets.stream().map(SourceSet::getJavadocJarTaskName).collect(Collectors.toSet());
-
-		project.getTasks().withType(Jar.class, jar -> project.afterEvaluate( (evaluated) -> {
-			jar.metaInf((metaInf) -> metaInf.from(extractLegalResources));
-			jar.manifest(manifest -> {
-				Map<String, Object> attributes = new TreeMap<>();
-				attributes.put("Automatic-Module-Name", project.getName().replace("-", "."));
-				attributes.put("Build-Jdk-Spec", project.property("sourceCompatibility"));
-				attributes.put("Built-By", "Jcohy");
-				attributes.put("Implementation-Title",
-						determineImplementationTitle(project, sourceJarTaskNames, javadocJarTaskNames, jar));
-				attributes.put("Implementation-Version", project.getVersion());
-				manifest.attributes(attributes);
-			});
-		}));
-	}
-
-	private String determineImplementationTitle(Project project, Set<String> sourceJarTaskNames,
-			Set<String> javadocJarTaskNames, Jar jar) {
-		if (sourceJarTaskNames.contains(jar.getName())) {
-			return "Source for " + project.getName();
-		}
-		if (javadocJarTaskNames.contains(jar.getName())) {
-			return "Javadoc for " + project.getName();
-		}
-		return project.getDescription();
-	}
-	/**
-	 * 配置测试的约定
-	 * 当 系统中存在 System.getenv("CI") 属性时，最大重试次数为 3 次
-	 * @param project project
-	 */
-	private void configureTestConventions(Project project) {
-		project.getTasks().withType(Test.class, (test) -> {
-			test.useJUnitPlatform();
-			test.setMaxHeapSize("1024M");
-		});
-
-		project.getPlugins().withType(JavaPlugin.class,javaPlugin -> {
-			project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,"org.junit.platform:junit-platform-launcher");
-			project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,"org.junit.jupiter:junit-jupiter");
-			project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,"org.assertj:assertj-core");
-			project.getDependencies().add(JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,"org.springframework.boot:spring-boot-starter-test");
-		});
-
-		project.getPlugins().apply(TestRetryPlugin.class);
-
-		project.getTasks().withType(Test.class,(test -> {
-			project.getPlugins().withType(TestRetryPlugin.class,testRetryPlugin -> {
-				TestRetryTaskExtension testRetry = test.getExtensions().getByType(TestRetryTaskExtension.class);
-				testRetry.getFailOnPassedAfterRetry().set(true);
-				testRetry.getMaxRetries().set(isCi()? 3 : 0);
-			});
-		}));
-	}
-
-	private boolean isCi() {
-		return Boolean.parseBoolean(System.getenv("CI"));
-	}
-
-	/**
-	 * 配置 JavaDoc 约定
-	 * @param project project
-	 */
-	private void configureJavadocConventions(Project project) {
-		project.getTasks().withType(Javadoc.class,javadoc -> {
-			javadoc.setDescription("Generates project-level javadoc for use in -javadoc jar");
-			javadoc.options((option) -> {
-				option.encoding("UTF-8");
-				option.source("1.8");
-				option.setMemberLevel(JavadocMemberLevel.PROTECTED);
-				option.header(project.getName());
-			});
-		});
-	}
-
-	/**
-	 * 配置 Java 编译
-	 * @param project project
-	 */
-	private void configureJavaCompileConventions(Project project) {
-		project.getTasks().withType(JavaCompile.class,compile -> {
-			compile.getOptions().setEncoding("UTF-8");
-			compile.setSourceCompatibility("1.8");
-			compile.setTargetCompatibility("1.8");
-			List<String> args = compile.getOptions().getCompilerArgs();
-			if (!args.contains("-parameters")) {
-				args.add("-parameters");
-			}
-			if(!project.hasProperty("toolchainVersion") && JavaVersion.current() == JavaVersion.VERSION_1_8){
-				args.addAll(Arrays.asList("-Werror", "-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:rawtypes",
-						"-Xlint:varargs"));
-			}
-		});
-	}
-
-	/**
-	 * 配置 {@link SpringJavaFormatPlugin} 和 {@link CheckstylePlugin} 插件
-	 * @param project project
-	 */
-	private void configureSpringJavaFormat(Project project) {
-		project.getPlugins().apply(SpringJavaFormatPlugin.class);
-		project.getTasks().withType(FormatTask.class,(formatTask -> formatTask.setEncoding("UTF-8")));
-
-		project.getPlugins().apply(CheckstylePlugin.class);
-		CheckstyleExtension checkstyle = project.getExtensions().getByType(CheckstyleExtension.class);
-		checkstyle.setToolVersion("8.29");
-		checkstyle.getConfigDirectory().set(project.getRootProject().file("src/checkstyle"));
+        project.getPlugins().withType(OptionalDependenciesPlugin.class, (optionalDependencies) -> configurations
+                .getByName(OptionalDependenciesPlugin.OPTIONAL_CONFIGURATION_NAME).extendsFrom(dependencyManagement));
+    }
+    
+    /**
+     * 配置生成的 Jar 清单文件
+     * @param project project
+     */
+    private void configureJarManifestConventions(Project project) {
+        
+        ExtractResources extractLegalResources = project.getTasks().create("extractLegalResources", ExtractResources.class);
+        extractLegalResources.getDestinationDirectory().set(project.getLayout().getBuildDirectory().dir("legal"));
+        extractLegalResources.setResourcesNames(Arrays.asList("LICENSE.txt", "NOTICE.txt", "README.txt"));
+        extractLegalResources.property("version", project.getVersion().toString());
+        extractLegalResources.property("copyright", DateTimeFormatter.ofPattern("yyyy").format(LocalDateTime.now()));
+        SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
+        
+        Set<String> sourceJarTaskNames = sourceSets.stream().map(SourceSet::getSourcesJarTaskName).collect(Collectors.toSet());
+        Set<String> javadocJarTaskNames = sourceSets.stream().map(SourceSet::getJavadocJarTaskName).collect(Collectors.toSet());
+        
+        project.getTasks().withType(Jar.class, jar -> project.afterEvaluate((evaluated) -> {
+            jar.metaInf((metaInf) -> metaInf.from(extractLegalResources));
+            jar.manifest(manifest -> {
+                Map<String, Object> attributes = new TreeMap<>();
+                attributes.put("Automatic-Module-Name", project.getName().replace("-", "."));
+                attributes.put("Build-Jdk-Spec", project.property("sourceCompatibility"));
+                attributes.put("Built-By", "Jcohy");
+                attributes.put("Implementation-Title",
+                        determineImplementationTitle(project, sourceJarTaskNames, javadocJarTaskNames, jar));
+                attributes.put("Implementation-Version", project.getVersion());
+                manifest.attributes(attributes);
+            });
+        }));
+    }
+    
+    private String determineImplementationTitle(Project project, Set<String> sourceJarTaskNames,
+            Set<String> javadocJarTaskNames, Jar jar) {
+        if (sourceJarTaskNames.contains(jar.getName())) {
+            return "Source for " + project.getName();
+        }
+        if (javadocJarTaskNames.contains(jar.getName())) {
+            return "Javadoc for " + project.getName();
+        }
+        return project.getDescription();
+    }
+    
+    /**
+     * 配置测试的约定
+     * 当 系统中存在 System.getenv("CI") 属性时，最大重试次数为 3 次
+     * @param project project
+     */
+    private void configureTestConventions(Project project) {
+        project.getTasks().withType(Test.class, (test) -> {
+            test.useJUnitPlatform();
+            test.setMaxHeapSize("1024M");
+        });
+        
+        project.getPlugins().withType(JavaPlugin.class, javaPlugin -> {
+            project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME, "org.junit.platform:junit-platform-launcher");
+            project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME, "org.junit.jupiter:junit-jupiter");
+            project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME, "org.assertj:assertj-core");
+            project.getDependencies().add(JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME, "org.springframework.boot:spring-boot-starter-test");
+        });
+        
+        project.getPlugins().apply(TestRetryPlugin.class);
+        
+        project.getTasks().withType(Test.class, (test -> {
+            project.getPlugins().withType(TestRetryPlugin.class, testRetryPlugin -> {
+                TestRetryTaskExtension testRetry = test.getExtensions().getByType(TestRetryTaskExtension.class);
+                testRetry.getFailOnPassedAfterRetry().set(true);
+                testRetry.getMaxRetries().set(isCi() ? 3 : 0);
+            });
+        }));
+    }
+    
+    private boolean isCi() {
+        return Boolean.parseBoolean(System.getenv("CI"));
+    }
+    
+    /**
+     * 配置 JavaDoc 约定
+     * @param project project
+     */
+    private void configureJavadocConventions(Project project) {
+        project.getTasks().withType(Javadoc.class, javadoc -> {
+            javadoc.setDescription("Generates project-level javadoc for use in -javadoc jar");
+            javadoc.options((option) -> {
+                option.encoding("UTF-8");
+                option.source("1.8");
+                option.setMemberLevel(JavadocMemberLevel.PROTECTED);
+                option.header(project.getName());
+            });
+        });
+    }
+    
+    /**
+     * 配置 Java 编译
+     * @param project project
+     */
+    private void configureJavaCompileConventions(Project project) {
+        project.getTasks().withType(JavaCompile.class, compile -> {
+            compile.getOptions().setEncoding("UTF-8");
+            compile.setSourceCompatibility("1.8");
+            compile.setTargetCompatibility("1.8");
+            List<String> args = compile.getOptions().getCompilerArgs();
+            if (!args.contains("-parameters")) {
+                args.add("-parameters");
+            }
+            if (!project.hasProperty("toolchainVersion") && JavaVersion.current() == JavaVersion.VERSION_1_8) {
+                args.addAll(Arrays.asList("-Werror", "-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:rawtypes",
+                        "-Xlint:varargs"));
+            }
+        });
+    }
+    
+    /**
+     * 配置 {@link SpringJavaFormatPlugin} 和 {@link CheckstylePlugin} 插件
+     * @param project project
+     */
+    private void configureSpringJavaFormat(Project project) {
+        project.getPlugins().apply(SpringJavaFormatPlugin.class);
+        project.getTasks().withType(FormatTask.class, (formatTask -> formatTask.setEncoding("UTF-8")));
+        
+        project.getPlugins().apply(CheckstylePlugin.class);
+        CheckstyleExtension checkstyle = project.getExtensions().getByType(CheckstyleExtension.class);
+        checkstyle.setToolVersion("8.29");
+        checkstyle.getConfigDirectory().set(project.getRootProject().file("src/checkstyle"));
 
 //		String version = SpringJavaFormatPlugin.class.getPackage().getImplementationVersion();
-		DependencySet dependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
-		dependencies.add(project.getDependencies().module(":jcohy-java-convention"));
+        DependencySet dependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
+        dependencies.add(project.getDependencies().module(":jcohy-java-convention"));
 //		dependencies.add(project.getDependencies().create("io.spring.javaformat:spring-javaformat-checkstyle:" + version));
-	}
+    }
 }

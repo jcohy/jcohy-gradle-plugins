@@ -16,22 +16,22 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion;
  * @since 1.0.0
  */
 public class ToolchainExtension {
-
-	private final Property<JavaLanguageVersion> maximumCompatibleJavaVersion;
-
-	private final JavaLanguageVersion javaVersion;
-
-	public ToolchainExtension(Project project) {
-		this.maximumCompatibleJavaVersion = project.getObjects().property(JavaLanguageVersion.class);
-		String toolchainVersion = (String) project.findProperty("toolchainVersion");
-		this.javaVersion = (toolchainVersion != null) ? JavaLanguageVersion.of(toolchainVersion) : null;
-	}
-
-	public Property<JavaLanguageVersion> getMaximumCompatibleJavaVersion() {
-		return this.maximumCompatibleJavaVersion;
-	}
-
-	JavaLanguageVersion getJavaVersion() {
-		return this.javaVersion;
-	}
+    
+    private final Property<JavaLanguageVersion> maximumCompatibleJavaVersion;
+    
+    private final JavaLanguageVersion javaVersion;
+    
+    public ToolchainExtension(Project project) {
+        this.maximumCompatibleJavaVersion = project.getObjects().property(JavaLanguageVersion.class);
+        String toolchainVersion = (String) project.findProperty("toolchainVersion");
+        this.javaVersion = (toolchainVersion != null) ? JavaLanguageVersion.of(toolchainVersion) : null;
+    }
+    
+    public Property<JavaLanguageVersion> getMaximumCompatibleJavaVersion() {
+        return this.maximumCompatibleJavaVersion;
+    }
+    
+    JavaLanguageVersion getJavaVersion() {
+        return this.javaVersion;
+    }
 }
