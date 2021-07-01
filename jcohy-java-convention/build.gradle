@@ -5,12 +5,13 @@ plugins {
 }
 
 dependencies {
-	implementation(project(":jcohy-java-checkstyle"))
+//	implementation(project(":jcohy-java-checkstyle"))
 	implementation("org.springframework.boot:spring-boot-gradle-plugin:2.4.5")
 	implementation("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.11.4")
 	implementation("commons-codec:commons-codec:1.13")
 	implementation("org.apache.maven:maven-embedder:3.6.2")
+	implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
 	implementation("org.asciidoctor:asciidoctor-gradle-jvm:3.0.0")
 	implementation("org.asciidoctor:asciidoctor-gradle-jvm-pdf:3.0.0")
 	implementation("org.gradle:test-retry-gradle-plugin:1.1.9")
@@ -45,6 +46,10 @@ gradlePlugin {
 		optionalDependenciesPlugin {
 			id = "com.jcohy.convention.optional-dependencies"
 			implementationClass = "com.jcohy.convention.optional.OptionalDependenciesPlugin"
+		}
+		sonarScannerPlugin {
+			id = "com.jcohy.sonar.scanner"
+			implementationClass = "com.jcohy.convention.sonar.SonarScannerPlugin"
 		}
 	}
 }
