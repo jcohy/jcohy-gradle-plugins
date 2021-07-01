@@ -89,12 +89,11 @@ public class SpringJUnit5Check extends AbstractSpringCheck {
     
     @Override
     public void visitToken(DetailAST ast) {
-        switch (ast.getType()) {
-            case TokenTypes.METHOD_DEF:
-                visitMethodDef(ast);
-            case TokenTypes.IMPORT:
-                visitImport(ast);
-                break;
+        if(ast.getType() == TokenTypes.METHOD_DEF){
+            visitMethodDef(ast);
+        }
+        else if (ast.getType() == TokenTypes.IMPORT) {
+            visitImport(ast);
         }
     }
     

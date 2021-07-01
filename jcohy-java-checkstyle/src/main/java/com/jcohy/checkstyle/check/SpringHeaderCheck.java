@@ -107,11 +107,11 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
     protected void finishLocalSetup() {
         try {
             this.check = createCheck(this.headerType, this.headerFile);
-            String packageInfoHeaderType = this.packageInfoHeaderType != null ? this.packageInfoHeaderType
+            String packageHeaderType = this.packageInfoHeaderType != null ? this.packageInfoHeaderType
                     : this.headerType;
-            URI packageInfoHeaderFile = this.packageInfoHeaderFile != null ? this.packageInfoHeaderFile
+            URI packageHeaderFile = this.packageInfoHeaderFile != null ? this.packageInfoHeaderFile
                     : this.headerFile;
-            this.packageInfoCheck = createCheck(packageInfoHeaderType, packageInfoHeaderFile);
+            this.packageInfoCheck = createCheck(packageHeaderType, packageHeaderFile);
         }
         catch (IOException ex) {
             ex.printStackTrace();
@@ -136,7 +136,7 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
     }
     
     @Override
-    protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
+    protected void processFiltered(File file, FileText fileText)  {
         getCheck(file).run(fileText, this.blankLineAfter);
     }
     
@@ -151,7 +151,7 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
         this.headerType = headerType;
     }
     
-    public void setHeaderFile(URI headerFile) throws CheckstyleException {
+    public void setHeaderFile(URI headerFile) {
         this.headerFile = headerFile;
     }
     

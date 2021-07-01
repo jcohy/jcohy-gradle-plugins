@@ -35,10 +35,7 @@ public class IdentCheckFilter extends CheckFilter {
     
     private boolean isFiltered(DetailAST ast) {
         String name = ast.getText();
-        if (this.names.contains(name)) {
-            return true;
-        }
-        return false;
+        return this.names.contains(name);
     }
     
     public void setNames(String... names) {

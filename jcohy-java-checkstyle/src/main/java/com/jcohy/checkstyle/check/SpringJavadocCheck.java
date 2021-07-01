@@ -64,7 +64,7 @@ public class SpringJavadocCheck extends AbstractSpringCheck {
     }
     
     static {
-        Set<Integer> topLevelTypes = new HashSet<Integer>();
+        Set<Integer> topLevelTypes = new HashSet<>();
         topLevelTypes.add(TokenTypes.INTERFACE_DEF);
         topLevelTypes.add(TokenTypes.CLASS_DEF);
         topLevelTypes.add(TokenTypes.ENUM_DEF);
@@ -102,9 +102,9 @@ public class SpringJavadocCheck extends AbstractSpringCheck {
         super.beginTree(rootAST);
         this.blockComments = new HashMap<>();
         FileContents contents = getFileContents();
-        for (List<TextBlock> blockComments : contents.getBlockComments().values()) {
-            for (TextBlock blockComment : blockComments) {
-                this.blockComments.put(blockComment.getEndLineNo(), blockComment);
+        for (List<TextBlock> comments : contents.getBlockComments().values()) {
+            for (TextBlock comment : comments) {
+                this.blockComments.put(comment.getEndLineNo(), comment);
             }
         }
     }

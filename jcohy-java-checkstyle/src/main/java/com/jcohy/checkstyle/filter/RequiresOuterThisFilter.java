@@ -39,10 +39,8 @@ public class RequiresOuterThisFilter implements TreeWalkerFilter {
         Violation message = event.getViolation();
         if ("require.this.variable".equals(message.getKey())) {
             Object[] args = getArgs(message);
-            String prefex = (args.length > 1 ? Objects.toString(args[1]) : null);
-            if (prefex != null && prefex.length() > 0) {
-                return false;
-            }
+            String prefix = (args != null && args.length > 1 ? Objects.toString(args[1]) : null);
+            return prefix == null || prefix.length() <= 0;
         }
         return true;
     }

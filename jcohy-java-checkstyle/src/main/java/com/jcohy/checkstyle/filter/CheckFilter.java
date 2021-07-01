@@ -51,11 +51,11 @@ public class CheckFilter extends AbstractCheck {
         if (this.check != null) {
             throw new CheckstyleException("Can only make a single check optional");
         }
-        AbstractCheck check = (AbstractCheck) module;
-        check.contextualize(this.childContext);
-        check.configure(childConf);
-        check.init();
-        this.check = check;
+        AbstractCheck moduleCheck = (AbstractCheck) module;
+        moduleCheck.contextualize(this.childContext);
+        moduleCheck.configure(childConf);
+        moduleCheck.init();
+        this.check = moduleCheck;
     }
     
     private ModuleFactory createModuleFactory() {

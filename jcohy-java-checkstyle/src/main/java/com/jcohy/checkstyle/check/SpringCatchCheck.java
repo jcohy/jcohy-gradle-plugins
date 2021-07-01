@@ -51,7 +51,7 @@ public class SpringCatchCheck extends AbstractSpringCheck {
         if (text.length() == 1) {
             log(ast.getLineNo(), ast.getColumnNo(), "catch.singleLetter");
         }
-        if (text.toLowerCase().equals("o_o")) {
+        if (text.equalsIgnoreCase("o_o")) {
             log(ast.getLineNo(), ast.getColumnNo(), "catch.wideEye");
         }
     }

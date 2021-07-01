@@ -24,18 +24,18 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
     
     private static final Set<Integer> TOP_LEVEL_TYPES;
     
-    private static final Set<Integer> OTHER_LEVEL_TYPES;
+//    private static final Set<Integer> OTHER_LEVEL_TYPES;
+    
+//    static {
+//        Set<Integer> otherLevelTypes = new HashSet<>();
+//        otherLevelTypes.add(TokenTypes.METHOD_DEF);
+//        otherLevelTypes.add(TokenTypes.PARAMETER_DEF);
+//        otherLevelTypes.add(TokenTypes.VARIABLE_DEF);
+//        OTHER_LEVEL_TYPES = Collections.unmodifiableSet(otherLevelTypes);
+//    }
     
     static {
-        Set<Integer> otherLevelTypes = new HashSet<Integer>();
-        otherLevelTypes.add(TokenTypes.METHOD_DEF);
-        otherLevelTypes.add(TokenTypes.PARAMETER_DEF);
-        otherLevelTypes.add(TokenTypes.VARIABLE_DEF);
-        OTHER_LEVEL_TYPES = Collections.unmodifiableSet(otherLevelTypes);
-    }
-    
-    static {
-        Set<Integer> topLevelTypes = new HashSet<Integer>();
+        Set<Integer> topLevelTypes = new HashSet<>();
         topLevelTypes.add(TokenTypes.INTERFACE_DEF);
         topLevelTypes.add(TokenTypes.CLASS_DEF);
         topLevelTypes.add(TokenTypes.ENUM_DEF);
