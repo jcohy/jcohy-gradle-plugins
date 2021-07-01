@@ -23,15 +23,15 @@ import java.util.function.Function;
  */
 public class LambdaNecessaryTryBlock {
 
-	public Function<String, Integer> test() {
-		return (string) -> {
-			try {
-				return 0;
-			}
-			catch (Exception ex) {
-				// Ignore
-			}
-		};
-	}
+    public Function<String, Integer> test() {
+        return (string) -> {
+            try {
+                return 0;
+            }
+            catch (Exception ex) {
+                // Ignore
+            }
+        };
+    }
 
 }

@@ -26,94 +26,94 @@ import com.puppycrawl.tools.checkstyle.api.Violation;
  * @since 1.0.0
  */
 public class CheckFilter extends AbstractCheck {
-
-	private Context childContext;
-
-	private AbstractCheck check;
-
-	@Override
-	public void finishLocalSetup() {
-		DefaultContext context = new DefaultContext();
-		context.add("severity", getSeverity());
-		context.add("tabWidth", String.valueOf(getTabWidth()));
-		this.childContext = context;
-	}
-
-	@Override
-	public void setupChild(Configuration childConf) throws CheckstyleException {
-		ModuleFactory moduleFactory = createModuleFactory();
-		String name = childConf.getName();
-		Object module = moduleFactory.createModule(name);
-		if (!(module instanceof AbstractCheck)) {
-			throw new CheckstyleException("OptionalCheck is not allowed as a parent of " + name
-					+ " Please review 'Parent Module' section for this Check.");
-		}
-		if (this.check != null) {
-			throw new CheckstyleException("Can only make a single check optional");
-		}
-		AbstractCheck check = (AbstractCheck) module;
-		check.contextualize(this.childContext);
-		check.configure(childConf);
-		check.init();
-		this.check = check;
-	}
-
-	private ModuleFactory createModuleFactory() {
-		try {
-			ClassLoader classLoader = AbstractCheck.class.getClassLoader();
-			Set<String> packageNames = PackageNamesLoader.getPackageNames(classLoader);
-			return new PackageObjectFactory(packageNames, classLoader);
-		}
-		catch (CheckstyleException ex) {
-			throw new IllegalStateException(ex);
-		}
-	}
-
-	@Override
-	public int[] getDefaultTokens() {
-		return this.check.getDefaultTokens();
-	}
-
-	@Override
-	public int[] getAcceptableTokens() {
-		return this.check.getAcceptableTokens();
-	}
-
-	@Override
-	public int[] getRequiredTokens() {
-		return this.check.getRequiredTokens();
-	}
-
-	@Override
-	public boolean isCommentNodesRequired() {
-		return this.check.isCommentNodesRequired();
-	}
-
-	@Override
-	public SortedSet<Violation> getViolations() {
-		return this.check.getViolations();
-	}
-
-	@Override
-	public void beginTree(DetailAST rootAST) {
-		this.check.setFileContents(getFileContents());
-		this.check.clearViolations();
-		this.check.beginTree(rootAST);
-	}
-
-	@Override
-	public void finishTree(DetailAST rootAST) {
-		this.check.finishTree(rootAST);
-	}
-
-	@Override
-	public void visitToken(DetailAST ast) {
-		this.check.visitToken(ast);
-	}
-
-	@Override
-	public void leaveToken(DetailAST ast) {
-		this.check.leaveToken(ast);
-	}
-
+    
+    private Context childContext;
+    
+    private AbstractCheck check;
+    
+    @Override
+    public void finishLocalSetup() {
+        DefaultContext context = new DefaultContext();
+        context.add("severity", getSeverity());
+        context.add("tabWidth", String.valueOf(getTabWidth()));
+        this.childContext = context;
+    }
+    
+    @Override
+    public void setupChild(Configuration childConf) throws CheckstyleException {
+        ModuleFactory moduleFactory = createModuleFactory();
+        String name = childConf.getName();
+        Object module = moduleFactory.createModule(name);
+        if (!(module instanceof AbstractCheck)) {
+            throw new CheckstyleException("OptionalCheck is not allowed as a parent of " + name
+                    + " Please review 'Parent Module' section for this Check.");
+        }
+        if (this.check != null) {
+            throw new CheckstyleException("Can only make a single check optional");
+        }
+        AbstractCheck check = (AbstractCheck) module;
+        check.contextualize(this.childContext);
+        check.configure(childConf);
+        check.init();
+        this.check = check;
+    }
+    
+    private ModuleFactory createModuleFactory() {
+        try {
+            ClassLoader classLoader = AbstractCheck.class.getClassLoader();
+            Set<String> packageNames = PackageNamesLoader.getPackageNames(classLoader);
+            return new PackageObjectFactory(packageNames, classLoader);
+        }
+        catch (CheckstyleException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+    
+    @Override
+    public int[] getDefaultTokens() {
+        return this.check.getDefaultTokens();
+    }
+    
+    @Override
+    public int[] getAcceptableTokens() {
+        return this.check.getAcceptableTokens();
+    }
+    
+    @Override
+    public int[] getRequiredTokens() {
+        return this.check.getRequiredTokens();
+    }
+    
+    @Override
+    public boolean isCommentNodesRequired() {
+        return this.check.isCommentNodesRequired();
+    }
+    
+    @Override
+    public SortedSet<Violation> getViolations() {
+        return this.check.getViolations();
+    }
+    
+    @Override
+    public void beginTree(DetailAST rootAST) {
+        this.check.setFileContents(getFileContents());
+        this.check.clearViolations();
+        this.check.beginTree(rootAST);
+    }
+    
+    @Override
+    public void finishTree(DetailAST rootAST) {
+        this.check.finishTree(rootAST);
+    }
+    
+    @Override
+    public void visitToken(DetailAST ast) {
+        this.check.visitToken(ast);
+    }
+    
+    @Override
+    public void leaveToken(DetailAST ast) {
+        this.check.leaveToken(ast);
+    }
+    
 }

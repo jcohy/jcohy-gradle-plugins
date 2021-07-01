@@ -25,17 +25,17 @@ import java.util.function.Function;
  */
 public class LambdaUnnecessaryBlock {
 
-	public Function<String, Integer> test() {
-		return (string) -> {
-			return 1;
-		};
-	}
+    public Function<String, Integer> test() {
+        return (string) -> {
+            return 1;
+        };
+    }
 
-	public Consumer<String> test() {
-		return (string) -> {
-			new StringBuilder()
-				.append("foo");
-		};
-	}
+    public Consumer<String> test() {
+        return (string) -> {
+            new StringBuilder()
+                    .append("foo");
+        };
+    }
 
 }

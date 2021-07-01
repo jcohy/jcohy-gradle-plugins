@@ -26,9 +26,9 @@ import org.junit.Test;
 @RunWith(OptOutRunner.class)
 public class JUnit5BadImportWithOptOut {
 
-	@Test
-	void doSomethingWorks() {
-		// test here
-	}
+    @Test
+    void doSomethingWorks() {
+        // test here
+    }
 
 }

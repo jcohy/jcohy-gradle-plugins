@@ -28,14 +28,14 @@ import com.example.util.MyUtils2;
  */
 public final class ImportOrderCustomPackageValid {
 
-	private ImportOrderCustomPackageValid() {
-	}
+    private ImportOrderCustomPackageValid() {
+    }
 
-	public static void main(String[] args) {
-		if (Objects.nonNull(args)) {
-			MyUtils1.sort(args);
-			MyUtils2.find(args);
-		}
-	}
+    public static void main(String[] args) {
+        if (Objects.nonNull(args)) {
+            MyUtils1.sort(args);
+            MyUtils2.find(args);
+        }
+    }
 
 }

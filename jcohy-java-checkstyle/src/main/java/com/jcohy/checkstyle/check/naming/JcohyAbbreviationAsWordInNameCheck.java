@@ -21,56 +21,55 @@ import com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameChe
  * @since 1.0.0
  */
 public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInNameCheck {
-
-	private final Set<String> suffixes = new HashSet<>(Arrays.asList("DO","BO","DTO","VO","AO"));
-
-	private static final Set<Integer> TOP_LEVEL_TYPES;
-
-	private static final Set<Integer> OTHER_LEVEL_TYPES;
-
-	static {
-		Set<Integer> topLevelTypes = new HashSet<Integer>();
-		topLevelTypes.add(TokenTypes.METHOD_DEF);
-		topLevelTypes.add(TokenTypes.PARAMETER_DEF);
-		topLevelTypes.add(TokenTypes.VARIABLE_DEF);
-		TOP_LEVEL_TYPES = Collections.unmodifiableSet(topLevelTypes);
-	}
-
-	static {
-		Set<Integer> otherLevelTypes = new HashSet<Integer>();
-		otherLevelTypes.add(TokenTypes.INTERFACE_DEF);
-		otherLevelTypes.add(TokenTypes.CLASS_DEF);
-		otherLevelTypes.add(TokenTypes.ENUM_DEF);
-		otherLevelTypes.add(TokenTypes.ANNOTATION_DEF);
-		OTHER_LEVEL_TYPES = Collections.unmodifiableSet(otherLevelTypes);
-	}
-
-
-	@Override
-	public void visitToken(DetailAST ast) {
-		if (TOP_LEVEL_TYPES.contains(ast.getType())) {
-			checkSuffix(ast);
-		}
-
-	}
-
-	private void checkSuffix(DetailAST ast) {
-		DetailAST detailAST = ast.findFirstToken(TokenTypes.IDENT);
-		if(!this.contain(detailAST.getText())){
-			super.visitToken(ast);
-		}
-	}
-
-	public boolean contain(String str){
-		for(String suffix: suffixes){
-			if(str.endsWith(suffix)){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void setSuffix(String... suffix) {
-		this.suffixes.addAll(Arrays.asList(suffix));
-	}
+    
+    private static final Set<Integer> TOP_LEVEL_TYPES;
+    
+    private static final Set<Integer> OTHER_LEVEL_TYPES;
+    
+    static {
+        Set<Integer> topLevelTypes = new HashSet<Integer>();
+        topLevelTypes.add(TokenTypes.METHOD_DEF);
+        topLevelTypes.add(TokenTypes.PARAMETER_DEF);
+        topLevelTypes.add(TokenTypes.VARIABLE_DEF);
+        TOP_LEVEL_TYPES = Collections.unmodifiableSet(topLevelTypes);
+    }
+    
+    static {
+        Set<Integer> otherLevelTypes = new HashSet<Integer>();
+        otherLevelTypes.add(TokenTypes.INTERFACE_DEF);
+        otherLevelTypes.add(TokenTypes.CLASS_DEF);
+        otherLevelTypes.add(TokenTypes.ENUM_DEF);
+        otherLevelTypes.add(TokenTypes.ANNOTATION_DEF);
+        OTHER_LEVEL_TYPES = Collections.unmodifiableSet(otherLevelTypes);
+    }
+    
+    private final Set<String> suffixes = new HashSet<>(Arrays.asList("DO", "BO", "DTO", "VO", "AO"));
+    
+    @Override
+    public void visitToken(DetailAST ast) {
+        if (TOP_LEVEL_TYPES.contains(ast.getType())) {
+            checkSuffix(ast);
+        }
+        
+    }
+    
+    private void checkSuffix(DetailAST ast) {
+        DetailAST detailAST = ast.findFirstToken(TokenTypes.IDENT);
+        if (!this.contain(detailAST.getText())) {
+            super.visitToken(ast);
+        }
+    }
+    
+    public boolean contain(String str) {
+        for (String suffix : suffixes) {
+            if (str.endsWith(suffix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void setSuffix(String... suffix) {
+        this.suffixes.addAll(Arrays.asList(suffix));
+    }
 }

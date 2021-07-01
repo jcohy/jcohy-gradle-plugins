@@ -25,7 +25,7 @@ public class LeadingWhitespaceSpaces {
      * Comments are ignored.
      */
     public void hello() {
-    	System.out.println("World");
+        System.out.println("World");
     }
 
 }

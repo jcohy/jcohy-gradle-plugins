@@ -24,13 +24,13 @@ import org.junit.Before;
  */
 public class JUnit5BadImport {
 
-	@Before
-	public void bad() {
-	}
+    @Before
+    public void bad() {
+    }
 
-	@Test
-	void doSomethingWorks() {
-		// test here
-	}
+    @Test
+    void doSomethingWorks() {
+        // test here
+    }
 
 }

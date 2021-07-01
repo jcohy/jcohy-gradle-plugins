@@ -7,5 +7,5 @@
 		<module name="com.jcohy.checkstyle.check.SpringLambdaCheck">
 			<property name="singleArgumentParentheses" value="false"/>
 		</module>
- 	</module>
+	</module>
 </module>

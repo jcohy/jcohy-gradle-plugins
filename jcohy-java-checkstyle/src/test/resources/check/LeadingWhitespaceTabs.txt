@@ -1,2 +1,2 @@
-+Indentation should be performed with tabs only. [SpringLeadingWhitespace]
-+1 error
++Indentation should be performed with spaces only. [SpringLeadingWhitespace]
++3 errors

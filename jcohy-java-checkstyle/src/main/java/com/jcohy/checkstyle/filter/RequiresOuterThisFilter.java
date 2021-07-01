@@ -20,42 +20,42 @@ import com.puppycrawl.tools.checkstyle.api.Violation;
  * @since 1.0.0
  */
 public class RequiresOuterThisFilter implements TreeWalkerFilter {
-
-	private static final Field ARGS_FIELD = getArgsField();
-
-	@Override
-	public boolean accept(TreeWalkerAuditEvent event) {
-		Violation message = event.getViolation();
-		if ("require.this.variable".equals(message.getKey())) {
-			Object[] args = getArgs(message);
-			String prefex = (args.length > 1 ? Objects.toString(args[1]) : null);
-			if (prefex != null && prefex.length() > 0) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private Object[] getArgs(Violation message) {
-		if (ARGS_FIELD == null) {
-			throw new IllegalStateException("Unable to extract message args");
-		}
-		try {
-			return (Object[]) ARGS_FIELD.get(message);
-		}
-		catch (Exception ex) {
-			return null;
-		}
-	}
-
-	private static Field getArgsField() {
-		try {
-			Field field = Violation.class.getDeclaredField("args");
-			field.setAccessible(true);
-			return field;
-		}
-		catch (Exception ex) {
-			return null;
-		}
-	}
+    
+    private static final Field ARGS_FIELD = getArgsField();
+    
+    private static Field getArgsField() {
+        try {
+            Field field = Violation.class.getDeclaredField("args");
+            field.setAccessible(true);
+            return field;
+        }
+        catch (Exception ex) {
+            return null;
+        }
+    }
+    
+    @Override
+    public boolean accept(TreeWalkerAuditEvent event) {
+        Violation message = event.getViolation();
+        if ("require.this.variable".equals(message.getKey())) {
+            Object[] args = getArgs(message);
+            String prefex = (args.length > 1 ? Objects.toString(args[1]) : null);
+            if (prefex != null && prefex.length() > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private Object[] getArgs(Violation message) {
+        if (ARGS_FIELD == null) {
+            throw new IllegalStateException("Unable to extract message args");
+        }
+        try {
+            return (Object[]) ARGS_FIELD.get(message);
+        }
+        catch (Exception ex) {
+            return null;
+        }
+    }
 }

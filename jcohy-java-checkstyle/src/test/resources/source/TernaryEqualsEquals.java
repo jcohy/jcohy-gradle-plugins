@@ -21,18 +21,18 @@
  */
 public class TernaryEqualsEquals {
 
-	public void valid() {
-		boolean a = true;
-		boolean b = false;
-		boolean bb = true;
-		int c = (a != b) ? 1 : 2;
-		int d = ((a != b) | (a == b)) ? 1 : 2;
-		int e = (a != (b | bb)) ? 1 : 2;
-	}
+    public void valid() {
+        boolean a = true;
+        boolean b = false;
+        boolean bb = true;
+        int c = (a != b) ? 1 : 2;
+        int d = ((a != b) | (a == b)) ? 1 : 2;
+        int e = (a != (b | bb)) ? 1 : 2;
+    }
 
-	public void notValid() {
-		Boolean a = true;
-		int c = (a == null) ? 1 : 2;
-	}
+    public void notValid() {
+        Boolean a = true;
+        int c = (a == null) ? 1 : 2;
+    }
 
 }

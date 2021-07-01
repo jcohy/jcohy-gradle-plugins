@@ -23,9 +23,9 @@ import org.junit.jupiter.api.Test;
  */
 public class JUnit5Valid {
 
-	@Test
-	void doSomethingWorks() {
-		// test here
-	}
+    @Test
+    void doSomethingWorks() {
+        // test here
+    }
 
 }

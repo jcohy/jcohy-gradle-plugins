@@ -6,5 +6,5 @@
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
 		<module name="com.jcohy.checkstyle.check.SpringJUnit5Check">
 		</module>
- 	</module>
+	</module>
 </module>

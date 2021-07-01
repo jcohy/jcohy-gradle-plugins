@@ -23,10 +23,10 @@ import java.util.function.Function;
  */
 public class LambdaNecessaryThrowBlock {
 
-	public Function<String, Integer> test() {
-		return (string) -> {
-			throw new RuntimeException("test");
-		};
-	}
+    public Function<String, Integer> test() {
+        return (string) -> {
+            throw new RuntimeException("test");
+        };
+    }
 
 }

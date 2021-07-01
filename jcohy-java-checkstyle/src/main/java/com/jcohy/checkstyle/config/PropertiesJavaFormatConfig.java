@@ -18,29 +18,29 @@ import java.util.Properties;
  * @since 1.0.0
  */
 public class PropertiesJavaFormatConfig implements JavaFormatConfig {
-
-	private final Properties properties;
-
-	PropertiesJavaFormatConfig(Properties properties) {
-		this.properties = properties;
-	}
-
-	@Override
-	public IndentationStyle getIndentationStyle() {
-		Object value = this.properties.get("indentation-style");
-		return (value != null) ? IndentationStyle.valueOf(value.toString().toUpperCase().trim())
-				: DEFAULT.getIndentationStyle();
-	}
-
-	static JavaFormatConfig load(File file) throws IOException {
-		try (InputStream inputStream = new FileInputStream(file)) {
-			return load(inputStream);
-		}
-	}
-
-	static JavaFormatConfig load(InputStream inputStream) throws IOException {
-		Properties properties = new Properties();
-		properties.load(inputStream);
-		return new PropertiesJavaFormatConfig(properties);
-	}
+    
+    private final Properties properties;
+    
+    PropertiesJavaFormatConfig(Properties properties) {
+        this.properties = properties;
+    }
+    
+    static JavaFormatConfig load(File file) throws IOException {
+        try (InputStream inputStream = new FileInputStream(file)) {
+            return load(inputStream);
+        }
+    }
+    
+    static JavaFormatConfig load(InputStream inputStream) throws IOException {
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        return new PropertiesJavaFormatConfig(properties);
+    }
+    
+    @Override
+    public IndentationStyle getIndentationStyle() {
+        Object value = this.properties.get("indentation-style");
+        return (value != null) ? IndentationStyle.valueOf(value.toString().toUpperCase().trim())
+                : DEFAULT.getIndentationStyle();
+    }
 }

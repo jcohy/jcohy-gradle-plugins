@@ -21,13 +21,13 @@
  */
 class MethodVisibilityPackagePrivateWithPublicMethod {
 
-	MethodVisibilityPackagePrivateWithPublicMethod() {
-	}
+    MethodVisibilityPackagePrivateWithPublicMethod() {
+    }
 
-	public void bad() {
-	}
+    public void bad() {
+    }
 
-	public static void badStatic() {
-	}
+    public static void badStatic() {
+    }
 
 }

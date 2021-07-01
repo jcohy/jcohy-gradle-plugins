@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck;
-import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 /**
  * Copyright: Copyright (c) 2021.
@@ -21,22 +20,22 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * @since 1.0.0
  */
 public class JcohyConstantNameCheck extends ConstantNameCheck {
-
-	private Set<String> excludes;
-
-	public JcohyConstantNameCheck() {
-		setApplyToPublic(true);
-		setFormat(Pattern.compile("^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"));
-	}
-
-	@Override
-	public void visitToken(DetailAST ast) {
-		if (!excludes.contains(ast.getText())) {
-			super.visitToken(ast);
-		}
-	}
-
-	public void setExcludes(String... excludes) {
-		this.excludes = new HashSet<>(Arrays.asList(excludes));
-	}
+    
+    private Set<String> excludes;
+    
+    public JcohyConstantNameCheck() {
+        setApplyToPublic(true);
+        setFormat(Pattern.compile("^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"));
+    }
+    
+    @Override
+    public void visitToken(DetailAST ast) {
+        if (!excludes.contains(ast.getText())) {
+            super.visitToken(ast);
+        }
+    }
+    
+    public void setExcludes(String... excludes) {
+        this.excludes = new HashSet<>(Arrays.asList(excludes));
+    }
 }

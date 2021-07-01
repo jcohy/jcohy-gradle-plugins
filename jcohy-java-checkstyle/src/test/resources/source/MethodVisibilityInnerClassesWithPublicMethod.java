@@ -21,31 +21,31 @@
  */
 public class MethodVisibilityInnerClassesWithPublicMethod {
 
-	private static class PrivateInnerClass {
+    private static class PrivateInnerClass {
 
-		public void badPrivateInner() {
-		}
+        public void badPrivateInner() {
+        }
 
-	}
+    }
 
-	protected static class ProtectedInnerClass {
+    protected static class ProtectedInnerClass {
 
-		public void okProtectedInner() {
-		}
+        public void okProtectedInner() {
+        }
 
-	}
+    }
 
-	static class DefaultInnerClass {
+    static class DefaultInnerClass {
 
-		public void badDefaultInner() {
-		}
+        public void badDefaultInner() {
+        }
 
-	}
+    }
 
-	public static class PublicInnerClass {
+    public static class PublicInnerClass {
 
-		public void okPublicInner() {
-		}
+        public void okPublicInner() {
+        }
 
-	}
+    }
 }

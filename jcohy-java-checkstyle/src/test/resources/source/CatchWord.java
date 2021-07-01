@@ -21,13 +21,13 @@
  */
 public class CatchWord {
 
-	public void test() {
-		try {
-			new String("foo");
-		}
-		catch (IllegalStateException illegalStateException) {
-			// Ignore
-		}
-	}
+    public void test() {
+        try {
+            new String("foo");
+        }
+        catch (IllegalStateException illegalStateException) {
+            // Ignore
+        }
+    }
 
 }

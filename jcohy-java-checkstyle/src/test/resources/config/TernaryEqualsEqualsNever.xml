@@ -7,5 +7,5 @@
 		<module name="com.jcohy.checkstyle.check.SpringTernaryCheck">
 			<property name="equalsTest" value="never"/>
 		</module>
- 	</module>
+	</module>
 </module>

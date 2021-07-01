@@ -21,15 +21,15 @@ import com.puppycrawl.tools.checkstyle.api.AuditListener;
  * @since 1.0.0
  */
 public class SpringChecksTestParameter {
-
-	private final List<String> checks;
-
-	public SpringChecksTestParameter(File file) throws IOException {
-		this.checks = Collections.unmodifiableList(Files.readAllLines(file.toPath()));
-	}
-
-	public void attach(Consumer<AuditListener> consumer) {
-		consumer.accept(new AssertionsAuditListener(this.checks));
-	}
-
+    
+    private final List<String> checks;
+    
+    public SpringChecksTestParameter(File file) throws IOException {
+        this.checks = Collections.unmodifiableList(Files.readAllLines(file.toPath()));
+    }
+    
+    public void attach(Consumer<AuditListener> consumer) {
+        consumer.accept(new AssertionsAuditListener(this.checks));
+    }
+    
 }

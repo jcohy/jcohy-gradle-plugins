@@ -23,12 +23,12 @@ import java.util.function.Function;
  */
 public class LambdaNecessaryBlock {
 
-	public Function<String, Integer> test() {
-		return (string) -> {
-			int i = 0;
-			int j = 0;
-			return 1;
-		};
-	}
+    public Function<String, Integer> test() {
+        return (string) -> {
+            int i = 0;
+            int j = 0;
+            return 1;
+        };
+    }
 
 }

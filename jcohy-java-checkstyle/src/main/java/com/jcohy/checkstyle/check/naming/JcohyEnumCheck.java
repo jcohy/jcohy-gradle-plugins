@@ -15,9 +15,9 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @since 1.0.0
  */
 public class JcohyEnumCheck extends AbstractSpringCheck {
-
-	@Override
-	public int[] getAcceptableTokens() {
-		return new int[]{ TokenTypes.ENUM_DEF };
-	}
+    
+    @Override
+    public int[] getAcceptableTokens() {
+        return new int[] { TokenTypes.ENUM_DEF };
+    }
 }

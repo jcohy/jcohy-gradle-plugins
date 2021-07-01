@@ -23,21 +23,21 @@ import org.apache.commons.logging.Log;
  */
 public class NotThis {
 
-	private Log logger;
+    private Log logger;
 
-	public void test() {
-		this.logger = null;
-		this.logger.debug("test");
-	}
+    public void test() {
+        this.logger = null;
+        this.logger.debug("test");
+    }
 
-	private class Nested {
+    private class Nested {
 
-		private String nested;
+        private String nested;
 
-		Nested() {
-			FiltersToSkipThis.this.logger.debug("string");
-		}
+        Nested() {
+            FiltersToSkipThis.this.logger.debug("string");
+        }
 
-	}
+    }
 
 }

@@ -22,13 +22,13 @@
  */
 class JavadocNonPublicSince {
 
-	/**
-	 * Inner class.
-	 *
-	 * @since 1.2.3
-	 */
-	private static class Inner {
+    /**
+     * Inner class.
+     *
+     * @since 1.2.3
+     */
+    private static class Inner {
 
-	}
+    }
 
 }

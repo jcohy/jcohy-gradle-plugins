@@ -11,16 +11,16 @@ package com.jcohy.checkstyle.config;
  * @version 1.0.0 2021/6/21:16:36
  * @since 1.0.0
  */
-public class DefaultJavaFormatConfig implements JavaFormatConfig{
-
-	private final IndentationStyle indentationStyle;
-
-	DefaultJavaFormatConfig(IndentationStyle indentationStyle) {
-		this.indentationStyle = indentationStyle;
-	}
-
-	@Override
-	public IndentationStyle getIndentationStyle() {
-		return this.indentationStyle;
-	}
+public class DefaultJavaFormatConfig implements JavaFormatConfig {
+    
+    private final IndentationStyle indentationStyle;
+    
+    DefaultJavaFormatConfig(IndentationStyle indentationStyle) {
+        this.indentationStyle = indentationStyle;
+    }
+    
+    @Override
+    public IndentationStyle getIndentationStyle() {
+        return this.indentationStyle;
+    }
 }

@@ -22,26 +22,26 @@ import com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck;
  * @since 1.0.0
  */
 public class IdentCheckFilter extends CheckFilter {
-
-	private Set<String> names = Collections.emptySet();
-
-	@Override
-	public void visitToken(DetailAST ast) {
-		if (ast.getType() == TokenTypes.IDENT && isFiltered(ast)) {
-			return;
-		}
-		super.visitToken(ast);
-	}
-
-	private boolean isFiltered(DetailAST ast) {
-		String name = ast.getText();
-		if (this.names.contains(name)) {
-			return true;
-		}
-		return false;
-	}
-
-	public void setNames(String... names) {
-		this.names = new HashSet<>(Arrays.asList(names));
-	}
+    
+    private Set<String> names = Collections.emptySet();
+    
+    @Override
+    public void visitToken(DetailAST ast) {
+        if (ast.getType() == TokenTypes.IDENT && isFiltered(ast)) {
+            return;
+        }
+        super.visitToken(ast);
+    }
+    
+    private boolean isFiltered(DetailAST ast) {
+        String name = ast.getText();
+        if (this.names.contains(name)) {
+            return true;
+        }
+        return false;
+    }
+    
+    public void setNames(String... names) {
+        this.names = new HashSet<>(Arrays.asList(names));
+    }
 }

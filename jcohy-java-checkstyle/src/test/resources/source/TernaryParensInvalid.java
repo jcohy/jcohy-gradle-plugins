@@ -21,12 +21,12 @@
  */
 public class TernaryParensInvalid {
 
-	public void test() {
-		boolean a = true;
-		boolean b = false;
-		int d = a != b ? 1 : 2;
-		int e = (a != b ? 1 : 2);
-		int f = (a != b) | (a == b) ? 1 : 2;
-	}
+    public void test() {
+        boolean a = true;
+        boolean b = false;
+        int d = a != b ? 1 : 2;
+        int e = (a != b ? 1 : 2);
+        int f = (a != b) | (a == b) ? 1 : 2;
+    }
 
 }

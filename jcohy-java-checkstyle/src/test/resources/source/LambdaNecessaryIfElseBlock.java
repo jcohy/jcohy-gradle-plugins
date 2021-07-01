@@ -23,15 +23,15 @@ import java.util.function.Consumer;
  */
 public class LambdaNecessaryIfElseBlock {
 
-	public Consumer<String> test() {
-		return (string) -> {
-			if (string.equals("foo")) {
-				System.out.println("bar");
-			}
-			else {
-				System.out.println("baz");
-			}
-		};
-	}
+    public Consumer<String> test() {
+        return (string) -> {
+            if (string.equals("foo")) {
+                System.out.println("bar");
+            }
+            else {
+                System.out.println("baz");
+            }
+        };
+    }
 
 }

@@ -5,17 +5,17 @@
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<!-- TreeWalker Checks -->
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.filter.RequiresOuterThisFilter" />
+		<module name="com.jcohy.checkstyle.filter.RequiresOuterThisFilter"/>
 		<module name="com.jcohy.checkstyle.filter.IdentCheckFilter">
-			<property name="names" value="logger" />
+			<property name="names" value="logger"/>
 			<module
-				name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
-				<property name="checkMethods" value="false" />
-				<property name="validateOnlyOverlapping" value="false" />
+					name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
+				<property name="checkMethods" value="false"/>
+				<property name="validateOnlyOverlapping" value="false"/>
 			</module>
 		</module>
 		<module name="com.jcohy.checkstyle.check.SpringNoThisCheck">
-			<property name="names" value="logger" />
+			<property name="names" value="logger"/>
 		</module>
 	</module>
 </module>

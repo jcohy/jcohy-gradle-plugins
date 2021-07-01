@@ -21,15 +21,15 @@
  */
 public class TernaryEqualsEqualsAlways {
 
-	public void test() {
-		boolean a = true;
-		boolean b = false;
-		int c = (a != b) ? 1 : 2;
-	}
+    public void test() {
+        boolean a = true;
+        boolean b = false;
+        int c = (a != b) ? 1 : 2;
+    }
 
-	public void test2() {
-		Boolean a = true;
-		int c = (a == null) ? 1 : 2;
-	}
+    public void test2() {
+        Boolean a = true;
+        int c = (a == null) ? 1 : 2;
+    }
 
 }

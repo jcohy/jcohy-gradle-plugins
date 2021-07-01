@@ -21,9 +21,9 @@
  */
 public class JUnit5BadAnnotation {
 
-	@org.junit.Test
-	void doSomethingWorks() {
-		// test here
-	}
+    @org.junit.Test
+    void doSomethingWorks() {
+        // test here
+    }
 
 }

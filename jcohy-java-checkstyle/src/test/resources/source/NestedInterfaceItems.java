@@ -23,18 +23,18 @@ package io.spring.javaformat.checkstyle;
  */
 public interface NestedInterfaceItems {
 
-	/**
-	 * A nested class class.
-	 */
-	class NestedClass {
+    /**
+     * A nested class class.
+     */
+    class NestedClass {
 
-		public NestedClass(String arg) {
-			// This is valid because nested class is implicitly public
-		}
+        public NestedClass(String arg) {
+            // This is valid because nested class is implicitly public
+        }
 
-		public void thisIsFine() {
-		}
+        public void thisIsFine() {
+        }
 
-	}
+    }
 
 }

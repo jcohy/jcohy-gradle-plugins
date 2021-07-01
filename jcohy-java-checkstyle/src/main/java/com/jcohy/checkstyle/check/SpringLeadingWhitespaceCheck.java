@@ -24,53 +24,54 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * @version 1.0.0 2021/6/21:16:32
  * @since 1.0.0
  */
-public class SpringLeadingWhitespaceCheck extends AbstractSpringCheck  {
-
-	private static final Pattern PATTERN = Pattern.compile("^([\\ \\t]+)\\S");
-
-	private static final Map<IndentationStyle, Pattern> INDENTATION_STYLE_PATTERN;
-	static {
-		Map<IndentationStyle, Pattern> indentationStylePatterns = new HashMap<>();
-		indentationStylePatterns.put(IndentationStyle.TABS, Pattern.compile("\\t*"));
-		indentationStylePatterns.put(IndentationStyle.SPACES, Pattern.compile("\\ *"));
-		INDENTATION_STYLE_PATTERN = Collections.unmodifiableMap(indentationStylePatterns);
-	}
-
-	private IndentationStyle indentationStyle;
-
-	@Override
-	public int[] getAcceptableTokens() {
-		return NO_REQUIRED_TOKENS;
-	}
-
-	@Override
-	public void beginTree(DetailAST rootAST) {
-		super.beginTree(rootAST);
-		FileContents fileContents = getFileContents();
-		FileText fileText = fileContents.getText();
-		File file = fileText.getFile();
-		if (file == null) {
-			return;
-		}
-		IndentationStyle indentationStyle = (this.indentationStyle != null) ? this.indentationStyle
-				: JavaFormatConfig.findFrom(file.getParentFile()).getIndentationStyle();
-		for (int i = 0; i < fileText.size(); i++) {
-			String line = fileText.get(i);
-			int lineNo = i + 1;
-			Matcher matcher = PATTERN.matcher(line);
-			boolean found = matcher.find(0);
-			while (found
-					&& fileContents.hasIntersectionWithComment(lineNo, matcher.start(0), lineNo, matcher.end(0) - 1)) {
-				found = matcher.find(matcher.end(0));
-			}
-			if (found && !INDENTATION_STYLE_PATTERN.get(indentationStyle).matcher(matcher.group(1)).matches()) {
-				log(lineNo, "leadingwhitespace.incorrect", indentationStyle.toString().toLowerCase());
-			}
-		}
-	}
-
-	public void setIndentationStyle(String indentationStyle) {
-		this.indentationStyle = (indentationStyle != null && !"".equals(indentationStyle))
-				? IndentationStyle.valueOf(indentationStyle.toUpperCase()) : null;
-	}
+public class SpringLeadingWhitespaceCheck extends AbstractSpringCheck {
+    
+    private static final Pattern PATTERN = Pattern.compile("^([\\ \\t]+)\\S");
+    
+    private static final Map<IndentationStyle, Pattern> INDENTATION_STYLE_PATTERN;
+    
+    static {
+        Map<IndentationStyle, Pattern> indentationStylePatterns = new HashMap<>();
+        indentationStylePatterns.put(IndentationStyle.TABS, Pattern.compile("\\t*"));
+        indentationStylePatterns.put(IndentationStyle.SPACES, Pattern.compile("\\ *"));
+        INDENTATION_STYLE_PATTERN = Collections.unmodifiableMap(indentationStylePatterns);
+    }
+    
+    private IndentationStyle indentationStyle;
+    
+    @Override
+    public int[] getAcceptableTokens() {
+        return NO_REQUIRED_TOKENS;
+    }
+    
+    @Override
+    public void beginTree(DetailAST rootAST) {
+        super.beginTree(rootAST);
+        FileContents fileContents = getFileContents();
+        FileText fileText = fileContents.getText();
+        File file = fileText.getFile();
+        if (file == null) {
+            return;
+        }
+        IndentationStyle indentationStyle = (this.indentationStyle != null) ? this.indentationStyle
+                : JavaFormatConfig.findFrom(file.getParentFile()).getIndentationStyle();
+        for (int i = 0; i < fileText.size(); i++) {
+            String line = fileText.get(i);
+            int lineNo = i + 1;
+            Matcher matcher = PATTERN.matcher(line);
+            boolean found = matcher.find(0);
+            while (found
+                    && fileContents.hasIntersectionWithComment(lineNo, matcher.start(0), lineNo, matcher.end(0) - 1)) {
+                found = matcher.find(matcher.end(0));
+            }
+            if (found && !INDENTATION_STYLE_PATTERN.get(indentationStyle).matcher(matcher.group(1)).matches()) {
+                log(lineNo, "leadingwhitespace.incorrect", indentationStyle.toString().toLowerCase());
+            }
+        }
+    }
+    
+    public void setIndentationStyle(String indentationStyle) {
+        this.indentationStyle = (indentationStyle != null && !"".equals(indentationStyle))
+                ? IndentationStyle.valueOf(indentationStyle.toUpperCase()) : null;
+    }
 }

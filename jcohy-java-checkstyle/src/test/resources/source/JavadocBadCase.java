@@ -22,13 +22,13 @@
  */
 public class JavadocBadCase<T> {
 
-	/**
-	 * Do something.
-	 * @param something A bad thing
-	 * @return Naughty
-	 * @throws RuntimeException I fail
-	 */
-	public String test(String something) throws RuntimeException {
-	}
+    /**
+     * Do something.
+     * @param something A bad thing
+     * @return Naughty
+     * @throws RuntimeException I fail
+     */
+    public String test(String something) throws RuntimeException {
+    }
 
 }

@@ -21,11 +21,11 @@
  */
 public class JavadocMissingSince {
 
-	/**
-	 * Inner class.
-	 */
-	private static class Inner {
+    /**
+     * Inner class.
+     */
+    private static class Inner {
 
-	}
+    }
 
 }

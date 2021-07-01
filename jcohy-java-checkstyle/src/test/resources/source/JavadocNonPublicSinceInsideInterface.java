@@ -22,15 +22,15 @@
  */
 public interface JavadocNonPublicSinceInsideInterface {
 
-	/**
-	 * Inner enum.
-	 *
-	 * @since 1.2.3
-	 */
-	enum Inner {
+    /**
+     * Inner enum.
+     *
+     * @since 1.2.3
+     */
+    enum Inner {
 
-		FOO
+        FOO
 
-	}
+    }
 
 }

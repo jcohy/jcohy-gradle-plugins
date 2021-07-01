@@ -24,8 +24,8 @@ import java.util.function.Function;
  */
 public class LambdaMissingParens {
 
-	public Function<String, Integer> test() {
-		return string -> 1;
-	}
+    public Function<String, Integer> test() {
+        return string -> 1;
+    }
 
 }

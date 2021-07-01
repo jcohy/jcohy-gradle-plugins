@@ -21,12 +21,12 @@
  */
 public class JavadocMethodEmptyLineBeforeTag<T> {
 
-	/**
-	 * Do something.
-	 *
-	 * @param something a lovely thing
-	 */
-	public void test(String something) {
-	}
+    /**
+     * Do something.
+     *
+     * @param something a lovely thing
+     */
+    public void test(String something) {
+    }
 
 }

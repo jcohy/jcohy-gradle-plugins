@@ -5,8 +5,8 @@
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
 		<module name="com.jcohy.checkstyle.check.SpringJavadocCheck">
-			<property name="publicOnlySinceTags" value="true" />
-			<property name="requireSinceTag" value="true" />
+			<property name="publicOnlySinceTags" value="true"/>
+			<property name="requireSinceTag" value="true"/>
 		</module>
 	</module>
 </module>

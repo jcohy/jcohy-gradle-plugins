@@ -28,64 +28,64 @@ import org.junit.jupiter.api.TestTemplate;
  */
 public class JUnit5BadModifier {
 
-	@BeforeAll
-	public static void publicBeforeAll() {
+    @BeforeAll
+    public static void publicBeforeAll() {
 
-	}
+    }
 
-	@BeforeEach
-	public void publicBeforeEach() {
+    @AfterAll
+    public static void publicAfterAll() {
 
-	}
+    }
 
-	@AfterAll
-	public static void publicAfterAll() {
+    @BeforeAll
+    private static void privateBeforeAll() {
 
-	}
+    }
 
-	@AfterEach
-	public void publicAfterEach() {
+    @AfterAll
+    private static void privateAfterAll() {
 
-	}
+    }
 
-	@BeforeAll
-	private static void privateBeforeAll() {
+    @BeforeEach
+    public void publicBeforeEach() {
 
-	}
+    }
 
-	@BeforeEach
-	private void privateBeforeEach() {
+    @AfterEach
+    public void publicAfterEach() {
 
-	}
+    }
 
-	@AfterAll
-	private static void privateAfterAll() {
+    @BeforeEach
+    private void privateBeforeEach() {
 
-	}
+    }
 
-	@AfterEach
-	private void privateAfterEach() {
+    @AfterEach
+    private void privateAfterEach() {
 
-	}
+    }
 
-	@Test
-	public void doSomethingWorks() {
-		// test here
-	}
+    @Test
+    public void doSomethingWorks() {
+        // test here
+    }
 
-	@Test
-	private void doSomethingElseWorks() {
-		// test here
-	}
+    @Test
+    private void doSomethingElseWorks() {
+        // test here
+    }
 
-	@TestTemplate
-	public void doSomethingWithTemplateWorks() {
-		// test here
-	}
+    @TestTemplate
+    public void doSomethingWithTemplateWorks() {
+        // test here
+    }
 
-	@TestTemplate
-	private void doSomethingElseWithTemplateWorks() {
-		// test here
-	}
+    @TestTemplate
+    private void doSomethingElseWithTemplateWorks() {
+        // test here
+    }
 
 }

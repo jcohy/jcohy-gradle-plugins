@@ -21,10 +21,10 @@
  */
 public class TernaryParensAndPlus {
 
-	public void test() {
-		boolean a = true;
-		boolean b = false;
-		String c = new String((a != b) ? "1" + "2" : "3");
-	}
+    public void test() {
+        boolean a = true;
+        boolean b = false;
+        String c = new String((a != b) ? "1" + "2" : "3");
+    }
 
 }

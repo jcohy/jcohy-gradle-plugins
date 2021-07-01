@@ -12,15 +12,15 @@ package com.jcohy.checkstyle.config;
  * @since 1.0.0
  */
 public enum IndentationStyle {
-
-	/**
-	 * Indent with tabs.
-	 */
-	TABS,
-
-	/**
-	 * Indent with spaces.
-	 */
-	SPACES
-
+    
+    /**
+     * Indent with tabs.
+     */
+    TABS,
+    
+    /**
+     * Indent with spaces.
+     */
+    SPACES
+    
 }

@@ -25,9 +25,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class HideUtilityClassConstructorSpringConfiguration {
 
-	@Bean
-	public static String myBean() {
-		return "foo";
-	}
+    @Bean
+    public static String myBean() {
+        return "foo";
+    }
 
 }

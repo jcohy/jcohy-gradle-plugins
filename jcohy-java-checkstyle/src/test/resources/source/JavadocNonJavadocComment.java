@@ -21,16 +21,16 @@
  */
 public class JavadocNonJavadocComment {
 
-	/* (non-Javadoc)
-	 * Example.
-	 */
-	public void one() {
-	}
+    /* (non-Javadoc)
+     * Example.
+     */
+    public void one() {
+    }
 
-	/**
-	 * (non-Javadoc).
-	 */
-	public void two() {
-	}
+    /**
+     * (non-Javadoc).
+     */
+    public void two() {
+    }
 
 }

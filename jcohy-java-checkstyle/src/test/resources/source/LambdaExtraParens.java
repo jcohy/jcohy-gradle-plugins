@@ -26,20 +26,20 @@ import java.util.function.BiFunction;
  */
 public class LambdaExtraParens {
 
-	public Function<String, Integer> test() {
-		return (string) -> 1;
-	}
+    public Function<String, Integer> test() {
+        return (string) -> 1;
+    }
 
-	public BiFunction<String, String, Integer> test2() {
-		return (string1, string2) -> 1;
-	}
+    public BiFunction<String, String, Integer> test2() {
+        return (string1, string2) -> 1;
+    }
 
-	public void test3() {
-		Object x = null;
-		List<String> result = input((String x) -> 123);
-	}
+    public void test3() {
+        Object x = null;
+        List<String> result = input((String x) -> 123);
+    }
 
-	private <T extends CharSequence> List<T> input(Function<T, Integer> in) {
-	}
+    private <T extends CharSequence> List<T> input(Function<T, Integer> in) {
+    }
 
 }

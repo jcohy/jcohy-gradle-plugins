@@ -21,13 +21,13 @@
  */
 public class CatchE {
 
-	public void test() {
-		try {
-			new String("foo");
-		}
-		catch (IllegalStateException e) {
-			// Ignore
-		}
-	}
+    public void test() {
+        try {
+            new String("foo");
+        }
+        catch (IllegalStateException e) {
+            // Ignore
+        }
+    }
 
 }

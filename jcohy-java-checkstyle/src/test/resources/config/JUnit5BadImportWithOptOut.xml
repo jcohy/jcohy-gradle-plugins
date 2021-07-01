@@ -7,5 +7,5 @@
 		<module name="com.jcohy.checkstyle.check.SpringJUnit5Check">
 			<property name="unlessImports" value="com.example.OptOutRunner"/>
 		</module>
- 	</module>
+	</module>
 </module>

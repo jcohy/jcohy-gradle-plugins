@@ -21,19 +21,19 @@
  */
 public class TernaryParensValid {
 
-	private boolean test;
+    private boolean test;
 
-	public void test() {
-		boolean a = true;
-		boolean b = false;
-		int c = (a != b) ? 1 : 2;
-		int d = a ? 1 : 2;
-		int e = ((a != b) | (a == b)) ? 1 : 2;
-		int d = "a".equals("b") ? 1 : 2;
-	}
+    public void test() {
+        boolean a = true;
+        boolean b = false;
+        int c = (a != b) ? 1 : 2;
+        int d = a ? 1 : 2;
+        int e = ((a != b) | (a == b)) ? 1 : 2;
+        int d = "a".equals("b") ? 1 : 2;
+    }
 
-	public int withMember() {
-		return this.test ? 1 : 2;
-	}
+    public int withMember() {
+        return this.test ? 1 : 2;
+    }
 
 }

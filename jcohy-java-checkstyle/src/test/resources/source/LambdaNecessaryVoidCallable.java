@@ -23,11 +23,11 @@ import java.util.concurrent.Callable;
  */
 public class LambdaNecessaryVoidCallable {
 
-	public Callable<Void> test() {
-		return () -> {
-			new String("test");
-			return null;
-		};
-	}
+    public Callable<Void> test() {
+        return () -> {
+            new String("test");
+            return null;
+        };
+    }
 
 }

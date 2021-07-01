@@ -7,12 +7,14 @@
 		<!-- 检查 javadoc 块标签或 javadoc 标签的顺序 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
 			<property name="target" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF"/>
-			<property name="tagOrder" value="@param, @author, @version, @since, @see, @serial, @deprecated"/>
+			<property name="tagOrder"
+					  value="@param, @author, @version, @since, @see, @serial, @deprecated"/>
 		</module>
 		<!-- 检查 javadoc 块标签或 javadoc 标签的顺序 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
 			<property name="target" value="METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
-			<property name="tagOrder" value="@param, @return, @throws, @since, @deprecated, @see"/>
+			<property name="tagOrder"
+					  value="@param, @return, @throws, @since, @deprecated, @see"/>
 		</module>
 	</module>
 </module>

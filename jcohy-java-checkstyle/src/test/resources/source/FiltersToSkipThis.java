@@ -23,24 +23,24 @@ import org.apache.commons.logging.Log;
  */
 public class FiltersToSkipThis {
 
-	private Log logger;
+    private Log logger;
 
-	private String inner;
+    private String inner;
 
-	public void test() {
-		logger.debug("test");
-		inner = "test";
-	}
+    public void test() {
+        logger.debug("test");
+        inner = "test";
+    }
 
-	private class Nested {
+    private class Nested {
 
-		private String nested;
+        private String nested;
 
-		Nested() {
-			String x = inner;
-			nested = "ok";
-		}
+        Nested() {
+            String x = inner;
+            nested = "ok";
+        }
 
-	}
+    }
 
 }

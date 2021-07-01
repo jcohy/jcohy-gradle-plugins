@@ -21,10 +21,10 @@
  */
 public class TernaryEqualsEqualsNever {
 
-	public void test() {
-		boolean a = true;
-		boolean b = false;
-		int c = (a == b) ? 1 : 2;
-	}
+    public void test() {
+        boolean a = true;
+        boolean b = false;
+        int c = (a == b) ? 1 : 2;
+    }
 
 }

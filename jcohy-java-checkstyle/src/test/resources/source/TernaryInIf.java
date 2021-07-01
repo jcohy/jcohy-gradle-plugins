@@ -21,12 +21,12 @@
  */
 public class TernaryInIf {
 
-	public void test() {
-		boolean a = true;
-		boolean b = false;
-		if ((a != b) ? true : false) {
-			System.out.println("OK");
-		}
-	}
+    public void test() {
+        boolean a = true;
+        boolean b = false;
+        if ((a != b) ? true : false) {
+            System.out.println("OK");
+        }
+    }
 
 }

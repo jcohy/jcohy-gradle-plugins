@@ -23,8 +23,8 @@ import java.util.function.Function;
  */
 public class LambdaValid {
 
-	public Function<String, Integer> test() {
-		return (string) -> 1;
-	}
+    public Function<String, Integer> test() {
+        return (string) -> 1;
+    }
 
 }

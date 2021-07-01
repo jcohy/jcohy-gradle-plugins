@@ -14,17 +14,17 @@ import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
  * @since 1.0.0
  */
 public abstract class AbstractSpringCheck extends AbstractCheck {
-
-	public static final int[] NO_REQUIRED_TOKENS = {};
-
-	@Override
-	public int[] getDefaultTokens() {
-		return getAcceptableTokens();
-	}
-
-	@Override
-	public int[] getRequiredTokens() {
-		return NO_REQUIRED_TOKENS;
-	}
-
+    
+    public static final int[] NO_REQUIRED_TOKENS = {};
+    
+    @Override
+    public int[] getDefaultTokens() {
+        return getAcceptableTokens();
+    }
+    
+    @Override
+    public int[] getRequiredTokens() {
+        return NO_REQUIRED_TOKENS;
+    }
+    
 }

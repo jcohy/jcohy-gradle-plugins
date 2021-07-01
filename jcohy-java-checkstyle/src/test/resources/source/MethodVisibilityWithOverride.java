@@ -21,28 +21,28 @@
  */
 public class MethodVisibilityWithOverride {
 
-	private static class PrivateInnerClass {
+    private static class PrivateInnerClass {
 
-		@Override
-		public void okPrivateInner() {
-		}
+        @Override
+        public void okPrivateInner() {
+        }
 
-	}
+    }
 
-	protected static class ProtectedInnerClass {
+    protected static class ProtectedInnerClass {
 
-		@Override
-		public void okProtectedInner() {
-		}
+        @Override
+        public void okProtectedInner() {
+        }
 
-	}
+    }
 
-	static class DefaultInnerClass {
+    static class DefaultInnerClass {
 
-		@Override
-		public void okDefaultInner() {
-		}
+        @Override
+        public void okDefaultInner() {
+        }
 
-	}
+    }
 
 }

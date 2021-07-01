@@ -27,57 +27,57 @@ import org.xml.sax.InputSource;
  * @since 1.0.0
  */
 public class JcohyConfigurationLoader {
-
-	private final Context context;
-
-	private final FilteredModuleFactory moduleFactory;
-
-	public JcohyConfigurationLoader(Context context, FilteredModuleFactory moduleFactory) {
-		this.context = context;
-		this.moduleFactory = moduleFactory;
-	}
-
-	public Collection<FileSetCheck> load(PropertyResolver propertyResolver,String checkstyleFilePath) {
-		Configuration config = loadConfiguration(getClass().getResourceAsStream(checkstyleFilePath),
-				propertyResolver);
-		return Arrays.stream(config.getChildren()).filter(this.moduleFactory::nonFiltered).map(this::load)
-				.collect(Collectors.toList());
-	}
-
-	private Configuration loadConfiguration(InputStream inputStream, PropertyResolver propertyResolver) {
-		try {
-			InputSource inputSource = new InputSource(inputStream);
-			return ConfigurationLoader.loadConfiguration(inputSource, propertyResolver, IgnoredModulesOptions.EXECUTE);
-		}
-		catch (CheckstyleException ex) {
-			throw new IllegalStateException(ex);
-		}
-	}
-
-	private FileSetCheck load(Configuration configuration) {
-		Object module = createModule(configuration);
-		if (!(module instanceof FileSetCheck)) {
-			throw new IllegalStateException(configuration.getName() + " is not allowed");
-		}
-		return (FileSetCheck) module;
-	}
-
-	private Object createModule(Configuration configuration) {
-		String name = configuration.getName();
-		try {
-			Object module = this.moduleFactory.createModule(name);
-			if (module instanceof AutomaticBean) {
-				initialize(configuration, (AutomaticBean) module);
-			}
-			return module;
-		}
-		catch (CheckstyleException ex) {
-			throw new IllegalStateException("cannot initialize module " + name + " - " + ex.getMessage(), ex);
-		}
-	}
-
-	private void initialize(Configuration configuration, AutomaticBean bean) throws CheckstyleException {
-		bean.contextualize(this.context);
-		bean.configure(configuration);
-	}
+    
+    private final Context context;
+    
+    private final FilteredModuleFactory moduleFactory;
+    
+    public JcohyConfigurationLoader(Context context, FilteredModuleFactory moduleFactory) {
+        this.context = context;
+        this.moduleFactory = moduleFactory;
+    }
+    
+    public Collection<FileSetCheck> load(PropertyResolver propertyResolver, String checkstyleFilePath) {
+        Configuration config = loadConfiguration(getClass().getResourceAsStream(checkstyleFilePath),
+                propertyResolver);
+        return Arrays.stream(config.getChildren()).filter(this.moduleFactory::nonFiltered).map(this::load)
+                .collect(Collectors.toList());
+    }
+    
+    private Configuration loadConfiguration(InputStream inputStream, PropertyResolver propertyResolver) {
+        try {
+            InputSource inputSource = new InputSource(inputStream);
+            return ConfigurationLoader.loadConfiguration(inputSource, propertyResolver, IgnoredModulesOptions.EXECUTE);
+        }
+        catch (CheckstyleException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+    
+    private FileSetCheck load(Configuration configuration) {
+        Object module = createModule(configuration);
+        if (!(module instanceof FileSetCheck)) {
+            throw new IllegalStateException(configuration.getName() + " is not allowed");
+        }
+        return (FileSetCheck) module;
+    }
+    
+    private Object createModule(Configuration configuration) {
+        String name = configuration.getName();
+        try {
+            Object module = this.moduleFactory.createModule(name);
+            if (module instanceof AutomaticBean) {
+                initialize(configuration, (AutomaticBean) module);
+            }
+            return module;
+        }
+        catch (CheckstyleException ex) {
+            throw new IllegalStateException("cannot initialize module " + name + " - " + ex.getMessage(), ex);
+        }
+    }
+    
+    private void initialize(Configuration configuration, AutomaticBean bean) throws CheckstyleException {
+        bean.contextualize(this.context);
+        bean.configure(configuration);
+    }
 }

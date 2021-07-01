@@ -29,28 +29,29 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @version 1.0.0 2021/6/21:17:36
  * @since 1.0.0
  */
-public class JcohyConfigurationLoaderTests {
+public class SunConfigurationLoaderTests {
     
-    private String checkStyleFile = ChecksStyle.getPath("jcohy");
+    private String checkStyleFile = ChecksStyle.getPath("sun");
     
     @Test
-    public void loadJcohyShouldLoadChecks() {
+    public void loadSunShouldLoadChecks() {
+        checkStyleFile = ChecksStyle.getPath("sun");
         Collection<FileSetCheck> checks = load(null);
-        assertThat(checks).hasSize(5);
-        TreeWalker treeWalker = (TreeWalker) checks.toArray()[4];
+        assertThat(checks).hasSize(8);
+        TreeWalker treeWalker = (TreeWalker) checks.toArray()[7];
         Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
-        assertThat(ordinaryChecks).hasSize(71);
+        assertThat(ordinaryChecks).hasSize(54);
     }
     
     @Test
     public void loadWithExcludeShouldExcludeChecks() {
         Set<String> excludes = Collections
-                .singleton("com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck");
+                .singleton("com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck");
         Collection<FileSetCheck> checks = load(excludes);
-        assertThat(checks).hasSize(5);
-        TreeWalker treeWalker = (TreeWalker) checks.toArray()[4];
+        assertThat(checks).hasSize(8);
+        TreeWalker treeWalker = (TreeWalker) checks.toArray()[7];
         Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
-        assertThat(ordinaryChecks).hasSize(70);
+        assertThat(ordinaryChecks).hasSize(53);
     }
     
     private Collection<FileSetCheck> load(Set<String> excludes) {
@@ -62,13 +63,6 @@ public class JcohyConfigurationLoaderTests {
         Collection<FileSetCheck> checks = new JcohyConfigurationLoader(context, filteredModuleFactory)
                 .load(getPropertyResolver(), checkStyleFile);
         return checks;
-    }
-    
-    @Test
-    public void loadWithExcludeHeaderShouldExcludeChecks() {
-        Set<String> excludes = Collections.singleton("com.jcohy.checkstyle.check.SpringHeaderCheck");
-        Object[] checks = load(excludes).stream().toArray();
-        assertThat(checks).hasSize(4);
     }
     
     private PropertyResolver getPropertyResolver() {

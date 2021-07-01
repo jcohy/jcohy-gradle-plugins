@@ -21,35 +21,35 @@
  */
 public class MethodOrderInvalid {
 
-	@Override
-	public int hashCode() {
-		return 0;
-	}
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return false;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        return false;
+    }
 
-	@Override
-	public String toString() {
-		return "";
-	}
+    @Override
+    public String toString() {
+        return "";
+    }
 
-	/**
-	 * Nested.
-	 */
-	interface Nested {
+    /**
+     * Nested.
+     */
+    interface Nested {
 
-		@Override
-		String toString();
+        @Override
+        String toString();
 
-		@Override
-		boolean equals(Object obj);
+        @Override
+        boolean equals(Object obj);
 
-		@Override
-		int hashCode();
+        @Override
+        int hashCode();
 
-	}
+    }
 
 }

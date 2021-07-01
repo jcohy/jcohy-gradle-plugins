@@ -23,9 +23,9 @@ import java.util.function.Function;
  */
 public class LambdaNecessaryEmptyBlock {
 
-	public Function<String, Integer> test() {
-		return (string) -> {
-		};
-	}
+    public Function<String, Integer> test() {
+        return (string) -> {
+        };
+    }
 
 }

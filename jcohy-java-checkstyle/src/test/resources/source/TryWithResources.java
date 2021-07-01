@@ -21,10 +21,10 @@
  */
 public class TryWithResources {
 
-	public void test() {
-		try (Session session = this.driver.session(); Transaction tx = session.beginTransaction()) {
-			System.out.println(session);
-		}
-	}
+    public void test() {
+        try (Session session = this.driver.session(); Transaction tx = session.beginTransaction()) {
+            System.out.println(session);
+        }
+    }
 
 }

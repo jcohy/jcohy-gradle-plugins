@@ -8,7 +8,7 @@
 	</module>
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
 		<module name="com.jcohy.checkstyle.check.SpringImportOrderCheck">
-			<property name="ordered" value="true" />
+			<property name="ordered" value="true"/>
 		</module>
 	</module>
 </module>
