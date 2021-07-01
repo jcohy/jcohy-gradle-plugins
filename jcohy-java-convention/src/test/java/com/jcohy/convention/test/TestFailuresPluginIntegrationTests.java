@@ -146,6 +146,7 @@ class TestFailuresPluginIntegrationTests {
             writer.println("}");
             writer.println();
             writer.println("repositories {");
+            writer.println("	maven { url 'https://maven.aliyun.com/repository/public' } ");
             writer.println("	mavenCentral()");
             writer.println("}");
             writer.println();

@@ -37,8 +37,8 @@ public class AlibabaConfigurationLoaderTests {
     public void loadAliBabaShouldLoadChecks() {
         checkStyleFile = ChecksStyle.getPath("alibaba");
         Collection<FileSetCheck> checks = load(null);
-        assertThat(checks).hasSize(3);
-        TreeWalker treeWalker = (TreeWalker) checks.toArray()[2];
+        assertThat(checks).hasSize(2);
+        TreeWalker treeWalker = (TreeWalker) checks.toArray()[1];
         Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
         assertThat(ordinaryChecks).hasSize(59);
     }
@@ -48,8 +48,8 @@ public class AlibabaConfigurationLoaderTests {
         Set<String> excludes = Collections
                 .singleton("com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck");
         Collection<FileSetCheck> checks = load(excludes);
-        assertThat(checks).hasSize(3);
-        TreeWalker treeWalker = (TreeWalker) checks.toArray()[2];
+        assertThat(checks).hasSize(2);
+        TreeWalker treeWalker = (TreeWalker) checks.toArray()[1];
         Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
         assertThat(ordinaryChecks).hasSize(58);
     }

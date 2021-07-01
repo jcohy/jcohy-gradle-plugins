@@ -36,8 +36,8 @@ public class JcohyConfigurationLoaderTests {
     @Test
     public void loadJcohyShouldLoadChecks() {
         Collection<FileSetCheck> checks = load(null);
-        assertThat(checks).hasSize(5);
-        TreeWalker treeWalker = (TreeWalker) checks.toArray()[4];
+        assertThat(checks).hasSize(4);
+        TreeWalker treeWalker = (TreeWalker) checks.toArray()[3];
         Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
         assertThat(ordinaryChecks).hasSize(71);
     }
@@ -47,8 +47,8 @@ public class JcohyConfigurationLoaderTests {
         Set<String> excludes = Collections
                 .singleton("com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck");
         Collection<FileSetCheck> checks = load(excludes);
-        assertThat(checks).hasSize(5);
-        TreeWalker treeWalker = (TreeWalker) checks.toArray()[4];
+        assertThat(checks).hasSize(4);
+        TreeWalker treeWalker = (TreeWalker) checks.toArray()[3];
         Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
         assertThat(ordinaryChecks).hasSize(70);
     }
@@ -68,7 +68,7 @@ public class JcohyConfigurationLoaderTests {
     public void loadWithExcludeHeaderShouldExcludeChecks() {
         Set<String> excludes = Collections.singleton("com.jcohy.checkstyle.check.SpringHeaderCheck");
         Object[] checks = load(excludes).stream().toArray();
-        assertThat(checks).hasSize(4);
+        assertThat(checks).hasSize(3);
     }
     
     private PropertyResolver getPropertyResolver() {
