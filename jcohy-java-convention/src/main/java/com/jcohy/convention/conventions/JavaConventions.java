@@ -112,7 +112,7 @@ class JavaConventions {
             importsHandler.mavenBom(BomCoordinates.FlightBomCoordinates);
         }));
         
-        
+
         configurations
                 .matching((configuration) ->
                         configuration.getName().endsWith("Classpath") || JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME.equals(configuration.getName()))
@@ -120,9 +120,6 @@ class JavaConventions {
                     configuration.extendsFrom(dependencyManagement);
                 });
 
-//		Dependency flightFrameworkParent = project.getDependencies().enforcedPlatform(project.getDependencies()
-//				.project(Collections.singletonMap("path", ":jcohy-framework-bom")));
-//		dependencyManagement.getDependencies().add(flightFrameworkParent);
         project.getPlugins().withType(OptionalDependenciesPlugin.class, (optionalDependencies) -> configurations
                 .getByName(OptionalDependenciesPlugin.OPTIONAL_CONFIGURATION_NAME).extendsFrom(dependencyManagement));
     }

@@ -49,7 +49,7 @@ public class OptionalDependenciesPluginIntegrationTests {
     @Test
     void optionalConfigurationIsCreated() throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
-            out.println("plugins { id 'com.jcohy.convention.optional-dependencies' }");
+            out.println("plugins { id 'com.jcohy.optional-dependencies' }");
             out.println("task printConfigurations {");
             out.println("    doLast {");
             out.println("        configurations.all { println it.name }");
@@ -84,7 +84,7 @@ public class OptionalDependenciesPluginIntegrationTests {
             throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
             out.println("plugins {");
-            out.println("    id 'com.jcohy.convention.optional-dependencies'");
+            out.println("    id 'com.jcohy.optional-dependencies'");
             out.println("    id 'java'");
             out.println("}");
             out.println("repositories {");

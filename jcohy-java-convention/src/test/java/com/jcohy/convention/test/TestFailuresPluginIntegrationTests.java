@@ -142,7 +142,7 @@ class TestFailuresPluginIntegrationTests {
         withPrintWriter(new File(dir, "build.gradle"), (writer) -> {
             writer.println("plugins {");
             writer.println("	id 'java'");
-            writer.println("	id 'com.jcohy.gradle.plugins.test-failures'");
+            writer.println("	id 'com.jcohy.test-failures'");
             writer.println("}");
             writer.println();
             writer.println("repositories {");
