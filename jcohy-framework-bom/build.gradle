@@ -1,0 +1,96 @@
+plugins {
+	id "java-gradle-plugin"
+	id "maven-publish"
+}
+
+ext {
+	//================= framework =================
+	set('assertjCoreVersion', "3.15.0")
+	set('junitPlatformCommonsVersion', "1.5.2")
+	set('mybatisPlusStarterVersion', "3.3.1")
+	set('flightVersion', "1.0.10.RELEASE")
+	set('justAuthVersion', "1.15.9")
+	set('tencentOssVersion','5.6.37')
+	set('qiniuOssVersion','7.2.23')
+	set('minioOssVersion','6.0.7')
+	//================= swagger ===================
+	set('swaggerModelsVersion', "1.6.2")
+	set('swaggerVersion', "2.10.5")
+	set('swaggerUIVersion', "2.10.5")
+	set('knife4jVersion', "2.0.6")
+	set('protostuffVersion', "1.6.0")
+	set('ip2regionVersion', "1.7.2")
+
+	//================= datasource ================
+	set('druidVersion', "1.1.21")
+
+	//================= tools ====================
+	set('fastjsonVersion', "1.2.70")
+	set('easyCaptchaVersion', "1.6.2")
+	set('GuavaVersion', "26.0-jre")
+	set('jjwtVersion', "0.9.1")
+	set('mapstructVersion', "1.3.1.Final")
+	set('aliyunSdkVersion', "3.8.0")
+	set('easyexcelVersion',"2.2.6")
+	set('tencentSmsVersion',"3.1.281")
+	set('commonsiolVersion',"2.9.0")
+}
+
+dependencies {
+
+	api platform("org.springframework.boot:spring-boot-dependencies:2.4.5")
+	api platform("com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0")
+	api platform("com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1")
+
+	constraints {
+		// Platform declares some versions of libraries used in subprojects
+		// flight
+		api "com.flight.framework:flight-framework-api:${flightVersion}"
+		api "com.flight.framework:flight-framework-auto:${flightVersion}"
+		api "com.flight.framework:flight-framework-boot:${flightVersion}"
+		api "com.flight.framework:flight-framework-jwt:${flightVersion}"
+		api "com.flight.framework:flight-framework-launch:${flightVersion}"
+		api "com.flight.framework:flight-framework-swagger:${flightVersion}"
+		api "com.flight.framework:flight-framework-utils:${flightVersion}"
+		api "com.flight.framework:flight-starter-elasticsearch:${flightVersion}"
+		api "com.flight.framework:flight-starter-mybatis:${flightVersion}"
+		api "com.flight.framework:flight-starter-oss:${flightVersion}"
+		api "com.flight.framework:flight-starter-rabbitmq:${flightVersion}"
+		api "com.flight.framework:flight-starter-redis:${flightVersion}"
+		api "com.flight.framework:flight-starter-sms:${flightVersion}"
+		api "com.flight.framework:flight-starter-social:${flightVersion}"
+
+		// commons
+		api "com.google.guava:guava:${GuavaVersion}"
+		api "io.springfox:springfox-swagger2:${swaggerVersion}"
+		api "io.swagger:swagger-models:${swaggerModelsVersion}"
+		api (
+				[group: 'io.protostuff', name: 'protostuff-core', version: "${protostuffVersion}"],
+				[group: 'io.protostuff', name: 'protostuff-runtime', version: "${protostuffVersion}"]
+		)
+
+		api (
+				[group: 'org.mapstruct', name: 'mapstruct', version: "${mapstructVersion}"],
+				[group: 'org.mapstruct', name: 'mapstruct-processor', version: "${mapstructVersion}"]
+		)
+
+		api (
+				[group: 'com.alibaba', name: 'druid', version: "${druidVersion}"],
+				[group: 'com.alibaba', name: 'druid-spring-boot-starter', version: "${druidVersion}"]
+		)
+
+		api "com.tencentcloudapi:tencentcloud-sdk-java:${tencentSmsVersion}"
+		api "com.github.xiaoymin:knife4j-spring-boot-starter:${knife4jVersion}"
+		api "org.lionsoul:ip2region:${ip2regionVersion}"
+		api "com.alibaba:fastjson:${fastjsonVersion}"
+		api "io.jsonwebtoken:jjwt:${jjwtVersion}"
+		api "com.github.whvcse:easy-captcha:${easyCaptchaVersion}"
+		api "com.qcloud:cos_api:${tencentOssVersion}"
+		api "com.qiniu:qiniu-java-sdk:${qiniuOssVersion}"
+		api "io.minio:minio:${minioOssVersion}"
+		api "com.baomidou:mybatis-plus-boot-starter:${mybatisPlusStarterVersion}"
+		api "me.zhyd.oauth:JustAuth:${justAuthVersion}"
+		api "commons-io:commons-io:${commonsiolVersion}"
+		api "com.alibaba:easyexcel:${easyexcelVersion}"
+	}
+}

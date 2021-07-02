@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import com.jcohy.convention.JcohyVersion;
 import com.jcohy.convention.constant.BomCoordinates;
 import com.jcohy.convention.optional.OptionalDependenciesPlugin;
 import com.jcohy.convention.testing.TestFailuresPlugin;
@@ -21,6 +22,7 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
+import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -107,6 +109,7 @@ class JavaConventions {
             importsHandler.mavenBom(BomCoordinates.SpringBomCoordinates);
             importsHandler.mavenBom(BomCoordinates.AliYunBomCoordinates);
             importsHandler.mavenBom(BomCoordinates.AliCloudBomCoordinates);
+            importsHandler.mavenBom(BomCoordinates.FlightBomCoordinates);
         }));
         
         
@@ -250,7 +253,8 @@ class JavaConventions {
 
 //		String version = SpringJavaFormatPlugin.class.getPackage().getImplementationVersion();
         DependencySet dependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
-        dependencies.add(project.getDependencies().module(":jcohy-java-checkstyle"));
+        dependencies.add(project.getDependencies().create("jcohy-gradle-plugins:jcohy-java-checkstyle:"+ JcohyVersion.getVersion()));
+//        dependencies.add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,"jcohy-gradle-plugins:jcohy-java-checkstyle:"+ JcohyVersion.getVersion());
 //		dependencies.add(project.getDependencies().create("io.spring.javaformat:spring-javaformat-checkstyle:" + version));
     }
 }
