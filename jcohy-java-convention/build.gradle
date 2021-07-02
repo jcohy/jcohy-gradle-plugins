@@ -27,27 +27,27 @@ test {
 	useJUnitPlatform()
 }
 
-gradlePlugin {
-	plugins {
-		deployedPlugin {
-			id = "com.jcohy.convention.deployed"
-			implementationClass = "com.jcohy.convention.deployed.DeployedPlugin"
-		}
-		conventionsPlugin {
-			id = "com.jcohy.convention.conventions"
-			implementationClass = "com.jcohy.convention.conventions.ConventionsPlugin"
-		}
-		testFailuresPlugin {
-			id = "com.jcohy.gradle.plugins.test-failures"
-			implementationClass = "com.jcohy.convention.testing.TestFailuresPlugin"
-		}
-		optionalDependenciesPlugin {
-			id = "com.jcohy.convention.optional-dependencies"
-			implementationClass = "com.jcohy.convention.optional.OptionalDependenciesPlugin"
-		}
-		sonarScannerPlugin {
-			id = "com.jcohy.sonar.scanner"
-			implementationClass = "com.jcohy.convention.sonar.SonarScannerPlugin"
-		}
-	}
-}
+//gradlePlugin {
+//	plugins {
+//		deployedPlugin {
+//			id = "com.jcohy.deployed"
+//			implementationClass = "com.jcohy.convention.deployed.DeployedPlugin"
+//		}
+//		conventionsPlugin {
+//			id = "com.jcohy.conventions"
+//			implementationClass = "com.jcohy.convention.conventions.ConventionsPlugin"
+//		}
+//		testFailuresPlugin {
+//			id = "com.jcohy.test-failures"
+//			implementationClass = "com.jcohy.convention.testing.TestFailuresPlugin"
+//		}
+//		optionalDependenciesPlugin {
+//			id = "com.jcohy.optional-dependencies"
+//			implementationClass = "com.jcohy.convention.optional.OptionalDependenciesPlugin"
+//		}
+//		sonarScannerPlugin {
+//			id = "com.jcohy.sonar.scanner"
+//			implementationClass = "com.jcohy.convention.sonar.SonarScannerPlugin"
+//		}
+//	}
+//}

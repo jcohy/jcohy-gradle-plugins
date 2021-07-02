@@ -242,7 +242,7 @@ class JavaConventions {
     private void configureSpringJavaFormat(Project project) {
         project.getPlugins().apply(SpringJavaFormatPlugin.class);
         project.getTasks().withType(FormatTask.class, (formatTask -> formatTask.setEncoding("UTF-8")));
-        
+
         project.getPlugins().apply(CheckstylePlugin.class);
         CheckstyleExtension checkstyle = project.getExtensions().getByType(CheckstyleExtension.class);
         checkstyle.setToolVersion("8.29");
@@ -250,7 +250,7 @@ class JavaConventions {
 
 //		String version = SpringJavaFormatPlugin.class.getPackage().getImplementationVersion();
         DependencySet dependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
-        dependencies.add(project.getDependencies().module(":jcohy-java-convention"));
+        dependencies.add(project.getDependencies().module(":jcohy-java-checkstyle"));
 //		dependencies.add(project.getDependencies().create("io.spring.javaformat:spring-javaformat-checkstyle:" + version));
     }
 }
