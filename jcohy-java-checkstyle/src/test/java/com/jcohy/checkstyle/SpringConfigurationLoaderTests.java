@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SpringConfigurationLoaderTests {
     
-    private String checkStyleFile = ChecksStyle.getPath("spring");
+    private String checkStyleFile = ChecksStyles.getFilePath("spring");
     
     @Test
     public void loadShouldLoadChecks() {

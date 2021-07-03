@@ -81,7 +81,7 @@ public class JcohyChecks extends AbstractFileSetCheck implements ExternalResourc
     }
     
     @Override
-    protected void finishLocalSetup() throws CheckstyleException {
+    protected void finishLocalSetup() {
         FilteredModuleFactory factory = new FilteredModuleFactory(this.moduleFactory, this.excludes);
         DefaultContext context = new DefaultContext();
         context.add("classLoader", this.classLoader);
@@ -93,9 +93,10 @@ public class JcohyChecks extends AbstractFileSetCheck implements ExternalResourc
         put(properties, "headerCopyrightPattern", this.headerCopyrightPattern);
         put(properties, "headerFile", this.headerFile);
         put(properties, "projectRootPackage", this.projectRootPackage);
+        put(properties, "style", this.style);
         put(properties, "avoidStaticImportExcludes",
-                this.avoidStaticImportExcludes.stream().collect(Collectors.joining(",")));
-        String checkStyleFile = ChecksStyle.getPath(this.style);
+                String.join(",", this.avoidStaticImportExcludes));
+        String checkStyleFile = ChecksStyles.getFilePath(this.style);
         this.checks = new JcohyConfigurationLoader(context, factory).load(new PropertiesExpander(properties), checkStyleFile);
     }
     

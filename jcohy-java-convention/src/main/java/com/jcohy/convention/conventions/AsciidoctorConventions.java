@@ -61,7 +61,7 @@ public class AsciidoctorConventions {
 
 
     /**
-     * 添加文档依赖
+     * 添加文档依赖仓库
      * @param project project
      */
     private void configureDocumentationDependenciesRepository(Project project) {

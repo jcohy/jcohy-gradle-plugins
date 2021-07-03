@@ -92,10 +92,10 @@
 		<!-- 检查子表达式中是否有赋值语句 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.NoEnumTrailingCommaCheck"/>
 		<!-- 检查是否有魔法值 -->
-		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck">
-			<property name="ignoreHashCodeMethod" value="true"/>
-			<property name="ignoreAnnotationElementDefaults" value="true"/>
-		</module>
+<!--		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck">-->
+<!--			<property name="ignoreHashCodeMethod" value="true"/>-->
+<!--			<property name="ignoreAnnotationElementDefaults" value="true"/>-->
+<!--		</module>-->
 		<!-- 检查是否有过于复杂的布尔表达式。 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck"/>
 		<!-- 检查是否有过于复杂的布尔类型 return 语句 -->
@@ -200,9 +200,16 @@
 		<!-- 抽象类命名使用 Abstract 或 Base 开头；异常类命名使用 Exception 结尾；测试类命名以它要测试的类的名称开始，以 Test 结尾。目前仅支持抽象类。 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.naming.AbstractClassNameCheck">
 			<property name="format" value="^(Abstract|Base).+$"/>
+			<property name="ignoreModifier" value="true"/>
 		</module>
 		<module name="com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck">
 			<property name="format" value="^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+			<property name="applyToPrivate" value="false"/>
+			<property name="applyToPackage" value="false"/>
+		</module>
+		<module name="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck">
+			<property name="applyToPrivate" value="false"/>
+			<property name="applyToPackage" value="false"/>
 		</module>
 
 

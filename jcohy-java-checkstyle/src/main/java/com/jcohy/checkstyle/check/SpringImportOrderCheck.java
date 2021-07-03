@@ -31,7 +31,7 @@ public class SpringImportOrderCheck extends ImportOrderCheck {
     }
     
     public void setProjectRootPackage(String projectRootPackage) {
-        setGroups("java", "/^javax?\\./", "*", projectRootPackage);
+        setGroups("java", "/^javax?\\./", "*", "org.springframework",projectRootPackage);
     }
     
     @Override

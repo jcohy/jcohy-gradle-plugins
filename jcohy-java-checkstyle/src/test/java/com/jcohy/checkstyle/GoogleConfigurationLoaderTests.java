@@ -31,12 +31,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class GoogleConfigurationLoaderTests {
     
-    private String checkStyleFile = ChecksStyle.getPath("google");
+    private String checkStyleFile = ChecksStyles.getFilePath("google");
     
     
     @Test
     public void loadGoogleShouldLoadChecks() {
-        checkStyleFile = ChecksStyle.getPath("google");
+        checkStyleFile = ChecksStyles.getFilePath("google");
         Collection<FileSetCheck> checks = load(null);
         assertThat(checks).hasSize(3);
         TreeWalker treeWalker = (TreeWalker) checks.toArray()[2];

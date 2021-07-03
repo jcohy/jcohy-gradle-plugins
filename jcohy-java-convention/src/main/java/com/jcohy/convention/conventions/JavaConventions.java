@@ -1,5 +1,6 @@
 package com.jcohy.convention.conventions;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -22,7 +23,6 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -79,6 +79,7 @@ class JavaConventions {
             // 为插件配置 SpringJavaFromat
             configureSpringJavaFormat(project);
             project.setProperty("sourceCompatibility", "1.8");
+            configureMavenRepository(project);
             configureJavaCompileConventions(project);
             configureJavadocConventions(project);
             configureTestConventions(project);
@@ -87,7 +88,29 @@ class JavaConventions {
             configureToolchain(project);
         });
     }
-    
+
+    private void configureMavenRepository(Project project) {
+        project.getRepositories().maven((mavenRepo) -> {
+           mavenRepo.setUrl(URI.create("http://192.168.11.230:8081/repository/releases/"));
+           mavenRepo.setName("xw-release");
+        });
+
+        project.getRepositories().maven((mavenRepo) -> {
+            mavenRepo.setUrl(URI.create("http://192.168.11.230:8081/repository/snapshot"));
+            mavenRepo.setName("xw-snapshot");
+        });
+
+        project.getRepositories().maven((mavenRepo) -> {
+            mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/central"));
+            mavenRepo.setName("ali");
+        });
+
+        project.getRepositories().maven((mavenRepo) -> {
+            mavenRepo.setUrl(URI.create("https://repo.spring.io/artifactory/release/"));
+            mavenRepo.setName("spring");
+        });
+    }
+
     private void configureToolchain(Project project) {
         project.getPlugins().apply(ToolchainPlugin.class);
     }
@@ -109,7 +132,7 @@ class JavaConventions {
             importsHandler.mavenBom(BomCoordinates.SpringBomCoordinates);
             importsHandler.mavenBom(BomCoordinates.AliYunBomCoordinates);
             importsHandler.mavenBom(BomCoordinates.AliCloudBomCoordinates);
-            importsHandler.mavenBom(BomCoordinates.FlightBomCoordinates);
+            importsHandler.mavenBom(BomCoordinates.JcohyBomCoordinates);
         }));
         
 
@@ -245,13 +268,10 @@ class JavaConventions {
 
         project.getPlugins().apply(CheckstylePlugin.class);
         CheckstyleExtension checkstyle = project.getExtensions().getByType(CheckstyleExtension.class);
-        checkstyle.setToolVersion("8.29");
+        checkstyle.setToolVersion("8.44");
         checkstyle.getConfigDirectory().set(project.getRootProject().file("src/checkstyle"));
 
-//		String version = SpringJavaFormatPlugin.class.getPackage().getImplementationVersion();
-        DependencySet dependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
-        dependencies.add(project.getDependencies().create("jcohy-gradle-plugins:jcohy-java-checkstyle:"+ JcohyVersion.getVersion()));
-//        dependencies.add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,"jcohy-gradle-plugins:jcohy-java-checkstyle:"+ JcohyVersion.getVersion());
-//		dependencies.add(project.getDependencies().create("io.spring.javaformat:spring-javaformat-checkstyle:" + version));
+        DependencySet checkstyleDependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
+        checkstyleDependencies.add(project.getDependencies().create(BomCoordinates.JCOHY_CHECKSTYLE));
     }
 }
