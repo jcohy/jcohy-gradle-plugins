@@ -17,13 +17,13 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
  */
 public final class BomCoordinates {
 
-    public static final String SpringBomCoordinates = SpringBootPlugin.BOM_COORDINATES;
+    public static final String SPRING_BOM_COORDINATES = SpringBootPlugin.BOM_COORDINATES;
 
-    public static final String AliYunBomCoordinates = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
+    public static final String ALI_YUN_BOM_COORDINATES = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
 
-    public static final String JcohyBomCoordinates = "com.jcohy.gradle:jcohy-framework-bom:" + JcohyVersion.getVersion();
+    public static final String JCOHY_BOM_COORDINATES = "com.jcohy.gradle:jcohy-framework-bom:" + JcohyVersion.getVersion();
 
-    public static final String AliCloudBomCoordinates = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE";
+    public static final String ALI_CLOUD_BOM_COORDINATES = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE";
 
     public static final String JCOHY_CHECKSTYLE = "com.jcohy.gradle:jcohy-java-checkstyle:"+ JcohyVersion.getVersion();
 }

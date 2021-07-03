@@ -205,13 +205,10 @@
 		<module name="com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck">
 			<property name="format" value="^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
 			<property name="applyToPrivate" value="false"/>
-			<property name="applyToPackage" value="false"/>
 		</module>
 		<module name="com.puppycrawl.tools.checkstyle.checks.naming.MemberNameCheck">
 			<property name="applyToPrivate" value="false"/>
-			<property name="applyToPackage" value="false"/>
 		</module>
-
 
 		<!-- Regexp -->
 		<!-- 检查单行是否匹配一条给定的正则表达式 -->
