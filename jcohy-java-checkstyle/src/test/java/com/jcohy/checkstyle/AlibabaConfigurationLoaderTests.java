@@ -31,11 +31,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class AlibabaConfigurationLoaderTests {
     
-    private String checkStyleFile = ChecksStyle.getPath("alibaba");
+    private String checkStyleFile = ChecksStyles.getFilePath("alibaba");
     
     @Test
     public void loadAliBabaShouldLoadChecks() {
-        checkStyleFile = ChecksStyle.getPath("alibaba");
+        checkStyleFile = ChecksStyles.getFilePath("alibaba");
         Collection<FileSetCheck> checks = load(null);
         assertThat(checks).hasSize(2);
         TreeWalker treeWalker = (TreeWalker) checks.toArray()[1];

@@ -31,11 +31,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SunConfigurationLoaderTests {
     
-    private String checkStyleFile = ChecksStyle.getPath("sun");
+    private String checkStyleFile = ChecksStyles.getFilePath("sun");
     
     @Test
     public void loadSunShouldLoadChecks() {
-        checkStyleFile = ChecksStyle.getPath("sun");
+        checkStyleFile = ChecksStyles.getFilePath("sun");
         Collection<FileSetCheck> checks = load(null);
         assertThat(checks).hasSize(8);
         TreeWalker treeWalker = (TreeWalker) checks.toArray()[7];

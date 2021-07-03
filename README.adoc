@@ -622,6 +622,7 @@ public class HideUtilityClassConstructorSpringConfiguration {
 * "java",
 * "/^javax?\\./",
 * "*",
+* org.springframework.*
 * projectRootPackage
 
 ==== 示例

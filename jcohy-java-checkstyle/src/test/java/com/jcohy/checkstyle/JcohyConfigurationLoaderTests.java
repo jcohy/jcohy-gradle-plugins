@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class JcohyConfigurationLoaderTests {
     
-    private String checkStyleFile = ChecksStyle.getPath("jcohy");
+    private String checkStyleFile = ChecksStyles.getFilePath("jcohy");
     
     @Test
     public void loadJcohyShouldLoadChecks() {
@@ -58,16 +58,15 @@ public class JcohyConfigurationLoaderTests {
         FilteredModuleFactory filteredModuleFactory = new FilteredModuleFactory(
                 new PackageObjectFactory(getClass().getPackage().getName(), getClass().getClassLoader()), excludes);
         context.add("moduleFactory", filteredModuleFactory);
-        
-        Collection<FileSetCheck> checks = new JcohyConfigurationLoader(context, filteredModuleFactory)
+
+        return new JcohyConfigurationLoader(context, filteredModuleFactory)
                 .load(getPropertyResolver(), checkStyleFile);
-        return checks;
     }
     
     @Test
     public void loadWithExcludeHeaderShouldExcludeChecks() {
         Set<String> excludes = Collections.singleton("com.jcohy.checkstyle.check.SpringHeaderCheck");
-        Object[] checks = load(excludes).stream().toArray();
+        Object[] checks = load(excludes).toArray();
         assertThat(checks).hasSize(3);
     }
     
