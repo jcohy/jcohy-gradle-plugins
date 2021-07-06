@@ -43,8 +43,10 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
         TOP_LEVEL_TYPES = Collections.unmodifiableSet(topLevelTypes);
     }
     
-    private final Set<String> suffixes = new HashSet<>(Arrays.asList("DO", "BO", "DTO", "VO", "AO"));
-    
+    private final Set<String> suffixes = new HashSet<>(Arrays.asList("DO", "BO", "DTO", "VO", "AO", "OSS"));
+
+    private final Set<String> prefixes = new HashSet<>(Arrays.asList("OSS"));
+
     @Override
     public void visitToken(DetailAST ast) {
         if (TOP_LEVEL_TYPES.contains(ast.getType())) {
@@ -55,12 +57,22 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
     
     private void checkSuffix(DetailAST ast) {
         DetailAST detailAST = ast.findFirstToken(TokenTypes.IDENT);
-        if (!this.contain(detailAST.getText())) {
+        String name = detailAST.getText();
+        if (!this.containSuffix(name) && !this.containPrefix(name)) {
             super.visitToken(ast);
         }
     }
-    
-    public boolean contain(String str) {
+
+    public boolean containPrefix(String str) {
+        for (String prefix : prefixes) {
+            if (str.startsWith(prefix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containSuffix(String str) {
         for (String suffix : suffixes) {
             if (str.endsWith(suffix)) {
                 return true;
@@ -68,7 +80,11 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
         }
         return false;
     }
-    
+
+    public void setPrefix(String... prefix){
+        this.prefixes.addAll(Arrays.asList(prefix));
+    }
+
     public void setSuffix(String... suffix) {
         this.suffixes.addAll(Arrays.asList(suffix));
     }

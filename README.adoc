@@ -2656,7 +2656,7 @@ public class TernaryParensValid { // OK
 
 === JcohyAbbreviationAsWordInNameCheck
 
-检查类，接口，枚举是否符合驼峰命名，但以下情形例外：DO / BO / DTO / VO / AO。并提供 `suffix` 属性，可以设置指定的后缀:
+检查类，接口，枚举是否符合驼峰命名，但以下情形例外：以 `OSS` 开头或以 `DO` , `BO` , `DTO` , `VO` , `AO`。并提供 `prefix`, `suffix` 属性，可以设置指定的前缀，后缀:
 
 ==== 示例
 
