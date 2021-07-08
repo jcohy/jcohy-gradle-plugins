@@ -21,8 +21,6 @@ public final class BomCoordinates {
 
     public static final String ALI_YUN_BOM_COORDINATES = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
 
-    public static final String JCOHY_BOM_COORDINATES = "com.jcohy.gradle:jcohy-framework-bom:" + JcohyVersion.getVersion();
-
     public static final String ALI_CLOUD_BOM_COORDINATES = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE";
 
     public static final String JCOHY_CHECKSTYLE = "com.jcohy.gradle:jcohy-java-checkstyle:"+ JcohyVersion.getVersion();

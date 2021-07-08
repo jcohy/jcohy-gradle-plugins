@@ -1,0 +1,63 @@
+package com.jcohy.convention.asciidoctor;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.gradle.testkit.runner.BuildResult;
+import org.gradle.testkit.runner.GradleRunner;
+import org.gradle.testkit.runner.TaskOutcome;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+/**
+ * Copyright: Copyright (c) 2021.
+ * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
+ * <p>
+ * Description:
+ *
+ * @author jiac
+ * @version 1.0.0 2021/7/8:11:13
+ * @since 1.0.0
+ */
+public class AsciidoctorTest {
+
+    @Test
+    void gradleBuild() throws Exception {
+        File projectDir = new File("src/test/gradle");
+        Map<String, String> environment = new LinkedHashMap<>();
+        environment.put("spring-asciidoctor-backends.version", "1.0.0");
+        environment.put("spring-asciidoctor-backends-repo",
+                new File("build/maven-repository").getAbsoluteFile().toURI().toString());
+
+        BuildResult result = GradleRunner.create()
+                .withPluginClasspath()
+                .withGradleVersion("6.8.3")
+                .withProjectDir(projectDir)
+                .withDebug(true)
+//                .withEnvironment(environment)
+                .forwardOutput()
+                .withArguments("clean", "asciidoctor","asciidoctorPdf")
+                .build();
+        assertThat(result.task(":asciidoctor").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
+        File generatedHtml = new File(projectDir, "build/docs/asciidoc");
+        File htmlFile = new File(generatedHtml, "index.html");
+        assertThat(new File(generatedHtml, "css/site.css")).exists();
+        assertThat(new File(generatedHtml, "js/site.js")).exists();
+        assertThat(htmlFile).exists();
+        assertThat(new String(Files.readAllBytes(htmlFile.toPath()), StandardCharsets.UTF_8))
+                .contains("<title>Gradle Example</title>").contains("main-container").contains("new-anchor");
+        File generatedPdf = new File(projectDir, "build/docs/asciidocPdf");
+        File pdfFile = new File(generatedPdf, "index.pdf");
+        assertThat(pdfFile).exists();
+    }
+}

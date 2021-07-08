@@ -10,6 +10,7 @@ dependencies {
 	implementation("org.apache.maven:maven-embedder:3.6.2")
 	implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
 	implementation("org.asciidoctor:asciidoctor-gradle-jvm:3.3.2")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm-pdf:3.3.2")
 	implementation("org.gradle:test-retry-gradle-plugin:1.1.9")
 	implementation("org.springframework:spring-core:5.2.2.RELEASE")
 	implementation("org.springframework:spring-web:5.2.2.RELEASE")
@@ -22,28 +23,3 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
-
-//gradlePlugin {
-//	plugins {
-//		deployedPlugin {
-//			id = "com.jcohy.deployed"
-//			implementationClass = "com.jcohy.convention.deployed.DeployedPlugin"
-//		}
-//		conventionsPlugin {
-//			id = "com.jcohy.conventions"
-//			implementationClass = "com.jcohy.convention.conventions.ConventionsPlugin"
-//		}
-//		testFailuresPlugin {
-//			id = "com.jcohy.test-failures"
-//			implementationClass = "com.jcohy.convention.testing.TestFailuresPlugin"
-//		}
-//		optionalDependenciesPlugin {
-//			id = "com.jcohy.optional-dependencies"
-//			implementationClass = "com.jcohy.convention.optional.OptionalDependenciesPlugin"
-//		}
-//		sonarScannerPlugin {
-//			id = "com.jcohy.sonar.scanner"
-//			implementationClass = "com.jcohy.convention.sonar.SonarScannerPlugin"
-//		}
-//	}
-//}

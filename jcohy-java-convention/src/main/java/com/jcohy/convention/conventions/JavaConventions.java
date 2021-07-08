@@ -10,7 +10,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import com.jcohy.convention.JcohyVersion;
 import com.jcohy.convention.constant.BomCoordinates;
 import com.jcohy.convention.optional.OptionalDependenciesPlugin;
 import com.jcohy.convention.testing.TestFailuresPlugin;
@@ -132,7 +131,6 @@ class JavaConventions {
             importsHandler.mavenBom(BomCoordinates.SPRING_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.ALI_YUN_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.ALI_CLOUD_BOM_COORDINATES);
-            importsHandler.mavenBom(BomCoordinates.JCOHY_BOM_COORDINATES);
         }));
         
 

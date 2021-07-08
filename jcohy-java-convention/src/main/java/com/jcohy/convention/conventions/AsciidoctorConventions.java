@@ -108,9 +108,20 @@ public class AsciidoctorConventions {
         configureCommonAttributes(project, asciidoctorTask);
         configureOptions(asciidoctorTask);
         asciidoctorTask.baseDirFollowsSourceDir();
+//        asciidoctorTask.sources("index111.adoc");
+        String name = asciidoctorTask.getBaseDir().getName();
+        String path = asciidoctorTask.getBaseDir().getPath();
         createSyncDocumentationSourceTask(project, asciidoctorTask);
         if (asciidoctorTask instanceof AsciidoctorTask) {
+            String name1 = asciidoctorTask.getName();
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
+            if(pdf){
+                Map<String, Object> attributes = new HashMap<>();
+                attributes.put("pdf-fontsdir",new File("data/fonts"));
+                attributes.put("pdf-stylesdir",new File("data/themes"));
+                attributes.put("pdf-style","Chinese");
+                asciidoctorTask.attributes(attributes);
+            }
             String backend = (!pdf) ? "spring-html" : "spring-pdf";
             ((AsciidoctorTask) asciidoctorTask).outputOptions((outputOptions) -> outputOptions.backends(backend));
         }
@@ -141,10 +152,11 @@ public class AsciidoctorConventions {
     private void configureCommonAttributes(Project project, AbstractAsciidoctorTask asciidoctorTask) {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("attribute-missing", "warn");
-        attributes.put("github-tag", determineGitHubTag(project));
-        attributes.put("spring-boot-artifactory-repo", determineArtifactoryRepo(project));
-        attributes.put("revnumber", null);
+//        attributes.put("github-tag", determineGitHubTag(project));
+//        attributes.put("spring-boot-artifactory-repo", determineArtifactoryRepo(project));
+        attributes.put("revnumber", project.getVersion());
         asciidoctorTask.attributes(attributes);
+
     }
 
     private static String determineArtifactoryRepo(Project project) {
@@ -187,6 +199,7 @@ public class AsciidoctorConventions {
      * @return /
      */
     private Sync createSyncDocumentationSourceTask(Project project, AbstractAsciidoctorTask asciidoctorTask) {
+        String name = asciidoctorTask.getName();
         Sync syncDocumentationSource = project.getTasks()
                 .create("syncDocumentationSourceFor" + StringUtils.capitalize(asciidoctorTask.getName()), Sync.class);
         File syncedSource = new File(project.getBuildDir(), "docs/src/" + asciidoctorTask.getName());
@@ -194,6 +207,7 @@ public class AsciidoctorConventions {
         syncDocumentationSource.from("/src/docs");
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncedSource);
+        String relativePath = project.relativePath(new File(syncedSource, "asciidoc/"));
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncedSource, "asciidoc/")));
         return syncDocumentationSource;
     }
