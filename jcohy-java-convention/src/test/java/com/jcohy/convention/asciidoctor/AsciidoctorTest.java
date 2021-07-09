@@ -35,16 +35,12 @@ public class AsciidoctorTest {
     void gradleBuild() throws Exception {
         File projectDir = new File("src/test/gradle");
         Map<String, String> environment = new LinkedHashMap<>();
-        environment.put("spring-asciidoctor-backends.version", "1.0.0");
-        environment.put("spring-asciidoctor-backends-repo",
-                new File("build/maven-repository").getAbsoluteFile().toURI().toString());
 
         BuildResult result = GradleRunner.create()
                 .withPluginClasspath()
                 .withGradleVersion("6.8.3")
                 .withProjectDir(projectDir)
                 .withDebug(true)
-//                .withEnvironment(environment)
                 .forwardOutput()
                 .withArguments("clean", "asciidoctor","asciidoctorPdf")
                 .build();
@@ -55,7 +51,12 @@ public class AsciidoctorTest {
         assertThat(new File(generatedHtml, "js/site.js")).exists();
         assertThat(htmlFile).exists();
         assertThat(new String(Files.readAllBytes(htmlFile.toPath()), StandardCharsets.UTF_8))
-                .contains("<title>Gradle Example</title>").contains("main-container").contains("new-anchor");
+                .contains("<title>Flight 文档</title>")
+                .contains("<p>doc-url: <a href=\"http://docs.jcohy.com\">doc-url</a></p>")
+                .contains("<p>resource-url: <a href=\"http://resources.jcohy.com\">resource-url</a></p>")
+                .contains("<p>software-url: <a href=\"http://software.jcohy.com\">software-url</a></p>")
+                .contains("<p>study-url: <a href=\"http://study.jcohy.com\">study-url</a></p>")
+                .contains("<p>project-url: <a href=\"http://project.jcohy.com\">project-url</a></p>");
         File generatedPdf = new File(projectDir, "build/docs/asciidocPdf");
         File pdfFile = new File(generatedPdf, "index.pdf");
         assertThat(pdfFile).exists();

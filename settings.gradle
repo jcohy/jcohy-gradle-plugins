@@ -16,5 +16,5 @@ pluginManagement {
 }
 include 'jcohy-java-convention'
 include 'jcohy-java-checkstyle'
-include 'jcohy-framework-bom'
+include 'jcohy-plugins-docs'
 

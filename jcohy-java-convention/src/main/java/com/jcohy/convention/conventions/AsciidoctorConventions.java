@@ -108,12 +108,8 @@ public class AsciidoctorConventions {
         configureCommonAttributes(project, asciidoctorTask);
         configureOptions(asciidoctorTask);
         asciidoctorTask.baseDirFollowsSourceDir();
-//        asciidoctorTask.sources("index111.adoc");
-        String name = asciidoctorTask.getBaseDir().getName();
-        String path = asciidoctorTask.getBaseDir().getPath();
         createSyncDocumentationSourceTask(project, asciidoctorTask);
         if (asciidoctorTask instanceof AsciidoctorTask) {
-            String name1 = asciidoctorTask.getName();
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
             if(pdf){
                 Map<String, Object> attributes = new HashMap<>();
@@ -151,10 +147,12 @@ public class AsciidoctorConventions {
      */
     private void configureCommonAttributes(Project project, AbstractAsciidoctorTask asciidoctorTask) {
         Map<String, Object> attributes = new HashMap<>();
-        attributes.put("attribute-missing", "warn");
-//        attributes.put("github-tag", determineGitHubTag(project));
-//        attributes.put("spring-boot-artifactory-repo", determineArtifactoryRepo(project));
-        attributes.put("revnumber", project.getVersion());
+        attributes.put("doc-url", "http://docs.jcohy.com");
+        attributes.put("resource-url", "http://resources.jcohy.com");
+        attributes.put("software-url", "http://software.jcohy.com");
+        attributes.put("study-url", "http://study.jcohy.com");
+        attributes.put("project-url", "http://project.jcohy.com");
+        attributes.put("revnumber", null);
         asciidoctorTask.attributes(attributes);
 
     }
@@ -172,26 +170,6 @@ public class AsciidoctorConventions {
         return "snapshot";
     }
 
-    private String determineGitHubTag(Project project) {
-        String version = "v" + project.getVersion();
-        return (version.endsWith("-SNAPSHOT")) ? "2.4.x" : version;
-    }
-
-    /**
-     * 设置 html 属性
-     * @param asciidoctorTask asciidoctorTask
-     */
-    private void configureHtmlOnlyAttributes(AbstractAsciidoctorTask asciidoctorTask) {
-        Map<String, Object> attributes = new HashMap<>();
-        attributes.put("source-highlighter", "highlightjs");
-        attributes.put("highlightjsdir", "js/highlight");
-        attributes.put("highlightjs-theme", "github");
-        attributes.put("linkcss", true);
-        attributes.put("icons", "font");
-        attributes.put("stylesheet", "css/spring.css");
-        asciidoctorTask.attributes(attributes);
-    }
-
     /**
      * 异步创建文档源文件
      * @param project project
@@ -207,7 +185,6 @@ public class AsciidoctorConventions {
         syncDocumentationSource.from("/src/docs");
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncedSource);
-        String relativePath = project.relativePath(new File(syncedSource, "asciidoc/"));
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncedSource, "asciidoc/")));
         return syncDocumentationSource;
     }
