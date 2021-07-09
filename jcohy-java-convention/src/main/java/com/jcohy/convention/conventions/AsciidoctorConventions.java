@@ -1,7 +1,14 @@
 package com.jcohy.convention.conventions;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +17,13 @@ import org.asciidoctor.gradle.jvm.AbstractAsciidoctorTask;
 import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
 import org.asciidoctor.gradle.jvm.AsciidoctorJPlugin;
 import org.asciidoctor.gradle.jvm.AsciidoctorTask;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Sync;
+import org.gradle.jvm.Classpath;
 
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -103,7 +114,7 @@ public class AsciidoctorConventions {
      * @param project project
      * @param asciidoctorTask asciidoctorTask
      */
-    private void configureAsciidoctorTask(Project project, AbstractAsciidoctorTask asciidoctorTask) {
+    private void configureAsciidoctorTask(Project project, AbstractAsciidoctorTask asciidoctorTask){
         asciidoctorTask.configurations(EXTENSIONS_CONFIGURATION_NAME);
         configureCommonAttributes(project, asciidoctorTask);
         configureOptions(asciidoctorTask);
@@ -113,8 +124,8 @@ public class AsciidoctorConventions {
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
             if(pdf){
                 Map<String, Object> attributes = new HashMap<>();
-                attributes.put("pdf-fontsdir",new File("data/fonts"));
-                attributes.put("pdf-stylesdir",new File("data/themes"));
+                attributes.put("pdf-fontsdir", extractResources("data/fonts"));
+                attributes.put("pdf-stylesdir",extractResources("data/themes"));
                 attributes.put("pdf-style","Chinese");
                 asciidoctorTask.attributes(attributes);
             }
@@ -123,6 +134,16 @@ public class AsciidoctorConventions {
         }
     }
 
+    private File extractResources(String path) {
+        File file1 = new File("data/fonts");
+        File file = new File("data/themes");
+        String resource = getClass().getClassLoader().getResource(path).getPath();
+        File file2 = new File(getClass().getClassLoader().getResource(path).getPath());
+        for(File file3 : file2.listFiles()){
+            System.out.println(file3.getName());
+        }
+        return new File(getClass().getClassLoader().getResource(path).getPath());
+    }
 
     /**
      * AsciidoctorJ 版本为 2.4.1.

@@ -38,21 +38,21 @@ public class FileDeleteLineTest {
     @Test
     public void testDelete() throws IOException {
         System.out.println("================= 文件处理开始 ======================");
-        for(File file : Objects.requireNonNull(projectDir.listFiles())){
-            List<String> lines = readLines(file);
-
-            System.out.println("开始去除 " + file.getName() + " 文件的图片格式");
-            System.out.println("原始文件总量: " + lines.size());
-
-            List<String> remain = lines.stream()
-                    .filter(line -> !contains(line))
-                    .collect(Collectors.toList());
-
-            withPrintWriter(new File(this.buildFile, file.getName()), (writer) -> {
-                remain.forEach(writer::println);
-            });
-            System.out.println("去除后文件总量: "+ remain.size());
-        }
+//        for(File file : Objects.requireNonNull(projectDir.listFiles())){
+//            List<String> lines = readLines(file);
+//
+//            System.out.println("开始去除 " + file.getName() + " 文件的图片格式");
+//            System.out.println("原始文件总量: " + lines.size());
+//
+//            List<String> remain = lines.stream()
+//                    .filter(line -> !contains(line))
+//                    .collect(Collectors.toList());
+//
+//            withPrintWriter(new File(this.buildFile, file.getName()), (writer) -> {
+//                remain.forEach(writer::println);
+//            });
+//            System.out.println("去除后文件总量: "+ remain.size());
+//        }
         System.out.println("================= 文件处理结束 ======================");
     }
 
