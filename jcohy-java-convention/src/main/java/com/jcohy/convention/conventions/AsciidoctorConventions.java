@@ -1,14 +1,8 @@
 package com.jcohy.convention.conventions;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,13 +11,9 @@ import org.asciidoctor.gradle.jvm.AbstractAsciidoctorTask;
 import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
 import org.asciidoctor.gradle.jvm.AsciidoctorJPlugin;
 import org.asciidoctor.gradle.jvm.AsciidoctorTask;
-import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Sync;
-import org.gradle.jvm.Classpath;
 
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -60,6 +50,8 @@ public class AsciidoctorConventions {
     private static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
 
     void apply(Project project){
+
+
         project.getPlugins().withType(AsciidoctorJPlugin.class,(asciidoctorPlugin) -> {
             configureDocumentationDependenciesRepository(project);
             makeAllWarningsFatal(project);
@@ -70,6 +62,36 @@ public class AsciidoctorConventions {
         });
     }
 
+    /**
+     * 配置 asciidoctorTask
+     * @param project project
+     * @param asciidoctorTask asciidoctorTask
+     */
+    private void configureAsciidoctorTask(Project project, AbstractAsciidoctorTask asciidoctorTask){
+        asciidoctorTask.configurations(EXTENSIONS_CONFIGURATION_NAME);
+        configureCommonAttributes(project, asciidoctorTask);
+        configureOptions(asciidoctorTask);
+        asciidoctorTask.baseDirFollowsSourceDir();
+        createSyncDocumentationSourceTask(project, asciidoctorTask);
+        if (asciidoctorTask instanceof AsciidoctorTask) {
+            boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
+            if(pdf){
+                try {
+                    Map<String, Object> attributes = new HashMap<>();
+                    attributes.put("pdf-fontsdir", AsciidoctorConventions.class.getResource("/data/fonts").toURI());
+                    attributes.put("pdf-stylesdir",AsciidoctorConventions.class.getResource("/data/themes").toURI());
+                    attributes.put("pdf-style","Chinese");
+                    asciidoctorTask.attributes(attributes);
+                }
+                catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            String backend = (!pdf) ? "spring-html" : "spring-pdf";
+            ((AsciidoctorTask) asciidoctorTask).outputOptions((outputOptions) -> outputOptions.backends(backend));
+        }
+    }
 
     /**
      * 添加文档依赖仓库
@@ -109,41 +131,6 @@ public class AsciidoctorConventions {
         });
     }
 
-    /**
-     * 配置 asciidoctorTask
-     * @param project project
-     * @param asciidoctorTask asciidoctorTask
-     */
-    private void configureAsciidoctorTask(Project project, AbstractAsciidoctorTask asciidoctorTask){
-        asciidoctorTask.configurations(EXTENSIONS_CONFIGURATION_NAME);
-        configureCommonAttributes(project, asciidoctorTask);
-        configureOptions(asciidoctorTask);
-        asciidoctorTask.baseDirFollowsSourceDir();
-        createSyncDocumentationSourceTask(project, asciidoctorTask);
-        if (asciidoctorTask instanceof AsciidoctorTask) {
-            boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
-            if(pdf){
-                Map<String, Object> attributes = new HashMap<>();
-                attributes.put("pdf-fontsdir", extractResources("data/fonts"));
-                attributes.put("pdf-stylesdir",extractResources("data/themes"));
-                attributes.put("pdf-style","Chinese");
-                asciidoctorTask.attributes(attributes);
-            }
-            String backend = (!pdf) ? "spring-html" : "spring-pdf";
-            ((AsciidoctorTask) asciidoctorTask).outputOptions((outputOptions) -> outputOptions.backends(backend));
-        }
-    }
-
-    private File extractResources(String path) {
-        File file1 = new File("data/fonts");
-        File file = new File("data/themes");
-        String resource = getClass().getClassLoader().getResource(path).getPath();
-        File file2 = new File(getClass().getClassLoader().getResource(path).getPath());
-        for(File file3 : file2.listFiles()){
-            System.out.println(file3.getName());
-        }
-        return new File(getClass().getClassLoader().getResource(path).getPath());
-    }
 
     /**
      * AsciidoctorJ 版本为 2.4.1.
@@ -176,19 +163,6 @@ public class AsciidoctorConventions {
         attributes.put("revnumber", null);
         asciidoctorTask.attributes(attributes);
 
-    }
-
-    private static String determineArtifactoryRepo(Project project) {
-        String version = project.getVersion().toString();
-        int modifierIndex = version.lastIndexOf('-');
-        if (modifierIndex == -1) {
-            return "release";
-        }
-        String type = version.substring(modifierIndex + 1);
-        if (type.startsWith("M") || type.startsWith("RC")) {
-            return "milestone";
-        }
-        return "snapshot";
     }
 
     /**
