@@ -50,8 +50,6 @@ public class AsciidoctorConventions {
     private static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
 
     void apply(Project project){
-
-
         project.getPlugins().withType(AsciidoctorJPlugin.class,(asciidoctorPlugin) -> {
             configureDocumentationDependenciesRepository(project);
             makeAllWarningsFatal(project);
@@ -172,7 +170,6 @@ public class AsciidoctorConventions {
      * @return /
      */
     private Sync createSyncDocumentationSourceTask(Project project, AbstractAsciidoctorTask asciidoctorTask) {
-        String name = asciidoctorTask.getName();
         Sync syncDocumentationSource = project.getTasks()
                 .create("syncDocumentationSourceFor" + StringUtils.capitalize(asciidoctorTask.getName()), Sync.class);
         File syncedSource = new File(project.getBuildDir(), "docs/src/" + asciidoctorTask.getName());

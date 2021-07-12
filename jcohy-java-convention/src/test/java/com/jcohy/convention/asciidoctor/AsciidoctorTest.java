@@ -1,20 +1,13 @@
 package com.jcohy.convention.asciidoctor;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +43,7 @@ public class AsciidoctorTest {
         assertThat(new File(generatedHtml, "css/site.css")).exists();
         assertThat(new File(generatedHtml, "js/site.js")).exists();
         assertThat(htmlFile).exists();
-        assertThat(new String(Files.readAllBytes(htmlFile.toPath()), StandardCharsets.UTF_8))
+        assertThat(Files.readString(htmlFile.toPath()))
                 .contains("<title>Flight 文档</title>")
                 .contains("<p>doc-url: <a href=\"http://docs.jcohy.com\">doc-url</a></p>")
                 .contains("<p>resource-url: <a href=\"http://resources.jcohy.com\">resource-url</a></p>")
