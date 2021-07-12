@@ -42,8 +42,8 @@ public class AsciidoctorTest {
                 .withProjectDir(projectDir)
                 .withDebug(true)
                 .forwardOutput()
-//                .withArguments("clean", "asciidoctor","asciidoctorPdf")
-                .withArguments("clean", "asciidoctorPdf")
+                .withArguments("clean", "asciidoctor","asciidoctorPdf")
+//                .withArguments("clean", "asciidoctorPdf")
                 .build();
         assertThat(result.task(":asciidoctor").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
         File generatedHtml = new File(projectDir, "build/docs/asciidoc");
@@ -51,7 +51,7 @@ public class AsciidoctorTest {
         assertThat(new File(generatedHtml, "css/site.css")).exists();
         assertThat(new File(generatedHtml, "js/site.js")).exists();
         assertThat(htmlFile).exists();
-        assertThat(new String(Files.readAllBytes(htmlFile.toPath()), StandardCharsets.UTF_8))
+        assertThat(Files.readString(htmlFile.toPath()))
                 .contains("<title>Flight 文档</title>")
                 .contains("<p>doc-url: <a href=\"http://docs.jcohy.com\">doc-url</a></p>")
                 .contains("<p>resource-url: <a href=\"http://resources.jcohy.com\">resource-url</a></p>")

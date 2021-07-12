@@ -9,14 +9,19 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.jcohy.convention.JcohyVersion;
 import org.asciidoctor.gradle.jvm.AbstractAsciidoctorTask;
 import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
 import org.asciidoctor.gradle.jvm.AsciidoctorJPlugin;
 import org.asciidoctor.gradle.jvm.AsciidoctorTask;
+import org.asciidoctor.gradle.jvm.pdf.AsciidoctorJPdfPlugin;
+import org.asciidoctor.gradle.jvm.pdf.AsciidoctorPdfTask;
+import org.asciidoctor.gradle.jvm.pdf.AsciidoctorPdfThemesExtension;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Sync;
@@ -59,15 +64,37 @@ public class AsciidoctorConventions {
 
     private static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
 
+    private FileSystem fileSystem = null;
+
     void apply(Project project){
         project.getPlugins().withType(AsciidoctorJPlugin.class,(asciidoctorPlugin) -> {
             configureDocumentationDependenciesRepository(project);
+//            configureAsciidoctorPdfTask(project);
             makeAllWarningsFatal(project);
             upgradeAsciidoctorJVersion(project);
             createAsciidoctorExtensionsConfiguration(project);
             project.getTasks().withType(AbstractAsciidoctorTask.class,
                     (asciidoctorTask) -> configureAsciidoctorTask(project, asciidoctorTask));
         });
+    }
+
+    private void configureAsciidoctorPdfTask(Project project) {
+//        project.getPlugins().apply(AsciidoctorJPdfPlugin.class);
+//        AsciidoctorPdfThemesExtension pdfThemes = project.getExtensions().create(AsciidoctorPdfThemesExtension.NAME, AsciidoctorPdfThemesExtension.class, project);
+//        pdfThemes.local("English",(english) -> {
+//            english.setThemeDir();
+//            english.setThemeName("English");
+//        });
+//
+//        pdfThemes.local("Chinese",(chinese) -> {
+//            chinese.setThemeDir();
+//            chinese.setThemeName("Chinese");
+//        });
+//
+//        project.getTasks().withType(AsciidoctorPdfTask.class,(pdfTask) -> {
+//           pdfTask.setFontsDirs(new File("data/fonts"));
+//           pdfTask.setTheme("Chinese");
+//        });
     }
 
 
@@ -124,8 +151,8 @@ public class AsciidoctorConventions {
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
             if(pdf){
                 Map<String, Object> attributes = new HashMap<>();
-                attributes.put("pdf-fontsdir", extractResources("data/fonts"));
-                attributes.put("pdf-stylesdir",extractResources("data/themes"));
+                attributes.put("pdf-fontsdir", extractResources("/data/fonts"));
+                attributes.put("pdf-stylesdir",extractResources("/data/themes"));
                 attributes.put("pdf-style","Chinese");
                 asciidoctorTask.attributes(attributes);
             }
@@ -134,15 +161,24 @@ public class AsciidoctorConventions {
         }
     }
 
-    private File extractResources(String path) {
-        File file1 = new File("data/fonts");
-        File file = new File("data/themes");
-        String resource = getClass().getClassLoader().getResource(path).getPath();
-        File file2 = new File(getClass().getClassLoader().getResource(path).getPath());
-        for(File file3 : file2.listFiles()){
-            System.out.println(file3.getName());
+
+    private File extractResources(String dir) {
+
+        File file = null;
+        try {
+            URI resource = AsciidoctorConventions.class.getResource(dir).toURI();
+            String[] array = resource.toString().split("!");
+            if(fileSystem == null) {
+                Map<String, String> env = new HashMap<>();
+                fileSystem = FileSystems.newFileSystem(URI.create(array[0]), env);
+            }
+            Path path = fileSystem.getPath(array[1]);
+            Files.list(path).forEach((p) -> System.out.println(p.toString()));
+            file = new File(path.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return new File(getClass().getClassLoader().getResource(path).getPath());
+        return file;
     }
 
     /**
@@ -198,7 +234,6 @@ public class AsciidoctorConventions {
      * @return /
      */
     private Sync createSyncDocumentationSourceTask(Project project, AbstractAsciidoctorTask asciidoctorTask) {
-        String name = asciidoctorTask.getName();
         Sync syncDocumentationSource = project.getTasks()
                 .create("syncDocumentationSourceFor" + StringUtils.capitalize(asciidoctorTask.getName()), Sync.class);
         File syncedSource = new File(project.getBuildDir(), "docs/src/" + asciidoctorTask.getName());

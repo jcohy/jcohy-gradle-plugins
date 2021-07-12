@@ -4,7 +4,6 @@ buildscript {
 		maven { url "https://maven.aliyun.com/repository/spring-plugin" }
 		gradlePluginPortal()
 		mavenCentral()
-		jcenter()
 		maven { url 'https://plugins.gradle.org/m2/' }
 	}
 	dependencies {
@@ -15,8 +14,8 @@ buildscript {
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-//	id 'signing'
-//	id "io.github.gradle-nexus.publish-plugin" version "1.0.0"
+	id 'signing'
+	id "io.github.gradle-nexus.publish-plugin" version "1.0.0"
 }
 
 ext {
@@ -27,14 +26,14 @@ ext {
 	set('deployPassword',System.getenv('NEXUS_OSS_PASS_WORD'))
 }
 
-//nexusPublishing {
-//	repositories {
-//		sonatype {
-//			username = deployUsername
-//			password = deployPassword
-//		}
-//	}
-//}
+nexusPublishing {
+	repositories {
+		sonatype {
+			username = deployUsername
+			password = deployPassword
+		}
+	}
+}
 
 configure(allprojects) { project ->
 	apply plugin: 'java'
