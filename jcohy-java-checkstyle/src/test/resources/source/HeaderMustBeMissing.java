@@ -3,7 +3,7 @@ package example;
 /**
  * The Apache header doesn't match.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderMustBeMissing {
 

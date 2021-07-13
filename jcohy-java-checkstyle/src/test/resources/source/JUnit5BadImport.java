@@ -20,7 +20,7 @@ import org.junit.Before;
 /**
  * Test with banned import.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JUnit5BadImport {
 

@@ -17,7 +17,7 @@
 /**
  * A invalid catch with o_O as the variable.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class CatchOo {
 

@@ -17,7 +17,7 @@
 /**
  * This is a valid example.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class Valid {
 

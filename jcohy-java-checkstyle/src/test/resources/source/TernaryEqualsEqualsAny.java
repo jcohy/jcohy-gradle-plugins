@@ -17,7 +17,7 @@
 /**
  * This is an invalid example of a ternary expression.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class TernaryEqualsEqualsAlways {
 

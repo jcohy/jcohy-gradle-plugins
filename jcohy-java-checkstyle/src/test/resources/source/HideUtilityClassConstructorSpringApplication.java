@@ -19,7 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Usually invalid utility class but OK because it's a Spring Application.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 @SpringBootApplication
 public class HideUtilityClassConstructorSpringApplication {

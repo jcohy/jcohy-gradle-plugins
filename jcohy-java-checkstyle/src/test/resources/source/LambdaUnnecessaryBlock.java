@@ -21,7 +21,7 @@ import java.util.function.Function;
  * Lambda blocks add noise since they introducde wrapping. If there's a single
  * statement we should not use them.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaUnnecessaryBlock {
 

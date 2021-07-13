@@ -17,7 +17,7 @@
 /**
  * The header doesn't use a date range.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderWithSingleDate {
 

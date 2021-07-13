@@ -31,7 +31,7 @@ jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的�
 
 === 当使用 JavaBasePlugin 插件时
 
-当我们在项目中使用 `JavaBasePlugin` 时，此插件会提供一下配置
+当我们在项目中使用 `JavaBasePlugin` 时，此插件会提供以下配置
 
 . 设置 `sourceCompatibility` 为 1.8
 . 设置 `targetCompatibility` 为 1.8
@@ -46,7 +46,7 @@ jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的�
 .. http://192.168.11.230:8081/repository/snapshot
 .. https://maven.aliyun.com/repository/central
 .. https://repo.spring.io/artifactory/release
-. 自动为项目添加一下依赖管理 BOM
+. 自动为项目添加以下依赖管理 BOM
 .. org.springframework.boot:spring-boot-dependencies:2.4.5
 .. com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0
 .. com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE
@@ -68,7 +68,7 @@ jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的�
 
 === 当使用 MavenPublishPlugin 插件时
 
-当我们在项目中使用 `MavenPublishPlugin` 时，此插件会提供一下配置
+当我们在项目中使用 `MavenPublishPlugin` 时，此插件会提供以下配置
 
 . 所有的 MavenPublication 都满足 Maven Central 的要求.即要满足以下需求
 .. 需要有 issueManagement 标签
@@ -83,7 +83,7 @@ jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的�
 
 === 当使用 AsciidoctorConventions 插件时
 
-我们使用 https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc]，并且使用 https://github.com/spring-io/spring-asciidoctor-backends[spring-asciidoctor-backends] 依赖添加 Spring 风格的样式， 当我们在项目中使用 `AsciidoctorConventions` 时，此插件会提供一下配置
+我们使用 https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc]，并且使用 https://github.com/spring-io/spring-asciidoctor-backends[spring-asciidoctor-backends] 依赖添加 Spring 风格的样式， 当我们在项目中使用 `AsciidoctorConventions` 时，此插件会提供以下配置
 
 . 配置 https://repo.spring.io/release 仓库，并限制只能引入以下组的依赖
 .. io.spring.asciidoctor

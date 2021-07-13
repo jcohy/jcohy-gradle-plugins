@@ -18,7 +18,7 @@
 /**
  * The header has an extra line.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderTooLong {
 

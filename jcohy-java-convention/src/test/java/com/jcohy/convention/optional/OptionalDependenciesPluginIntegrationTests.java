@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for {@link OptionalDependenciesPlugin}.
  *
- * @author Andy Wilkinson
+ * @author jiac
  */
 public class OptionalDependenciesPluginIntegrationTests {
     

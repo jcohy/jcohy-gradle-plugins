@@ -16,7 +16,7 @@
 /**
  * The header is too short.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderTooShort {
 

@@ -17,7 +17,7 @@
 /**
  * Test with bad full qualified annotation.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JUnit5BadAnnotation {
 

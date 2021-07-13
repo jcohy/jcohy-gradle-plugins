@@ -136,9 +136,9 @@ import com.jcohy.web.context.support.StandardServletEnvironment;
  * ("spring.main.web-application-type=none") or the flag to switch off the banner
  * ("spring.main.banner-mode=off").
  *
- * @author Phillip Webb
+ * @author jiac
  * @author Dave Syer
- * @author Andy Wilkinson
+ * @author jiac
  * @author Christian Dupuis
  * @author Stephane Nicoll
  * @author Jeremy Rickard

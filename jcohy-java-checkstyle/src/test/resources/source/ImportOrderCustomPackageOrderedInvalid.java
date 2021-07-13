@@ -24,7 +24,7 @@ import com.example.util.MyUtils1;
 /**
  * Custom pacakge with valid imports.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public final class ImportOrderCustomPackageOrderedInvalid {
 

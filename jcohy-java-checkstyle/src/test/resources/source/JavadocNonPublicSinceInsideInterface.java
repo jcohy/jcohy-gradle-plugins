@@ -17,7 +17,7 @@
 /**
  * Javadoc with a good since tag.
  *
- * @author Phillip Webb
+ * @author jiac
  * @since 1.2.3
  */
 public interface JavadocNonPublicSinceInsideInterface {

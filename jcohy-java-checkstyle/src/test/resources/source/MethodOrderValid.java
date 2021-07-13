@@ -17,7 +17,7 @@
 /**
  * This is a valid example of method ordering.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class MethodOrderValid {
 

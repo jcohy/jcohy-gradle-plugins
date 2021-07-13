@@ -19,7 +19,7 @@ package io.spring.javaformat.checkstyle;
 /**
  * Interface with implicit public elements.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public interface NestedInterfaceItems {
 

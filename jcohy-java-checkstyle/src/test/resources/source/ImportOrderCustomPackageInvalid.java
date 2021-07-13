@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * Custom pacakge with valid imports.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public final class ImportOrderCustomPackageInvalid {
 
