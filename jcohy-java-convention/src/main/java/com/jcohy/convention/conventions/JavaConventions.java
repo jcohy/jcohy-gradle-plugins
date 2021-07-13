@@ -45,16 +45,37 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * Description:  当使用 {@link JavaBasePlugin} 时的约定. 当使用此插件时:
  * <ul>
  * <li>{@code sourceCompatibility} 设置为 {@code 1.8}
- * <li>应用 {@link SpringJavaFormatPlugin Spring Java Format}, {@link CheckstylePlugin Checkstyle}, {@link TestFailuresPlugin Test Failures}, 和 {@link TestRetryPlugin TestRetry} 插件
+ * <li>{@code targetCompatibility} 设置为 {@code 1.8}
+ * <li>应用 {@link SpringJavaFormatPlugin Spring Java Format}, {@link CheckstylePlugin Checkstyle}, {@link TestFailuresPlugin Test Failures}, 和 {@link TestRetryPlugin TestRetry} 插件。
+ *  {@link CheckstylePlugin Checkstyle} 插件使用我们自定义的代码规则检查配置对项目进行检查。代码检查规则查看 jcohy-checkstyle.xml 文件
  * <li>{@link Test} 任务使用 JUnit Platform 并且配置最大堆为 1024M
- * <li>在使用 {@link JavaPlugin} 插件的项目中添加依赖于 {@code org.junit.platform:junit-platform-launcher}  的 {@code testRuntimeOnly} 依赖
  * <li>{@link JavaCompile}, {@link Javadoc}, 和 {@link FormatTask} 任务编码为 UTF-8
  * <li>{@link JavaCompile} 任务配置为使用 {@code -parameters}, 并且当使用 Java8 时
  * <ul>
  * <li> 将警告视为错误
  * <li>启用 {@code unchecked}, {@code deprecation}, {@code rawtypes}, 和 {@code varags} 警告
  * </ul>
- * <li>{@link Jar} 任务的生成带有 LICENSE.txt 和 NOTICE.txt 和以下清单属性:
+ * <li> 为每个项目配置以下 maven 仓库。
+ * <ul>
+ * <li> http://192.168.11.230:8081/repository/releases </li>
+ * <li> http://192.168.11.230:8081/repository/snapshot </li>
+ * <li> https://maven.aliyun.com/repository/central </li>
+ * <li> https://repo.spring.io/artifactory/release </li>
+ * </ul>
+ *  <li>自动为项目添加一下依赖管理 BOM </li>
+ * <ul>
+ * <li> org.springframework.boot:spring-boot-dependencies:2.4.5 </li>
+ * <li> com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0 </li>
+ * <li> com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE </li>
+ * </ul>
+ * <li>  在使用 {@link JavaPlugin} 插件的项目中添加以下测试相关的依赖, 并且测试最大重试次数为 {@code 3} 次 </li>
+ * <ul>
+ * <li> testRuntimeOnly(org.junit.platform:junit-platform-launcher) </li>
+ * <li> testRuntimeOnly(org.junit.jupiter:junit-jupiter) </li>
+ * <li> testRuntimeOnly(org.assertj:assertj-core) </li>
+ * <li> testImplementation(org.springframework.boot:spring-boot-starter-test) </li>
+ * </ul>
+ * <li>{@link Jar} 任务的生成带有 LICENSE.txt,README.txt 和 NOTICE.txt 和以下清单属性:
  * <ul>
  * <li>{@code Automatic-Module-Name}
  * <li>{@code Build-Jdk-Spec}

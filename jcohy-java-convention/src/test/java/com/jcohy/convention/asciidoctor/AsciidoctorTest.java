@@ -1,6 +1,7 @@
 package com.jcohy.convention.asciidoctor;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class AsciidoctorTest {
         assertThat(new File(generatedHtml, "css/site.css")).exists();
         assertThat(new File(generatedHtml, "js/site.js")).exists();
         assertThat(htmlFile).exists();
-        assertThat(Files.readString(htmlFile.toPath()))
+        assertThat(new String(Files.readAllBytes(htmlFile.toPath()), StandardCharsets.UTF_8))
                 .contains("<title>Flight 文档</title>")
                 .contains("<p>doc-url: <a href=\"http://docs.jcohy.com\">doc-url</a></p>")
                 .contains("<p>resource-url: <a href=\"http://resources.jcohy.com\">resource-url</a></p>")

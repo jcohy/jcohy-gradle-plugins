@@ -27,6 +27,7 @@ public class SpringAvoidStaticImportCheck extends AvoidStaticImportCheck {
         Set<String> excludes = new LinkedHashSet<>();
         excludes.add("io.restassured.RestAssured.*");
         excludes.add("org.assertj.core.api.Assertions.*");
+        excludes.add("org.assertj.core.api.AssertionsForClassTypes.*");
         excludes.add("org.assertj.core.api.Assumptions.*");
         excludes.add("org.assertj.core.api.HamcrestCondition.*");
         excludes.add("org.awaitility.Awaitility.*");
