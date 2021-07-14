@@ -270,13 +270,17 @@ class JavaConventions {
             if (!args.contains("-parameters")) {
                 args.add("-parameters");
             }
-            if (!project.hasProperty("toolchainVersion") && JavaVersion.current() == JavaVersion.VERSION_1_8) {
+            if (buildingWithJava8(project)) {
                 args.addAll(Arrays.asList("-Werror", "-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:rawtypes",
                         "-Xlint:varargs"));
             }
         });
     }
-    
+
+    private boolean buildingWithJava8(Project project) {
+        return !project.hasProperty("toolchainVersion") && JavaVersion.current() == JavaVersion.VERSION_1_8;
+    }
+
     /**
      * 配置 {@link SpringJavaFormatPlugin} 和 {@link CheckstylePlugin} 插件
      * @param project project

@@ -187,7 +187,7 @@ public class AsciidoctorConventions {
                 .create("syncDocumentationSourceFor" + StringUtils.capitalize(asciidoctorTask.getName()), Sync.class);
         File syncedSource = new File(project.getBuildDir(), "docs/src/" + asciidoctorTask.getName());
         syncDocumentationSource.setDestinationDir(syncedSource);
-        syncDocumentationSource.from("/src/docs");
+        syncDocumentationSource.from("src/docs");
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncedSource);
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncedSource, "asciidoc/")));
