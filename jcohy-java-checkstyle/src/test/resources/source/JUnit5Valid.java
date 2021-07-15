@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 /**
  * This is a valid example.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JUnit5Valid {
 

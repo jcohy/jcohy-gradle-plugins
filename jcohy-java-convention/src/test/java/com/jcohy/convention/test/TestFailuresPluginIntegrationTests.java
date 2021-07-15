@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integrations tests for {@link TestFailuresPlugin}.
  *
- * @author Andy Wilkinson
+ * @author jiac
  */
 class TestFailuresPluginIntegrationTests {
     

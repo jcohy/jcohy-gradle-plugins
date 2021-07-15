@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaNecessaryIfElseBlock {
 

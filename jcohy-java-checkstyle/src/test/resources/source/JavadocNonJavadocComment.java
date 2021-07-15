@@ -17,7 +17,7 @@
 /**
  * Example with non javadoc comments.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JavadocNonJavadocComment {
 

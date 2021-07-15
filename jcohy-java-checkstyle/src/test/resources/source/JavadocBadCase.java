@@ -18,7 +18,7 @@
  * Javadoc with a bad author tag.
  *
  * @param <T> This is bad
- * @author Phillip Webb
+ * @author jiac
  */
 public class JavadocBadCase<T> {
 

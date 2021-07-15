@@ -19,7 +19,7 @@ import org.apache.commons.logging.Log;
 /**
  * Allow this to be skipped items.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class FiltersToSkipThis {
 

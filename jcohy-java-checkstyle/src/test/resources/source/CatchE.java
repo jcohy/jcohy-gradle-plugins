@@ -17,7 +17,7 @@
 /**
  * A invalid catch with e as the variable.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class CatchE {
 

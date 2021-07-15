@@ -17,7 +17,7 @@
 /**
  * This is an example of a ternary expression in an array.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class TernaryInArray {
 

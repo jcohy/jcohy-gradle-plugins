@@ -19,7 +19,7 @@ import java.util.concurrent.Callable;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Andy Wilkinson
+ * @author jiac
  */
 public class LambdaNecessaryVoidCallable {
 

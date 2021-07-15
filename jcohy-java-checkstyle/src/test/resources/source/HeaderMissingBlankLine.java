@@ -2,7 +2,7 @@
 /**
  * A custom header file.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderMissingBlankLine {
 

@@ -17,7 +17,7 @@
 /**
  * Leading whitepace expects only tabs.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LeadingWhitespaceSpaces {
 

@@ -24,7 +24,7 @@ import org.junit.jupiter.api.TestTemplate;
 /**
  * Test with bad modifiers.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JUnit5BadModifier {
 

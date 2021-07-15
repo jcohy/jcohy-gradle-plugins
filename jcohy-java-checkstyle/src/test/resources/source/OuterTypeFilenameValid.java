@@ -17,7 +17,7 @@
 /**
  * This is a valid example of a class name matching its filename.
  *
- * @author Christoph Dreis
+ * @author jiac
  */
 public class OuterTypeFilenameValid {
 

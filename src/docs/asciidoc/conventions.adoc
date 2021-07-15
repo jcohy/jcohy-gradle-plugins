@@ -1,0 +1,141 @@
+= jcohy-java-convention
+
+jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的代码结构。当我们使用有约定指定的插件时，会自动添加一些配置。
+
+
+|===
+| 插件 | ID
+
+| ConventionsPlugin
+| com.jcohy.conventions
+
+| DeployedPlugin
+| com.jcohy.deployed
+
+| OptionalDependenciesPlugin
+| com.jcohy.optional-dependencies
+
+| SonarScannerPlugin
+| com.jcohy.sonar.scanner
+
+| TestFailuresPlugin
+| com.jcohy.test-failures
+|===
+
+
+每个插件都有自己的作用，遵循不同的约定。下面进行详细说明
+
+== ConventionsPlugin
+
+`ConventionsPlugin` 插件是主核心插件，这个插件对当使用 `JavaBasePlugin`,`MavenPublishPlugin` 和 `AsciidoctorJPlugin` 时的一些约定。
+
+=== 当使用 JavaBasePlugin 插件时
+
+当我们在项目中使用 `JavaBasePlugin` 时，此插件会提供以下配置
+
+. 设置 `sourceCompatibility` 为 1.8
+. 设置 `targetCompatibility` 为 1.8
+. 配置 `JavaCompile`,  `Javadoc`, 和 `FormatTask` 任务编码为 UTF-8
+. 为项目添加 `SpringJavaFormatPlugin`, `CheckstylePlugin`, `TestFailuresPlugin`, `TestRetryPlugin` 插件。`CheckstylePlugin` 插件使用我们自定义的代码规则检查配置对项目进行检查。代码检查规则查看  link:checks.adoc#自定义-checkstyle-规则[jcohy-checkstyle.xml] 文件
+. `Test` 任务使用 JUnit Platform，并且配置最大堆为 1G
+. JavaCompile 任务配置为使用 `-parameters`, 并且当使用 Java8 时
+.. 将警告视为错误
+.. 启用  `unchecked`, `deprecation`, `rawtypes`, 和 `varags`  警告
+. 为每个项目配置以下 maven 仓库。
+.. http://192.168.11.230:8081/repository/releases
+.. http://192.168.11.230:8081/repository/snapshot
+.. https://maven.aliyun.com/repository/central
+.. https://repo.spring.io/artifactory/release
+. 自动为项目添加以下依赖管理 BOM
+.. org.springframework.boot:spring-boot-dependencies:2.4.5
+.. com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0
+.. com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE
+. 在使用  `JavaPlugin` 插件的项目中添加以下测试相关的依赖, 并且测试最大重试次数为 `3` 次
+.. testRuntimeOnly(org.junit.platform:junit-platform-launcher)
+.. testRuntimeOnly(org.junit.jupiter:junit-jupiter)
+.. testRuntimeOnly(org.assertj:assertj-core)
+.. testImplementation(org.springframework.boot:spring-boot-starter-test)
+. 对于 Jar 任务的生成 jar 包
+.. 将 `LICENSE.txt`, `NOTICE.txt` 和 `README.txt` 文件打包进 Jar 包
+.. Jar 的属性清单中添加 Automatic-Module-Name 属性
+.. Jar 的属性清单中添加 Build-Jdk-Spec 属性
+.. Jar 的属性清单中添加 Built-By 属性
+.. Jar 的属性清单中添加 Implementation-Title 属性
+.. Jar 的属性清单中添加 Implementation-Version 属性
+. 对于 Javadoc 任务的约定：
+.. 添加描述
+.. 设置编码为 UTF-8
+
+=== 当使用 MavenPublishPlugin 插件时
+
+当我们在项目中使用 `MavenPublishPlugin` 时，此插件会提供以下配置
+
+. 所有的 MavenPublication 都满足 Maven Central 的要求.即要满足以下需求
+.. 需要有 issueManagement 标签
+.. 需要有 scm 标签
+.. 需要有 developers 标签
+.. 需要有 licenses 标签
+.. 需要有 organization 标签
+. 如果使用了 `JavaPlugin` 插件，则
+. 允许在 pom 中添加 `optional` 依赖，这是使 Eclipse 中的 m2e 所必需的。
+.. 创建  Javadoc 和 source jars。
+.. 发布元数据 (poms 和 Gradle module metadata),配置为使用解析的版本.
+
+=== 当使用 AsciidoctorConventions 插件时
+
+我们使用 https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc]，并且使用 https://github.com/spring-io/spring-asciidoctor-backends[spring-asciidoctor-backends] 依赖添加 Spring 风格的样式， 当我们在项目中使用 `AsciidoctorConventions` 时，此插件会提供以下配置
+
+. 配置 https://repo.spring.io/release 仓库，并限制只能引入以下组的依赖
+.. io.spring.asciidoctor
+.. io.spring.asciidoctor.backends
+.. io.spring.docresources
+. 设置所有的警告都是致命的.
+. AsciidoctorJ 版本更新为 2.4.3.
+. 创建一个 `asciidoctorExtensions` configuration.
+. 对于每个 AsciidoctorTask (HTML only):
+.. 创建一个任务将文档资源同步到其输出目录
+.. 配置 backend
+.. 配置 doctype 为 book.
+. 对于每个 AsciidoctorTask (PDF only):
+.. 添加中文支持
+. 对于每个 AsciidoctorTask (PDF and HTML):
+.. 添加通用属性:
++
+|===
+|属性 |值
+
+| doc-url
+| http://docs.jcohy.com
+
+| resource-url
+| http://resource.jcohy.com
+
+| software-url
+| http://software.jcohy.com
+
+| study-url
+| http://study.jcohy.com
+
+| project-url
+| http://project.jcohy.com
+|===
+
+.. 启用 baseDirFollowsSourceDir()
+.. 将 `asciidoctorExtensions` 添加到 task 配置
+
+== DeployedPlugin
+
+当项目需要部署时，可以使用该插件。该插件应用了 `MavenPublishPlugin` 插件
+
+== OptionalDependenciesPlugin
+
+增加了对 Maven 风格的 `optional` 依赖的支持. 创建一个  `optional` 配置
+ `optional` 配置是项目 `compile` 和 `runtime` 时 classpath 的一部分，但是不影响依赖项目的 classpath
+
+== SonarScannerPlugin
+
+集成 SonarQube 代码质量管理平台，此功能目前属于内测功能。
+
+== TestFailuresPlugin
+
+此插件用于记录测试失败并在构建结束时生成报告。

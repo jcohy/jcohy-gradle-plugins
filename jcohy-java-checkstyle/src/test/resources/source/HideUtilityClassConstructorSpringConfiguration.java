@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Usually invalid utility class but OK because it's a Spring Configuration.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 @Configuration
 public class HideUtilityClassConstructorSpringConfiguration {

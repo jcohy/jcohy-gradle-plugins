@@ -1,8 +1,11 @@
 package com.jcohy.convention.conventions;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,21 +25,34 @@ import org.springframework.util.StringUtils;
  *
  * <p>
  * Description: 在 {@link AsciidoctorJPlugin} 存在的情况下应用的约定。 应用插件时：
+ *
  * <ul>
- * <li>所有的警告都是致命的.
- * <li>AsciidoctorJ 版本为 2.4.1.
- * <li>创建一个任务来解析和解压缩文档资源(CSS 和 Javascript).
+ * <li>配置 {@code https://repo.spring.io/release} 仓库，并限制只能引入以下组的依赖:
+ * <ul>
+ * <li>{@code io.spring.asciidoctor}
+ * <li>{@code io.spring.asciidoctor.backends}
+ * <li>{@code io.spring.docresources}
+ * </ul>
+ * <li>设置所有的警告都是致命的.
+ * <li> AsciidoctorJ 版本更新为 2.4.3.
+ * <li>创建一个 {@code asciidoctorExtensions} configuration.
  * <li>对于每个 {@link AsciidoctorTask} (HTML only):
  * <ul>
- * <li>创建一个任务将文档资源同步到其输出目录。
- * <li>配置 {@code doctype} {@link AsciidoctorTask#options(Map) 选项}.
- * <li>配置 {@link AsciidoctorTask#attributes(Map) 属性}，例如syntax
- * highlighting, CSS styling, docinfo, 等等.
+ * <li>创建一个任务以将文档资源同步到其输出目录。
+ * <li>配置 {@code doctype} {@link AsciidoctorTask#options(Map) option}.
+ * <li>配置 {@code backend}.
+ * </ul>
+ * <li>对于每个 {@link AsciidoctorTask} (PDF only):
+ * <ul>
+ * <li> 添加中文支持。
  * </ul>
  * <li>对于每个 {@link AbstractAsciidoctorTask} (HTML 和 PDF):
  * <ul>
- * <li>配置 {@link AsciidoctorTask#attributes(Map) Attributes} 以启用对当前版本的属性缺失，GitHub 标签，存储库等等的警告
- * <li>启用 {@link AbstractAsciidoctorTask#baseDirFollowsSourceDir() baseDirFollowsSourceDir()}.
+ * <li>{@link AsciidoctorTask#attributes(Map) Attributes} are configured to enable
+ * warnings for references to missing attributes, etc.
+ * <li>{@link AbstractAsciidoctorTask#baseDirFollowsSourceDir() baseDirFollowsSourceDir()}
+ * is enabled.
+ * <li>{@code asciidoctorExtensions} is added to the task's configurations.
  * </ul>
  * </ul>
  * @author jiac
@@ -55,6 +71,7 @@ public class AsciidoctorConventions {
             makeAllWarningsFatal(project);
             upgradeAsciidoctorJVersion(project);
             createAsciidoctorExtensionsConfiguration(project);
+            createAsciidoctorPdfTask(project);
             project.getTasks().withType(AbstractAsciidoctorTask.class,
                     (asciidoctorTask) -> configureAsciidoctorTask(project, asciidoctorTask));
         });
@@ -73,21 +90,46 @@ public class AsciidoctorConventions {
         createSyncDocumentationSourceTask(project, asciidoctorTask);
         if (asciidoctorTask instanceof AsciidoctorTask) {
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
-            if(pdf){
-                try {
-                    Map<String, Object> attributes = new HashMap<>();
-                    attributes.put("pdf-fontsdir", AsciidoctorConventions.class.getResource("/data/fonts").toURI());
-                    attributes.put("pdf-stylesdir",AsciidoctorConventions.class.getResource("/data/themes").toURI());
-                    attributes.put("pdf-style","Chinese");
-                    asciidoctorTask.attributes(attributes);
-                }
-                catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-
+            if(!pdf){
+                replaceLogo(project,asciidoctorTask);
             }
             String backend = (!pdf) ? "spring-html" : "spring-pdf";
             ((AsciidoctorTask) asciidoctorTask).outputOptions((outputOptions) -> outputOptions.backends(backend));
+        }
+    }
+
+    private void replaceLogo(Project project, AbstractAsciidoctorTask asciidoctorTask) {
+        // 替换 logo
+        asciidoctorTask.doLast((replaceIcon) -> {
+            String language = asciidoctorTask.getLanguages().contains("zh-cn") ? "/zh-cn": "";
+            project.delete(project.getBuildDir() + "/docs/asciidoc" + language+ "/img/banner-logo.svg");
+            try {
+                Files.copy(AsciidoctorConventions.class.getResourceAsStream("/data/images/banner-logo.svg"),
+                        Paths.get(project.getBuildDir() + "/docs/asciidoc" + language+ "/img/banner-logo.svg"));
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void createAsciidoctorPdfTask(Project project) {
+        project.getTasks().register("asciidoctorPdf",AsciidoctorTask.class,(asciidoctorPdf) -> {
+            asciidoctorPdf.sources("index.adoc");
+            configureAsciidoctorPdfTask(project,asciidoctorPdf);
+        });
+    }
+
+    private void configureAsciidoctorPdfTask(Project project, AsciidoctorTask asciidoctorPdf) {
+        try {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("pdf-fontsdir", AsciidoctorConventions.class.getResource("/data/fonts").toURI());
+            attributes.put("pdf-stylesdir",AsciidoctorConventions.class.getResource("/data/themes").toURI());
+            attributes.put("pdf-style","Chinese");
+            asciidoctorPdf.attributes(attributes);
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 
@@ -131,7 +173,7 @@ public class AsciidoctorConventions {
 
 
     /**
-     * AsciidoctorJ 版本为 2.4.1.
+     * AsciidoctorJ 版本为 2.4.3.
      * @param project project
      */
     private void upgradeAsciidoctorJVersion(Project project) {
@@ -158,6 +200,7 @@ public class AsciidoctorConventions {
         attributes.put("software-url", "http://software.jcohy.com");
         attributes.put("study-url", "http://study.jcohy.com");
         attributes.put("project-url", "http://project.jcohy.com");
+        attributes.put("allow-uri-read", true);
         attributes.put("revnumber", null);
         asciidoctorTask.attributes(attributes);
 
@@ -174,7 +217,7 @@ public class AsciidoctorConventions {
                 .create("syncDocumentationSourceFor" + StringUtils.capitalize(asciidoctorTask.getName()), Sync.class);
         File syncedSource = new File(project.getBuildDir(), "docs/src/" + asciidoctorTask.getName());
         syncDocumentationSource.setDestinationDir(syncedSource);
-        syncDocumentationSource.from("/src/docs");
+        syncDocumentationSource.from("src/docs");
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncedSource);
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncedSource, "asciidoc/")));

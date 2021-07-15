@@ -8,7 +8,7 @@ plugins {
 	id "checkstyle"
 }
 
-checkstyle "jcohy-gradle-plugins:jcohy-java-checkstyle:0.0.1"
+checkstyle "jcohy-gradle-plugins:jcohy-java-checkstyle:0.0.3"
 ----
 
 == SpringCatchCheck
@@ -41,7 +41,7 @@ checkstyle "jcohy-gradle-plugins:jcohy-java-checkstyle:0.0.1"
 /**
  * A invalid catch with e as the variable.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class CatchE {
 
@@ -66,7 +66,7 @@ public class CatchE {
 /**
  * A valid catch with ex as the variable.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class CatchEx {
 
@@ -91,7 +91,7 @@ public class CatchEx {
 /**
  * A invalid catch with o_O as the variable.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class CatchOo {
 
@@ -116,7 +116,7 @@ public class CatchOo {
 /**
  * A valid catch with a full word as the variable.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class CatchWord {
 
@@ -225,7 +225,7 @@ public class CatchWord {
 /**
  * The header data pattern is specified and doesn't match.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderDate {
 
@@ -266,7 +266,7 @@ public class HeaderDate {
 /**
  * A custom header file.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderFile {
 
@@ -301,7 +301,7 @@ public class HeaderFile {
 /**
  * A custom header file.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderMissingBlankLine {
 
@@ -336,7 +336,7 @@ package example; // OK
 /**
  * The Apache header doesn't match.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderMustBeMissing {
 
@@ -373,7 +373,7 @@ package example;
 /**
  * The Apache header doesn't match.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderMustBeMissingButIsNot {
 
@@ -411,7 +411,7 @@ public class HeaderMustBeMissingButIsNot {
 /**
  * The header unchecked.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderUnchecked {
 
@@ -533,7 +533,7 @@ package com.example; // OK
 /**
  * Invlid utility class.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HideUtilityClassConstructorInvalid {
 
@@ -556,7 +556,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Usually invalid utility class but OK because it's a Spring Application.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 @SpringBootApplication
 public class HideUtilityClassConstructorSpringApplication {
@@ -581,7 +581,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Usually invalid utility class but OK because it's a Spring Configuration.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 @Configuration
 public class HideUtilityClassConstructorSpringConfiguration {
@@ -657,7 +657,7 @@ import java.util.Objects;  // violation, Wrong order for 'java.util.Objects' imp
 /**
  * Custom pacakge with valid imports.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public final class ImportOrderCustomPackageInvalid {
 
@@ -710,7 +710,7 @@ import com.example.util.MyUtils2; // OK
 /**
  * Custom pacakge with valid imports.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public final class ImportOrderCustomPackageValid {
 
@@ -820,7 +820,7 @@ public class JavadocAuthorWithoutSpace {
  * Javadoc with a bad author tag.
  *
  * @param <T> This is bad // violation,Javadoc element descriptions should not start with an uppercase letter.
- * @author Phillip Webb
+ * @author jiac
  */
 public class JavadocBadCase<T> {
 
@@ -862,7 +862,7 @@ public class JavadocBadCase<T> {
 /**
  * Javadoc with white space.
  * @param <T> this is a valid param
- * @author Sushant Kumar Singh
+ * @author jiac
  */
 public class JavadocMethodEmptyLineBeforeTag<T> {
 
@@ -908,7 +908,7 @@ public class JavadocMethodEmptyLineBeforeTag<T> {
 /**
  * Javadoc with a bad since tag.
  *
- * @author Phillip Webb // violation,Missing Javadoc @since tag.
+ * @author jiac // violation,Missing Javadoc @since tag.
  */
 public class JavadocMissingSince {
 
@@ -948,7 +948,7 @@ public class JavadocMissingSince {
 /**
  * Example with non javadoc comments.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JavadocNonJavadocComment {
 
@@ -997,7 +997,7 @@ public class JavadocNonJavadocComment {
 /**
  * Javadoc with a bad since tag.
  *
- * @author Phillip Webb
+ * @author jiac
  * @since 1.2.3     // violation,Javadoc @since tag should not be used on private classes.
  */
 class JavadocNonPublicSince {
@@ -1045,7 +1045,7 @@ class JavadocNonPublicSince {
 /**
  * Javadoc with a good since tag.
  *
- * @author Phillip Webb
+ * @author jiac
  * @since 1.2.3         // OK
  */
 public interface JavadocNonPublicSinceInsideInterface {
@@ -1092,7 +1092,7 @@ public interface JavadocNonPublicSinceInsideInterface {
  * Valid Javadoc.
  *
  * @param <T> this is a valid param
- * @author Phillip Webb
+ * @author jiac
  * @soundtrack Gina G - Ooh Aah Just A Little Bit       // violation,Javadoc tag '@soundtrack' should not be used.
  */
 public class JavadocSoundtrack<T> {
@@ -1129,7 +1129,7 @@ public class JavadocSoundtrack<T> {
  * Valid Javadoc.
  *
  * @param <T> this is a valid param
- * @author Phillip Webb
+ * @author jiac
  */
 public class JavadocValid<T> {
 
@@ -1196,7 +1196,7 @@ public class JavadocValid<T> {
 /**
  * Test with bad full qualified annotation.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JUnit5BadAnnotation {
 
@@ -1241,7 +1241,7 @@ import org.junit.Before; //  violation,Import 'org.junit.Before' should not be u
 /**
  * Test with banned import.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JUnit5BadImport {
 
@@ -1292,7 +1292,7 @@ import org.junit.Test;
 /**
  * Test with banned import but also opt-out trigger.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 @RunWith(OptOutRunner.class) // OK
 public class JUnit5BadImportWithOptOut {
@@ -1342,7 +1342,7 @@ import org.junit.jupiter.api.TestTemplate;
 /**
  * Test with bad modifiers.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JUnit5BadModifier {
 
@@ -1440,7 +1440,7 @@ import org.junit.jupiter.api.Test;
 /**
  * This is a valid example.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class JUnit5Valid {
 
@@ -1492,7 +1492,7 @@ import java.util.function.BiFunction;
  * Lambda extra parentheses. If configured we enfoce that single args don't use
  * parentheses.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaExtraParens {
 
@@ -1543,7 +1543,7 @@ import java.util.function.Function;
  * Lambda missing parentheses. Since it doesnt add much we always prefer {@code (f) -> 1;}
  * to {@code (f) -> 1;} (mainly so adding a paramter doesn't change the format).
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaMissingParens {
 
@@ -1566,7 +1566,7 @@ import java.util.function.Function;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaNecessaryBlock {
 
@@ -1594,7 +1594,7 @@ import java.util.function.Function;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaNecessaryEmptyBlock {
 
@@ -1618,7 +1618,7 @@ import java.util.function.Consumer;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaNecessaryIfBlock {
 
@@ -1645,7 +1645,7 @@ import java.util.function.Consumer;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaNecessaryIfElseBlock {
 
@@ -1675,7 +1675,7 @@ import java.util.function.Function;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaNecessaryThrowBlock {
 
@@ -1700,7 +1700,7 @@ import java.util.function.Function;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaNecessaryTryBlock {
 
@@ -1730,7 +1730,7 @@ import java.util.concurrent.Callable;
 /**
  * This is a valid example of a lambda where the block is required.
  *
- * @author Andy Wilkinson
+ * @author jiac
  */
 public class LambdaNecessaryVoidCallable {
 
@@ -1758,7 +1758,7 @@ import java.util.function.Function;
  * Lambda blocks add noise since they introducde wrapping. If there's a single
  * statement we should not use them.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaUnnecessaryBlock {
 
@@ -1791,7 +1791,7 @@ import java.util.function.Function;
 /**
  * This is a valid example.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class LambdaValid {
 
@@ -1841,7 +1841,7 @@ public class LambdaValid {
 /**
  * Leading whitepace expects only tabs.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class LeadingWhitespaceSpaces {
 
@@ -1882,7 +1882,7 @@ public class LeadingWhitespaceSpaces {
 /**
  * Leading whitepace expects only tabs.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class LeadingWhitespaceTabs {
 
@@ -1926,7 +1926,7 @@ public class LeadingWhitespaceTabs {
 /**
  * This is a valid example of method ordering.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class MethodOrderInvalid {
 
@@ -1975,7 +1975,7 @@ public class MethodOrderInvalid {
 /**
  * This is a valid example of method ordering.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class MethodOrderValid {
 
@@ -2027,7 +2027,7 @@ public class MethodOrderValid {
 /**
  * Bad visibility because of public method.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class MethodVisibilityInnerClassesWithPublicMethod {
 
@@ -2071,7 +2071,7 @@ public class MethodVisibilityInnerClassesWithPublicMethod {
 /**
  * Bad visibility because of public method.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 class MethodVisibilityPackagePrivateWithPublicMethod {
 
@@ -2098,7 +2098,7 @@ class MethodVisibilityPackagePrivateWithPublicMethod {
 /**
  * Bad visibility because of public method.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class MethodVisibilityWithOverride {
 
@@ -2139,7 +2139,7 @@ package io.spring.javaformat.checkstyle;
 /**
  * Interface with implicit public elements.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public interface NestedInterfaceItems {
 
@@ -2219,7 +2219,7 @@ import org.apache.commons.logging.Log;
 /**
  * Ensure this isn't use for loggers.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class NotThis {
 
@@ -2288,7 +2288,7 @@ public class NotThis {
 /**
  * This is an example of a ternary expression.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryEqualsEquals {
 
@@ -2339,7 +2339,7 @@ public class TernaryEqualsEquals {
 /**
  * This is an invalid example of a ternary expression.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryEqualsEqualsAlways {
 
@@ -2387,7 +2387,7 @@ public class TernaryEqualsEqualsAlways {
 /**
  * This is a valid example of a ternary expression.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryEqualsEqualsNever {
 
@@ -2426,7 +2426,7 @@ public class TernaryEqualsEqualsNever {
 /**
  * This is an example of a ternary expression in an array.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryInArray {
 
@@ -2466,7 +2466,7 @@ public class TernaryInArray {
 /**
  * This is a valid example of a ternary expression.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryInIf {
 
@@ -2507,7 +2507,7 @@ public class TernaryInIf {
 /**
  * This is a valid example of a ternary expression.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryInWhile {
 
@@ -2548,7 +2548,7 @@ public class TernaryInWhile {
 /**
  * This is a valid example of a ternary expression.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryParensAndPlus {
 
@@ -2587,7 +2587,7 @@ public class TernaryParensAndPlus {
 /**
  * This is a invalid example of invalid ternary expressions.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryParensInvalid {
 
@@ -2628,7 +2628,7 @@ public class TernaryParensInvalid {
 /**
  * This is a valid example of valid ternary expressions.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class TernaryParensValid { // OK
 
@@ -2878,7 +2878,7 @@ import org.apache.commons.logging.Log;
 /**
  * Allow this to be skipped items.
  *
- * @author Phillip Webb
+ * @author jcohy
  */
 public class FiltersToSkipThis {
 
@@ -2906,6 +2906,7 @@ public class FiltersToSkipThis {
 
 ----
 
+[[jcohy-checkstyle]]
 == 自定义 checkstyle 规则
 
 [source,xml]

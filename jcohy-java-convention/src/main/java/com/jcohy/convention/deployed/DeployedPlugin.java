@@ -18,7 +18,7 @@ import org.gradle.api.tasks.bundling.Jar;
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  *
  * <p>
- * Description:
+ * Description: 当项目需要部署时，可以使用该插件。
  *
  * @author jiac
  * @version 1.0.0 2021/6/17:12:39

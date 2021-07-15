@@ -21,7 +21,7 @@ import org.junit.Test;
 /**
  * Test with banned import but also opt-out trigger.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 @RunWith(OptOutRunner.class)
 public class JUnit5BadImportWithOptOut {

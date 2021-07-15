@@ -17,7 +17,7 @@
 /**
  * Javadoc with white space.
  * @param <T> this is a valid param
- * @author Sushant Kumar Singh
+ * @author jiac
  */
 public class JavadocMethodEmptyLineBeforeTag<T> {
 

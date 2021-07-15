@@ -17,7 +17,7 @@
 /**
  * This is an example of a class name not matching its filename.
  *
- * @author Christoph Dreis
+ * @author jiac
  */
 public class NameNotMatching {
 

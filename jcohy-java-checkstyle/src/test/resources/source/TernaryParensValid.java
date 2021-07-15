@@ -17,7 +17,7 @@
 /**
  * This is a valid example of valid ternary expressions.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class TernaryParensValid {
 

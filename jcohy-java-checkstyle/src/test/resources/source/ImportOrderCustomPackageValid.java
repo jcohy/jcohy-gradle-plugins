@@ -24,7 +24,7 @@ import com.example.util.MyUtils2;
 /**
  * Custom pacakge with valid imports.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public final class ImportOrderCustomPackageValid {
 
