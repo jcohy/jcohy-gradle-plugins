@@ -90,14 +90,22 @@ public class AsciidoctorConventions {
         createSyncDocumentationSourceTask(project, asciidoctorTask);
         if (asciidoctorTask instanceof AsciidoctorTask) {
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
+            if(!pdf){
+                replaceLogo(project,asciidoctorTask);
+            }
             String backend = (!pdf) ? "spring-html" : "spring-pdf";
             ((AsciidoctorTask) asciidoctorTask).outputOptions((outputOptions) -> outputOptions.backends(backend));
         }
+    }
+
+    private void replaceLogo(Project project, AbstractAsciidoctorTask asciidoctorTask) {
         // 替换 logo
         asciidoctorTask.doLast((replaceIcon) -> {
-            project.delete(project.getBuildDir() + "/docs/asciidoc/img/banner-logo.svg");
+            String language = asciidoctorTask.getLanguages().contains("zh-cn") ? "/zh-cn": "";
+            project.delete(project.getBuildDir() + "/docs/asciidoc" + language+ "/img/banner-logo.svg");
             try {
-                Files.copy(AsciidoctorConventions.class.getResourceAsStream("/data/images/banner-logo.svg"),Paths.get(project.getBuildDir() + "/docs/asciidoc/img/banner-logo.svg"));
+                Files.copy(AsciidoctorConventions.class.getResourceAsStream("/data/images/banner-logo.svg"),
+                        Paths.get(project.getBuildDir() + "/docs/asciidoc" + language+ "/img/banner-logo.svg"));
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -192,6 +200,7 @@ public class AsciidoctorConventions {
         attributes.put("software-url", "http://software.jcohy.com");
         attributes.put("study-url", "http://study.jcohy.com");
         attributes.put("project-url", "http://project.jcohy.com");
+        attributes.put("allow-uri-read", true);
         attributes.put("revnumber", null);
         asciidoctorTask.attributes(attributes);
 
