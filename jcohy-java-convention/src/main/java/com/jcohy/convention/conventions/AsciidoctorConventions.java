@@ -1,8 +1,11 @@
 package com.jcohy.convention.conventions;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,6 +71,7 @@ public class AsciidoctorConventions {
             makeAllWarningsFatal(project);
             upgradeAsciidoctorJVersion(project);
             createAsciidoctorExtensionsConfiguration(project);
+            createAsciidoctorPdfTask(project);
             project.getTasks().withType(AbstractAsciidoctorTask.class,
                     (asciidoctorTask) -> configureAsciidoctorTask(project, asciidoctorTask));
         });
@@ -86,21 +90,38 @@ public class AsciidoctorConventions {
         createSyncDocumentationSourceTask(project, asciidoctorTask);
         if (asciidoctorTask instanceof AsciidoctorTask) {
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
-            if(pdf){
-                try {
-                    Map<String, Object> attributes = new HashMap<>();
-                    attributes.put("pdf-fontsdir", AsciidoctorConventions.class.getResource("/data/fonts").toURI());
-                    attributes.put("pdf-stylesdir",AsciidoctorConventions.class.getResource("/data/themes").toURI());
-                    attributes.put("pdf-style","Chinese");
-                    asciidoctorTask.attributes(attributes);
-                }
-                catch (URISyntaxException e) {
-                    e.printStackTrace();
-                }
-
-            }
             String backend = (!pdf) ? "spring-html" : "spring-pdf";
             ((AsciidoctorTask) asciidoctorTask).outputOptions((outputOptions) -> outputOptions.backends(backend));
+        }
+        // 替换 logo
+        asciidoctorTask.doLast((replaceIcon) -> {
+            project.delete(project.getBuildDir() + "/docs/asciidoc/img/banner-logo.svg");
+            try {
+                Files.copy(AsciidoctorConventions.class.getResourceAsStream("/data/images/banner-logo.svg"),Paths.get(project.getBuildDir() + "/docs/asciidoc/img/banner-logo.svg"));
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void createAsciidoctorPdfTask(Project project) {
+        project.getTasks().register("asciidoctorPdf",AsciidoctorTask.class,(asciidoctorPdf) -> {
+            asciidoctorPdf.sources("index.adoc");
+            configureAsciidoctorPdfTask(project,asciidoctorPdf);
+        });
+    }
+
+    private void configureAsciidoctorPdfTask(Project project, AsciidoctorTask asciidoctorPdf) {
+        try {
+            Map<String, Object> attributes = new HashMap<>();
+            attributes.put("pdf-fontsdir", AsciidoctorConventions.class.getResource("/data/fonts").toURI());
+            attributes.put("pdf-stylesdir",AsciidoctorConventions.class.getResource("/data/themes").toURI());
+            attributes.put("pdf-style","Chinese");
+            asciidoctorPdf.attributes(attributes);
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 
