@@ -15,6 +15,7 @@ import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
 import org.asciidoctor.gradle.jvm.AsciidoctorJPlugin;
 import org.asciidoctor.gradle.jvm.AsciidoctorTask;
 import org.gradle.api.Project;
+import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.Sync;
 
 import org.springframework.util.StringUtils;
@@ -195,13 +196,25 @@ public class AsciidoctorConventions {
      */
     private void configureCommonAttributes(Project project, AbstractAsciidoctorTask asciidoctorTask) {
         Map<String, Object> attributes = new HashMap<>();
+        attributes.put("idprefix", "");
+        attributes.put("idseparator","-" );
+        attributes.put("toc", "left");
+        attributes.put("toclevels", 4);
+        attributes.put("tabsize", 4);
+        attributes.put("numbered","" );
+        attributes.put("source-indent",0);
+        attributes.put("sectanchors", "");
+        attributes.put("icons", "font");
+        attributes.put("hide-uri-scheme", "font");
+        attributes.put("allow-uri-read", true);
+        attributes.put("revnumber", null);
+        attributes.put("docinfo", "shared,private");
+
         attributes.put("doc-url", "http://docs.jcohy.com");
         attributes.put("resource-url", "http://resources.jcohy.com");
         attributes.put("software-url", "http://software.jcohy.com");
         attributes.put("study-url", "http://study.jcohy.com");
         attributes.put("project-url", "http://project.jcohy.com");
-        attributes.put("allow-uri-read", true);
-        attributes.put("revnumber", null);
         asciidoctorTask.attributes(attributes);
 
     }
@@ -219,8 +232,21 @@ public class AsciidoctorConventions {
         syncDocumentationSource.setDestinationDir(syncedSource);
         syncDocumentationSource.from("src/docs");
         asciidoctorTask.dependsOn(syncDocumentationSource);
-        asciidoctorTask.getInputs().dir(syncedSource);
+        asciidoctorTask.getInputs().dir(syncedSource).withPathSensitivity(PathSensitivity.RELATIVE)
+                .withPropertyName("synced source");
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncedSource, "asciidoc/")));
+        project.copy((copySpec) -> {
+            copySpec.from("src/main/java");
+            copySpec.into("main/java");
+        });
+        project.copy((copySpec) -> {
+            copySpec.from("src/test/java");
+            copySpec.into("test/java");
+        });
+        project.copy((copySpec) -> {
+            copySpec.from("src/main/groovy");
+            copySpec.into("main/groovy");
+        });
         return syncDocumentationSource;
     }
 }
