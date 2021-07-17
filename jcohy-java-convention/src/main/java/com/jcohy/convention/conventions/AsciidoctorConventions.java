@@ -116,7 +116,7 @@ public class AsciidoctorConventions {
 
     private void createAsciidoctorPdfTask(Project project) {
         project.getTasks().register("asciidoctorPdf",AsciidoctorTask.class,(asciidoctorPdf) -> {
-            asciidoctorPdf.sources("index.adoc");
+            asciidoctorPdf.sources("index.singleadoc");
             configureAsciidoctorPdfTask(project,asciidoctorPdf);
         });
     }
