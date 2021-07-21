@@ -52,8 +52,22 @@ public class AsciidoctorTest {
                 .contains("<p>software-url: <a href=\"http://software.jcohy.com\">software-url</a></p>")
                 .contains("<p>study-url: <a href=\"http://study.jcohy.com\">study-url</a></p>")
                 .contains("<p>project-url: <a href=\"http://project.jcohy.com\">project-url</a></p>");
+
         File generatedPdf = new File(projectDir, "build/docs/asciidocPdf");
         File pdfFile = new File(generatedPdf, "index.pdf");
         assertThat(pdfFile).exists();
+
+        File GroovyExample = new File(projectDir, "build/docs/src/asciidoctor/main/groovy/com/jcohy/gradle/GroovyExample.groovy");
+        File JavaExample = new File(projectDir, "build/docs/src/asciidoctor/main/java/com/jcohy/gradle/JavaExample.java");
+        File KotlinExample = new File(projectDir, "build/docs/src/asciidoctor/main/kotlin/com/jcohy/gradle/KotlinExample.kts");
+        File GroovyTestExample = new File(projectDir, "build/docs/src/asciidoctor/test/groovy/com/jcohy/gradle/GroovyTestExample.groovy");
+        File JavaTestExample = new File(projectDir, "build/docs/src/asciidoctor/test/java/com/jcohy/gradle/JavaTestExample.java");
+        File KotlinTestExample = new File(projectDir, "build/docs/src/asciidoctor/test/kotlin/com/jcohy/gradle/KotlinTestExample.kts");
+        assertThat(GroovyExample).exists();
+        assertThat(JavaExample).exists();
+        assertThat(KotlinExample).exists();
+        assertThat(GroovyTestExample).exists();
+        assertThat(JavaTestExample).exists();
+        assertThat(KotlinTestExample).exists();
     }
 }

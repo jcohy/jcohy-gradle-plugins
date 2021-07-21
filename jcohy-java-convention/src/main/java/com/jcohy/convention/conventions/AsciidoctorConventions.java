@@ -116,7 +116,7 @@ public class AsciidoctorConventions {
 
     private void createAsciidoctorPdfTask(Project project) {
         project.getTasks().register("asciidoctorPdf",AsciidoctorTask.class,(asciidoctorPdf) -> {
-            asciidoctorPdf.sources("index.adoc");
+            asciidoctorPdf.sources("index.singleadoc");
             configureAsciidoctorPdfTask(project,asciidoctorPdf);
         });
     }
@@ -231,22 +231,28 @@ public class AsciidoctorConventions {
         File syncedSource = new File(project.getBuildDir(), "docs/src/" + asciidoctorTask.getName());
         syncDocumentationSource.setDestinationDir(syncedSource);
         syncDocumentationSource.from("src/docs");
+        syncDocumentationSource.from("src/main/java",(spec) -> {
+            spec.into("main/java");
+        });
+        syncDocumentationSource.from("src/main/groovy",(spec) -> {
+            spec.into("main/groovy");
+        });
+        syncDocumentationSource.from("src/main/kotlin",(spec) -> {
+            spec.into("main/kotlin");
+        });
+        syncDocumentationSource.from("src/test/java",(spec) -> {
+            spec.into("test/java");
+        });
+        syncDocumentationSource.from("src/test/groovy",(spec) -> {
+            spec.into("test/groovy");
+        });
+        syncDocumentationSource.from("src/test/kotlin",(spec) -> {
+            spec.into("test/kotlin");
+        });
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncedSource).withPathSensitivity(PathSensitivity.RELATIVE)
                 .withPropertyName("synced source");
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncedSource, "asciidoc/")));
-        project.copy((copySpec) -> {
-            copySpec.from("src/main/java");
-            copySpec.into("main/java");
-        });
-        project.copy((copySpec) -> {
-            copySpec.from("src/test/java");
-            copySpec.into("test/java");
-        });
-        project.copy((copySpec) -> {
-            copySpec.from("src/main/groovy");
-            copySpec.into("main/groovy");
-        });
         return syncDocumentationSource;
     }
 }
