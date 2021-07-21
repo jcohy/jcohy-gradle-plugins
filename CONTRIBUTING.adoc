@@ -11,8 +11,6 @@ Jcohy Gradle Plugins 是在 Apache 2.0 许可证下发布。如果你想贡献�
 
 我们使用 GitHub Issues 来对问题进行跟踪和改进。如果您要报告问题，或者有新的建议或意见，请在 https://github.com/jcohy/jcohy-gradle-plugins/issues[Github Issues] 上汇报问题。
 
-我们使用 Github Issues 来对问题进行跟踪和改进。如果您要报告问题，或者有新的建议或意见，请在 https://github.com/jcohy/jcohy-gradle-plugins/issues[Github Issues] 上汇报问题。
-
 关于新增功能或增强功能，请详细描述您的意向，以便我们能更好的理解您的想法。
 
 如果您发现了一些 Bug，请尽可能的提供更多的关于问题的详细信息，最好能可以提供一个可以重现问题的小 Demo。
