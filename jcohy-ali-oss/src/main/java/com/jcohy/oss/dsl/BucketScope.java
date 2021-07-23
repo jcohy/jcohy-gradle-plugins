@@ -1,0 +1,58 @@
+package com.jcohy.oss.dsl;
+
+
+import com.aliyun.oss.model.CannedAccessControlList;
+
+/**
+ * <p> 描述: .
+ * Copyright: Copyright (c) 2021.
+ * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
+ *
+ * @author jiac
+ * @version 1.0.0 2021/7/23:11:01
+ * @since 1.0.0
+ */
+public enum BucketScope {
+
+    /**
+     * 私有.
+     */
+    PRIVATE("private"),
+
+    /**
+     * 公共读.
+     */
+    READ("read"),
+
+    /**
+     * 公共读.
+     */
+    WRITE("write"),
+
+    /**
+     * 公共读写.
+     */
+    READ_WRITE("public-read-write");
+
+    private final String scope;
+
+    BucketScope(String scope) {
+        this.scope = scope;
+    }
+
+    public String getScope() {
+        return this.scope;
+    }
+
+    public static CannedAccessControlList getAccessControl(BucketScope scope) {
+        switch (scope) {
+            case READ:
+                return CannedAccessControlList.PublicRead;
+            case READ_WRITE:
+                return CannedAccessControlList.PublicReadWrite;
+            default:
+                return CannedAccessControlList.Private;
+        }
+    }
+}
+
