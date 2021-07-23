@@ -1,11 +1,12 @@
 = Jcohy Gradle Plugins
 
-此项目包含目前包含了两个项目:
+此项目包含目前包含了三个项目:
 
 * jcohy-java-convention：可以应用于任何 Java 项目的一组插件，以提供一致的风格样式。请参考 link:src/docs/asciidoc/conventions.adoc[jcohy-java-convention] 获取更多信息
 * jcohy-java-checkstyle：一个 checkstyle 插件。集成 alibaba,sun,google,spring 和 jcohy（此项目自定义提供） 代码检查规范。请参考 link:src/docs/asciidoc/checks.adoc[jcohy-java-checkstyle] 获取更多信息
+* jcohy-ali-oss: 用于向 ali oss 上传文件的插件
 
-由于该项目的目的是提供一致性，因此每个插件通常都不可配置。 您需要更改代码以匹配所需的约定。 您无法配置插件约定以匹配您的风格！
+前两个项目的目的是提供一致性，因此每个插件通常都不可配置。 您需要更改代码以匹配所需的约定。 您无法配置插件约定以匹配您的风格！
 
 == 如何使用
 
@@ -22,7 +23,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("com.jcohy.gradle:jcohy-java-convention:0.0.3")
+		classpath("com.jcohy.gradle:jcohy-java-convention:0.0.6")
 	}
 }
 
@@ -38,7 +39,7 @@ apply plugin: "com.jcohy.deployed"
 .buildSrc build.gradle
 ----
 dependencies {
-	implementation("com.jcohy.gradle:jcohy-java-convention:0.0.3")
+	implementation("com.jcohy.gradle:jcohy-java-convention:0.0.6")
 }
 ----
 
@@ -66,7 +67,7 @@ checkstyle {
 }
 
 dependencies {
-	checkstyle("com.jcohy.gradle:jcohy-java-checkstyle:0.0.3")
+	checkstyle("com.jcohy.gradle:jcohy-java-checkstyle:0.0.6")
 }
 ----
 
@@ -90,3 +91,170 @@ git push xw master git push origin master
 
 git pull xw master git push origin master
 
+==== AliOss
+
+下面展示了如何使用 gradle 使用此插件
+
+[source,groovy]
+----
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("com.jcohy.gradle:jcohy-ali-oss:0.0.6")
+	}
+}
+
+apply plugin: "com.jcohy.oss"
+----
+
+===== DSL 配置
+
+先看一个简单的示例
+
+====
+[source,groovy]
+----
+alioss {
+	accessKey = "xxxx" // <1>
+	secretKey = "xxxx" // <2>
+	upload {
+		source = "src/main" // <3>
+		prefix = "jcohy" // <4>
+		ignoreSourceDir = "true" // <5>
+		exclusions = ["JavaExample.java"] // <6>
+	}
+}
+----
+<1> 配置 accessKey
+<2> 配置 secretKey
+<3> 配置上传的源目录
+<4> 配置上传的 key oss 的前缀
+<5> 是否忽略源目录
+<6> 需要排除的文件
+====
+
+`OssUploadPlugin` 插件属性详细
+
+
+|===
+|属性 |类型 |描述| 默认值
+
+| accessKey
+| String
+| 阿里云的 accessKey
+| accessKey
+
+| secretKey
+| String
+| 阿里云的 secretKey
+| secretKey
+
+| bucket
+| String
+| 阿里云的 bucket，如果 bucket 不存在会自动创建 bucket
+| jcohy-test
+
+| endpoint
+| String
+| 地域节点
+| http://oss-cn-beijing.aliyuncs.com
+
+| scope
+| String
+| 访问权限(private,read,write,public-read-write)
+| public-read-write
+
+| Upload.source
+| String
+| 源文件目录
+|
+
+| Upload.exclusions
+| List<String>
+| 忽略那些要上传的文件
+|
+
+| Upload.prefix
+| String
+| 上传到 oss 指定的 prefix 目录下
+|
+
+| Upload.ignoreSourceDir
+| boolean
+| 是否忽略 source 指定的目录。
+| false
+
+| Upload.recursion
+| boolean
+| 是否递归目录上传
+| true
+|===
+
+[NOTE]
+====
+注意，要上传的目录中和本地文件目录尽量不要包含重复的字符串。
+例如: src/main/com/src/main/... src/main 重复了一次。
+====
+
+关于 upload 属性做如下说明
+
+假设我们现在有个需要上传的文件目录结构如下
+
+[source,text]
+----
+-- src
+---- main
+------ com
+-------- jcohy
+---------- gradle
+------------ groovy
+-------------- GroovyExample.groovy
+------------ java
+-------------- JavaExample.java
+------------ kotlin
+-------------- KotlinExample.kts
+----
+
+====
+.example 1
+[source,groovy]
+----
+alioss {
+	accessKey = "xxx"
+	secretKey = "xxx"
+    bucket = "jcohy"
+    endpoint ="http://oss-cn-beijing.aliyuncs.com"
+    upload {
+        source = "src/main"
+        prefix = "jcohy"
+        ignoreSourceDir = true
+        recursion = true
+    }
+}
+----
+* 当 `ignoreSourceDir` 和 `recursion` 都为 `true` 时，当文件上传成功后，文件的下载路径为:
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/com/jcohy/gradle/java/JavaExample.java
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/com/jcohy/gradle/kotlin/KotlinExample.kts
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/com/jcohy/gradle/groovy/GroovyExample.groovy
+* 当 `ignoreSourceDir` 为 `true` 和 `recursion` 为 `false` 时，当文件上传成功后，文件的下载路径为: http:
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/JavaExample.java
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/KotlinExample.kts
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/GroovyExample.groovy
+* 当 `ignoreSourceDir` 为 `false` 和 `recursion` 为 `true` 时，当文件上传成功后，文件的下载路径为:
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/src/main/com/jcohy/gradle/java/JavaExample.java
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/src/main/com/jcohy/gradle/kotlin/KotlinExample.kts
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/src/main/com/jcohy/gradle/groovy/GroovyExample.groovy
+* 当 `ignoreSourceDir` 和 `recursion` 都为 `false` 时，当文件上传成功后，文件的下载路径为:
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/src/main/JavaExample.java
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/src/main/KotlinExample.kts
+** http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/src/main/GroovyExample.groovy
+====
+
+==== uploadOssFiles Task
+
+[source,shell]
+----
+$ ./gradlew clean uploadOssFiles
+----
