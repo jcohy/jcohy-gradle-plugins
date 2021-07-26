@@ -2,9 +2,9 @@
 
 此项目包含目前包含了三个项目:
 
-* jcohy-java-convention：可以应用于任何 Java 项目的一组插件，以提供一致的风格样式。请参考 link:src/docs/asciidoc/conventions.adoc[jcohy-java-convention] 获取更多信息
-* jcohy-java-checkstyle：一个 checkstyle 插件。集成 alibaba,sun,google,spring 和 jcohy（此项目自定义提供） 代码检查规范。请参考 link:src/docs/asciidoc/checks.adoc[jcohy-java-checkstyle] 获取更多信息
-* jcohy-ali-oss: 用于向 ali oss 上传文件的插件
+* jcohy-java-convention：可以应用于任何 Java 项目的一组插件，以提供一致的风格样式。请参考 https://github.com/jcohy/jcohy-gradle-plugins/tree/main/src/docs/asciidoc/conventions.adoc[jcohy-java-convention] 获取更多信息
+* jcohy-java-checkstyle：一个 checkstyle 插件。集成 alibaba,sun,google,spring 和 jcohy（此项目自定义提供） 代码检查规范。请参考 https://github.com/jcohy/jcohy-gradle-plugins/tree/main/src/docs/asciidoc/checks.adoc[jcohy-java-checkstyle]  获取更多信息
+* jcohy-ali-oss: 用于向 ali oss 上传文件的插件. 请参考 https://github.com/jcohy/jcohy-gradle-plugins/tree/main/src/docs/asciidoc/alioss.adoc[jcohy-ali-oss] 获取更多信息
 
 前两个项目的目的是提供一致性，因此每个插件通常都不可配置。 您需要更改代码以匹配所需的约定。 您无法配置插件约定以匹配您的风格！
 
