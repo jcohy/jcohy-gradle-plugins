@@ -20,7 +20,7 @@ import java.util.function.Function;
  * Lambda missing parentheses. Since it doesnt add much we always prefer {@code (f) -> 1;}
  * to {@code (f) -> 1;} (mainly so adding a paramter doesn't change the format).
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaMissingParens {
 

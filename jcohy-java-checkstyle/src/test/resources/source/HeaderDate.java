@@ -16,7 +16,7 @@
 /**
  * The header data pattern is specified and doesn't match.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HeaderDate {
 

@@ -19,7 +19,7 @@ import org.apache.commons.logging.Log;
 /**
  * Ensure this isn't use for loggers.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class NotThis {
 

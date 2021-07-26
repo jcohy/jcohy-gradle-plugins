@@ -17,7 +17,7 @@
 /**
  * A valid catch with ex as the variable.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class CatchEx {
 

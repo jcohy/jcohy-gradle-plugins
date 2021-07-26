@@ -24,6 +24,8 @@ ext {
 	set('signing.secretKeyRingFile',System.getenv('signing.secretKeyRingFile'))
 	set('deployUsername',System.getenv('NEXUS_OSS_USER_NAME'))
 	set('deployPassword',System.getenv('NEXUS_OSS_PASS_WORD'))
+//	set('deployUsername',NEXUS_OSS_USER_NAME)
+//	set('deployPassword',NEXUS_OSS_PASS_WORD)
 }
 
 nexusPublishing {

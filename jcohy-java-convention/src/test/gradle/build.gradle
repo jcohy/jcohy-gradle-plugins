@@ -17,8 +17,8 @@ asciidoctor {
 	}
 }
 
-task asciidoctorPdf(type: org.asciidoctor.gradle.jvm.AsciidoctorTask) {
-	sources {
-		include "index.adoc"
-	}
-}
+//task asciidoctorPdf(type: org.asciidoctor.gradle.jvm.AsciidoctorTask) {
+//	sources {
+//		include "index.adoc"
+//	}
+//}

@@ -1,0 +1,22 @@
+plugins {
+	id "java"
+	id "com.jcohy.oss"
+}
+
+alioss {
+	accessKey = "xxx"
+	secretKey = "xxx"
+	upload {
+		source = "src/main"
+		prefix = "jcohy"
+		ignoreSourceDir = false
+		recursion = true
+//		exclusions = ["JavaExample.java"]
+	}
+}
+
+description = "Jcohy Boot Docs"
+
+group = 'com.jcohy.oss.test'
+version = '0.0.1-SNAPSHOT'
+

@@ -17,7 +17,7 @@
 /**
  * A valid catch with a full word as the variable.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class CatchWord {
 

@@ -11,8 +11,6 @@ Jcohy Gradle Plugins 是在 Apache 2.0 许可证下发布。如果你想贡献�
 
 我们使用 GitHub Issues 来对问题进行跟踪和改进。如果您要报告问题，或者有新的建议或意见，请在 https://github.com/jcohy/jcohy-gradle-plugins/issues[Github Issues] 上汇报问题。
 
-我们使用 Github Issues 来对问题进行跟踪和改进。如果您要报告问题，或者有新的建议或意见，请在 https://github.com/jcohy/jcohy-gradle-plugins/issues[Github Issues] 上汇报问题。
-
 关于新增功能或增强功能，请详细描述您的意向，以便我们能更好的理解您的想法。
 
 如果您发现了一些 Bug，请尽可能的提供更多的关于问题的详细信息，最好能可以提供一个可以重现问题的小 Demo。
@@ -46,7 +44,9 @@ Jcohy Gradle Plugins 是在 Apache 2.0 许可证下发布。如果你想贡献�
 . 如果要求进行更正，只需将更改推送到同一分支，您的拉取请求就会更新。换句话说，当被要求进行更改时，您不需要创建新的拉取请求。
 
 === 参与评论
-帮助审查拉取请求是另一种很好的贡献方式。您的反馈有助于塑造新功能的实现。但是，在审查拉取请求时，除非您是 Jcohy 组织的核心提交者，否则请不要批准或拒绝 PR。
+
+帮助审查拉取请求是另一种很好的贡献方式。您的反馈有助于塑造新功能的实现。但是，在审查拉取请求时，除非您是 Jcohy Team 的核心提交者，否则请不要批准或拒绝 PR。
+
 
 == 构建源码
 

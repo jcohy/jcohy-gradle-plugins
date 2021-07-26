@@ -17,7 +17,7 @@
 /**
  * This is a invalid example of invalid ternary expressions.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class TernaryParensInvalid {
 

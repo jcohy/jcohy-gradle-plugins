@@ -17,7 +17,7 @@
 /**
  * Javadoc with a bad since tag.
  *
- * @author Phillip Webb
+ * @author jiac
  * @since 1.2.3
  */
 class JavadocNonPublicSince {

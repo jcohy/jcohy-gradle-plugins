@@ -17,7 +17,7 @@
 /**
  * Invlid utility class.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class HideUtilityClassConstructorInvalid {
 

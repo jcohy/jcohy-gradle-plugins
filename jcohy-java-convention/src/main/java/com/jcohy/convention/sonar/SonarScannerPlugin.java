@@ -15,7 +15,7 @@ import org.sonarqube.gradle.SonarQubePlugin;
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  *
  * <p>
- * Description:
+ * Description: 集成 SonarQube 代码质量管理平台
  *
  * @author jiac
  * @version 1.0.0 2021/7/1:18:17

@@ -18,7 +18,7 @@
  * Valid Javadoc.
  *
  * @param <T> this is a valid param
- * @author Phillip Webb
+ * @author jiac
  */
 public class JavadocValid<T> {
 

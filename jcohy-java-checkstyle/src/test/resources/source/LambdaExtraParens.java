@@ -22,7 +22,7 @@ import java.util.function.BiFunction;
  * Lambda extra parentheses. If configured we enfoce that single args don't use
  * parentheses.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 public class LambdaExtraParens {
 

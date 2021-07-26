@@ -17,7 +17,7 @@
 /**
  * Bad visibility because of public method.
  *
- * @author Phillip Webb
+ * @author jiac
  */
 class MethodVisibilityPackagePrivateWithPublicMethod {
 
