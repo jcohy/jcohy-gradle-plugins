@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
@@ -72,12 +73,11 @@ public class AliOssTemplate {
 
     public List<OssFile> putUploadFile (Map<String,File> uploadFiles) {
         List<OssFile> list = new ArrayList<>();
-        uploadFiles.forEach((key,value) -> {
-            list.add(this.putFile(key, value));
-        });
+        uploadFiles.forEach((key,value) -> list.add(this.putFile(key, value)));
         return list;
     }
     public OssFile put(String bucketName, File file, String key, boolean cover) {
+        key = formatKey(key);
         createBucket(bucketName);
         // 覆盖上传
         if (cover) {
@@ -128,5 +128,19 @@ public class AliOssTemplate {
         String prefix = this.extension.getEndpoint().contains("https://") ? "https://" : "http://";
         return prefix + bucketName + "."
                 + this.extension.getEndpoint().replaceFirst(prefix, "");
+    }
+
+    public String formatKey(String key) {
+        // / 用于分割路径，可快速创建子目录，但不要以 / 或 \ 开头，不要出现连续的 /；
+        if(StringUtils.isNullOrEmpty(key)) {
+            return "";
+        }
+
+        if(key.startsWith("\\") || key.startsWith("/")) {
+            key = key.substring(1);
+        }
+
+        Pattern pattern = Pattern.compile("[\\\\|/]{2,}");
+        return pattern.matcher(key).replaceAll("/");
     }
 }
