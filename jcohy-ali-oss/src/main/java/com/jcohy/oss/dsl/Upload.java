@@ -28,13 +28,14 @@ public class Upload {
      * 上传到 oss 指定的 prefix 目录下。
      * 例如:
      * 假设 Test.txt 文件在如下路径中
+     * <pre>
      * -- src
      * --- main
      * ---- com
      * ----- jcohy
      * ------ oss
      * ------- Test.txt
-     * <pre>
+     *
      *    alioss {
      * 	    upload {
      * 	        source = "src/main"
@@ -51,13 +52,14 @@ public class Upload {
      * 是否忽略 source 下的目录递归上传。默认为 {@code false}。如果设置为  {@code true}。则会忽略 {@code source} 属性，将所有文件上传至 prefix 指定的目录中
      * 例如:
      * 假设 Test.txt 文件在如下路径中
+     * <pre>
      * -- src
      * --- main
      * ---- com
      * ----- jcohy
      * ------ oss
      * ------- Test.txt
-     * <pre>
+     *
      *    alioss {
      * 	    upload {
      * 	        source = "src/main"

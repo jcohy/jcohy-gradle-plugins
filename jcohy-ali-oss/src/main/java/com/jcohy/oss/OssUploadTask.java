@@ -14,9 +14,9 @@ import com.jcohy.oss.dsl.AliOssExtension;
 import com.jcohy.oss.dsl.Upload;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
-import org.gradle.api.file.Directory;
-import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.TaskAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p> 描述: .
@@ -28,6 +28,8 @@ import org.gradle.api.tasks.TaskAction;
  * @since 1.0.0
  */
 public class OssUploadTask extends DefaultTask {
+
+    private final Logger log = LoggerFactory.getLogger(OssUploadTask.class);
 
     private final AliOssExtension extension;
 
@@ -45,18 +47,11 @@ public class OssUploadTask extends DefaultTask {
     @TaskAction
     public void upload(){
         Map<String,File> uploadFiles = getUploadFiles();
-//        uploadFiles.forEach((key,value) -> {
-//            System.out.print(key + ":");
-//            System.out.println(value.getPath());
-//        });
         AliOssTemplate aliOssTemplate = new AliOssTemplate(extension);
         List<OssFile> ossFiles = aliOssTemplate.putUploadFile(uploadFiles);
-//
-//        ossFiles.forEach( ossFile -> {
-//            System.out.println("==========================");
-//            System.out.println("name:"+ ossFile.getName());
-//            System.out.println("link:"+ ossFile.getLink());
-//        });
+        ossFiles.forEach((ossFile) -> {
+            log.info(ossFile.getName() + "：文件上传成功!!!" + "下载地址：" + ossFile.getLink());
+        });
     }
 
     /**
