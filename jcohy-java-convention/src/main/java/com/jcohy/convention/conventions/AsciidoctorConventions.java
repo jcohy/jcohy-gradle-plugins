@@ -210,11 +210,11 @@ public class AsciidoctorConventions {
         attributes.put("revnumber", null);
         attributes.put("docinfo", "shared,private");
 
-        attributes.put("doc-url", "http://docs.jcohy.com");
-        attributes.put("resource-url", "http://resources.jcohy.com");
-        attributes.put("software-url", "http://software.jcohy.com");
-        attributes.put("study-url", "http://study.jcohy.com");
-        attributes.put("project-url", "http://project.jcohy.com");
+        attributes.put("doc-url", "https://docs.jcohy.com");
+        attributes.put("resource-url", "https://resources.jcohy.com");
+        attributes.put("software-url", "https://software.jcohy.com");
+        attributes.put("study-url", "https://study.jcohy.com");
+        attributes.put("project-url", "https://project.jcohy.com");
         asciidoctorTask.attributes(attributes);
 
     }
