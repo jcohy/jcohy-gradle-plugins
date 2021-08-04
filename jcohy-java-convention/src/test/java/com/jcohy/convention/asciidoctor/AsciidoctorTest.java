@@ -47,11 +47,11 @@ public class AsciidoctorTest {
         assertThat(htmlFile).exists();
         assertThat(new String(Files.readAllBytes(htmlFile.toPath()), StandardCharsets.UTF_8))
                 .contains("<title>Flight 文档</title>")
-                .contains("<p>doc-url: <a href=\"http://docs.jcohy.com\">doc-url</a></p>")
-                .contains("<p>resource-url: <a href=\"http://resources.jcohy.com\">resource-url</a></p>")
-                .contains("<p>software-url: <a href=\"http://software.jcohy.com\">software-url</a></p>")
-                .contains("<p>study-url: <a href=\"http://study.jcohy.com\">study-url</a></p>")
-                .contains("<p>project-url: <a href=\"http://project.jcohy.com\">project-url</a></p>");
+                .contains("<p>doc-url: <a href=\"https://docs.jcohy.com\">doc-url</a></p>")
+                .contains("<p>resource-url: <a href=\"https://resources.jcohy.com\">resource-url</a></p>")
+                .contains("<p>software-url: <a href=\"https://software.jcohy.com\">software-url</a></p>")
+                .contains("<p>study-url: <a href=\"https://study.jcohy.com\">study-url</a></p>")
+                .contains("<p>project-url: <a href=\"https://project.jcohy.com\">project-url</a></p>");
 
         File generatedPdf = new File(projectDir, "build/docs/asciidocPdf");
         File pdfFile = new File(generatedPdf, "index.pdf");
