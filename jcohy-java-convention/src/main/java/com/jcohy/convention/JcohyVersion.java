@@ -59,7 +59,7 @@ public class JcohyVersion {
         return jarFile.getManifest().getMainAttributes().getValue(Attributes.Name.IMPLEMENTATION_VERSION);
     }
 
-    private static String getSpringBootVersion() {
+    public static String getSpringBootVersion() {
         return VersionExtractor.forClass(SpringBootPlugin.class);
     }
 }
