@@ -1,3 +1,4 @@
+[[checkstyles]]
 = CheckStyle
 
 使用 jcohy-java-checkstyle 进行代码检查

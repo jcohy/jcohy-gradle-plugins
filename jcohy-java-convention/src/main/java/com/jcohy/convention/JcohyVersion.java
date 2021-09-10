@@ -9,6 +9,9 @@ import java.security.CodeSource;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 
+import org.springframework.boot.gradle.plugin.SpringBootPlugin;
+import org.springframework.boot.gradle.util.VersionExtractor;
+
 /**
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
@@ -54,5 +57,9 @@ public class JcohyVersion {
 
     private static String getImplementationVersion(JarFile jarFile) throws IOException {
         return jarFile.getManifest().getMainAttributes().getValue(Attributes.Name.IMPLEMENTATION_VERSION);
+    }
+
+    private static String getSpringBootVersion() {
+        return VersionExtractor.forClass(SpringBootPlugin.class);
     }
 }

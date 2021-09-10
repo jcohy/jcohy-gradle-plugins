@@ -1,6 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
-apply plugin: 'signing'
+//apply plugin: 'signing'
 
 
 java {
@@ -67,9 +67,9 @@ publishing {
 	}
 }
 
-signing {
-	sign publishing.publications.mavenJava
-}
+//signing {
+//	sign publishing.publications.mavenJava
+//}
 
 
 javadoc {

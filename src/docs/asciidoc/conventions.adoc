@@ -1,4 +1,5 @@
-= jcohy-java-convention
+[[jcohy-conventions]]
+= Convention
 
 jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的代码结构。当我们使用有约定指定的插件时，会自动添加一些配置。
 
