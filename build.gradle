@@ -36,10 +36,10 @@ ext {
 //		}
 //	}
 //}
-
-configure(rootProject) { abjects ->
-	apply from: "${rootDir}/gradle/docs.gradle"
-}
+//
+//configure(rootProject) { abjects ->
+//	apply from: "${rootDir}/gradle/docs.gradle"
+//}
 
 configure(allprojects) { project ->
 	apply plugin: 'java'
