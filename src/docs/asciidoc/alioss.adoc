@@ -1,3 +1,4 @@
+[[jcohy-ali-oss]]
 = AliOss
 
 下面展示了如何使用 gradle 使用此插件
