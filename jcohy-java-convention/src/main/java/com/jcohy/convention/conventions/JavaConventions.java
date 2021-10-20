@@ -149,6 +149,7 @@ class JavaConventions {
         project.getPlugins().apply(DependencyManagementPlugin.class);
         DependencyManagementExtension dependencyManagementExtension = project.getExtensions().getByType(DependencyManagementExtension.class);
         dependencyManagementExtension.imports((importsHandler -> {
+            importsHandler.mavenBom(BomCoordinates.SPRING_CLOUD_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.SPRING_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.ALI_YUN_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.ALI_CLOUD_BOM_COORDINATES);

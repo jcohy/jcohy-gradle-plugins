@@ -17,6 +17,8 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
  */
 public final class BomCoordinates {
 
+    public static final String SPRING_CLOUD_BOM_COORDINATES = "org.springframework.cloud:spring-cloud-dependencies:2020.0.3";
+
     public static final String SPRING_BOM_COORDINATES = SpringBootPlugin.BOM_COORDINATES;
 
     public static final String ALI_YUN_BOM_COORDINATES = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
