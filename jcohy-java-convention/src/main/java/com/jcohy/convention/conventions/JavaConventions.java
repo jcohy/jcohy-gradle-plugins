@@ -111,12 +111,12 @@ class JavaConventions {
 
     private void configureMavenRepository(Project project) {
         project.getRepositories().maven((mavenRepo) -> {
-           mavenRepo.setUrl(URI.create("http://192.168.11.230:8081/repository/releases/"));
+           mavenRepo.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/releases/"));
            mavenRepo.setName("xw-release");
         });
 
         project.getRepositories().maven((mavenRepo) -> {
-            mavenRepo.setUrl(URI.create("http://192.168.11.230:8081/repository/snapshot"));
+            mavenRepo.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/snapshot"));
             mavenRepo.setName("xw-snapshot");
         });
 
