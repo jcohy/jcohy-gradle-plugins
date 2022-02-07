@@ -111,12 +111,12 @@ class JavaConventions {
 
     private void configureMavenRepository(Project project) {
         project.getRepositories().maven((mavenRepo) -> {
-           mavenRepo.setUrl(URI.create("http://192.168.11.230:8081/repository/releases/"));
+           mavenRepo.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/releases/"));
            mavenRepo.setName("xw-release");
         });
 
         project.getRepositories().maven((mavenRepo) -> {
-            mavenRepo.setUrl(URI.create("http://192.168.11.230:8081/repository/snapshot"));
+            mavenRepo.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/snapshot"));
             mavenRepo.setName("xw-snapshot");
         });
 
@@ -149,7 +149,10 @@ class JavaConventions {
         project.getPlugins().apply(DependencyManagementPlugin.class);
         DependencyManagementExtension dependencyManagementExtension = project.getExtensions().getByType(DependencyManagementExtension.class);
         dependencyManagementExtension.imports((importsHandler -> {
+            importsHandler.mavenBom(BomCoordinates.SPRING_CLOUD_BOM_COORDINATES);
+            importsHandler.mavenBom(BomCoordinates.SPRING_BOOT_ADMIN);
             importsHandler.mavenBom(BomCoordinates.SPRING_BOM_COORDINATES);
+            importsHandler.mavenBom(BomCoordinates.PIVOTAL_SPRING_CLOUD);
             importsHandler.mavenBom(BomCoordinates.ALI_YUN_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.ALI_CLOUD_BOM_COORDINATES);
         }));
