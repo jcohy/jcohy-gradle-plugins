@@ -90,6 +90,7 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * @since 0.0.5.1
  */
 class JavaConventions {
+
     void apply(Project project) {
         project.getPlugins().withType(JavaBasePlugin.class, (java) -> {
             // 此插件用于生成测试失败报告
@@ -125,7 +126,7 @@ class JavaConventions {
     }
     
     /**
-     * 配置项目依赖
+     * 配置项目依赖.
      * @param project project
      */
     private void configureDependencyManagement(Project project) {
@@ -159,7 +160,7 @@ class JavaConventions {
     }
     
     /**
-     * 配置生成的 Jar 清单文件
+     * 配置生成的 Jar 清单文件.
      * @param project project
      */
     private void configureJarManifestConventions(Project project) {
@@ -201,7 +202,7 @@ class JavaConventions {
     }
     
     /**
-     * 配置测试的约定
+     * 配置测试的约定.
      * 当 系统中存在 System.getenv("CI") 属性时，最大重试次数为 3 次
      * @param project project
      */
@@ -234,7 +235,7 @@ class JavaConventions {
     }
     
     /**
-     * 配置 JavaDoc 约定
+     * 配置 JavaDoc 约定.
      * @param project project
      */
     private void configureJavadocConventions(Project project) {
@@ -250,7 +251,7 @@ class JavaConventions {
     }
     
     /**
-     * 配置 Java 编译
+     * 配置 Java 编译.
      * @param project project
      */
     private void configureJavaCompileConventions(Project project) {
@@ -274,7 +275,7 @@ class JavaConventions {
     }
 
     /**
-     * 配置 {@link SpringJavaFormatPlugin} 和 {@link CheckstylePlugin} 插件
+     * 配置 {@link SpringJavaFormatPlugin} 和 {@link CheckstylePlugin} 插件.
      * @param project project
      */
     private void configureSpringJavaFormat(Project project) {

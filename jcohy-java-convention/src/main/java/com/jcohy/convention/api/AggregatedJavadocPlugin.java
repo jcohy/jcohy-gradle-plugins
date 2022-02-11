@@ -7,10 +7,12 @@ import org.gradle.api.Project;
 import org.gradle.api.tasks.javadoc.Javadoc;
 
 /**
+ *
+ * 描述: 多项目聚合 JavaDoc 文档
+ *
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  * <p>
- * Description:
  *
  * @author jiac
  * @version 0.0.5.1 2021/7/9:15:24

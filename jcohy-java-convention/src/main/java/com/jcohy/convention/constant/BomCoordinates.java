@@ -1,6 +1,6 @@
 package com.jcohy.convention.constant;
 
-import com.jcohy.convention.JcohyVersion;
+import com.jcohy.convention.JcohyGradlePluginsVersion;
 
 import org.springframework.boot.gradle.plugin.SpringBootPlugin;
 
@@ -29,5 +29,5 @@ public final class BomCoordinates {
 
     public static final String ALI_CLOUD_BOM_COORDINATES = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.1";
 
-    public static final String JCOHY_CHECKSTYLE = "com.jcohy.gradle:jcohy-java-checkstyle:"+ JcohyVersion.getVersion();
+    public static final String JCOHY_CHECKSTYLE = "com.jcohy.gradle:jcohy-java-checkstyle:"+ JcohyGradlePluginsVersion.getVersion();
 }

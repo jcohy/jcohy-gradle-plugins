@@ -15,19 +15,19 @@ public enum Repository {
      * 快照版本对应的仓库.
      */
     SNAPSHOT("jcohy-snapshots", "Jcohy-Snapshots",
-            "http://192.168.11.230:8081/repository/snapshot", true),
+            "https://oss.sonatype.org/content/repositories/snapshots", true),
     
     /**
      * 预发布版本对应的仓库.
      */
     MILESTONE("jcohy-milestones", "Jcohy-Milestones",
-            "http://192.168.11.230:8081/repository/milestone", false),
+            "https://oss.sonatype.org/service/local/staging/deploy/maven2", false),
 
     /**
      * 发布版本对应的仓库.
      */
     RELEASE("jochy-releases", "Jcohy-Releases",
-            "http://192.168.11.230:8081/repository/releases", false);
+            "https://oss.sonatype.org/service/local/staging/deploy/maven2", false);
     
     private final String id;
     
@@ -45,7 +45,7 @@ public enum Repository {
     }
     
     /**
-     * 根据  {@link ReleaseStatus} 获取仓库地址
+     * 根据  {@link ReleaseStatus} 获取仓库地址.
      * @param status the release status
      * @return the artifact repository
      */

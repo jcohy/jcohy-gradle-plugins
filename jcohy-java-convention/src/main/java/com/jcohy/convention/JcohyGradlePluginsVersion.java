@@ -13,30 +13,32 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
 import org.springframework.boot.gradle.util.VersionExtractor;
 
 /**
+ * <p>
+ * Description: 获取此 jar 包版本号.
+ *
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  *
- * <p>
- * Description:
+
  *
  * @author jiac
  * @version 0.0.5.1 2021/7/2:18:15
  * @since 0.0.5.1
  */
-public class JcohyVersion {
-    private JcohyVersion() {
+public class JcohyGradlePluginsVersion {
+    private JcohyGradlePluginsVersion() {
     }
 
     public static String getVersion() {
-        return determineFlightFrameworkVersion();
+        return determineVersion();
     }
 
-    private static String determineFlightFrameworkVersion() {
-        String implementationVersion = JcohyVersion.class.getPackage().getImplementationVersion();
+    private static String determineVersion() {
+        String implementationVersion = JcohyGradlePluginsVersion.class.getPackage().getImplementationVersion();
         if (implementationVersion != null) {
             return implementationVersion;
         }
-        CodeSource codeSource = JcohyVersion.class.getProtectionDomain().getCodeSource();
+        CodeSource codeSource = JcohyGradlePluginsVersion.class.getProtectionDomain().getCodeSource();
         if (codeSource == null) {
             return null;
         }

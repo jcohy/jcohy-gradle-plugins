@@ -80,7 +80,7 @@ public class AsciidoctorConventions {
     }
 
     /**
-     * 配置 asciidoctorTask
+     * 配置 asciidoctorTask.
      * @param project project
      * @param asciidoctorTask asciidoctorTask
      */
@@ -136,7 +136,7 @@ public class AsciidoctorConventions {
     }
 
     /**
-     * 添加文档依赖仓库
+     * 添加文档依赖仓库.
      * @param project project
      */
     private void configureDocumentationDependenciesRepository(Project project) {
@@ -151,7 +151,7 @@ public class AsciidoctorConventions {
     }
 
     /**
-     *  添加警告错误
+     *  添加警告错误.
      * @param project project
      */
     private void makeAllWarningsFatal(Project project) {
@@ -159,7 +159,7 @@ public class AsciidoctorConventions {
     }
 
     /**
-     * 创建 asciidoctorExtensions 配置
+     * 创建 asciidoctorExtensions 配置.
      * @param project project
      */
     private void createAsciidoctorExtensionsConfiguration(Project project) {
@@ -191,7 +191,7 @@ public class AsciidoctorConventions {
     }
 
     /**
-     * 设置通用属性
+     * 设置通用属性.
      * @param project project
      * @param asciidoctorTask asciidoctorTask
      */
@@ -221,7 +221,7 @@ public class AsciidoctorConventions {
     }
 
     /**
-     * 异步创建文档源文件
+     * 异步创建文档源文件.
      * @param project project
      * @param asciidoctorTask asciidoctorTask
      * @return /

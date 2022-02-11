@@ -1,6 +1,7 @@
 package com.jcohy.convention.deployed;
 
 import com.jcohy.convention.constant.PomConstant;
+import com.jcohy.convention.dsl.PomExtension;
 import com.jcohy.convention.version.ReleaseStatus;
 import com.jcohy.convention.version.Repository;
 import org.gradle.api.Plugin;
@@ -25,20 +26,26 @@ import org.gradle.api.tasks.bundling.Jar;
  * @since 0.0.5.1
  */
 public class DeployedPlugin implements Plugin<Project> {
+
+    private PomExtension pomExtension = null;
+
     @Override
     public void apply(Project project) {
         PluginContainer plugins = project.getPlugins();
         plugins.apply(MavenPublishPlugin.class);
         PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
         MavenPublication mavenPublication = publishing.getPublications().create("maven", MavenPublication.class);
-        
+
+        pomExtension = project.getRootProject().getExtensions().create(PomExtension.OSS_EXTENSION_NAME,
+                PomExtension.class);
+
         publishing.getRepositories().maven(mavenRepository -> {
             Repository repository = Repository.of(ReleaseStatus.ofProject(project));
             mavenRepository.setUrl(repository.getUrl());
             mavenRepository.setName(repository.getName());
             mavenRepository.credentials((passwordCredentials -> {
-                passwordCredentials.setUsername(PomConstant.NEXUS_USER_NAME);
-                passwordCredentials.setPassword(PomConstant.NEXUS_PASSWORD);
+                passwordCredentials.setUsername(pomExtension.getUsername() != null ? pomExtension.getUsername() : PomConstant.NEXUS_USER_NAME);
+                passwordCredentials.setPassword(pomExtension.getPassword() != null ? pomExtension.getPassword() : PomConstant.NEXUS_PASSWORD);
             }));
         });
         
