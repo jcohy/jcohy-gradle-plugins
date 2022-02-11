@@ -108,7 +108,6 @@ class JavaConventions {
     }
 
     private void configureMavenRepository(Project project) {
-
         project.getRepositories().maven((mavenRepo) -> {
             mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/central"));
             mavenRepo.setName("ali");
