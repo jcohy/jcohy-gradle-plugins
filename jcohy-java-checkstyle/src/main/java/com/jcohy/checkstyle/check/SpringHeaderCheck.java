@@ -28,8 +28,8 @@ import com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck;
  * Description: 检查源文件的头部信息
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:10:53
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:10:53
+ * @since 0.0.5.1
  */
 public class SpringHeaderCheck extends AbstractFileSetCheck {
     

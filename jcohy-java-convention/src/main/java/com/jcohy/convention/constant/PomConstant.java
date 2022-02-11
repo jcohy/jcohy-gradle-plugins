@@ -6,8 +6,8 @@ package com.jcohy.convention.constant;
  * <p> Description:
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:17:24
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:17:24
+ * @since 0.0.5.1
  */
 public final class PomConstant {
     public static final String NEXUS_USER_NAME="xw-developer";

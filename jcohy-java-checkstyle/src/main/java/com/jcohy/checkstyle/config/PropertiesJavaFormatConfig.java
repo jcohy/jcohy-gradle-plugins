@@ -14,8 +14,8 @@ import java.util.Properties;
  * Description: {@link JavaFormatConfig} 由属性文件支持.
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:16:37
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:16:37
+ * @since 0.0.5.1
  */
 public class PropertiesJavaFormatConfig implements JavaFormatConfig {
     

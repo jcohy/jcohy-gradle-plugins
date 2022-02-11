@@ -11,8 +11,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * Description: 一个参数的 lambda 应该有括号。 单语句实现不应使用花括号。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:16:28
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:16:28
+ * @since 0.0.5.1
  */
 public class SpringLambdaCheck extends AbstractSpringCheck {
     

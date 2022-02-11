@@ -18,8 +18,8 @@ import org.sonarqube.gradle.SonarQubePlugin;
  * Description: 集成 SonarQube 代码质量管理平台
  *
  * @author jiac
- * @version 1.0.0 2021/7/1:18:17
- * @since 1.0.0
+ * @version 0.0.5.1 2021/7/1:18:17
+ * @since 0.0.5.1
  */
 public class SonarScannerPlugin implements Plugin<Project> {
 

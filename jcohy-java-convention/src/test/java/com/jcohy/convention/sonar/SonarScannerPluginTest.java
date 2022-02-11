@@ -25,8 +25,8 @@
 // * Description:
 // *
 // * @author jiac
-// * @version 1.0.0 2021/7/1:18:48
-// * @since 1.0.0
+// * @version 0.0.5.1 2021/7/1:18:48
+// * @since 0.0.5.1
 // */
 //class SonarScannerPluginTest {
 //

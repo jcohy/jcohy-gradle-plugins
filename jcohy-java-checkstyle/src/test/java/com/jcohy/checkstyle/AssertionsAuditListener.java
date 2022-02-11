@@ -24,8 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Description: {@link AuditListener} 检查预期事件发生。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:17:29
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:17:29
+ * @since 0.0.5.1
  */
 class AssertionsAuditListener implements AuditListener {
     

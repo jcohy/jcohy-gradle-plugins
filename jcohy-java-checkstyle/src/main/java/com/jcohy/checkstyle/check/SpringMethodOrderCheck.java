@@ -17,8 +17,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * Description: 检查方法是否以正确的顺序定义。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:16:54
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:16:54
+ * @since 0.0.5.1
  */
 public class SpringMethodOrderCheck extends AbstractSpringCheck {
     

@@ -11,8 +11,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * Description: 检查 catch 块
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:15:18
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:15:18
+ * @since 0.0.5.1
  */
 public class SpringCatchCheck extends AbstractSpringCheck {
     

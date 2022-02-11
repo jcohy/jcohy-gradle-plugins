@@ -10,8 +10,8 @@ import com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck;
  * Description: 检查导入顺序是否遵循 Spring 约定.
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:12:54
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:12:54
+ * @since 0.0.5.1
  */
 public class SpringImportOrderCheck extends ImportOrderCheck {
     

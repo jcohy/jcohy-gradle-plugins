@@ -16,8 +16,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * Description: 使用 {@code 'this.'} 检查某些字段是否从未被引用。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:17:01
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:17:01
+ * @since 0.0.5.1
  */
 public class SpringNoThisCheck extends AbstractSpringCheck {
     

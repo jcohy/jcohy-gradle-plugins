@@ -21,8 +21,8 @@ import org.gradle.api.tasks.bundling.Jar;
  * Description: 当项目需要部署时，可以使用该插件。
  *
  * @author jiac
- * @version 1.0.0 2021/6/17:12:39
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/17:12:39
+ * @since 0.0.5.1
  */
 public class DeployedPlugin implements Plugin<Project> {
     @Override
@@ -45,14 +45,14 @@ public class DeployedPlugin implements Plugin<Project> {
         project.afterEvaluate((evaluated) -> {
             project.getPlugins().withType(JavaPlugin.class).all((javaPlugin) -> {
                 if (((Jar) project.getTasks().getByName(JavaPlugin.JAR_TASK_NAME)).isEnabled()) {
-                    project.getComponents().matching((component) -> component.getName().equals("java"))
-                            .all((javaComponent) -> mavenPublication.from(javaComponent));
+                    project.getComponents().matching((component) -> "java".equals(component.getName()))
+                            .all(mavenPublication::from);
                 }
             });
         });
         project.getPlugins().withType(JavaPlatformPlugin.class)
                 .all((javaPlugin) -> project.getComponents()
-                        .matching((component) -> component.getName().equals("javaPlatform"))
-                        .all((javaComponent) -> mavenPublication.from(javaComponent)));
+                        .matching((component) -> "javaPlatform".equals(component.getName()))
+                        .all(mavenPublication::from));
     }
 }

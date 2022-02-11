@@ -17,8 +17,8 @@ import com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameChe
  * Description: 类名使用 UpperCamelCase 风格，必须遵从驼峰形式，但以下情形例外：DO / BO / DTO / VO / AO
  *
  * @author jiac
- * @version 1.0.0 2021/6/30:11:54
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/30:11:54
+ * @since 0.0.5.1
  */
 public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInNameCheck {
     

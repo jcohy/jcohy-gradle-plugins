@@ -6,24 +6,25 @@ package com.jcohy.convention.version;
  * <p> Description: 项目构件发布的仓库地址
  *
  * @author jiac
- * @version 1.0.0 2021/3/5:12:47
- * @since 1.0.0
+ * @version 0.0.5.1 2021/3/5:12:47
+ * @since 0.0.5.1
  */
 public enum Repository {
     
     /**
-     * 快照版本对应的仓库
+     * 快照版本对应的仓库.
      */
     SNAPSHOT("jcohy-snapshots", "Jcohy-Snapshots",
             "http://192.168.11.230:8081/repository/snapshot", true),
     
     /**
-     * 预发布版本对应的仓库
+     * 预发布版本对应的仓库.
      */
     MILESTONE("jcohy-milestones", "Jcohy-Milestones",
             "http://192.168.11.230:8081/repository/milestone", false),
+
     /**
-     * 发布版本对应的仓库
+     * 发布版本对应的仓库.
      */
     RELEASE("jochy-releases", "Jcohy-Releases",
             "http://192.168.11.230:8081/repository/releases", false);

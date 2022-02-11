@@ -29,8 +29,8 @@ import org.springframework.util.PropertyPlaceholderHelper;
  * Description: {@link Task} 从 classpath 中获取资源并写入磁盘中
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:16:25
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:16:25
+ * @since 0.0.5.1
  */
 public class ExtractResources extends DefaultTask {
     
@@ -78,7 +78,7 @@ public class ExtractResources extends DefaultTask {
             }
             String resource = FileCopyUtils.copyToString(new InputStreamReader(resourceStream, StandardCharsets.UTF_8));
             resource = this.propertyPlaceholderHelper.replacePlaceholders(resource,
-                    (placeholder) -> this.properties.get(placeholder));
+                    this.properties::get);
             FileCopyUtils.copy(resource,
                     new FileWriter(this.destinationDirectory.file(resourceName).get().getAsFile()));
         }

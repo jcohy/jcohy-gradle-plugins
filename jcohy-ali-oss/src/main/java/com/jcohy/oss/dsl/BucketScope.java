@@ -9,8 +9,8 @@ import com.aliyun.oss.model.CannedAccessControlList;
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  *
  * @author jiac
- * @version 1.0.0 2021/7/23:11:01
- * @since 1.0.0
+ * @version 0.0.5.1 2021/7/23:11:01
+ * @since 0.0.5.1
  */
 public enum BucketScope {
 

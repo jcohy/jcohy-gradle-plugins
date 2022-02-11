@@ -29,8 +29,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Description:
  *
  * @author jiac
- * @version 1.0.0 2021/6/19:16:37
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/19:16:37
+ * @since 0.0.5.1
  */
 public class ConventionsPluginTests {
     

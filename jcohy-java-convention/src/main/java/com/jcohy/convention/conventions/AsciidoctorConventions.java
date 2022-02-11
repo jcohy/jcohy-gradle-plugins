@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.asciidoctor.gradle.jvm.AbstractAsciidoctorTask;
 import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
@@ -57,8 +58,8 @@ import org.springframework.util.StringUtils;
  * </ul>
  * </ul>
  * @author jiac
- * @version 1.0.0 2021/7/2:12:25
- * @since 1.0.0
+ * @version 0.0.5.1 2021/7/2:12:25
+ * @since 0.0.5.1
  */
 public class AsciidoctorConventions {
 
@@ -105,7 +106,7 @@ public class AsciidoctorConventions {
             String language = asciidoctorTask.getLanguages().contains("zh-cn") ? "/zh-cn": "";
             project.delete(project.getBuildDir() + "/docs/asciidoc" + language+ "/img/banner-logo.svg");
             try {
-                Files.copy(AsciidoctorConventions.class.getResourceAsStream("/data/images/banner-logo.svg"),
+                Files.copy(Objects.requireNonNull(AsciidoctorConventions.class.getResourceAsStream("/data/images/banner-logo.svg")),
                         Paths.get(project.getBuildDir() + "/docs/asciidoc" + language+ "/img/banner-logo.svg"));
             }
             catch (IOException e) {

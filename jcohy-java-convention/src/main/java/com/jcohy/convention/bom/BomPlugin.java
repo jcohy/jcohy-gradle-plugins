@@ -8,8 +8,8 @@ package com.jcohy.convention.bom;
  * Description:
  *
  * @author jiac
- * @version 1.0.0 2021/6/17:12:52
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/17:12:52
+ * @since 0.0.5.1
  */
 public class BomPlugin {
 }

@@ -18,8 +18,8 @@ import com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck;
  * {@link RequireThisCheck} for logger references.
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:17:07
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:17:07
+ * @since 0.0.5.1
  */
 public class IdentCheckFilter extends CheckFilter {
     

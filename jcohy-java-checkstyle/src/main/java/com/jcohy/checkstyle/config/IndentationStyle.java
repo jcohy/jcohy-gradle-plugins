@@ -8,8 +8,8 @@ package com.jcohy.checkstyle.config;
  * Description: 可以使用的缩进样式
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:16:34
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:16:34
+ * @since 0.0.5.1
  */
 public enum IndentationStyle {
     

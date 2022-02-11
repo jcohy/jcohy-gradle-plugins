@@ -21,8 +21,8 @@ import org.gradle.jvm.toolchain.JavaToolchainSpec;
  * Description:
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:16:55
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:16:55
+ * @since 0.0.5.1
  */
 public class ToolchainPlugin implements Plugin<Project> {
     @Override

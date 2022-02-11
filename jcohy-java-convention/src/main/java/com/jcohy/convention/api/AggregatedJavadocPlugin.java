@@ -13,8 +13,8 @@ import org.gradle.api.tasks.javadoc.Javadoc;
  * Description:
  *
  * @author jiac
- * @version 1.0.0 2021/7/9:15:24
- * @since 1.0.0
+ * @version 0.0.5.1 2021/7/9:15:24
+ * @since 0.0.5.1
  */
 public class AggregatedJavadocPlugin implements Plugin<Project> {
 

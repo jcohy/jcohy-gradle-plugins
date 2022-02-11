@@ -20,8 +20,8 @@ import org.gradle.tooling.events.OperationCompletionListener;
  * Description:  {@link BuildService} 提供构建中所有测试失败的概述.
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:15:46
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:15:46
+ * @since 0.0.5.1
  */
 public abstract class TestResultsOverview
         implements BuildService<BuildServiceParameters.None>, OperationCompletionListener, AutoCloseable {

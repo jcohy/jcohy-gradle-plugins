@@ -20,8 +20,8 @@ import org.springframework.boot.gradle.util.VersionExtractor;
  * Description:
  *
  * @author jiac
- * @version 1.0.0 2021/7/2:18:15
- * @since 1.0.0
+ * @version 0.0.5.1 2021/7/2:18:15
+ * @since 0.0.5.1
  */
 public class JcohyVersion {
     private JcohyVersion() {
