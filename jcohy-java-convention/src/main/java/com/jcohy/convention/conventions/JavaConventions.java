@@ -57,8 +57,6 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * </ul>
  * <li> 为每个项目配置以下 maven 仓库。
  * <ul>
- * <li> http://192.168.11.230:8081/repository/releases </li>
- * <li> http://192.168.11.230:8081/repository/snapshot </li>
  * <li> https://maven.aliyun.com/repository/central </li>
  * <li> https://repo.spring.io/artifactory/release </li>
  * </ul>
@@ -88,8 +86,8 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * <p/>
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:15:26
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:15:26
+ * @since 0.0.5.1
  */
 class JavaConventions {
     void apply(Project project) {
@@ -110,16 +108,6 @@ class JavaConventions {
     }
 
     private void configureMavenRepository(Project project) {
-        project.getRepositories().maven((mavenRepo) -> {
-           mavenRepo.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/releases/"));
-           mavenRepo.setName("xw-release");
-        });
-
-        project.getRepositories().maven((mavenRepo) -> {
-            mavenRepo.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/snapshot"));
-            mavenRepo.setName("xw-snapshot");
-        });
-
         project.getRepositories().maven((mavenRepo) -> {
             mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/central"));
             mavenRepo.setName("ali");

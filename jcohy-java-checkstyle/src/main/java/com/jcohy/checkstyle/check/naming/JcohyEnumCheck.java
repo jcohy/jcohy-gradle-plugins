@@ -11,8 +11,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * Description:
  *
  * @author jiac
- * @version 1.0.0 2021/6/30:17:21
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/30:17:21
+ * @since 0.0.5.1
  */
 public class JcohyEnumCheck extends AbstractSpringCheck {
     

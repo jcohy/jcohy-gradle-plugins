@@ -16,8 +16,8 @@ import com.puppycrawl.tools.checkstyle.checks.imports.AvoidStaticImportCheck;
  * Description: 检查没有静态导入  {@link AvoidStarImportCheck}. 添加需要排除的静态导入
  * <a href="https://checkstyle.sourceforge.io/config_imports.html#AvoidStaticImport">CheckStyle AvoidStaticImport</a>
  * @author jiac
- * @version 1.0.0 2021/6/21:15:13
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:15:13
+ * @since 0.0.5.1
  */
 public class SpringAvoidStaticImportCheck extends AvoidStaticImportCheck {
     

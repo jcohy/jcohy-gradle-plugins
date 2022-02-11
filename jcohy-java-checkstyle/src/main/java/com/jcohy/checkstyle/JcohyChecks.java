@@ -35,8 +35,8 @@ import com.puppycrawl.tools.checkstyle.filters.SuppressFilterElement;
  * Description: {@link FileSetCheck} that applies Spring checkstype rules.
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:10:50
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:10:50
+ * @since 0.0.5.1
  */
 public class JcohyChecks extends AbstractFileSetCheck implements ExternalResourceHolder {
     

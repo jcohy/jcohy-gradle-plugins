@@ -39,8 +39,8 @@ import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
  * </ul>
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:17:08
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:17:08
+ * @since 0.0.5.1
  */
 class MavenPublishingConventions {
     
@@ -60,14 +60,6 @@ class MavenPublishingConventions {
                 });
             }
 
-//			publishing.getRepositories().maven( mavenRepository -> {
-//				if(mavenRepository.getUrl().toString().startsWith("http://192.168.11.230:8081/repository")){
-//					mavenRepository.credentials( (passwordCredentials -> {
-//						passwordCredentials.setUsername(PomConstant.NEXUS_USER_NAME);
-//						passwordCredentials.setPassword(PomConstant.NEXUS_PASSWORD);
-//					}));
-//				}
-//			});
             publishing.getPublications().withType(MavenPublication.class)
                     .all((mavenPublication ->
                             customizeMavenPublication(mavenPublication, project)));

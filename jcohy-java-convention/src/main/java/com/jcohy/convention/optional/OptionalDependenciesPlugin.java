@@ -20,8 +20,8 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel;
  * 创建一个 {@code optional} 配置
  * {@code optional} 配置是项目 compile 和 runtime 时 classpath 的一部分，但是不影响依赖项目的 classpath
  * @author jiac
- * @version 1.0.0 2021/6/11:16:43
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:16:43
+ * @since 0.0.5.1
  */
 public class OptionalDependenciesPlugin implements Plugin<Project> {
     

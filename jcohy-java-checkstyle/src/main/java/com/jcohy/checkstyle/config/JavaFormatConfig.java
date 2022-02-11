@@ -13,8 +13,8 @@ import java.nio.file.Path;
  * Description: 支持 {@code .springjavaformatconfig} 文件，在每个项目的根目录上设置。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:16:36
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:16:36
+ * @since 0.0.5.1
  */
 public interface JavaFormatConfig {
     

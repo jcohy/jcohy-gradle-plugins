@@ -17,8 +17,8 @@ import com.puppycrawl.tools.checkstyle.api.AuditListener;
  * Description: 通过读取一个简单的文本文件来判断检查结果，如果文本必须存在，则使用  {@code +} 开头，如果必须不存在，则以  {@code -} 开头
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:17:34
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:17:34
+ * @since 0.0.5.1
  */
 public class SpringChecksTestParameter {
     

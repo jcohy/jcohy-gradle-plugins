@@ -21,8 +21,8 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * Description: 检查每一行前面空格是否与缩进样式匹配。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:16:32
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:16:32
+ * @since 0.0.5.1
  */
 public class SpringLeadingWhitespaceCheck extends AbstractSpringCheck {
     

@@ -12,8 +12,8 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion;
  * Description: {@link ToolchainPlugin} 扩展 DSL
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:16:55
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:16:55
+ * @since 0.0.5.1
  */
 public class ToolchainExtension {
     

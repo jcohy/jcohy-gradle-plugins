@@ -11,8 +11,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * Description: 检查  protected, package-private 和 private  的类没有公共方法，除非它们也用 {@link Override @Override} 注解。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:16:58
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:16:58
+ * @since 0.0.5.1
  */
 public class SpringMethodVisibilityCheck extends AbstractSpringCheck {
     

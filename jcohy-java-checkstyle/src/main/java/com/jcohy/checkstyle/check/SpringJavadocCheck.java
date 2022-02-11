@@ -32,8 +32,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  *     <li>注释不能包含 \"(non-Javadoc)\".</li>
  * </ul>
  * @author jiac
- * @version 1.0.0 2021/6/21:15:44
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:15:44
+ * @since 0.0.5.1
  */
 public class SpringJavadocCheck extends AbstractSpringCheck {
     

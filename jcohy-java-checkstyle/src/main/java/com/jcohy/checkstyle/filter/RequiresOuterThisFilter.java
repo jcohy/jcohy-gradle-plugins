@@ -16,8 +16,8 @@ import com.puppycrawl.tools.checkstyle.api.Violation;
  * referring to an outer class from an inner class.
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:17:09
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:17:09
+ * @since 0.0.5.1
  */
 public class RequiresOuterThisFilter implements TreeWalkerFilter {
     

@@ -10,8 +10,8 @@ import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
  * Description:
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:15:13
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:15:13
+ * @since 0.0.5.1
  */
 public abstract class AbstractSpringCheck extends AbstractCheck {
     

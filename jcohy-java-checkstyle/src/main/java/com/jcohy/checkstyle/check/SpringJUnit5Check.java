@@ -23,8 +23,8 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * Description: 检查是否遵循 JUnit 5 约定以及是否不小心使用了 JUnit 4。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:16:20
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:16:20
+ * @since 0.0.5.1
  */
 public class SpringJUnit5Check extends AbstractSpringCheck {
     

@@ -11,8 +11,8 @@ import org.gradle.api.Project;
  * Description:
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:15:26
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:15:26
+ * @since 0.0.5.1
  */
 public class ConventionsPlugin implements Plugin<Project> {
     @Override

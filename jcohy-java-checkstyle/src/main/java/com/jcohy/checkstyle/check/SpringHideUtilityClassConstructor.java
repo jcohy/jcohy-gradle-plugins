@@ -17,8 +17,8 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * Description: 扩展  {@link HideUtilityClassConstructorCheck} 确保工具类（在 API 中只有静态方法和字段的类）没有任何公有构造器。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:15:40
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:15:40
+ * @since 0.0.5.1
  */
 public class SpringHideUtilityClassConstructor extends HideUtilityClassConstructorCheck {
     

@@ -26,8 +26,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Description:  {@link JcohyConfigurationLoader}.
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:17:36
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:17:36
+ * @since 0.0.5.1
  */
 public class SpringConfigurationLoaderTests {
     

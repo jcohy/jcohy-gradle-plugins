@@ -19,8 +19,8 @@
  *
  * @param <T> this is a valid param
  * @author jiac
- * @version 1.0.0 2020/6/19:18:27
- * @since 1.0.0
+ * @version 0.0.5.1 2020/6/19:18:27
+ * @since 0.0.5.1
  */
 public class JavadocSoundtrack<T> {
 

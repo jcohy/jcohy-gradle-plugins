@@ -13,8 +13,8 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * Description: 检查三元操作是否遵循 Spring 约定。 所有三元测试都应该有括号。 应使用不等于而不是等于作为对空值的测试。
  *
  * @author jiac
- * @version 1.0.0 2021/6/21:17:04
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/21:17:04
+ * @since 0.0.5.1
  */
 public class SpringTernaryCheck extends AbstractSpringCheck {
     

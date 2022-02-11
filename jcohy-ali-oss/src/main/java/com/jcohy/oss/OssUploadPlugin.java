@@ -10,8 +10,8 @@ import org.gradle.api.Project;
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  *
  * @author jiac
- * @version 1.0.0 2021/7/23:11:04
- * @since 1.0.0
+ * @version 0.0.5.1 2021/7/23:11:04
+ * @since 0.0.5.1
  */
 public class OssUploadPlugin implements Plugin<Project> {
 

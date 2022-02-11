@@ -12,8 +12,8 @@ import java.util.List;
  * <p> Description:
  *
  * @author jiac
- * @version 1.0.0 2021/7/23:23:35
- * @since 1.0.0
+ * @version 0.0.5.1 2021/7/23:23:35
+ * @since 0.0.5.1
  */
 public class JsonUtils {
 

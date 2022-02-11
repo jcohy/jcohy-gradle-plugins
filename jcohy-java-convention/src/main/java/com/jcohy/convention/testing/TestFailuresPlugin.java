@@ -19,8 +19,8 @@ import org.gradle.api.tasks.testing.TestResult;
  * Description: 此插件用于记录测试失败并在构建结束时生成报告。
  *
  * @author jiac
- * @version 1.0.0 2021/6/11:15:42
- * @since 1.0.0
+ * @version 0.0.5.1 2021/6/11:15:42
+ * @since 0.0.5.1
  */
 public class TestFailuresPlugin implements Plugin<Project> {
     @Override
