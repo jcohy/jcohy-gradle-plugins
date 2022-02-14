@@ -1,4 +1,4 @@
-package com.jcohy.convention.version;
+package com.jcohy.convention.maven;
 
 /**
  * Copyright: Copyright (c) 2021 <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>

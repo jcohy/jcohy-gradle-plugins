@@ -21,7 +21,7 @@ public class ProjectVersion {
     }
 
     static String get() throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(new File("gradle.properties"))) {
+        try (FileInputStream inputStream = new FileInputStream("gradle.properties")) {
             Properties properties = new Properties();
             properties.load(inputStream);
             return properties.getProperty("VERSION");

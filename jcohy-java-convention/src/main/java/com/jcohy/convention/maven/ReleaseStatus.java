@@ -1,4 +1,4 @@
-package com.jcohy.convention.version;
+package com.jcohy.convention.maven;
 
 import java.util.regex.Pattern;
 

@@ -1,4 +1,4 @@
-package com.jcohy.convention.dsl;
+package com.jcohy.convention.conventions;
 
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Console;
@@ -15,7 +15,7 @@ import org.gradle.api.tasks.Console;
  */
 public class PomExtension {
 
-    public static final String OSS_EXTENSION_NAME = "pomExtension";
+    public static final String POM_EXTENSION = "pomExtension";
 
     public String username;
 

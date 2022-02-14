@@ -1,5 +1,7 @@
-package com.jcohy.convention.version;
+package com.jcohy.convention.utils;
 
+import com.jcohy.convention.maven.ReleaseStatus;
+import com.jcohy.convention.maven.Repository;
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.junit.jupiter.api.Test;

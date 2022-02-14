@@ -1,14 +1,14 @@
 package com.jcohy.convention.conventions;
 
 import com.jcohy.convention.constant.PomConstant;
-import com.jcohy.convention.dsl.PomExtension;
-import com.jcohy.convention.version.ReleaseStatus;
-import com.jcohy.convention.version.Repository;
+import com.jcohy.convention.maven.ReleaseStatus;
+import com.jcohy.convention.maven.Repository;
 import org.apache.maven.artifact.repository.MavenArtifactRepository;
 import org.gradle.api.Project;
 import org.gradle.api.attributes.Usage;
 import org.gradle.api.component.AdhocComponentWithVariants;
 import org.gradle.api.component.ConfigurationVariantDetails;
+import org.gradle.api.plugins.JavaPlatformPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.JavaPluginExtension;
@@ -22,6 +22,7 @@ import org.gradle.api.publish.maven.MavenPomOrganization;
 import org.gradle.api.publish.maven.MavenPomScm;
 import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.tasks.bundling.Jar;
 
 /**
  * Copyright: Copyright (c) 2021
@@ -49,36 +50,58 @@ class MavenPublishingConventions {
     private PomExtension pomExtension = null;
 
     void apply(Project project) {
+
+        pomExtension = new PomExtension(project.getRootProject());
+        project.getRootProject().getExtensions().add(PomExtension.POM_EXTENSION,pomExtension);
+
         project.getPlugins().withType(MavenPublishPlugin.class).all((mavenPublishPlugin) -> {
             PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
-
-            pomExtension = project.getRootProject().getExtensions().create(PomExtension.OSS_EXTENSION_NAME,
-                    PomExtension.class);
-
-            if (project.hasProperty("deploymentRepository")) {
-                publishing.getRepositories().maven(mavenRepository -> {
-                    Repository repository = Repository.of(ReleaseStatus.ofProject(project));
-                    mavenRepository.setUrl(repository.getUrl());
-                    mavenRepository.setName(repository.getName());
-                    mavenRepository.credentials((passwordCredentials -> {
-                        passwordCredentials.setUsername(PomConstant.NEXUS_USER_NAME);
-                        passwordCredentials.setPassword(PomConstant.NEXUS_PASSWORD);
-                    }));
-                });
-            }
-
-            publishing.getPublications().withType(MavenPublication.class)
-                    .all((mavenPublication ->
-                            customizeMavenPublication(mavenPublication, project)));
-            
+            configurationDeploy(project);
             project.getPlugins().withType(JavaPlugin.class).all(javaPlugin -> {
                 JavaPluginExtension extension = project.getExtensions().getByType(JavaPluginExtension.class);
                 extension.withJavadocJar();
                 extension.withSourcesJar();
             });
+
+            project.afterEvaluate( p -> {
+                publishing.getPublications().withType(MavenPublication.class)
+                        .all((mavenPublication ->
+                                customizeMavenPublication(mavenPublication, project)));
+            });
         });
     }
-    
+
+    private void configurationDeploy(Project project) {
+
+        PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
+        MavenPublication mavenPublication = publishing.getPublications().create("maven", MavenPublication.class);
+
+        project.afterEvaluate((evaluated) -> {
+            PomExtension pomExtension = project.getRootProject().getExtensions().getByType(PomExtension.class);
+            publishing.getRepositories().maven(mavenRepository -> {
+                Repository repository = Repository.of(ReleaseStatus.ofProject(project));
+                mavenRepository.setUrl(repository.getUrl());
+                mavenRepository.setName(repository.getName());
+                mavenRepository.credentials((passwordCredentials -> {
+                    passwordCredentials.setUsername(pomExtension.getUsername() != null ? pomExtension.getUsername() : PomConstant.NEXUS_USER_NAME);
+                    passwordCredentials.setPassword(pomExtension.getPassword() != null ? pomExtension.getPassword() : PomConstant.NEXUS_PASSWORD);
+                }));
+            });
+
+            project.getPlugins().withType(JavaPlugin.class).all((javaPlugin) -> {
+                if (((Jar) project.getTasks().getByName(JavaPlugin.JAR_TASK_NAME)).isEnabled()) {
+                    project.getComponents().matching((component) -> "java".equals(component.getName()))
+                            .all(mavenPublication::from);
+                }
+            });
+        });
+
+        project.getPlugins().withType(JavaPlatformPlugin.class)
+                .all((javaPlugin) -> project.getComponents()
+                        .matching((component) -> "javaPlatform".equals(component.getName()))
+                        .all(mavenPublication::from));
+    }
+
     /**
      * 自定义 maven 满足 Maven Central 的要求.
      * @param publication publication
@@ -90,7 +113,7 @@ class MavenPublishingConventions {
                 .all(javaPlugin -> customizeJavaMavenPublication(publication, project));
         suppressMavenOptionalFeatureWarnings(publication);
     }
-    
+
     /**
      * 添加发布兼容性警告.
      * @param publication publication
@@ -99,7 +122,7 @@ class MavenPublishingConventions {
         publication.suppressPomMetadataWarningsFor("mavenOptionalApiElements");
         publication.suppressPomMetadataWarningsFor("mavenOptionalRuntimeElements");
     }
-    
+
     /**
      * 版本解析.
      * @param publication publication
@@ -112,7 +135,7 @@ class MavenPublishingConventions {
         publication.versionMapping((strategy) -> strategy.usage(Usage.JAVA_RUNTIME,
                 VariantVersionMappingStrategy::fromResolutionResult));
     }
-    
+
     /**
      * 允许在 pom 中添加 optional 依赖，这是使 Eclipse 中的 m2e 所必需的.
      * @param project 要添加功能的项目
@@ -123,14 +146,14 @@ class MavenPublishingConventions {
         extension.registerFeature("mavenOptional", (feature) -> {
             feature.usingSourceSet(convention.getSourceSets().getByName("main"));
         });
-        
+
         AdhocComponentWithVariants javaComponent = (AdhocComponentWithVariants) project.getComponents()
                 .findByName("java");
         javaComponent.addVariantsFromConfiguration(
                 project.getConfigurations().findByName("mavenOptionalRuntimeElements"),
                 ConfigurationVariantDetails::mapToOptional);
     }
-    
+
     /**
      * 定义 pom 文件.
      * @param pom pom
@@ -143,7 +166,7 @@ class MavenPublishingConventions {
         if (!isUserInherited(project)) {
             pom.organization(this::customizeOrganization);
         }
-        
+
         pom.licenses(this::customizeLicenses);
         pom.developers(this::customizeDevelopers);
         pom.scm((scm) -> customizeScm(scm, project));
@@ -151,7 +174,7 @@ class MavenPublishingConventions {
             pom.issueManagement(this::customizeIssueManagement);
         }
     }
-    
+
     /**
      * 定义 issueManagement.
      * @param issueManagement issueManagement
@@ -160,7 +183,7 @@ class MavenPublishingConventions {
         issueManagement.getSystem().set(pomExtension.getIssueSystem() != null ? pomExtension.getIssueSystem() : PomConstant.ISSUE_SYSTEM);
         issueManagement.getUrl().set(pomExtension.getIssueUrl() != null ? pomExtension.getIssueUrl() : PomConstant.ISSUE_URL);
     }
-    
+
     /**
      * 定义 scm.
      * @param scm scm
@@ -173,7 +196,7 @@ class MavenPublishingConventions {
         }
         scm.getUrl().set(pomExtension.getGitUrl() != null ? pomExtension.getGitUrl() : PomConstant.GIT_URL);
     }
-    
+
     /**
      * 定义开发者.
      * @param developers developers
@@ -186,7 +209,7 @@ class MavenPublishingConventions {
             developer.getOrganizationUrl().set(pomExtension.getOrganizationUrl() != null ? pomExtension.getOrganizationUrl() : PomConstant.POM_ORGANIZATION_URL);
         });
     }
-    
+
     /**
      * 定义 licenses.
      * @param licenses licenses
@@ -197,7 +220,7 @@ class MavenPublishingConventions {
             licence.getUrl().set(pomExtension.getLicenseUrl() != null ? pomExtension.getLicenseUrl() : PomConstant.LICENSE_URL);
         });
     }
-    
+
     /**
      * 定义组织.
      * @param organization  organization
@@ -206,7 +229,7 @@ class MavenPublishingConventions {
         organization.getName().set(pomExtension.getOrganizationName() != null ? pomExtension.getOrganizationName() : PomConstant.POM_ORGANIZATION_NAME);
         organization.getUrl().set(pomExtension.getOrganizationUrl() != null ? pomExtension.getOrganizationUrl() : PomConstant.POM_ORGANIZATION_URL);
     }
-    
+
     /**
      * 排除.
      * @param project project
@@ -215,5 +238,5 @@ class MavenPublishingConventions {
     private boolean isUserInherited(Project project) {
         return "jcohy-framework-bom".equals(project.getName());
     }
-    
+
 }

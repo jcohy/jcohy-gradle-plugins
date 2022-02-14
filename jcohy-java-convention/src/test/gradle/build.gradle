@@ -2,14 +2,30 @@ plugins {
 	id "java"
 	id "org.asciidoctor.jvm.convert"
 //	id "org.asciidoctor.jvm.pdf"
-	id "com.jcohy.deployed"
+	id "maven-publish"
 	id "com.jcohy.conventions"
 }
 
 description = "Jcohy Boot Docs"
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '1.1.1-SNAPSHOT'
+
+pomExtension {
+	username = "jcohy"
+	password = "123456"
+	gitUrl = "https://github.com/jiachao23"
+	organizationName = "jcohy-example"
+	organizationUrl = "https://github.com/jcohy-example"
+	scmConnection = "scm:git:git://github.com/jcohy/jcohy-example"
+	scmDeveloperConnection = "scm:git:git://github.com/jcohy"
+	licenseName = "PSD"
+	licenseUrl = "PSD"
+	developerName = "aaa"
+	developerEmail = "aaa@email.com"
+	issueSystem = "GITHUB"
+	issueUrl = "https://github.com"
+}
 
 asciidoctor {
 	sources {
