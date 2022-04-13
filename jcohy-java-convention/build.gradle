@@ -1,5 +1,6 @@
 plugins {
 	id "java-gradle-plugin"
+	id 'com.gradle.plugin-publish' version '0.18.0'
 }
 
 dependencies {
@@ -20,6 +21,29 @@ dependencies {
 	testImplementation("com.google.code.gson:gson:2.8.4")
 	testImplementation("org.apache.logging.log4j:log4j-core:2.12.1")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
+}
+
+pluginBundle {
+	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
+	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
+	tags = ['JavaConventions', 'Deployed', 'OptionalDependencies',"Asciidoctor"]
+}
+
+gradlePlugin {
+	plugins {
+		conventionsPlugin {
+			id = 'com.jcohy.convention'
+			displayName = 'JavaConvention,MavenConvention,AsciidoctorConvention'
+			description = 'The plugin provides configuration with three conventions. Conventions when using the JavaBasePlugin, conventions when using the MavenPublishPlugin plugin, conventions when using the AsciidoctorJPlugin plugin'
+			implementationClass = 'com.jcohy.convention.conventions.ConventionsPlugin'
+		}
+		greetingsPlugin {
+			id = 'com.jcohy.optional-dependencies'
+			displayName = 'Optional Dependencies Plugins'
+			description = 'Added support for Maven-style optional dependencies.'
+			implementationClass = 'com.jcohy.convention.optional.OptionalDependenciesPlugin'
+		}
+	}
 }
 
 test {
