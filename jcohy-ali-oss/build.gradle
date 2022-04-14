@@ -14,11 +14,11 @@ test {
 	useJUnitPlatform()
 }
 
-gradlePlugin {
-	plugins {
-		simplePlugin {
-			id = 'com.jcohy.oss'
-			implementationClass = 'com.jcohy.oss.OssUploadPlugin'
-		}
-	}
-}
+//gradlePlugin {
+//	plugins {
+//		simplePlugin {
+//			id = 'com.jcohy.oss'
+//			implementationClass = 'com.jcohy.oss.OssUploadPlugin'
+//		}
+//	}
+//}

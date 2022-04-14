@@ -19,10 +19,9 @@ plugins {
 }
 
 ext {
-	set('signing.keyId',System.getenv('SIGNING_KEYID'))
-	set('signing.password',System.getenv('SIGNING_PASSWORD'))
-	set('signing.secretKeyRingFile',System.getenv('SIGNING_SECRETKEYRINGFILE'))
-
+	set('signing.keyId',System.getenv('signing.keyId'))
+	set('signing.password',System.getenv('signing.password'))
+	set('signing.secretKeyRingFile',System.getenv('signing.secretKeyRingFile'))
 	set('deployUsername',System.getenv('NEXUS_OSS_USER_NAME'))
 	set('deployPassword',System.getenv('NEXUS_OSS_PASS_WORD'))
 }
