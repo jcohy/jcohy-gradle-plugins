@@ -125,8 +125,8 @@ public class AsciidoctorConventions {
     private void configureAsciidoctorPdfTask(Project project, AsciidoctorTask asciidoctorPdf) {
         try {
             Map<String, Object> attributes = new HashMap<>();
-            attributes.put("pdf-fontsdir", AsciidoctorConventions.class.getResource("/data/fonts").toURI());
-            attributes.put("pdf-stylesdir",AsciidoctorConventions.class.getResource("/data/themes").toURI());
+            attributes.put("pdf-fontsdir", Objects.requireNonNull(AsciidoctorConventions.class.getResource("/data/fonts")).toURI());
+            attributes.put("pdf-stylesdir", Objects.requireNonNull(AsciidoctorConventions.class.getResource("/data/themes")).toURI());
             attributes.put("pdf-style","Chinese");
             asciidoctorPdf.attributes(attributes);
         }
@@ -167,7 +167,7 @@ public class AsciidoctorConventions {
             project.getConfigurations().matching((candidate) -> "dependencyManagement".equals(candidate.getName()))
                     .all(configuration::extendsFrom);
             configuration.getDependencies().add(project.getDependencies()
-                    .create("io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.2"));
+                    .create("io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.3"));
             configuration.getDependencies()
                     .add(project.getDependencies().create("org.asciidoctor:asciidoctorj-pdf:1.5.3"));
         });

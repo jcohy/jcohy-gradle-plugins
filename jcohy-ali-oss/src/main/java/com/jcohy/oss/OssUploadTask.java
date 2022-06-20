@@ -14,6 +14,7 @@ import com.jcohy.oss.dsl.AliOssExtension;
 import com.jcohy.oss.dsl.Upload;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +59,9 @@ public class OssUploadTask extends DefaultTask {
      * 获取需要上传的文件
      * @return /
      */
-    public Map<String,File> getUploadFiles(){
+
+	@Input
+	public Map<String,File> getUploadFiles(){
         String prefix = this.upload.getPrefix();
         Set<File> localFiles = project.getLayout().getProjectDirectory()
                 .dir(this.upload.getSource()).getAsFileTree().getFiles()

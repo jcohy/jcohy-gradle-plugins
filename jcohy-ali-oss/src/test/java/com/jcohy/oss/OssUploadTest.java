@@ -7,6 +7,7 @@ import java.util.Map;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OssUploadTest {
 
     @Test
+	@Disabled
     void uploadOssFiles() {
         File projectDir = new File("src/test/gradle");
         Map<String, String> environment = new LinkedHashMap<>();
