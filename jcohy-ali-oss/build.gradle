@@ -1,5 +1,6 @@
 plugins {
-	id 'java-gradle-plugin'
+	id "java-gradle-plugin"
+	id 'com.gradle.plugin-publish' version '0.18.0'
 }
 
 dependencies {
@@ -14,11 +15,17 @@ test {
 	useJUnitPlatform()
 }
 
-//gradlePlugin {
-//	plugins {
-//		simplePlugin {
-//			id = 'com.jcohy.oss'
-//			implementationClass = 'com.jcohy.oss.OssUploadPlugin'
-//		}
-//	}
-//}
+pluginBundle {
+	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
+	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
+	tags = ['OSS', 'AliYun', 'AliYunOss']
+}
+
+gradlePlugin {
+	plugins {
+		simplePlugin {
+			id = 'com.jcohy.oss'
+			implementationClass = 'com.jcohy.oss.OssUploadPlugin'
+		}
+	}
+}
