@@ -210,6 +210,7 @@ public class AsciidoctorConventions {
         attributes.put("allow-uri-read", true);
         attributes.put("revnumber", null);
         attributes.put("docinfo", "shared,private");
+		attributes.put("attribute-missing", "warn");
 
         attributes.put("doc-url", "https://docs.jcohy.com");
         attributes.put("resource-url", "https://resources.jcohy.com");
@@ -250,6 +251,9 @@ public class AsciidoctorConventions {
         syncDocumentationSource.from("src/test/kotlin",(spec) -> {
             spec.into("test/kotlin");
         });
+		syncDocumentationSource.from("src/main/resources",(spec) -> {
+			spec.into("main/resources");
+		});
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncedSource).withPathSensitivity(PathSensitivity.RELATIVE)
                 .withPropertyName("synced source");
