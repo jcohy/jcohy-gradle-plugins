@@ -92,9 +92,38 @@ jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的�
 .. io.spring.docresources
 . 设置所有的警告都是致命的.
 . AsciidoctorJ 版本更新为 2.4.3.
-. 创建一个 `asciidoctorExtensions` configuration.
+. 创建一个 `asciidoctorExtensions` configuration.并配置 `io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.3`，`org.asciidoctor:asciidoctorj-pdf:1.5.3` 依赖
 . 对于每个 AsciidoctorTask (HTML only):
 .. 创建一个任务将文档资源同步到其输出目录
++
+|===
+|源目录 |目标目录
+
+|src/main/java
+|project.getBuildDir() + "docs/src/" + asciidoctorTask.getName() /main/java
+
+|src/main/groovy
+|project.getBuildDir() + "docs/src/" + asciidoctorTask.getName()/main/groovy
+
+|src/main/kotlin
+|project.getBuildDir() + "docs/src/" + asciidoctorTask.getName()/main/kotlin
+
+|src/test/java
+|project.getBuildDir() + "docs/src/" + asciidoctorTask.getName()/test/java
+
+|src/test/groovy
+|project.getBuildDir() + "docs/src/" + asciidoctorTask.getName()/test/groovy
+
+|src/test/kotlin
+|project.getBuildDir() + "docs/src/" + asciidoctorTask.getName()/test/kotlin
+
+|src/main/resources
+|project.getBuildDir() + "docs/src/" + asciidoctorTask.getName()/main/resources
+
+|src/test/resources
+|project.getBuildDir() + "docs/src/" + asciidoctorTask.getName()/test/resources
+|===
+
 .. 配置 backend
 .. 配置 doctype 为 book.
 . 对于每个 AsciidoctorTask (PDF only):
@@ -105,20 +134,62 @@ jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的�
 |===
 |属性 |值
 
+| idprefix
+| ""
+
+| idseparator
+| -
+
+| toc
+| left
+
+| toclevels
+| 4
+
+| tabsize
+| 4
+
+| numbered
+| ""
+
+| source-indent
+| 0
+
+| sectanchors
+| ""
+
+| icons
+| font
+
+| hide-uri-scheme
+| font
+
+| allow-uri-read
+| true
+
+| revnumber
+| null
+
+| docinfo
+| shared,private
+
+| attribute-missing
+| warn
+
 | doc-url
-| http://docs.jcohy.com
+| https://docs.jcohy.com
 
 | resource-url
-| http://resource.jcohy.com
+| https://resource.jcohy.com
 
 | software-url
-| http://software.jcohy.com
+| https://software.jcohy.com
 
 | study-url
-| http://study.jcohy.com
+| https://study.jcohy.com
 
 | project-url
-| http://project.jcohy.com
+| https://project.jcohy.com
 |===
 
 .. 启用 baseDirFollowsSourceDir()

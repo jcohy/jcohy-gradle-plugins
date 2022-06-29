@@ -254,6 +254,9 @@ public class AsciidoctorConventions {
 		syncDocumentationSource.from("src/main/resources",(spec) -> {
 			spec.into("main/resources");
 		});
+        syncDocumentationSource.from("src/test/resources",(spec) -> {
+            spec.into("test/resources");
+        });
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncedSource).withPathSensitivity(PathSensitivity.RELATIVE)
                 .withPropertyName("synced source");
