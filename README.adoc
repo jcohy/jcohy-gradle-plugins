@@ -85,9 +85,5 @@ dependencies {
 ----
 
 
-git pull http://3b7t671894.zicp.vip/jiac/jcohy-gradle-plugins.git
-
-git push xw master git push origin master
-
-git pull xw master git push origin master
+git pull https://github.com/jcohy/jcohy-gradle-plugins.git
 

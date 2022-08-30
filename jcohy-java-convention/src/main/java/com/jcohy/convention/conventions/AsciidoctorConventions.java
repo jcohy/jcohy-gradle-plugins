@@ -117,7 +117,7 @@ public class AsciidoctorConventions {
 
     private void createAsciidoctorPdfTask(Project project) {
         project.getTasks().register("asciidoctorPdf",AsciidoctorTask.class,(asciidoctorPdf) -> {
-            asciidoctorPdf.sources("index.singleadoc");
+            asciidoctorPdf.sources("*.singleadoc");
             configureAsciidoctorPdfTask(project,asciidoctorPdf);
         });
     }
@@ -188,6 +188,7 @@ public class AsciidoctorConventions {
      */
     private void configureOptions(AbstractAsciidoctorTask asciidoctorTask) {
         asciidoctorTask.options(Collections.singletonMap("doctype", "book"));
+        asciidoctorTask.setLogDocuments(true);
     }
 
     /**
@@ -254,6 +255,9 @@ public class AsciidoctorConventions {
 		syncDocumentationSource.from("src/main/resources",(spec) -> {
 			spec.into("main/resources");
 		});
+        syncDocumentationSource.from("src/test/resources",(spec) -> {
+            spec.into("test/resources");
+        });
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncedSource).withPathSensitivity(PathSensitivity.RELATIVE)
                 .withPropertyName("synced source");
