@@ -3,6 +3,7 @@ package com.jcohy.oss.dsl;
 import groovy.lang.Closure;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Console;
+import org.gradle.api.tasks.Input;
 import org.gradle.util.ConfigureUtil;
 
 /**
@@ -18,10 +19,19 @@ public class AliOssExtension {
 
     public static final String OSS_EXTENSION_NAME = "alioss";
 
+    @Input
     private String endpoint ="http://oss-cn-beijing.aliyuncs.com";
+
+    @Input
     private String accessKey = "accessKey";
+
+    @Input
     private String secretKey = "secretKey";
+
+    @Input
     private String bucket = "jcohy-test";
+
+    @Input
     private String payload;
     private final Project project;
     private final Upload upload = new Upload();

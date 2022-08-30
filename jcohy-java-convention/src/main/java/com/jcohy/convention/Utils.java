@@ -1,7 +1,6 @@
 package com.jcohy.convention;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -11,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.jcohy.convention.conventions.AsciidoctorConventions;
@@ -27,6 +27,7 @@ import com.jcohy.convention.conventions.AsciidoctorConventions;
 public class Utils {
 
     public static File getResourceAsFile(Class clazz,String Path){
+		List
         File file = null;
         URL resource = clazz.getResource(Path);
         try {

@@ -1,5 +1,7 @@
 package com.jcohy.oss.dsl;
 
+import org.gradle.api.tasks.Input;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class Upload {
     /**
      * 源文件目录
      */
+    @Input
     private String source;
 
     /**
@@ -46,6 +49,7 @@ public class Upload {
      * 此设置会将 src/main 目录中的文件上传至指定的 bucket，下 jcohy 目录下。其路径不包含 source 指定的目录：
      * http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/com/jcohy/oss/Test.txt
      */
+    @Input
     private String prefix;
 
     /**
@@ -73,11 +77,13 @@ public class Upload {
      * 如果 ignoreSourceDir 为 {@code false} ,则上传的路径为:
      * http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/src/main/Test.txt
      */
+    @Input
     private boolean ignoreSourceDir = false;
 
     /**
      * 是否递归目录上传
      */
+    @Input
     private boolean recursion = true;
 
     public boolean isRecursion() {
