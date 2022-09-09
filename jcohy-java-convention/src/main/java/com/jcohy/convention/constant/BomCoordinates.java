@@ -17,13 +17,14 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
  */
 public final class BomCoordinates {
 
-    public static final String SPRING_CLOUD_BOM_COORDINATES = "org.springframework.cloud:spring-cloud-dependencies:2021.0.1";
+    public static final String SPRING_CLOUD_BOM_COORDINATES = "org.springframework.cloud:spring-cloud-dependencies:2021.0.4";
 
     public static final String SPRING_BOM_COORDINATES = SpringBootPlugin.BOM_COORDINATES;
 
-    public static final String PIVOTAL_SPRING_CLOUD = "io.pivotal.spring.cloud:spring-cloud-services-dependencies:2.4.1";
+    // https://github.com/pivotal-cf/spring-cloud-services-starters
+    public static final String PIVOTAL_SPRING_CLOUD = "io.pivotal.spring.cloud:spring-cloud-services-dependencies:3.5.0";
 
-    public static final String SPRING_BOOT_ADMIN = "de.codecentric:spring-boot-admin-dependencies:2.7.1";
+    public static final String SPRING_BOOT_ADMIN = "de.codecentric:spring-boot-admin-dependencies:2.6.9";
 
     public static final String ALI_YUN_BOM_COORDINATES = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
 

@@ -27,7 +27,6 @@ import com.jcohy.convention.conventions.AsciidoctorConventions;
 public class Utils {
 
     public static File getResourceAsFile(Class clazz,String Path){
-		List
         File file = null;
         URL resource = clazz.getResource(Path);
         try {
