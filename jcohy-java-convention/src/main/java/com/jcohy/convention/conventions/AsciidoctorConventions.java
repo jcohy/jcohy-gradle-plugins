@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.jcohy.convention.Utils;
 import org.asciidoctor.gradle.jvm.AbstractAsciidoctorTask;
 import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
 import org.asciidoctor.gradle.jvm.AsciidoctorJPlugin;
@@ -18,6 +19,7 @@ import org.asciidoctor.gradle.jvm.AsciidoctorTask;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.Sync;
+import org.gradle.internal.impldep.org.joda.time.DateTimeUtils;
 
 import org.springframework.util.StringUtils;
 
@@ -215,7 +217,8 @@ public class AsciidoctorConventions {
         attributes.put("icons", "font");
         attributes.put("hide-uri-scheme", "font");
         attributes.put("allow-uri-read", true);
-        attributes.put("revnumber", null);
+        attributes.put("revnumber", project.getVersion());
+        attributes.put("revdate", Utils.now());
         attributes.put("docinfo", "shared,private");
         attributes.put("attribute-missing", "warn");
 
