@@ -16,7 +16,6 @@ import org.gradle.jvm.toolchain.JavaToolchainSpec;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:
  *
@@ -29,7 +28,7 @@ public class ToolchainPlugin implements Plugin<Project> {
     public void apply(Project project) {
         configureToolchain(project);
     }
-    
+
     private void configureToolchain(Project project) {
         ToolchainExtension toolchain = project.getExtensions().create("toolchain", ToolchainExtension.class, project);
         JavaLanguageVersion toolchainVersion = toolchain.getJavaVersion();
@@ -37,7 +36,7 @@ public class ToolchainPlugin implements Plugin<Project> {
             project.afterEvaluate((evaluated) -> configure(evaluated, toolchain));
         }
     }
-    
+
     private void configure(Project project, ToolchainExtension toolchain) {
         if (!isJavaVersionSupported(toolchain, toolchain.getJavaVersion())) {
             disableToolchainTasks(project);
@@ -50,19 +49,19 @@ public class ToolchainPlugin implements Plugin<Project> {
             configureTestToolchain(project, toolchain);
         }
     }
-    
+
     private boolean isJavaVersionSupported(ToolchainExtension toolchain, JavaLanguageVersion toolchainVersion) {
         return toolchain.getMaximumCompatibleJavaVersion().map((version) -> version.canCompileOrRun(toolchainVersion))
                 .getOrElse(true);
     }
-    
+
     private void disableToolchainTasks(Project project) {
         project.getTasks().withType(JavaCompile.class, (task) -> task.setEnabled(false));
         project.getTasks().withType(Javadoc.class, (task) -> task.setEnabled(false));
         project.getTasks().withType(Test.class, (task) -> task.setEnabled(false));
         project.getTasks().withType(GradleBuild.class, (task) -> task.setEnabled(false));
     }
-    
+
     private void configureJavaCompileToolchain(Project project, ToolchainExtension toolchain) {
         project.getTasks().withType(JavaCompile.class, (compile) -> {
             compile.getOptions().setFork(true);
@@ -71,7 +70,7 @@ public class ToolchainPlugin implements Plugin<Project> {
             compile.getOptions().getForkOptions().getJvmArgs().addAll(forkArgs);
         });
     }
-    
+
     private void configureTestToolchain(Project project, ToolchainExtension toolchain) {
         project.getTasks().withType(Test.class, (test) -> {
             // See https://github.com/spring-projects/spring-ldap/issues/570

@@ -24,7 +24,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:
  *
@@ -33,11 +32,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 0.0.5.1
  */
 public class ConventionsPluginTests {
-    
+
     private File projectDir;
-    
+
     private File buildFile;
-    
+
     @BeforeEach
     void setup(@TempDir File projectDir) throws IOException {
         this.projectDir = projectDir;
@@ -47,7 +46,7 @@ public class ConventionsPluginTests {
         try (PrintWriter out = new PrintWriter(new FileWriter(settingsFile))) {
             out.println("include ':jcohy-project'");
         }
-        
+
         File jcohyParentProject = new File(this.projectDir, "jcohy-project/build.gradle");
         jcohyParentProject.getParentFile().mkdirs();
         try (PrintWriter out = new PrintWriter(new FileWriter(jcohyParentProject))) {
@@ -56,7 +55,7 @@ public class ConventionsPluginTests {
             out.println("}");
         }
     }
-    
+
     @Test
     void jarIncludesLegalFiles() throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
@@ -85,7 +84,7 @@ public class ConventionsPluginTests {
             assertThat(mainAttributes.getValue("Build-Jdk-Spec")).isEqualTo("1.8");
         }
     }
-    
+
     @Test
     void sourceJarIsBuilt() throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
@@ -114,7 +113,7 @@ public class ConventionsPluginTests {
             assertThat(mainAttributes.getValue("Build-Jdk-Spec")).isEqualTo("1.8");
         }
     }
-    
+
     @Test
     void javadocJarIsBuilt() throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
@@ -143,8 +142,8 @@ public class ConventionsPluginTests {
             assertThat(mainAttributes.getValue("Build-Jdk-Spec")).isEqualTo("1.8");
         }
     }
-    
-    
+
+
     @Test
     void testRetryIsConfiguredWithThreeRetriesOnCI() throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
@@ -167,7 +166,7 @@ public class ConventionsPluginTests {
                 .contains("Retry plugin applied: true").contains("maxRetries: 3")
                 .contains("failOnPassedAfterRetry: true");
     }
-    
+
     @Test
     void testRetryIsConfiguredWithZeroRetriesLocally() throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
@@ -190,12 +189,12 @@ public class ConventionsPluginTests {
                 .contains("Retry plugin applied: true").contains("maxRetries: 0")
                 .contains("failOnPassedAfterRetry: true");
     }
-    
+
     private void assertThatLicenseIsPresent(JarFile jar) {
         JarEntry license = jar.getJarEntry("META-INF/LICENSE.txt");
         assertThat(license).isNotNull();
     }
-    
+
     private void assertThatNoticeIsPresent(JarFile jar) throws IOException {
         JarEntry notice = jar.getJarEntry("META-INF/NOTICE.txt");
         assertThat(notice).isNotNull();
@@ -203,11 +202,11 @@ public class ConventionsPluginTests {
         // Test that variables were replaced
         assertThat(noticeContent).doesNotContain("${");
     }
-    
+
     private BuildResult runGradle(String... args) {
         return runGradle(Collections.emptyMap(), args);
     }
-    
+
     private BuildResult runGradle(Map<String, String> environment, String... args) {
         return GradleRunner.create().withProjectDir(this.projectDir).withEnvironment(environment).withArguments(args)
                 .withPluginClasspath().build();

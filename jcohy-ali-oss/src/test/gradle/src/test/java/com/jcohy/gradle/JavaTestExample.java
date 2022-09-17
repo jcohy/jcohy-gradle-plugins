@@ -9,7 +9,7 @@
  */
 public class JavaTestExample {
 
-	public static void main(String[] args) {
-		System.out.println("Test Hello, world!!!");
-	}
+    public static void main(String[] args) {
+        System.out.println("Test Hello, world!!!");
+    }
 }

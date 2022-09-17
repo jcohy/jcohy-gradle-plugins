@@ -22,13 +22,13 @@
 public class MethodOrderValid {
 
     @Override
-    public boolean equals(Object obj) {
-        return false;
+    public int hashCode() {
+        return 0;
     }
 
     @Override
-    public int hashCode() {
-        return 0;
+    public boolean equals(Object obj) {
+        return false;
     }
 
     @Override

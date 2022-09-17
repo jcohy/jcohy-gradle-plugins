@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:
  *
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 0.0.5.1
  */
 public class VersionTests {
-    
+
     @Test
     void whenProjectVersionIsMilestone() {
         Project project = ProjectBuilder.builder().build();
@@ -28,7 +27,7 @@ public class VersionTests {
         Repository repository = Repository.of(releaseStatus);
         assertThat(repository).isEqualTo(Repository.MILESTONE);
     }
-    
+
     @Test
     void whenProjectVersionIsReleaseCandidate() {
         Project project = ProjectBuilder.builder().build();
@@ -38,7 +37,7 @@ public class VersionTests {
         Repository repository = Repository.of(releaseStatus);
         assertThat(repository).isEqualTo(Repository.MILESTONE);
     }
-    
+
     @Test
     void whenProjectVersionIsRelease() {
         Project project = ProjectBuilder.builder().build();
@@ -48,7 +47,7 @@ public class VersionTests {
         Repository repository = Repository.of(releaseStatus);
         assertThat(repository).isEqualTo(Repository.RELEASE);
     }
-    
+
     @Test
     void whenProjectVersionIsSnapshot() {
         Project project = ProjectBuilder.builder().build();

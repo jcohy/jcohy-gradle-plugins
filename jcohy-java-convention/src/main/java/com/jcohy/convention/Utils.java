@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.jcohy.convention.conventions.AsciidoctorConventions;
@@ -26,7 +25,7 @@ import com.jcohy.convention.conventions.AsciidoctorConventions;
  */
 public class Utils {
 
-    public static File getResourceAsFile(Class clazz,String Path){
+    public static File getResourceAsFile(Class clazz, String Path) {
         File file = null;
         URL resource = clazz.getResource(Path);
         try {
@@ -38,23 +37,25 @@ public class Utils {
         return file;
     }
 
-    public static File extractResources(Class clazz ,String dir) {
+    public static File extractResources(Class clazz, String dir) {
         File file = null;
         try {
             URI resource = AsciidoctorConventions.class.getResource(dir).toURI();
             String[] array = resource.toString().split("!");
             Map<String, String> env = new HashMap<>();
-            try(FileSystem fs = FileSystems.newFileSystem(URI.create(array[0]), env)) {
+            try (FileSystem fs = FileSystems.newFileSystem(URI.create(array[0]), env)) {
                 Path path = fs.getPath(array[1]);
-                if(Files.isDirectory(path)){
+                if (Files.isDirectory(path)) {
                     Files.list(path).forEach((p) -> System.out.println(p.toString()));
-                } else {
+                }
+                else {
                     System.out.println(path.toString());
                 }
                 Path path1 = Files.copy(path, Paths.get("D:/logo.svg"));
                 file = new File(path.toString());
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return file;

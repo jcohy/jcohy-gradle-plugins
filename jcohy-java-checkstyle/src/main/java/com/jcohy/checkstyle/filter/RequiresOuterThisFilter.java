@@ -10,7 +10,6 @@ import com.puppycrawl.tools.checkstyle.api.Violation;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: {@link TreeWalkerFilter} that can used to relax the {@code 'this.'} requirement when
  * referring to an outer class from an inner class.
@@ -20,9 +19,9 @@ import com.puppycrawl.tools.checkstyle.api.Violation;
  * @since 0.0.5.1
  */
 public class RequiresOuterThisFilter implements TreeWalkerFilter {
-    
+
     private static final Field ARGS_FIELD = getArgsField();
-    
+
     private static Field getArgsField() {
         try {
             Field field = Violation.class.getDeclaredField("args");
@@ -33,7 +32,7 @@ public class RequiresOuterThisFilter implements TreeWalkerFilter {
             return null;
         }
     }
-    
+
     @Override
     public boolean accept(TreeWalkerAuditEvent event) {
         Violation message = event.getViolation();
@@ -44,7 +43,7 @@ public class RequiresOuterThisFilter implements TreeWalkerFilter {
         }
         return true;
     }
-    
+
     private Object[] getArgs(Violation message) {
         if (ARGS_FIELD == null) {
             throw new IllegalStateException("Unable to extract message args");

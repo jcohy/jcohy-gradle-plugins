@@ -8,7 +8,6 @@ import java.nio.file.Path;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 支持 {@code .springjavaformatconfig} 文件，在每个项目的根目录上设置。
  *
@@ -17,33 +16,35 @@ import java.nio.file.Path;
  * @since 0.0.5.1
  */
 public interface JavaFormatConfig {
-    
+
     /**
      * {@link JavaFormatConfig} 使用 {@link IndentationStyle#TABS}.
      */
     JavaFormatConfig TABS = new DefaultJavaFormatConfig(IndentationStyle.TABS);
-    
+
     /**
      * {@link JavaFormatConfig} 使用 {@link IndentationStyle#SPACES}.
      */
     JavaFormatConfig SPACES = new DefaultJavaFormatConfig(IndentationStyle.SPACES);
-    
+
     /**
-     *  默认使用 TABS 进行缩进 {@link JavaFormatConfig}.
+     * 默认使用 TABS 进行缩进 {@link JavaFormatConfig}.
      */
     JavaFormatConfig DEFAULT = TABS;
-    
+
     /**
      * 通过从给定文件中搜索来查找并加载 {@code .springjavaformatconfig}.
+     *
      * @param path 给定的文件
      * @return 加载 {@link JavaFormatConfig}, 当 {@code .springjavaformatconfig} 文件不存在时加载 {@link #DEFAULT}.
      */
     static JavaFormatConfig findFrom(Path path) {
         return findFrom((path != null) ? path.toFile() : (File) null);
     }
-    
+
     /**
      * 通过从给定文件中搜索来查找并加载 {@code .springjavaformatconfig}.
+     *
      * @param file 从指定文件或目录查找
      * @return 加载 {@link JavaFormatConfig}, 当 {@code .springjavaformatconfig} 文件不存在时加载 {@link #DEFAULT}.
      */
@@ -64,9 +65,10 @@ public interface JavaFormatConfig {
         }
         return DEFAULT;
     }
-    
+
     /**
      * 从指定文件加载 {@link JavaFormatConfig}.
+     *
      * @param file 加载文件
      * @return the loaded config
      */
@@ -78,9 +80,10 @@ public interface JavaFormatConfig {
             throw new IllegalStateException(ex);
         }
     }
-    
+
     /**
      * 从指定的流中加载 {@link JavaFormatConfig}.
+     *
      * @param inputStream the input stream to load
      * @return the loaded config
      */
@@ -92,9 +95,10 @@ public interface JavaFormatConfig {
             throw new IllegalStateException(ex);
         }
     }
-    
+
     /**
      * 返回应该与项目一起使用的缩进样式.
+     *
      * @return the indentation style
      */
     IndentationStyle getIndentationStyle();

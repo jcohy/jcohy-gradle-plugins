@@ -3,7 +3,6 @@ package com.jcohy.checkstyle.config;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 可以使用的缩进样式
  *
@@ -12,15 +11,15 @@ package com.jcohy.checkstyle.config;
  * @since 0.0.5.1
  */
 public enum IndentationStyle {
-    
+
     /**
      * Indent with tabs.
      */
     TABS,
-    
+
     /**
      * Indent with spaces.
      */
     SPACES
-    
+
 }

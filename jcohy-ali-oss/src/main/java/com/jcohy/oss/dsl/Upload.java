@@ -1,9 +1,9 @@
 package com.jcohy.oss.dsl;
 
-import org.gradle.api.tasks.Input;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.gradle.api.tasks.Input;
 
 /**
  * <p> 描述: .
@@ -38,12 +38,11 @@ public class Upload {
      * ----- jcohy
      * ------ oss
      * ------- Test.txt
-     *
      *    alioss {
      * 	    upload {
      * 	        source = "src/main"
      * 	        prefix = "jcohy"
-     * 	    }
+     *        }
      *    }
      * </pre>
      * 此设置会将 src/main 目录中的文件上传至指定的 bucket，下 jcohy 目录下。其路径不包含 source 指定的目录：
@@ -63,13 +62,12 @@ public class Upload {
      * ----- jcohy
      * ------ oss
      * ------- Test.txt
-     *
      *    alioss {
      * 	    upload {
      * 	        source = "src/main"
      * 	        prefix = "jcohy"
      * 	        ignoreSourceDir = "true"
-     * 	    }
+     *        }
      *    }
      * </pre>
      * 此设置会将 src/main 目录中的文件上传至指定的 bucket，下 jcohy 目录下。其路径为

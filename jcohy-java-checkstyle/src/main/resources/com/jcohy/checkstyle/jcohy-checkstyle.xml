@@ -16,10 +16,10 @@
 	<!-- 检查文件是否以一个新行结束-->
 	<module name="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck"/>
 
-<!--	&lt;!&ndash;【强制】采用 4 个空格缩进，禁止使用 tab 字符。 &ndash;&gt;-->
-<!--	<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck">-->
-<!--		<property name="eachLine" value="true"/>-->
-<!--	</module>-->
+	<!--	&lt;!&ndash;【强制】采用 4 个空格缩进，禁止使用 tab 字符。 &ndash;&gt;-->
+	<!--	<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck">-->
+	<!--		<property name="eachLine" value="true"/>-->
+	<!--	</module>-->
 
 	<!-- 尺寸超规 -->
 	<!-- 【强制】单行字符数限不超过 120 个，超出需要换行时 -->
@@ -92,10 +92,10 @@
 		<!-- 检查子表达式中是否有赋值语句 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.NoEnumTrailingCommaCheck"/>
 		<!-- 检查是否有魔法值 -->
-<!--		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck">-->
-<!--			<property name="ignoreHashCodeMethod" value="true"/>-->
-<!--			<property name="ignoreAnnotationElementDefaults" value="true"/>-->
-<!--		</module>-->
+		<!--		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck">-->
+		<!--			<property name="ignoreHashCodeMethod" value="true"/>-->
+		<!--			<property name="ignoreAnnotationElementDefaults" value="true"/>-->
+		<!--		</module>-->
 		<!-- 检查是否有过于复杂的布尔表达式。 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck"/>
 		<!-- 检查是否有过于复杂的布尔类型 return 语句 -->

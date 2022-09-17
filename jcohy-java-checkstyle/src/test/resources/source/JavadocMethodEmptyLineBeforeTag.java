@@ -16,6 +16,7 @@
 
 /**
  * Javadoc with white space.
+ *
  * @param <T> this is a valid param
  * @author jiac
  */

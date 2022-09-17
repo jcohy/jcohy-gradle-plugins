@@ -21,11 +21,11 @@
  */
 public class LeadingWhitespaceTabs {
 
-	/**
-	 * Comments are ignored.
-	 */
-	public void hello() {
-	    System.out.println("World");
-	}
+    /**
+     * Comments are ignored.
+     */
+    public void hello() {
+        System.out.println("World");
+    }
 
 }

@@ -11,7 +11,6 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:
  *
@@ -20,21 +19,21 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
  * @since 0.0.5.1
  */
 public class FilteredModuleFactory implements ModuleFactory {
-    
+
     static final TreeWalkerFilter FILTERED = treeWalkerAuditEvent -> true;
-    
+
     private final ModuleFactory moduleFactory;
-    
+
     private final Set<String> excludes;
-    
+
     public FilteredModuleFactory(ModuleFactory moduleFactory, Set<String> excludes) {
         this.moduleFactory = moduleFactory;
         this.excludes = excludes;
     }
-    
+
     @Override
     public Object createModule(String name) throws CheckstyleException {
-        
+
         Object module = this.moduleFactory.createModule(name);
         if (isFiltered(module)) {
             if (module instanceof AbstractCheck) {
@@ -44,15 +43,15 @@ public class FilteredModuleFactory implements ModuleFactory {
         }
         return module;
     }
-    
+
     boolean nonFiltered(Configuration configuration) {
         return !isFiltered(configuration.getName());
     }
-    
+
     private boolean isFiltered(Object module) {
         return isFiltered(module.getClass().getName());
     }
-    
+
     private boolean isFiltered(String name) {
         return this.excludes != null && this.excludes.contains(name);
     }

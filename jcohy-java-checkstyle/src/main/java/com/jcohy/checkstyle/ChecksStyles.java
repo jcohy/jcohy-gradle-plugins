@@ -3,7 +3,6 @@ package com.jcohy.checkstyle;
 /**
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:
  *
@@ -17,16 +16,16 @@ public enum ChecksStyles {
     ALIBABA("alibaba", "alibaba-checks.xml"),
     SPRING("spring", "spring-checks.xml"),
     SUN("sun", "sun-checks.xml");
-    
+
     private String name;
-    
+
     private String filePath;
-    
+
     ChecksStyles(String name, String filePath) {
         this.name = name;
         this.filePath = filePath;
     }
-    
+
     public static String getFilePath(String name) {
         for (ChecksStyles checksStyles : ChecksStyles.values()) {
             if (checksStyles.name.equals(name)) {
@@ -35,19 +34,19 @@ public enum ChecksStyles {
         }
         return DEFAULT.getFilePath();
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getFilePath() {
         return filePath;
     }
-    
+
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }

@@ -16,14 +16,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractFileSetCheck;
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.FileText;
 import com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck;
 
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 检查源文件的头部信息
  *
@@ -32,77 +30,77 @@ import com.puppycrawl.tools.checkstyle.checks.header.RegexpHeaderCheck;
  * @since 0.0.5.1
  */
 public class SpringHeaderCheck extends AbstractFileSetCheck {
-    
+
     /**
      * 默认 header 类型.
      */
     public static final String DEFAULT_HEADER_TYPE = "apache2";
-    
+
     /**
      * 默认 copyright 版权规则.
      */
     public static final String DEFAULT_HEADER_COPYRIGHT_PATTERN = "20\\d\\d(-20\\d\\d)?";
-    
+
     /**
      * 不检查 header.
      */
     private static final String UNCHECKED = "unchecked";
-    
+
     /**
      * 强制不能使用 header.
      */
     private static final String NONE = "none";
-    
+
     /**
      * 默认文件编码.
      */
     private static final String DEFAULT_CHARSET = System.getProperty("file.encoding", StandardCharsets.UTF_8.name());
-    
+
     /**
      * 编码.
      */
     private String charset = DEFAULT_CHARSET;
-    
+
     /**
      * 文件类型.
      */
     private String headerType = DEFAULT_HEADER_TYPE;
-    
+
     /**
      * 指定包含 header 信息的文件名.
      */
     private URI headerFile;
-    
+
     /**
      * header 版权规则.
      */
     private String headerCopyrightPattern = DEFAULT_HEADER_COPYRIGHT_PATTERN;
-    
+
     /**
      * package-info 文件类型.
      */
     private String packageInfoHeaderType;
-    
+
     /**
      * package-info 文件地址.
      */
     private URI packageInfoHeaderFile;
-    
+
     /**
      * 最后一行是否包含空白行，默认为 {@code true}.
      */
     private boolean blankLineAfter = true;
-    
+
     /**
      * Header 检查规则.
      */
     private HeaderCheck check;
-    
+
     /**
      * 默认编码.
      */
     private HeaderCheck packageInfoCheck;
-    
+
     @Override
     protected void finishLocalSetup() {
         try {
@@ -117,9 +115,10 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
             ex.printStackTrace();
         }
     }
-    
+
     /**
      * 创建 {@link HeaderCheck}
+     *
      * @param headerType headerType
      * @param headerFile headerFile
      * @return HeaderCheck
@@ -134,80 +133,82 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
         }
         return new RegexHeaderCheck(headerType, headerFile);
     }
-    
+
     @Override
-    protected void processFiltered(File file, FileText fileText)  {
+    protected void processFiltered(File file, FileText fileText) {
         getCheck(file).run(fileText, this.blankLineAfter);
     }
-    
+
     public void setCharset(String charset) throws UnsupportedEncodingException {
         if (!Charset.isSupported(charset)) {
             throw new UnsupportedEncodingException("unsupported charset: '" + charset + "'");
         }
         this.charset = charset;
     }
-    
+
     public void setHeaderType(String headerType) {
         this.headerType = headerType;
     }
-    
+
     public void setHeaderFile(URI headerFile) {
         this.headerFile = headerFile;
     }
-    
+
     public void setHeaderCopyrightPattern(String headerCopyrightPattern) {
         this.headerCopyrightPattern = headerCopyrightPattern;
     }
-    
+
     public void setPackageInfoHeaderType(String packageInfoHeaderType) {
         this.packageInfoHeaderType = packageInfoHeaderType;
     }
-    
+
     public void setPackageInfoHeaderFile(URI packageInfoHeaderFile) {
         this.packageInfoHeaderFile = packageInfoHeaderFile;
     }
-    
+
     public void setBlankLineAfter(boolean blankLineAfter) {
         this.blankLineAfter = blankLineAfter;
     }
-    
+
     private HeaderCheck getCheck(File file) {
         if (file.getName().startsWith("package-info")) {
             return this.packageInfoCheck;
         }
         return this.check;
     }
-    
+
     private interface HeaderCheck {
         /**
          * 不运行任何检查.
          */
         HeaderCheck NONE = (fileText, blankLineAfter) -> true;
-        
+
         /**
          * 运行检查.
+         *
          * @param fileText 检查的文件
          * @param blankLineAfter 如果 header 后面应该有一个空行
          * @return {@code true} header is valid
          */
         boolean run(FileText fileText, boolean blankLineAfter);
     }
-    
-    
+
+
     /**
      * {@link HeaderCheck} 基于表达式.
      */
     private class RegexHeaderCheck implements HeaderCheck {
-        
+
         private final List<Pattern> lines;
-        
+
         RegexHeaderCheck(String type, URI file) throws IOException {
             this.lines = loadLines(openInputStream(type, file));
         }
-        
+
         /**
          * 读取 header 文件.
          * 如果 file 不为空,则读取 file 指定的文件，否则则读取 header-{type}.txt 文件
+         *
          * @param type 文件类型 {@code headerType}
          * @param file 文件地址
          * @return /
@@ -224,9 +225,10 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
             }
             return inputStream;
         }
-        
+
         /**
          * 为每一行添加正则表达式
+         *
          * @param inputStream inputStream
          * @return List<Pattern>
          * @throws IOException ex
@@ -245,9 +247,10 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
                 }
             }
         }
-        
+
         /**
          * 将给定的正则表达式编译并赋予给 {@link Pattern} 类
+         *
          * @param line line
          * @param copyrightPattern copyrightPattern
          * @return Pattern
@@ -257,14 +260,14 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
             line = "^\\Q" + line + "\\E$";
             return Pattern.compile(line);
         }
-        
+
         @Override
         public boolean run(FileText fileText, boolean blankLineAfter) {
             if (this.lines.size() > fileText.size()) {
                 log(1, RegexpHeaderCheck.MSG_HEADER_MISSING);
                 return false;
             }
-            
+
             for (int i = 0; i < this.lines.size(); i++) {
                 String fileLine = fileText.get(i);
                 Pattern pattern = this.lines.get(i);
@@ -280,17 +283,17 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
             }
             return true;
         }
-        
+
     }
-    
+
     /**
      * {@link HeaderCheck} 强制不使用 header.
      */
     private class NoHeaderCheck implements HeaderCheck {
-        
+
         @Override
         public boolean run(FileText fileText, boolean blankLineAfter) {
-            
+
             for (int i = 0; i < fileText.size(); i++) {
                 String fileLine = fileText.get(i);
                 if (fileLine.trim().isEmpty()) {
@@ -304,7 +307,7 @@ public class SpringHeaderCheck extends AbstractFileSetCheck {
             }
             return true;
         }
-        
+
         private boolean isHeaderComment(String fileLine) {
             return fileLine.contains("/*") || fileLine.contains("//") && !fileLine.contains("/**");
         }

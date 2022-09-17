@@ -16,7 +16,6 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 检查每一行前面空格是否与缩进样式匹配。
  *
@@ -25,25 +24,25 @@ import com.puppycrawl.tools.checkstyle.api.FileText;
  * @since 0.0.5.1
  */
 public class SpringLeadingWhitespaceCheck extends AbstractSpringCheck {
-    
+
     private static final Pattern PATTERN = Pattern.compile("^([\\ \\t]+)\\S");
-    
+
     private static final Map<IndentationStyle, Pattern> INDENTATION_STYLE_PATTERN;
-    
+
     static {
         Map<IndentationStyle, Pattern> indentationStylePatterns = new HashMap<>();
         indentationStylePatterns.put(IndentationStyle.TABS, Pattern.compile("\\t*"));
         indentationStylePatterns.put(IndentationStyle.SPACES, Pattern.compile("\\ *"));
         INDENTATION_STYLE_PATTERN = Collections.unmodifiableMap(indentationStylePatterns);
     }
-    
+
     private IndentationStyle indentationStyle;
-    
+
     @Override
     public int[] getAcceptableTokens() {
         return NO_REQUIRED_TOKENS;
     }
-    
+
     @Override
     public void beginTree(DetailAST rootAST) {
         super.beginTree(rootAST);
@@ -69,7 +68,7 @@ public class SpringLeadingWhitespaceCheck extends AbstractSpringCheck {
             }
         }
     }
-    
+
     public void setIndentationStyle(String indentationStyle) {
         this.indentationStyle = (indentationStyle != null && !"".equals(indentationStyle))
                 ? IndentationStyle.valueOf(indentationStyle.toUpperCase()) : null;

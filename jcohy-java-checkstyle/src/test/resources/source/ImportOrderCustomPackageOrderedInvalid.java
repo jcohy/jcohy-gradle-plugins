@@ -18,8 +18,8 @@ package com.example;
 
 import java.util.Objects;
 
-import com.example.util.MyUtils2;
 import com.example.util.MyUtils1;
+import com.example.util.MyUtils2;
 
 /**
  * Custom pacakge with valid imports.

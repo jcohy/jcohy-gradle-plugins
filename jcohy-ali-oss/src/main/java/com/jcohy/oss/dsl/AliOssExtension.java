@@ -19,8 +19,15 @@ public class AliOssExtension {
 
     public static final String OSS_EXTENSION_NAME = "alioss";
 
+    private final Project project;
+
+    private final Upload upload = new Upload();
+
+    @Console
+    boolean logDocuments = false;
+
     @Input
-    private String endpoint ="http://oss-cn-beijing.aliyuncs.com";
+    private String endpoint = "http://oss-cn-beijing.aliyuncs.com";
 
     @Input
     private String accessKey = "accessKey";
@@ -33,11 +40,6 @@ public class AliOssExtension {
 
     @Input
     private String payload;
-    private final Project project;
-    private final Upload upload = new Upload();
-
-    @Console
-    boolean logDocuments = false;
 
     private BucketScope scope = BucketScope.READ_WRITE;
 
@@ -46,7 +48,7 @@ public class AliOssExtension {
     }
 
     public void upload(Closure<?> closure) {
-        ConfigureUtil.configure(closure,this.upload);
+        ConfigureUtil.configure(closure, this.upload);
     }
 
     public Upload getUpload() {

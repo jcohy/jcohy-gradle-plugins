@@ -19,6 +19,6 @@ public class OssUploadPlugin implements Plugin<Project> {
     public void apply(Project project) {
         AliOssExtension extension = project.getExtensions().create(AliOssExtension.OSS_EXTENSION_NAME,
                 AliOssExtension.class, project);
-        project.getTasks().create("uploadOssFiles", OssUploadTask.class,extension);
+        project.getTasks().create("uploadOssFiles", OssUploadTask.class, extension);
     }
 }

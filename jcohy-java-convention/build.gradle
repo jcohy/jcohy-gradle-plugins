@@ -4,29 +4,38 @@ plugins {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-gradle-plugin:2.6.11")
-	implementation("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
-	implementation('com.fasterxml.jackson.core:jackson-databind:2.12.6.1')
-	implementation("commons-codec:commons-codec:1.13")
-	implementation("org.apache.maven:maven-embedder:3.6.2")
+	implementation("org.springframework.boot:spring-boot-gradle-plugin:${SpringBootVersion}")
+	implementation("io.spring.gradle:dependency-management-plugin:${SpringBootDependencyVersion}")
+	implementation('com.fasterxml.jackson.core:jackson-databind')
+//	implementation('com.fasterxml.jackson.core:jackson-databind:2.13.3')
+	implementation("commons-codec:commons-codec")
+//	implementation("commons-codec:commons-codec:1.15")
+	implementation("org.apache.maven:maven-embedder:3.8.6")
 	implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
 	implementation("org.asciidoctor:asciidoctor-gradle-jvm:3.3.2")
 //	implementation("org.asciidoctor:asciidoctor-gradle-jvm-pdf:3.3.2")
 	implementation("org.gradle:test-retry-gradle-plugin:1.1.9")
-	implementation("org.springframework:spring-core:5.3.22")
-	implementation("org.springframework:spring-web:5.3.22")
-	implementation("io.spring.javaformat:spring-javaformat-gradle-plugin:${javaFormatVersion}")
-	testImplementation("org.assertj:assertj-core:3.11.1")
-	testImplementation('com.alibaba:fastjson:1.2.83')
-	testImplementation("com.google.code.gson:gson:2.8.4")
-	testImplementation('org.apache.logging.log4j:log4j-core:2.12.4')
-	testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
+	implementation("org.springframework:spring-core")
+	implementation("org.springframework:spring-web")
+//	implementation("org.springframework:spring-core:5.3.23")
+//	implementation("org.springframework:spring-web:5.3.23")
+	implementation("io.spring.javaformat:spring-javaformat-gradle-plugin:${JavaFormatVersion}")
+	testImplementation("org.assertj:assertj-core")
+	testImplementation('com.alibaba:fastjson:2.0.13')
+	testImplementation("com.google.code.gson:gson")
+	testImplementation('org.apache.logging.log4j:log4j-core')
+	testImplementation("org.junit.jupiter:junit-jupiter")
+//	testImplementation("org.assertj:assertj-core:3.22.0")
+
+//	testImplementation("com.google.code.gson:gson:2.9.1")
+//	testImplementation('org.apache.logging.log4j:log4j-core:2.17.2')
+//	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 pluginBundle {
 	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
 	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
-	tags = ['JavaConventions', 'Deployed', 'OptionalDependencies',"Asciidoctor"]
+	tags = ['JavaConventions', 'Deployed', 'OptionalDependencies', "Asciidoctor"]
 }
 
 gradlePlugin {
@@ -48,4 +57,8 @@ gradlePlugin {
 
 test {
 	useJUnitPlatform()
+}
+
+repositories {
+	mavenCentral()
 }

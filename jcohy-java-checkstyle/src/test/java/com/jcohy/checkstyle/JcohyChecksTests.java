@@ -33,7 +33,6 @@ import org.xml.sax.InputSource;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:
  *
@@ -44,30 +43,30 @@ import org.xml.sax.InputSource;
 //@ExtendWith(ParameterResolver.class)
 @RunWith(Parameterized.class)
 public class JcohyChecksTests {
-    
+
     private static final boolean RUNNING_ON_WINDOWS = System.getProperty("os.name").toLowerCase().contains("win");
-    
+
     private static final File SOURCES_DIR = new File("src/test/resources/source");
-    
+
     private static final File CHECKS_DIR = new File("src/test/resources/check");
-    
+
     private static final File CONFIGS_DIR = new File("src/test/resources/config");
-    
+
     private static final File DEFAULT_CONFIG = new File(CONFIGS_DIR, "default-checkstyle-configuration.xml");
-    
+
     private final Parameter parameter;
-    
+
     public JcohyChecksTests(Parameter parameter) throws Exception {
         this.parameter = parameter;
     }
-    
+
     //	@ParameterizedTest(name = "{0}")
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Parameter> files() throws IOException {
         return Arrays.stream(Objects.requireNonNull(SOURCES_DIR.list((dir, name) -> !name.startsWith(".")))).sorted().map(Parameter::new)
                 .collect(Collectors.toList());
     }
-    
+
     @Test
     public void processHasExpectedResults() throws Exception {
         Locale previousLocale = Locale.getDefault();
@@ -82,7 +81,7 @@ public class JcohyChecksTests {
             Locale.setDefault(previousLocale);
         }
     }
-    
+
     private Configuration loadConfiguration() throws Exception {
         try (InputStream inputStream = new FileInputStream(this.parameter.getConfigFile())) {
             Configuration configuration = ConfigurationLoader.loadConfiguration(new InputSource(inputStream),
@@ -91,7 +90,7 @@ public class JcohyChecksTests {
             return configuration;
         }
     }
-    
+
     private RootModule createRootModule(Configuration configuration) throws CheckstyleException {
         ModuleFactory factory = new PackageObjectFactory(Checker.class.getPackage().getName(),
                 getClass().getClassLoader());
@@ -100,7 +99,7 @@ public class JcohyChecksTests {
         rootModule.configure(configuration);
         return rootModule;
     }
-    
+
     private void processAndCheckResults(RootModule rootModule) throws CheckstyleException {
         rootModule.addListener(this.parameter.getAssertionsListener());
         if (!RUNNING_ON_WINDOWS) {
@@ -108,7 +107,7 @@ public class JcohyChecksTests {
         }
         rootModule.process(Arrays.asList(this.parameter.getSourceFile()));
     }
-    
+
     private void printDebugInfo(File file) throws CheckstyleException {
         try {
             System.out.println(AstTreeStringPrinter.printFileAst(file, JavaParser.Options.WITHOUT_COMMENTS));
@@ -116,17 +115,17 @@ public class JcohyChecksTests {
         catch (IOException ex) {
         }
     }
-    
+
     private static class Parameter {
-        
+
         private final String name;
-        
+
         private final File sourceFile;
-        
+
         private final AssertionsAuditListener assertionsListener;
-        
+
         private final File configFile;
-        
+
         Parameter(String sourceName) {
             this.name = sourceName.replace(".java", "");
             this.sourceFile = new File(SOURCES_DIR, sourceName);
@@ -134,7 +133,7 @@ public class JcohyChecksTests {
             this.configFile = (configFile.exists() ? configFile : DEFAULT_CONFIG);
             this.assertionsListener = new AssertionsAuditListener(readChecks(this.name + ".txt"));
         }
-        
+
         private List<String> readChecks(String name) {
             try {
                 return Files.readAllLines(new File(CHECKS_DIR, name).toPath());
@@ -143,23 +142,23 @@ public class JcohyChecksTests {
                 throw new IllegalStateException(ex);
             }
         }
-        
+
         public File getSourceFile() {
             return this.sourceFile;
         }
-        
+
         public File getConfigFile() {
             return this.configFile;
         }
-        
+
         public AssertionsAuditListener getAssertionsListener() {
             return this.assertionsListener;
         }
-        
+
         @Override
         public String toString() {
             return this.name;
         }
-        
+
     }
 }

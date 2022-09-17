@@ -18,7 +18,6 @@ import org.xml.sax.InputSource;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 从  {@code spring-checkstyle.xml} 加载 {@link FileSetCheck FileSetChecks} 配置
  *
@@ -27,23 +26,23 @@ import org.xml.sax.InputSource;
  * @since 0.0.5.1
  */
 public class JcohyConfigurationLoader {
-    
+
     private final Context context;
-    
+
     private final FilteredModuleFactory moduleFactory;
-    
+
     public JcohyConfigurationLoader(Context context, FilteredModuleFactory moduleFactory) {
         this.context = context;
         this.moduleFactory = moduleFactory;
     }
-    
+
     public Collection<FileSetCheck> load(PropertyResolver propertyResolver, String checkstyleFilePath) {
         Configuration config = loadConfiguration(getClass().getResourceAsStream(checkstyleFilePath),
                 propertyResolver);
         return Arrays.stream(config.getChildren()).filter(this.moduleFactory::nonFiltered).map(this::load)
                 .collect(Collectors.toList());
     }
-    
+
     private Configuration loadConfiguration(InputStream inputStream, PropertyResolver propertyResolver) {
         try {
             InputSource inputSource = new InputSource(inputStream);
@@ -53,7 +52,7 @@ public class JcohyConfigurationLoader {
             throw new IllegalStateException(ex);
         }
     }
-    
+
     private FileSetCheck load(Configuration configuration) {
         Object module = createModule(configuration);
         if (!(module instanceof FileSetCheck)) {
@@ -61,7 +60,7 @@ public class JcohyConfigurationLoader {
         }
         return (FileSetCheck) module;
     }
-    
+
     private Object createModule(Configuration configuration) {
         String name = configuration.getName();
         try {
@@ -75,7 +74,7 @@ public class JcohyConfigurationLoader {
             throw new IllegalStateException("cannot initialize module " + name + " - " + ex.getMessage(), ex);
         }
     }
-    
+
     private void initialize(Configuration configuration, AutomaticBean bean) throws CheckstyleException {
         bean.contextualize(this.context);
         bean.configure(configuration);

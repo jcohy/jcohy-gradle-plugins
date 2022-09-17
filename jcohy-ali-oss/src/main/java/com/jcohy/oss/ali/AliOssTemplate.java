@@ -63,19 +63,20 @@ public class AliOssTemplate {
         return ossClient;
     }
 
-    public OssFile putFile(String key, File file){
+    public OssFile putFile(String key, File file) {
         return putFile(this.bucket, key, file);
     }
 
-    public OssFile putFile(String bucket, String key, File file){
+    public OssFile putFile(String bucket, String key, File file) {
         return put(bucket, file, key, true);
     }
 
-    public List<OssFile> putUploadFile (Map<String,File> uploadFiles) {
+    public List<OssFile> putUploadFile(Map<String, File> uploadFiles) {
         List<OssFile> list = new ArrayList<>();
-        uploadFiles.forEach((key,value) -> list.add(this.putFile(key, value)));
+        uploadFiles.forEach((key, value) -> list.add(this.putFile(key, value)));
         return list;
     }
+
     public OssFile put(String bucketName, File file, String key, boolean cover) {
         key = formatKey(key);
         createBucket(bucketName);
@@ -132,11 +133,11 @@ public class AliOssTemplate {
 
     public String formatKey(String key) {
         // / 用于分割路径，可快速创建子目录，但不要以 / 或 \ 开头，不要出现连续的 /；
-        if(StringUtils.isNullOrEmpty(key)) {
+        if (StringUtils.isNullOrEmpty(key)) {
             return "";
         }
 
-        if(key.startsWith("\\") || key.startsWith("/")) {
+        if (key.startsWith("\\") || key.startsWith("/")) {
             key = key.substring(1);
         }
 

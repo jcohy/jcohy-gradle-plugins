@@ -41,14 +41,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author jiac
  */
 class TestFailuresPluginIntegrationTests {
-    
+
     private File projectDir;
-    
+
     @BeforeEach
     void setup(@TempDir File projectDir) throws IOException {
         this.projectDir = projectDir;
     }
-    
+
     @Test
     void singleProject() throws IOException {
         createProject(this.projectDir);
@@ -58,7 +58,7 @@ class TestFailuresPluginIntegrationTests {
                 "    example.ExampleTests > bad()", "    example.ExampleTests > fail()",
                 "    example.MoreTests > bad()", "    example.MoreTests > fail()", "");
     }
-    
+
     @Test
     void multiProject() throws IOException {
         createMultiProjectBuild();
@@ -68,7 +68,7 @@ class TestFailuresPluginIntegrationTests {
                 ":project-one:test", "    example.ExampleTests > bad()", "    example.ExampleTests > fail()",
                 "    example.MoreTests > bad()", "    example.MoreTests > fail()", "");
     }
-    
+
     @Test
     void multiProjectContinue() throws IOException {
         createMultiProjectBuild();
@@ -80,7 +80,7 @@ class TestFailuresPluginIntegrationTests {
                 "    example.ExampleTests > bad()", "    example.ExampleTests > fail()",
                 "    example.MoreTests > bad()", "    example.MoreTests > fail()", "");
     }
-    
+
     @Test
     void multiProjectParallel() throws IOException {
         createMultiProjectBuild();
@@ -92,7 +92,7 @@ class TestFailuresPluginIntegrationTests {
                 "    example.ExampleTests > bad()", "    example.ExampleTests > fail()",
                 "    example.MoreTests > bad()", "    example.MoreTests > fail()", "");
     }
-    
+
     private void createProject(File dir) {
         File examplePackage = new File(dir, "src/test/java/example");
         examplePackage.mkdirs();
@@ -100,7 +100,7 @@ class TestFailuresPluginIntegrationTests {
         createTestSource("MoreTests", examplePackage);
         createBuildScript(dir);
     }
-    
+
     private void createMultiProjectBuild() {
         createProject(new File(this.projectDir, "project-one"));
         createProject(new File(this.projectDir, "project-two"));
@@ -109,7 +109,7 @@ class TestFailuresPluginIntegrationTests {
             writer.println("include 'project-two'");
         });
     }
-    
+
     private void createTestSource(String name, File dir) {
         withPrintWriter(new File(dir, name + ".java"), (writer) -> {
             writer.println("package example;");
@@ -137,7 +137,7 @@ class TestFailuresPluginIntegrationTests {
             writer.println("}");
         });
     }
-    
+
     private void createBuildScript(File dir) {
         withPrintWriter(new File(dir, "build.gradle"), (writer) -> {
             writer.println("plugins {");
@@ -160,7 +160,7 @@ class TestFailuresPluginIntegrationTests {
             writer.println("}");
         });
     }
-    
+
     private void withPrintWriter(File file, Consumer<PrintWriter> consumer) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
             consumer.accept(writer);
@@ -169,7 +169,7 @@ class TestFailuresPluginIntegrationTests {
             throw new RuntimeException(ex);
         }
     }
-    
+
     private List<String> readLines(String output) {
         try (BufferedReader reader = new BufferedReader(new StringReader(output))) {
             return reader.lines().collect(Collectors.toList());
@@ -178,5 +178,5 @@ class TestFailuresPluginIntegrationTests {
             throw new RuntimeException(ex);
         }
     }
-    
+
 }

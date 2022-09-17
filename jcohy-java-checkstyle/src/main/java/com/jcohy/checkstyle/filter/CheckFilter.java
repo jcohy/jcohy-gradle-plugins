@@ -17,7 +17,6 @@ import com.puppycrawl.tools.checkstyle.api.Violation;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:{@link AbstractCheck checks}  的基类，用作单个子项的过滤器。
  *
@@ -26,11 +25,11 @@ import com.puppycrawl.tools.checkstyle.api.Violation;
  * @since 0.0.5.1
  */
 public class CheckFilter extends AbstractCheck {
-    
+
     private Context childContext;
-    
+
     private AbstractCheck check;
-    
+
     @Override
     public void finishLocalSetup() {
         DefaultContext context = new DefaultContext();
@@ -38,7 +37,7 @@ public class CheckFilter extends AbstractCheck {
         context.add("tabWidth", String.valueOf(getTabWidth()));
         this.childContext = context;
     }
-    
+
     @Override
     public void setupChild(Configuration childConf) throws CheckstyleException {
         ModuleFactory moduleFactory = createModuleFactory();
@@ -57,7 +56,7 @@ public class CheckFilter extends AbstractCheck {
         moduleCheck.init();
         this.check = moduleCheck;
     }
-    
+
     private ModuleFactory createModuleFactory() {
         try {
             ClassLoader classLoader = AbstractCheck.class.getClassLoader();
@@ -68,52 +67,52 @@ public class CheckFilter extends AbstractCheck {
             throw new IllegalStateException(ex);
         }
     }
-    
+
     @Override
     public int[] getDefaultTokens() {
         return this.check.getDefaultTokens();
     }
-    
+
     @Override
     public int[] getAcceptableTokens() {
         return this.check.getAcceptableTokens();
     }
-    
+
     @Override
     public int[] getRequiredTokens() {
         return this.check.getRequiredTokens();
     }
-    
+
     @Override
     public boolean isCommentNodesRequired() {
         return this.check.isCommentNodesRequired();
     }
-    
+
     @Override
     public SortedSet<Violation> getViolations() {
         return this.check.getViolations();
     }
-    
+
     @Override
     public void beginTree(DetailAST rootAST) {
         this.check.setFileContents(getFileContents());
         this.check.clearViolations();
         this.check.beginTree(rootAST);
     }
-    
+
     @Override
     public void finishTree(DetailAST rootAST) {
         this.check.finishTree(rootAST);
     }
-    
+
     @Override
     public void visitToken(DetailAST ast) {
         this.check.visitToken(ast);
     }
-    
+
     @Override
     public void leaveToken(DetailAST ast) {
         this.check.leaveToken(ast);
     }
-    
+
 }

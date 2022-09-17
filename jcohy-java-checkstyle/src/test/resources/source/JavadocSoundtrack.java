@@ -19,7 +19,6 @@
  *
  * @param <T> this is a valid param
  * @author jiac
- * @soundtrack Gina G - Ooh Aah Just A Little Bit
  */
 public class JavadocSoundtrack<T> {
 

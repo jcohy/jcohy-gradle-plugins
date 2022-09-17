@@ -6,7 +6,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 检查 catch 块
  *
@@ -15,19 +14,19 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @since 0.0.5.1
  */
 public class SpringCatchCheck extends AbstractSpringCheck {
-    
+
     @Override
     public int[] getAcceptableTokens() {
         return new int[] { TokenTypes.LITERAL_CATCH };
     }
-    
+
     @Override
     public void visitToken(DetailAST ast) {
         if (ast.getType() == TokenTypes.LITERAL_CATCH) {
             visitCatch(ast);
         }
     }
-    
+
     private void visitCatch(DetailAST ast) {
         DetailAST child = ast.getFirstChild();
         while (child != null && child.getType() != TokenTypes.PARAMETER_DEF) {
@@ -37,15 +36,15 @@ public class SpringCatchCheck extends AbstractSpringCheck {
             visitParameterDef(child);
         }
     }
-    
+
     private void visitParameterDef(DetailAST ast) {
         DetailAST lastChild = ast.getLastChild();
         if (lastChild != null && lastChild.getType() == TokenTypes.IDENT) {
             checkIdent(lastChild);
         }
     }
-    
-    
+
+
     private void checkIdent(DetailAST ast) {
         String text = ast.getText();
         if (text.length() == 1) {

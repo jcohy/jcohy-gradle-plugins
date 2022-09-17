@@ -11,18 +11,18 @@ import com.puppycrawl.tools.checkstyle.checks.imports.AvoidStaticImportCheck;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 检查没有静态导入  {@link AvoidStarImportCheck}. 添加需要排除的静态导入
  * <a href="https://checkstyle.sourceforge.io/config_imports.html#AvoidStaticImport">CheckStyle AvoidStaticImport</a>
+ *
  * @author jiac
  * @version 0.0.5.1 2021/6/21:15:13
  * @since 0.0.5.1
  */
 public class SpringAvoidStaticImportCheck extends AvoidStaticImportCheck {
-    
+
     private static final Set<String> ALWAYS_EXCLUDED;
-    
+
     static {
         Set<String> excludes = new LinkedHashSet<>();
         excludes.add("io.restassured.RestAssured.*");
@@ -78,16 +78,16 @@ public class SpringAvoidStaticImportCheck extends AvoidStaticImportCheck {
         excludes.add("org.springframework.ws.test.client.ResponseCreators.*");
         ALWAYS_EXCLUDED = Collections.unmodifiableSet(excludes);
     }
-    
+
     public SpringAvoidStaticImportCheck() {
         setExcludes(ALWAYS_EXCLUDED.toArray(new String[0]));
     }
-    
+
     @Override
     public void setExcludes(String... excludes) {
         Set<String> merged = new LinkedHashSet<>(ALWAYS_EXCLUDED);
         merged.addAll(Arrays.asList(excludes));
         super.setExcludes(merged.toArray(new String[0]));
     }
-    
+
 }

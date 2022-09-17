@@ -40,10 +40,6 @@ public enum BucketScope {
         this.scope = scope;
     }
 
-    public String getScope() {
-        return this.scope;
-    }
-
     public static CannedAccessControlList getAccessControl(BucketScope scope) {
         switch (scope) {
             case READ:
@@ -53,6 +49,10 @@ public enum BucketScope {
             default:
                 return CannedAccessControlList.Private;
         }
+    }
+
+    public String getScope() {
+        return this.scope;
     }
 }
 

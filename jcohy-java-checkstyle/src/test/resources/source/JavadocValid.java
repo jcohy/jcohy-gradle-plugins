@@ -24,6 +24,7 @@ public class JavadocValid<T> {
 
     /**
      * Do something.
+     *
      * @param something a lovely thing
      */
     public void test(String something) {
@@ -31,6 +32,7 @@ public class JavadocValid<T> {
 
     /**
      * Do something else.
+     *
      * @param something a loveley thing. Even if we've got some additional desc.
      */
     public void test2(String something) {
@@ -38,6 +40,7 @@ public class JavadocValid<T> {
 
     /**
      * Do something else.
+     *
      * @param something a loveley thing that goes on a bit and causes us to wrap at end.
      * Even if we've got some additional desc.
      * @return the thing

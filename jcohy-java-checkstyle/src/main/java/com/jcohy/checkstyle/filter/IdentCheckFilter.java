@@ -12,7 +12,6 @@ import com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: {@link CheckFilter} 用来跳过 "ident" tokens. 常用作过滤器
  * {@link RequireThisCheck} for logger references.
@@ -22,9 +21,9 @@ import com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck;
  * @since 0.0.5.1
  */
 public class IdentCheckFilter extends CheckFilter {
-    
+
     private Set<String> names = Collections.emptySet();
-    
+
     @Override
     public void visitToken(DetailAST ast) {
         if (ast.getType() == TokenTypes.IDENT && isFiltered(ast)) {
@@ -32,12 +31,12 @@ public class IdentCheckFilter extends CheckFilter {
         }
         super.visitToken(ast);
     }
-    
+
     private boolean isFiltered(DetailAST ast) {
         String name = ast.getText();
         return this.names.contains(name);
     }
-    
+
     public void setNames(String... names) {
         this.names = new HashSet<>(Arrays.asList(names));
     }

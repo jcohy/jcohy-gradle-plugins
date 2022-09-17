@@ -11,7 +11,6 @@ import com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck;
 /**
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:
  *
@@ -20,21 +19,21 @@ import com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck;
  * @since 0.0.5.1
  */
 public class JcohyConstantNameCheck extends ConstantNameCheck {
-    
+
     private Set<String> excludes;
-    
+
     public JcohyConstantNameCheck() {
         setApplyToPublic(true);
         setFormat(Pattern.compile("^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"));
     }
-    
+
     @Override
     public void visitToken(DetailAST ast) {
         if (!excludes.contains(ast.getText())) {
             super.visitToken(ast);
         }
     }
-    
+
     public void setExcludes(String... excludes) {
         this.excludes = new HashSet<>(Arrays.asList(excludes));
     }

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import org.junit.jupiter.api.Test;
 import org.junit.Before;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test with banned import.

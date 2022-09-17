@@ -19,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: {@link AuditListener} 检查预期事件发生。
  *
@@ -28,28 +27,28 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 0.0.5.1
  */
 class AssertionsAuditListener implements AuditListener {
-    
+
     static final AuditEventFormatter FORMATTER = new AuditEventDefaultFormatter();
-    
+
     private final List<String> checks;
-    
+
     private final StringBuilder message = new StringBuilder();
-    
+
     private final Map<SeverityLevel, Integer> severityCounts = new TreeMap<>();
-    
+
     private List<String> filenames = new ArrayList<>();
-    
+
     AssertionsAuditListener(List<String> checks) {
         this.checks = checks;
     }
-    
+
     @Override
     public void auditStarted(AuditEvent event) {
         recordLevel(event);
         recordLocalizedMessage(DefaultLogger.AUDIT_STARTED_MESSAGE);
         recordLevel(event);
     }
-    
+
     @Override
     public void auditFinished(AuditEvent event) {
         recordLevel(event);
@@ -61,7 +60,30 @@ class AssertionsAuditListener implements AuditListener {
         System.out.println(this.message);
         this.checks.forEach(this::runCheck);
     }
-    
+
+    @Override
+    public void fileStarted(AuditEvent event) {
+        this.filenames.add(event.getFileName());
+    }
+
+    @Override
+    public void fileFinished(AuditEvent event) {
+    }
+
+    @Override
+    public void addError(AuditEvent event) {
+        recordLevel(event);
+        if (event.getSeverityLevel() != SeverityLevel.IGNORE) {
+            recordMessage(FORMATTER.format(event));
+        }
+    }
+
+    @Override
+    public void addException(AuditEvent event, Throwable throwable) {
+        recordLevel(event);
+        recordLocalizedMessage(DefaultLogger.ADD_EXCEPTION_MESSAGE, event.getFileName());
+    }
+
     private void runCheck(String check) {
         String description = this.filenames.toString();
         if (check.startsWith("+")) {
@@ -71,42 +93,19 @@ class AssertionsAuditListener implements AuditListener {
             assertThat(this.message.toString()).as(description).doesNotContain(check.substring(1));
         }
     }
-    
-    @Override
-    public void fileStarted(AuditEvent event) {
-        this.filenames.add(event.getFileName());
-    }
-    
-    @Override
-    public void fileFinished(AuditEvent event) {
-    }
-    
-    @Override
-    public void addError(AuditEvent event) {
-        recordLevel(event);
-        if (event.getSeverityLevel() != SeverityLevel.IGNORE) {
-            recordMessage(FORMATTER.format(event));
-        }
-    }
-    
-    @Override
-    public void addException(AuditEvent event, Throwable throwable) {
-        recordLevel(event);
-        recordLocalizedMessage(DefaultLogger.ADD_EXCEPTION_MESSAGE, event.getFileName());
-    }
-    
+
     private void recordLevel(AuditEvent event) {
         this.severityCounts.compute(event.getSeverityLevel(), (level, count) -> (count == null ? 1 : count + 1));
     }
-    
+
     private void recordLocalizedMessage(String message, String... args) {
         recordMessage(new Violation(0, Definitions.CHECKSTYLE_BUNDLE, message, args, null,
                 Violation.class, null).getViolation());
     }
-    
+
     private void recordMessage(String message) {
         this.message.append(message);
         this.message.append("\n");
     }
-    
+
 }

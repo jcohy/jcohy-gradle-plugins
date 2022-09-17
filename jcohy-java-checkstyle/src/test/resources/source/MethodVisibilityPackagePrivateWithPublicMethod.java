@@ -24,10 +24,10 @@ class MethodVisibilityPackagePrivateWithPublicMethod {
     MethodVisibilityPackagePrivateWithPublicMethod() {
     }
 
-    public void bad() {
+    public static void badStatic() {
     }
 
-    public static void badStatic() {
+    public void bad() {
     }
 
 }

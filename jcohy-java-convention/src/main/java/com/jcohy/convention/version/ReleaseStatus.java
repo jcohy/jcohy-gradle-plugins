@@ -9,7 +9,6 @@ import org.springframework.util.Assert;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: Release 版本状态
  *
@@ -18,7 +17,7 @@ import org.springframework.util.Assert;
  * @since 0.0.5.1
  */
 public enum ReleaseStatus {
-    
+
     /**
      * 快照版本
      */
@@ -31,13 +30,14 @@ public enum ReleaseStatus {
      * 可用版本
      */
     GENERAL_AVAILABILITY;
-    
+
     private static final Pattern PRERELEASE_PATTERN = Pattern.compile("[A-Za-z0-9\\.\\-]+?(M|RC)\\d+");
-    
+
     private static final String SNAPSHOT_SUFFIX = "SNAPSHOT";
-    
+
     /**
      * 根据版本名 获取 {@link ReleaseStatus status}
+     *
      * @param project 项目版本
      * @return 获取此项目的 release status
      */

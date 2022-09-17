@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:  {@link JcohyConfigurationLoader}.
  *
@@ -30,9 +29,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 0.0.5.1
  */
 public class AlibabaConfigurationLoaderTests {
-    
+
     private String checkStyleFile = ChecksStyles.getFilePath("alibaba");
-    
+
     @Test
     public void loadAliBabaShouldLoadChecks() {
         checkStyleFile = ChecksStyles.getFilePath("alibaba");
@@ -42,7 +41,7 @@ public class AlibabaConfigurationLoaderTests {
         Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
         assertThat(ordinaryChecks).hasSize(59);
     }
-    
+
     @Test
     public void loadWithExcludeShouldExcludeChecks() {
         Set<String> excludes = Collections
@@ -53,18 +52,18 @@ public class AlibabaConfigurationLoaderTests {
         Set<?> ordinaryChecks = (Set<?>) Extractors.byName("ordinaryChecks").extract(treeWalker);
         assertThat(ordinaryChecks).hasSize(58);
     }
-    
+
     private Collection<FileSetCheck> load(Set<String> excludes) {
         DefaultContext context = new DefaultContext();
         FilteredModuleFactory filteredModuleFactory = new FilteredModuleFactory(
                 new PackageObjectFactory(getClass().getPackage().getName(), getClass().getClassLoader()), excludes);
         context.add("moduleFactory", filteredModuleFactory);
-        
+
         Collection<FileSetCheck> checks = new JcohyConfigurationLoader(context, filteredModuleFactory)
                 .load(getPropertyResolver(), checkStyleFile);
         return checks;
     }
-    
+
     private PropertyResolver getPropertyResolver() {
         Properties properties = new Properties();
         properties.put("headerType", SpringHeaderCheck.DEFAULT_HEADER_TYPE);

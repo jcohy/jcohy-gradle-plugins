@@ -15,7 +15,6 @@ import org.gradle.tooling.events.OperationCompletionListener;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:  {@link BuildService} 提供构建中所有测试失败的概述.
  *
@@ -25,12 +24,12 @@ import org.gradle.tooling.events.OperationCompletionListener;
  */
 public abstract class TestResultsOverview
         implements BuildService<BuildServiceParameters.None>, OperationCompletionListener, AutoCloseable {
-    
+
     private final Map<Test, List<TestFailure>> testFailures = new TreeMap<>(
             (one, two) -> one.getPath().compareTo(two.getPath()));
-    
+
     private final Object monitor = new Object();
-    
+
     void addFailures(Test test, List<TestDescriptor> failureDescriptors) {
         List<TestFailure> testFailures = failureDescriptors.stream().map(TestFailure::new).sorted()
                 .collect(Collectors.toList());
@@ -38,12 +37,12 @@ public abstract class TestResultsOverview
             this.testFailures.put(test, testFailures);
         }
     }
-    
+
     @Override
     public void onFinish(FinishEvent event) {
         // OperationCompletionListener is implemented to defer close until the build ends
     }
-    
+
     @Override
     public void close() {
         synchronized (this.monitor) {
@@ -61,15 +60,15 @@ public abstract class TestResultsOverview
             });
         }
     }
-    
+
     private static final class TestFailure implements Comparable<TestFailure> {
-        
+
         private final TestDescriptor descriptor;
-        
+
         private TestFailure(TestDescriptor descriptor) {
             this.descriptor = descriptor;
         }
-        
+
         @Override
         public int compareTo(TestFailure other) {
             int comparison = this.descriptor.getClassName().compareTo(other.descriptor.getClassName());
@@ -78,7 +77,7 @@ public abstract class TestResultsOverview
             }
             return comparison;
         }
-        
+
     }
-    
+
 }

@@ -10,7 +10,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import com.jcohy.checkstyle.check.SpringHeaderCheck;
 import com.jcohy.checkstyle.check.SpringImportOrderCheck;
@@ -30,7 +29,6 @@ import com.puppycrawl.tools.checkstyle.filters.SuppressFilterElement;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: {@link FileSetCheck} that applies Spring checkstype rules.
  *
@@ -39,47 +37,49 @@ import com.puppycrawl.tools.checkstyle.filters.SuppressFilterElement;
  * @since 0.0.5.1
  */
 public class JcohyChecks extends AbstractFileSetCheck implements ExternalResourceHolder {
-    
+
     private ClassLoader classLoader;
-    
+
     private ModuleFactory moduleFactory;
-    
+
     private Collection<FileSetCheck> checks;
-    
+
     private String headerType = SpringHeaderCheck.DEFAULT_HEADER_TYPE;
-    
+
     private String headerCopyrightPattern = SpringHeaderCheck.DEFAULT_HEADER_COPYRIGHT_PATTERN;
-    
+
     private String style;
-    
+
     private String headerFile;
-    
+
     private Set<String> avoidStaticImportExcludes = Collections.emptySet();
-    
+
     private String projectRootPackage = SpringImportOrderCheck.DEFAULT_PROJECT_ROOT_PACKAGE;
-    
+
     private Set<String> excludes;
-    
+
     /**
      * Sets classLoader to load class.
+     *
      * @param classLoader class loader to resolve classes with.
      */
     public void setClassLoader(ClassLoader classLoader) {
         this.classLoader = classLoader;
     }
-    
+
     public void setStyle(String style) {
         this.style = style;
     }
-    
+
     /**
      * Sets the module factory for creating child modules (Checks).
+     *
      * @param moduleFactory the factory
      */
     public void setModuleFactory(ModuleFactory moduleFactory) {
         this.moduleFactory = moduleFactory;
     }
-    
+
     @Override
     protected void finishLocalSetup() {
         FilteredModuleFactory factory = new FilteredModuleFactory(this.moduleFactory, this.excludes);
@@ -99,13 +99,13 @@ public class JcohyChecks extends AbstractFileSetCheck implements ExternalResourc
         String checkStyleFile = ChecksStyles.getFilePath(this.style);
         this.checks = new JcohyConfigurationLoader(context, factory).load(new PropertiesExpander(properties), checkStyleFile);
     }
-    
+
     private void put(Properties properties, String name, Object value) {
         if (value != null) {
             properties.put(name, value);
         }
     }
-    
+
     @Override
     protected void processFiltered(File file, FileText fileText) throws CheckstyleException {
         SortedSet<Violation> messages = new TreeSet<>();
@@ -114,18 +114,7 @@ public class JcohyChecks extends AbstractFileSetCheck implements ExternalResourc
         }
         addViolations(messages);
     }
-    
-    @Override
-    public Set<String> getExternalResourceLocations() {
-        Set<String> locations = new LinkedHashSet<>();
-        for (FileSetCheck check : this.checks) {
-            if (check instanceof ExternalResourceHolder) {
-                locations.addAll(((ExternalResourceHolder) check).getExternalResourceLocations());
-            }
-        }
-        return locations;
-    }
-    
+
     @Override
     public void beginProcessing(String charset) {
         super.beginProcessing(charset);
@@ -138,34 +127,45 @@ public class JcohyChecks extends AbstractFileSetCheck implements ExternalResourc
             // Ignore and let users configure their own suppressions
         }
     }
-    
+
+    @Override
+    public Set<String> getExternalResourceLocations() {
+        Set<String> locations = new LinkedHashSet<>();
+        for (FileSetCheck check : this.checks) {
+            if (check instanceof ExternalResourceHolder) {
+                locations.addAll(((ExternalResourceHolder) check).getExternalResourceLocations());
+            }
+        }
+        return locations;
+    }
+
     @Override
     public void setupChild(Configuration configuration) throws CheckstyleException {
         throw new CheckstyleException("SpringChecks is not allowed as a parent of " + configuration.getName());
     }
-    
+
     public void setHeaderType(String headerType) {
         this.headerType = headerType;
     }
-    
+
     public void setHeaderCopyrightPattern(String headerCopyrightPattern) {
         this.headerCopyrightPattern = headerCopyrightPattern;
     }
-    
+
     public void setHeaderFile(String headerFile) {
         this.headerFile = headerFile;
     }
-    
+
     public void setAvoidStaticImportExcludes(String[] avoidStaticImportExcludes) {
         this.avoidStaticImportExcludes = new LinkedHashSet<>(Arrays.asList(avoidStaticImportExcludes));
     }
-    
+
     public void setProjectRootPackage(String projectRootPackage) {
         this.projectRootPackage = projectRootPackage;
     }
-    
+
     public void setExcludes(String... excludes) {
         this.excludes = new HashSet<>(Arrays.asList(excludes));
     }
-    
+
 }

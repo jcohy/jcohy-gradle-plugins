@@ -1,21 +1,21 @@
 extends: English
 
 font:
-    catalog:
-        merge: true
-        # 思源宋体
-        ChineseFonts:
-            normal: SourceHanSerifCN-Regular.ttf
-            bold: SourceHanSerifCN-Bold.ttf
-            italic: SourceHanSerifCN-Regular-Italic.ttf
-            bold_italic: SourceHanSerifCN-Bold-Italic.ttf
-    fallbacks:
-        - ChineseFonts
-        - Noto Serif
-        - M+ 1mn
-        - Monospace
+  catalog:
+    merge: true
+    # 思源宋体
+    ChineseFonts:
+      normal: SourceHanSerifCN-Regular.ttf
+      bold: SourceHanSerifCN-Bold.ttf
+      italic: SourceHanSerifCN-Regular-Italic.ttf
+      bold_italic: SourceHanSerifCN-Bold-Italic.ttf
+  fallbacks:
+    - ChineseFonts
+    - Noto Serif
+    - M+ 1mn
+    - Monospace
 
 base:
-    font_family: Mono
+  font_family: Mono
 literal:
-    font_family: Mono
+  font_family: Mono

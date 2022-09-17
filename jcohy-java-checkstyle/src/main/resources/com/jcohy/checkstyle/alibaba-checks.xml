@@ -5,9 +5,9 @@
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<!-- TreeWalker Checks -->
 	<!-- 3.5. 【强制】采用 4 个空格缩进，禁止使用 tab 字符。 -->
-<!--	<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck">-->
-<!--		<property name="eachLine" value="true"/>-->
-<!--	</module>-->
+	<!--	<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck">-->
+	<!--		<property name="eachLine" value="true"/>-->
+	<!--	</module>-->
 
 	<!-- 3.7. 【强制】单行字符数限不超过 120 个，超出需要换行时 -->
 	<module name="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck">

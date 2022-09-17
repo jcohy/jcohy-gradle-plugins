@@ -24,10 +24,8 @@ import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 当 {@link MavenPublishPlugin} 插件存在时使用
- *
  * <ul>
  * <li>设置 {@link MavenArtifactRepository Maven artifact repository} 仓库.
  * <li>所有的 {@link MavenPublication Maven publications} 都满足 Maven Central 的要求.
@@ -43,11 +41,11 @@ import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
  * @since 0.0.5.1
  */
 class MavenPublishingConventions {
-    
+
     void apply(Project project) {
         project.getPlugins().withType(MavenPublishPlugin.class).all((mavenPublishPlugin) -> {
             PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
-            
+
             if (project.hasProperty("deploymentRepository")) {
                 publishing.getRepositories().maven(mavenRepository -> {
                     Repository repository = Repository.of(ReleaseStatus.ofProject(project));
@@ -63,7 +61,7 @@ class MavenPublishingConventions {
             publishing.getPublications().withType(MavenPublication.class)
                     .all((mavenPublication ->
                             customizeMavenPublication(mavenPublication, project)));
-            
+
             project.getPlugins().withType(JavaPlugin.class).all(javaPlugin -> {
                 JavaPluginExtension extension = project.getExtensions().getByType(JavaPluginExtension.class);
                 extension.withJavadocJar();
@@ -71,9 +69,10 @@ class MavenPublishingConventions {
             });
         });
     }
-    
+
     /**
      * 自定义 maven 满足 Maven Central 的要求
+     *
      * @param publication publication
      * @param project project
      */
@@ -83,18 +82,20 @@ class MavenPublishingConventions {
                 .all(javaPlugin -> customizeJavaMavenPublication(publication, project));
         suppressMavenOptionalFeatureWarnings(publication);
     }
-    
+
     /**
      * 添加发布兼容性警告
+     *
      * @param publication publication
      */
     private void suppressMavenOptionalFeatureWarnings(MavenPublication publication) {
         publication.suppressPomMetadataWarningsFor("mavenOptionalApiElements");
         publication.suppressPomMetadataWarningsFor("mavenOptionalRuntimeElements");
     }
-    
+
     /**
      * 版本解析
+     *
      * @param publication publication
      * @param project project
      */
@@ -105,9 +106,10 @@ class MavenPublishingConventions {
         publication.versionMapping((strategy) -> strategy.usage(Usage.JAVA_RUNTIME,
                 (mappingStrategy) -> mappingStrategy.fromResolutionResult()));
     }
-    
+
     /**
      * 允许在 pom 中添加 optional 依赖，这是使 Eclipse 中的 m2e 所必需的。
+     *
      * @param project 要添加功能的项目
      */
     private void addMavenOptionalFeature(Project project) {
@@ -116,16 +118,17 @@ class MavenPublishingConventions {
         extension.registerFeature("mavenOptional", (feature) -> {
             feature.usingSourceSet(convention.getSourceSets().getByName("main"));
         });
-        
+
         AdhocComponentWithVariants javaComponent = (AdhocComponentWithVariants) project.getComponents()
                 .findByName("java");
         javaComponent.addVariantsFromConfiguration(
                 project.getConfigurations().findByName("mavenOptionalRuntimeElements"),
                 ConfigurationVariantDetails::mapToOptional);
     }
-    
+
     /**
      * 定义 pom 文件
+     *
      * @param pom pom
      * @param project project
      */
@@ -136,7 +139,7 @@ class MavenPublishingConventions {
         if (!isUserInherited(project)) {
             pom.organization(this::customizeOrganization);
         }
-        
+
         pom.licenses(this::customizeLicenses);
         pom.developers(this::customizeDevelopers);
         pom.scm((scm) -> customizeScm(scm, project));
@@ -144,18 +147,20 @@ class MavenPublishingConventions {
             pom.issueManagement(this::customizeIssueManagement);
         }
     }
-    
+
     /**
      * 定义 issueManagement
+     *
      * @param issueManagement issueManagement
      */
     private void customizeIssueManagement(MavenPomIssueManagement issueManagement) {
         issueManagement.getSystem().set(PomConstant.ISSUE_SYSTEM);
         issueManagement.getUrl().set(PomConstant.ISSUE_URL);
     }
-    
+
     /**
      * 定义 scm
+     *
      * @param scm scm
      * @param project project
      */
@@ -166,9 +171,10 @@ class MavenPublishingConventions {
         }
         scm.getUrl().set(PomConstant.GIT_URL);
     }
-    
+
     /**
      * 定义开发者
+     *
      * @param developers developers
      */
     private void customizeDevelopers(MavenPomDeveloperSpec developers) {
@@ -179,9 +185,10 @@ class MavenPublishingConventions {
             developer.getOrganizationUrl().set(PomConstant.POM_ORGANIZATION_URL);
         });
     }
-    
+
     /**
      * 定义 licenses
+     *
      * @param licenses licenses
      */
     private void customizeLicenses(MavenPomLicenseSpec licenses) {
@@ -190,23 +197,25 @@ class MavenPublishingConventions {
             licence.getUrl().set(PomConstant.LICENSE_URL);
         });
     }
-    
+
     /**
      * 定义组织
-     * @param organization  organization
+     *
+     * @param organization organization
      */
     private void customizeOrganization(MavenPomOrganization organization) {
         organization.getName().set(PomConstant.POM_ORGANIZATION_NAME);
         organization.getUrl().set(PomConstant.POM_ORGANIZATION_URL);
     }
-    
+
     /**
      * 排除
+     *
      * @param project project
      * @return /
      */
     private boolean isUserInherited(Project project) {
         return "flight-framework-bom".equals(project.getName());
     }
-    
+
 }

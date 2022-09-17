@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * <p> 描述: .
  * Copyright: Copyright (c) 2021.
@@ -23,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OssUploadTest {
 
     @Test
-	@Disabled
+    @Disabled
     void uploadOssFiles() {
         File projectDir = new File("src/test/gradle");
         Map<String, String> environment = new LinkedHashMap<>();

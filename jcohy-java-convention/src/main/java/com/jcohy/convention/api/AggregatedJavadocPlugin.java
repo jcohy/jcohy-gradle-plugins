@@ -22,7 +22,7 @@ public class AggregatedJavadocPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        AggregateJavadocExtension extension = project.getExtensions().create("aggregateJavadoc",AggregateJavadocExtension.class);
+        AggregateJavadocExtension extension = project.getExtensions().create("aggregateJavadoc", AggregateJavadocExtension.class);
         Javadoc javadoc = project.getTasks().create(TASK_NAME, Javadoc.class, extension);
 
         Set<Project> publishedProjects = extension.getPublishedProjects();

@@ -12,7 +12,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 检查方法是否以正确的顺序定义。
  *
@@ -21,15 +20,15 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @since 0.0.5.1
  */
 public class SpringMethodOrderCheck extends AbstractSpringCheck {
-    
+
     private static final List<String> EXPECTED_ORDER = Collections
             .unmodifiableList(Arrays.asList("equals", "hashCode", "toString"));
-    
+
     @Override
     public int[] getAcceptableTokens() {
         return new int[] { TokenTypes.CLASS_DEF, TokenTypes.INTERFACE_DEF };
     }
-    
+
     @Override
     public void visitToken(DetailAST ast) {
         DetailAST block = ast.findFirstToken(TokenTypes.OBJBLOCK);
@@ -47,7 +46,7 @@ public class SpringMethodOrderCheck extends AbstractSpringCheck {
         }
         checkOrder(methods);
     }
-    
+
     private void checkOrder(List<DetailAST> methods) {
         List<String> methodsNames = methods.stream().map(DetailAST::getText).collect(Collectors.toList());
         List<String> expected = new ArrayList<>(EXPECTED_ORDER);
@@ -59,7 +58,7 @@ public class SpringMethodOrderCheck extends AbstractSpringCheck {
             }
         }
     }
-    
+
     private boolean isOrderedMethod(DetailAST ident, DetailAST parameters) {
         if ("equals".equals(ident.getText()) && parameters.getChildCount() == 1) {
             return true;

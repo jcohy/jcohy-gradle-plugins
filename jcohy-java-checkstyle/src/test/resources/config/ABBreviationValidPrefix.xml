@@ -6,7 +6,7 @@
 	<!-- TreeWalker Checks -->
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
 		<module name="com.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
-			<property name="prefix" value="ABSB" />
+			<property name="prefix" value="ABSB"/>
 			<property name="allowedAbbreviationLength" value="0"/>
 		</module>
 	</module>

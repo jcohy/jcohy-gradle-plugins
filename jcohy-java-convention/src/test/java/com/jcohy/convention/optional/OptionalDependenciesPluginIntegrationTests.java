@@ -35,17 +35,17 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author jiac
  */
 public class OptionalDependenciesPluginIntegrationTests {
-    
+
     private File projectDir;
-    
+
     private File buildFile;
-    
+
     @BeforeEach
     public void setup(@TempDir File projectDir) throws IOException {
         this.projectDir = projectDir;
         this.buildFile = new File(this.projectDir, "build.gradle");
     }
-    
+
     @Test
     void optionalConfigurationIsCreated() throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
@@ -59,27 +59,27 @@ public class OptionalDependenciesPluginIntegrationTests {
         BuildResult buildResult = runGradle("printConfigurations");
         assertThat(buildResult.getOutput()).contains(OptionalDependenciesPlugin.OPTIONAL_CONFIGURATION_NAME);
     }
-    
+
     @Test
     void optionalDependenciesAreAddedToMainSourceSetsCompileClasspath() throws IOException {
         optionalDependenciesAreAddedToSourceSetClasspath("main", "compileClasspath");
     }
-    
+
     @Test
     void optionalDependenciesAreAddedToMainSourceSetsRuntimeClasspath() throws IOException {
         optionalDependenciesAreAddedToSourceSetClasspath("main", "runtimeClasspath");
     }
-    
+
     @Test
     void optionalDependenciesAreAddedToTestSourceSetsCompileClasspath() throws IOException {
         optionalDependenciesAreAddedToSourceSetClasspath("test", "compileClasspath");
     }
-    
+
     @Test
     void optionalDependenciesAreAddedToTestSourceSetsRuntimeClasspath() throws IOException {
         optionalDependenciesAreAddedToSourceSetClasspath("test", "runtimeClasspath");
     }
-    
+
     public void optionalDependenciesAreAddedToSourceSetClasspath(String sourceSet, String classpath)
             throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(this.buildFile))) {
@@ -102,9 +102,9 @@ public class OptionalDependenciesPluginIntegrationTests {
         BuildResult buildResult = runGradle("printClasspath");
         assertThat(buildResult.getOutput()).contains("spring-jcl");
     }
-    
+
     private BuildResult runGradle(String... args) {
         return GradleRunner.create().withProjectDir(this.projectDir).withArguments(args).withPluginClasspath().build();
     }
-    
+
 }

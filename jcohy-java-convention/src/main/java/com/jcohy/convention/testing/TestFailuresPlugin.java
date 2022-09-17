@@ -14,7 +14,6 @@ import org.gradle.api.tasks.testing.TestResult;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 此插件用于记录测试失败并在构建结束时生成报告。
  *
@@ -27,43 +26,43 @@ public class TestFailuresPlugin implements Plugin<Project> {
     public void apply(Project project) {
         Provider<TestResultsOverview> testResultsOverview = project.getGradle().getSharedServices()
                 .registerIfAbsent("testResultsOverview", TestResultsOverview.class, (spec) -> {
-                
+
                 });
         project.getTasks().withType(Test.class, test ->
                 test.addTestListener(new FailureRecordingTestListener(testResultsOverview, test))
         );
     }
-    
+
     private final class FailureRecordingTestListener implements TestListener {
-        
+
         private final List<TestDescriptor> failures = new ArrayList<>();
-        
+
         private final Provider<TestResultsOverview> testResultsOverview;
-        
+
         private final Test test;
-        
+
         private FailureRecordingTestListener(Provider<TestResultsOverview> testResultOverview, Test test) {
             this.testResultsOverview = testResultOverview;
             this.test = test;
         }
-        
+
         @Override
         public void beforeSuite(TestDescriptor suite) {
-        
+
         }
-        
+
         @Override
         public void afterSuite(TestDescriptor suite, TestResult result) {
             if (!this.failures.isEmpty()) {
                 this.testResultsOverview.get().addFailures(this.test, this.failures);
             }
         }
-        
+
         @Override
         public void beforeTest(TestDescriptor testDescriptor) {
-        
+
         }
-        
+
         @Override
         public void afterTest(TestDescriptor testDescriptor, TestResult result) {
             if (result.getFailedTestCount() > 0) {

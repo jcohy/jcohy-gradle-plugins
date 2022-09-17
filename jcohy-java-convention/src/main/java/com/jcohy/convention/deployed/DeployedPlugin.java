@@ -16,7 +16,6 @@ import org.gradle.api.tasks.bundling.Jar;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 当项目需要部署时，可以使用该插件。
  *
@@ -31,7 +30,7 @@ public class DeployedPlugin implements Plugin<Project> {
         plugins.apply(MavenPublishPlugin.class);
         PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
         MavenPublication mavenPublication = publishing.getPublications().create("maven", MavenPublication.class);
-        
+
         publishing.getRepositories().maven(mavenRepository -> {
             Repository repository = Repository.of(ReleaseStatus.ofProject(project));
             mavenRepository.setUrl(repository.getUrl());
@@ -41,7 +40,7 @@ public class DeployedPlugin implements Plugin<Project> {
                 passwordCredentials.setPassword(PomConstant.NEXUS_PASSWORD);
             }));
         });
-        
+
         project.afterEvaluate((evaluated) -> {
             project.getPlugins().withType(JavaPlugin.class).all((javaPlugin) -> {
                 if (((Jar) project.getTasks().getByName(JavaPlugin.JAR_TASK_NAME)).isEnabled()) {

@@ -6,7 +6,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 检查  protected, package-private 和 private  的类没有公共方法，除非它们也用 {@link Override @Override} 注解。
  *
@@ -15,12 +14,12 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @since 0.0.5.1
  */
 public class SpringMethodVisibilityCheck extends AbstractSpringCheck {
-    
+
     @Override
     public int[] getAcceptableTokens() {
         return new int[] { TokenTypes.METHOD_DEF };
     }
-    
+
     @Override
     public void visitToken(DetailAST ast) {
         DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
@@ -28,7 +27,7 @@ public class SpringMethodVisibilityCheck extends AbstractSpringCheck {
             visitPublicMethod(modifiers, ast);
         }
     }
-    
+
     private void visitPublicMethod(DetailAST modifiers, DetailAST method) {
         if (hasOverrideAnnotation(modifiers)) {
             return;
@@ -44,7 +43,7 @@ public class SpringMethodVisibilityCheck extends AbstractSpringCheck {
         DetailAST ident = method.findFirstToken(TokenTypes.IDENT);
         log(ident.getLineNo(), ident.getColumnNo(), "methodvisibility.publicMethod", ident.getText());
     }
-    
+
     private boolean hasOverrideAnnotation(DetailAST modifiers) {
         DetailAST candidate = modifiers.getFirstChild();
         while (candidate != null) {
@@ -59,15 +58,15 @@ public class SpringMethodVisibilityCheck extends AbstractSpringCheck {
         }
         return false;
     }
-    
+
     private DetailAST getClassDef(DetailAST ast) {
         return findParent(ast, TokenTypes.CLASS_DEF);
     }
-    
+
     private DetailAST getInterfaceDef(DetailAST ast) {
         return findParent(ast, TokenTypes.INTERFACE_DEF);
     }
-    
+
     private DetailAST findParent(DetailAST ast, int classDef) {
         while (ast != null) {
             if (ast.getType() == classDef) {
@@ -77,7 +76,7 @@ public class SpringMethodVisibilityCheck extends AbstractSpringCheck {
         }
         return null;
     }
-    
+
     private boolean isPublicOrProtected(DetailAST ast) {
         DetailAST modifiers = ast.findFirstToken(TokenTypes.MODIFIERS);
         if (modifiers == null) {

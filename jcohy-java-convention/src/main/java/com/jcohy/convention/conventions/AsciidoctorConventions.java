@@ -24,10 +24,8 @@ import org.springframework.util.StringUtils;
 /**
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 在 {@link AsciidoctorJPlugin} 存在的情况下应用的约定。 应用插件时：
- *
  * <ul>
  * <li>配置 {@code https://repo.spring.io/release} 仓库，并限制只能引入以下组的依赖:
  * <ul>
@@ -57,6 +55,7 @@ import org.springframework.util.StringUtils;
  * <li>{@code asciidoctorExtensions} is added to the task's configurations.
  * </ul>
  * </ul>
+ *
  * @author jiac
  * @version 0.0.5.1 2021/7/2:12:25
  * @since 0.0.5.1
@@ -67,8 +66,8 @@ public class AsciidoctorConventions {
 
     private static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
 
-    void apply(Project project){
-        project.getPlugins().withType(AsciidoctorJPlugin.class,(asciidoctorPlugin) -> {
+    void apply(Project project) {
+        project.getPlugins().withType(AsciidoctorJPlugin.class, (asciidoctorPlugin) -> {
             configureDocumentationDependenciesRepository(project);
             makeAllWarningsFatal(project);
             upgradeAsciidoctorJVersion(project);
@@ -81,10 +80,11 @@ public class AsciidoctorConventions {
 
     /**
      * 配置 asciidoctorTask
+     *
      * @param project project
      * @param asciidoctorTask asciidoctorTask
      */
-    private void configureAsciidoctorTask(Project project, AbstractAsciidoctorTask asciidoctorTask){
+    private void configureAsciidoctorTask(Project project, AbstractAsciidoctorTask asciidoctorTask) {
         asciidoctorTask.configurations(EXTENSIONS_CONFIGURATION_NAME);
         configureCommonAttributes(project, asciidoctorTask);
         configureOptions(asciidoctorTask);
@@ -92,8 +92,8 @@ public class AsciidoctorConventions {
         createSyncDocumentationSourceTask(project, asciidoctorTask);
         if (asciidoctorTask instanceof AsciidoctorTask) {
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
-            if(!pdf){
-                replaceLogo(project,asciidoctorTask);
+            if (!pdf) {
+                replaceLogo(project, asciidoctorTask);
             }
             String backend = (!pdf) ? "spring-html" : "spring-pdf";
             ((AsciidoctorTask) asciidoctorTask).outputOptions((outputOptions) -> outputOptions.backends(backend));
@@ -103,11 +103,11 @@ public class AsciidoctorConventions {
     private void replaceLogo(Project project, AbstractAsciidoctorTask asciidoctorTask) {
         // 替换 logo
         asciidoctorTask.doLast((replaceIcon) -> {
-            String language = asciidoctorTask.getLanguages().contains("zh-cn") ? "/zh-cn": "";
-            project.delete(project.getBuildDir() + "/docs/asciidoc" + language+ "/img/banner-logo.svg");
+            String language = asciidoctorTask.getLanguages().contains("zh-cn") ? "/zh-cn" : "";
+            project.delete(project.getBuildDir() + "/docs/asciidoc" + language + "/img/banner-logo.svg");
             try {
                 Files.copy(Objects.requireNonNull(AsciidoctorConventions.class.getResourceAsStream("/data/images/banner-logo.svg")),
-                        Paths.get(project.getBuildDir() + "/docs/asciidoc" + language+ "/img/banner-logo.svg"));
+                        Paths.get(project.getBuildDir() + "/docs/asciidoc" + language + "/img/banner-logo.svg"));
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -116,9 +116,9 @@ public class AsciidoctorConventions {
     }
 
     private void createAsciidoctorPdfTask(Project project) {
-        project.getTasks().register("asciidoctorPdf",AsciidoctorTask.class,(asciidoctorPdf) -> {
+        project.getTasks().register("asciidoctorPdf", AsciidoctorTask.class, (asciidoctorPdf) -> {
             asciidoctorPdf.sources("*.singleadoc");
-            configureAsciidoctorPdfTask(project,asciidoctorPdf);
+            configureAsciidoctorPdfTask(project, asciidoctorPdf);
         });
     }
 
@@ -127,7 +127,7 @@ public class AsciidoctorConventions {
             Map<String, Object> attributes = new HashMap<>();
             attributes.put("pdf-fontsdir", Objects.requireNonNull(AsciidoctorConventions.class.getResource("/data/fonts")).toURI());
             attributes.put("pdf-stylesdir", Objects.requireNonNull(AsciidoctorConventions.class.getResource("/data/themes")).toURI());
-            attributes.put("pdf-style","Chinese");
+            attributes.put("pdf-style", "Chinese");
             asciidoctorPdf.attributes(attributes);
         }
         catch (URISyntaxException e) {
@@ -137,6 +137,7 @@ public class AsciidoctorConventions {
 
     /**
      * 添加文档依赖仓库
+     *
      * @param project project
      */
     private void configureDocumentationDependenciesRepository(Project project) {
@@ -151,7 +152,8 @@ public class AsciidoctorConventions {
     }
 
     /**
-     *  添加警告错误
+     * 添加警告错误
+     *
      * @param project project
      */
     private void makeAllWarningsFatal(Project project) {
@@ -160,6 +162,7 @@ public class AsciidoctorConventions {
 
     /**
      * 创建 asciidoctorExtensions 配置
+     *
      * @param project project
      */
     private void createAsciidoctorExtensionsConfiguration(Project project) {
@@ -176,6 +179,7 @@ public class AsciidoctorConventions {
 
     /**
      * AsciidoctorJ 版本为 2.4.3.
+     *
      * @param project project
      */
     private void upgradeAsciidoctorJVersion(Project project) {
@@ -184,6 +188,7 @@ public class AsciidoctorConventions {
 
     /**
      * 设置文档的 doctpye 类型
+     *
      * @param asciidoctorTask asciidoctorTask
      */
     private void configureOptions(AbstractAsciidoctorTask asciidoctorTask) {
@@ -193,25 +198,26 @@ public class AsciidoctorConventions {
 
     /**
      * 设置通用属性
+     *
      * @param project project
      * @param asciidoctorTask asciidoctorTask
      */
     private void configureCommonAttributes(Project project, AbstractAsciidoctorTask asciidoctorTask) {
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("idprefix", "");
-        attributes.put("idseparator","-" );
+        attributes.put("idseparator", "-");
         attributes.put("toc", "left");
         attributes.put("toclevels", 4);
         attributes.put("tabsize", 4);
-        attributes.put("numbered","" );
-        attributes.put("source-indent",0);
+        attributes.put("numbered", "");
+        attributes.put("source-indent", 0);
         attributes.put("sectanchors", "");
         attributes.put("icons", "font");
         attributes.put("hide-uri-scheme", "font");
         attributes.put("allow-uri-read", true);
         attributes.put("revnumber", null);
         attributes.put("docinfo", "shared,private");
-		attributes.put("attribute-missing", "warn");
+        attributes.put("attribute-missing", "warn");
 
         attributes.put("doc-url", "https://docs.jcohy.com");
         attributes.put("resource-url", "https://resources.jcohy.com");
@@ -224,6 +230,7 @@ public class AsciidoctorConventions {
 
     /**
      * 异步创建文档源文件
+     *
      * @param project project
      * @param asciidoctorTask asciidoctorTask
      * @return /
@@ -234,28 +241,28 @@ public class AsciidoctorConventions {
         File syncedSource = new File(project.getBuildDir(), "docs/src/" + asciidoctorTask.getName());
         syncDocumentationSource.setDestinationDir(syncedSource);
         syncDocumentationSource.from("src/docs");
-        syncDocumentationSource.from("src/main/java",(spec) -> {
+        syncDocumentationSource.from("src/main/java", (spec) -> {
             spec.into("main/java");
         });
-        syncDocumentationSource.from("src/main/groovy",(spec) -> {
+        syncDocumentationSource.from("src/main/groovy", (spec) -> {
             spec.into("main/groovy");
         });
-        syncDocumentationSource.from("src/main/kotlin",(spec) -> {
+        syncDocumentationSource.from("src/main/kotlin", (spec) -> {
             spec.into("main/kotlin");
         });
-        syncDocumentationSource.from("src/test/java",(spec) -> {
+        syncDocumentationSource.from("src/test/java", (spec) -> {
             spec.into("test/java");
         });
-        syncDocumentationSource.from("src/test/groovy",(spec) -> {
+        syncDocumentationSource.from("src/test/groovy", (spec) -> {
             spec.into("test/groovy");
         });
-        syncDocumentationSource.from("src/test/kotlin",(spec) -> {
+        syncDocumentationSource.from("src/test/kotlin", (spec) -> {
             spec.into("test/kotlin");
         });
-		syncDocumentationSource.from("src/main/resources",(spec) -> {
-			spec.into("main/resources");
-		});
-        syncDocumentationSource.from("src/test/resources",(spec) -> {
+        syncDocumentationSource.from("src/main/resources", (spec) -> {
+            spec.into("main/resources");
+        });
+        syncDocumentationSource.from("src/test/resources", (spec) -> {
             spec.into("test/resources");
         });
         asciidoctorTask.dependsOn(syncDocumentationSource);

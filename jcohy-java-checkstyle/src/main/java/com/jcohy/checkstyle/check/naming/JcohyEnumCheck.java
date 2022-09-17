@@ -6,7 +6,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description:
  *
@@ -15,7 +14,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @since 0.0.5.1
  */
 public class JcohyEnumCheck extends AbstractSpringCheck {
-    
+
     @Override
     public int[] getAcceptableTokens() {
         return new int[] { TokenTypes.ENUM_DEF };

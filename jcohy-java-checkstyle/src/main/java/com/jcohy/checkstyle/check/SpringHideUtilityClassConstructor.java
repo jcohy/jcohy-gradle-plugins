@@ -12,7 +12,6 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 扩展  {@link HideUtilityClassConstructorCheck} 确保工具类（在 API 中只有静态方法和字段的类）没有任何公有构造器。
  *
@@ -21,9 +20,9 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
  * @since 0.0.5.1
  */
 public class SpringHideUtilityClassConstructor extends HideUtilityClassConstructorCheck {
-    
+
     private static final Set<String> BYPASS_ANNOTATIONS;
-    
+
     static {
         Set<String> annotations = new LinkedHashSet<>();
         annotations.add("org.springframework.context.annotation.Configuration");
@@ -34,14 +33,14 @@ public class SpringHideUtilityClassConstructor extends HideUtilityClassConstruct
         annotations.addAll(shortNames);
         BYPASS_ANNOTATIONS = Collections.unmodifiableSet(annotations);
     }
-    
+
     @Override
     public void visitToken(DetailAST ast) {
         if (!isBypassed(ast)) {
             super.visitToken(ast);
         }
     }
-    
+
     private boolean isBypassed(DetailAST ast) {
         for (String bypassAnnotation : BYPASS_ANNOTATIONS) {
             if (AnnotationUtil.containsAnnotation(ast, bypassAnnotation)) {
@@ -50,5 +49,5 @@ public class SpringHideUtilityClassConstructor extends HideUtilityClassConstruct
         }
         return false;
     }
-    
+
 }

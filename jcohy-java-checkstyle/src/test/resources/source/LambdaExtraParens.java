@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import java.util.function.Function;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Lambda extra parentheses. If configured we enfoce that single args don't use

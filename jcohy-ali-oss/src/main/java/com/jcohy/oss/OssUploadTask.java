@@ -32,8 +32,10 @@ public class OssUploadTask extends DefaultTask {
 
     private final Logger log = LoggerFactory.getLogger(OssUploadTask.class);
 
+    @Input
     private final AliOssExtension extension;
 
+    @Input
     private final Upload upload;
 
     private final Project project;
@@ -46,8 +48,8 @@ public class OssUploadTask extends DefaultTask {
     }
 
     @TaskAction
-    public void upload(){
-        Map<String,File> uploadFiles = getUploadFiles();
+    public void upload() {
+        Map<String, File> uploadFiles = getUploadFiles();
         AliOssTemplate aliOssTemplate = new AliOssTemplate(extension);
         List<OssFile> ossFiles = aliOssTemplate.putUploadFile(uploadFiles);
         ossFiles.forEach((ossFile) -> {
@@ -57,22 +59,24 @@ public class OssUploadTask extends DefaultTask {
 
     /**
      * 获取需要上传的文件
+     *
      * @return /
      */
 
-	@Input
-	public Map<String,File> getUploadFiles(){
+    @Input
+    public Map<String, File> getUploadFiles() {
         String prefix = this.upload.getPrefix();
         Set<File> localFiles = project.getLayout().getProjectDirectory()
                 .dir(this.upload.getSource()).getAsFileTree().getFiles()
                 .stream()
                 .filter(file -> !contains(file.getPath()))
                 .collect(Collectors.toSet());
-        Map<String,File> uploadFiles;
-        if( !this.upload.isRecursion() ){
+        Map<String, File> uploadFiles;
+        if (!this.upload.isRecursion()) {
             uploadFiles = localFiles.stream()
                     .collect(Collectors.toMap((key) -> getUploadFileName(key.getName()), Function.identity()));
-        } else {
+        }
+        else {
             uploadFiles = localFiles
                     .stream()
                     .collect(Collectors.toMap((key) -> prefix + "/" + getUploadFilePath(key.getPath()), Function.identity()));
@@ -81,25 +85,25 @@ public class OssUploadTask extends DefaultTask {
     }
 
     private String getUploadFilePath(String localFilePath) {
-        localFilePath = localFilePath.replace("\\","/");
+        localFilePath = localFilePath.replace("\\", "/");
         String source = this.upload.getSource();
         int index = localFilePath.indexOf(source);
-        return this.upload.isIgnoreSourceDir()?
-                localFilePath.substring(index + source.length() + 1):
+        return this.upload.isIgnoreSourceDir() ?
+                localFilePath.substring(index + source.length() + 1) :
                 localFilePath.substring(index);
     }
 
     private String getUploadFileName(String localFileName) {
         String source = this.upload.getSource();
         String prefix = this.upload.getPrefix();
-        return this.upload.isIgnoreSourceDir()? prefix + "/" + localFileName
-                : prefix + "/" + source + "/" +localFileName;
+        return this.upload.isIgnoreSourceDir() ? prefix + "/" + localFileName
+                : prefix + "/" + source + "/" + localFileName;
     }
 
     public boolean contains(String filePath) {
-        filePath = filePath.replace("\\","/");
-        for (String e:extension.getUpload().getExclusions()) {
-            if(filePath.contains(e)){
+        filePath = filePath.replace("\\", "/");
+        for (String e : extension.getUpload().getExclusions()) {
+            if (filePath.contains(e)) {
                 return true;
             }
         }

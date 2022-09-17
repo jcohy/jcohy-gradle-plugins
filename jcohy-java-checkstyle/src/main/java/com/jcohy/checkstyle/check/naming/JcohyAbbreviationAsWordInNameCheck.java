@@ -12,7 +12,6 @@ import com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameChe
 /**
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 类名使用 UpperCamelCase 风格，必须遵从驼峰形式，但以下情形例外：DO / BO / DTO / VO / AO
  *
@@ -21,11 +20,11 @@ import com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameChe
  * @since 0.0.5.1
  */
 public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInNameCheck {
-    
+
     private static final Set<Integer> TOP_LEVEL_TYPES;
-    
+
 //    private static final Set<Integer> OTHER_LEVEL_TYPES;
-    
+
 //    static {
 //        Set<Integer> otherLevelTypes = new HashSet<>();
 //        otherLevelTypes.add(TokenTypes.METHOD_DEF);
@@ -33,7 +32,7 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
 //        otherLevelTypes.add(TokenTypes.VARIABLE_DEF);
 //        OTHER_LEVEL_TYPES = Collections.unmodifiableSet(otherLevelTypes);
 //    }
-    
+
     static {
         Set<Integer> topLevelTypes = new HashSet<>();
         topLevelTypes.add(TokenTypes.INTERFACE_DEF);
@@ -42,7 +41,7 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
         topLevelTypes.add(TokenTypes.ANNOTATION_DEF);
         TOP_LEVEL_TYPES = Collections.unmodifiableSet(topLevelTypes);
     }
-    
+
     private final Set<String> suffixes = new HashSet<>(Arrays.asList("DO", "BO", "DTO", "VO", "AO", "OSS"));
 
     private final Set<String> prefixes = new HashSet<>(Arrays.asList("OSS"));
@@ -52,9 +51,9 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
         if (TOP_LEVEL_TYPES.contains(ast.getType())) {
             checkSuffix(ast);
         }
-        
+
     }
-    
+
     private void checkSuffix(DetailAST ast) {
         DetailAST detailAST = ast.findFirstToken(TokenTypes.IDENT);
         String name = detailAST.getText();
@@ -81,7 +80,7 @@ public class JcohyAbbreviationAsWordInNameCheck extends AbbreviationAsWordInName
         return false;
     }
 
-    public void setPrefix(String... prefix){
+    public void setPrefix(String... prefix) {
         this.prefixes.addAll(Arrays.asList(prefix));
     }
 

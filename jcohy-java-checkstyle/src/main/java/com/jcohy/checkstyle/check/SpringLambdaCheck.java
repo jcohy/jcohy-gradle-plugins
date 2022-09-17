@@ -6,7 +6,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * Copyright: Copyright (c) 2021
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
- *
  * <p>
  * Description: 一个参数的 lambda 应该有括号。 单语句实现不应使用花括号。
  *
@@ -15,22 +14,22 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @since 0.0.5.1
  */
 public class SpringLambdaCheck extends AbstractSpringCheck {
-    
+
     private boolean singleArgumentParentheses = true;
-    
+
     @Override
     public int[] getAcceptableTokens() {
         return new int[] { TokenTypes.LAMBDA };
-        
+
     }
-    
+
     @Override
     public void visitToken(DetailAST ast) {
         if (ast.getType() == TokenTypes.LAMBDA) {
             visitLambda(ast);
         }
     }
-    
+
     private void visitLambda(DetailAST lambda) {
         if (hasSingleParameter(lambda)) {
             boolean hasParentheses = hasToken(lambda, TokenTypes.LPAREN);
@@ -50,7 +49,7 @@ public class SpringLambdaCheck extends AbstractSpringCheck {
             log(block.getLineNo(), block.getColumnNo(), "lambda.unnecessaryBlock");
         }
     }
-    
+
     private int countDescendantsOfType(DetailAST ast, int... types) {
         int count = 0;
         for (int type : types) {
@@ -63,12 +62,12 @@ public class SpringLambdaCheck extends AbstractSpringCheck {
         }
         return count;
     }
-    
+
     private boolean hasSingleParameter(DetailAST lambda) {
         DetailAST parameters = lambda.findFirstToken(TokenTypes.PARAMETERS);
         return (parameters == null) || (parameters.getChildCount(TokenTypes.PARAMETER_DEF) == 1);
     }
-    
+
     private boolean isUsingParametersToDefineType(DetailAST lambda) {
         DetailAST ast = lambda.findFirstToken(TokenTypes.PARAMETERS);
         ast = (ast != null ? ast.findFirstToken(TokenTypes.PARAMETER_DEF) : null);
@@ -76,13 +75,13 @@ public class SpringLambdaCheck extends AbstractSpringCheck {
         ast = (ast != null ? ast.findFirstToken(TokenTypes.IDENT) : null);
         return ast != null;
     }
-    
+
     private boolean hasToken(DetailAST ast, int type) {
         return ast.findFirstToken(type) != null;
     }
-    
+
     public void setSingleArgumentParentheses(boolean singleArgumentParentheses) {
         this.singleArgumentParentheses = singleArgumentParentheses;
     }
-    
+
 }
