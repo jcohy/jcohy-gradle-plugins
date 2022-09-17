@@ -17,6 +17,8 @@ import com.jcohy.convention.toolchain.ToolchainPlugin;
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
 import io.spring.javaformat.gradle.SpringJavaFormatPlugin;
+import io.spring.javaformat.gradle.tasks.CheckFormat;
+import io.spring.javaformat.gradle.tasks.Format;
 import io.spring.javaformat.gradle.tasks.FormatterTask;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
@@ -25,10 +27,12 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.quality.Checkstyle;
 import org.gradle.api.plugins.quality.CheckstyleExtension;
 import org.gradle.api.plugins.quality.CheckstylePlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
@@ -36,6 +40,8 @@ import org.gradle.external.javadoc.JavadocMemberLevel;
 import org.gradle.jvm.tasks.Jar;
 import org.gradle.testretry.TestRetryPlugin;
 import org.gradle.testretry.TestRetryTaskExtension;
+
+import org.springframework.util.StringUtils;
 
 /**
  * Copyright: Copyright (c) 2021
@@ -48,7 +54,7 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * <li>应用 {@link SpringJavaFormatPlugin Spring Java Format}, {@link CheckstylePlugin Checkstyle}, {@link TestFailuresPlugin Test Failures}, 和 {@link TestRetryPlugin TestRetry} 插件。
  *  {@link CheckstylePlugin Checkstyle} 插件使用我们自定义的代码规则检查配置对项目进行检查。代码检查规则查看 jcohy-checkstyle.xml 文件
  * <li>{@link Test} 任务使用 JUnit Platform 并且配置最大堆为 1024M
- * <li>{@link JavaCompile}, {@link Javadoc}, 和 {@link FormatTask} 任务编码为 UTF-8
+ * <li>{@link JavaCompile}, {@link Javadoc}, 和 {@link FormatterTask} 任务编码为 UTF-8
  * <li>{@link JavaCompile} 任务配置为使用 {@code -parameters}, 并且当使用 Java8 时
  * <ul>
  * <li> 将警告视为错误
@@ -162,30 +168,33 @@ class JavaConventions {
      * @param project project
      */
     private void configureJarManifestConventions(Project project) {
-
-        ExtractResources extractLegalResources = project.getTasks().create("extractLegalResources", ExtractResources.class);
-        extractLegalResources.getDestinationDirectory().set(project.getLayout().getBuildDirectory().dir("legal"));
-        extractLegalResources.setResourcesNames(Arrays.asList("LICENSE.txt", "NOTICE.txt", "README.txt"));
-        extractLegalResources.property("version", project.getVersion().toString());
-        extractLegalResources.property("copyright", DateTimeFormatter.ofPattern("yyyy").format(LocalDateTime.now()));
-        SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
-
-        Set<String> sourceJarTaskNames = sourceSets.stream().map(SourceSet::getSourcesJarTaskName).collect(Collectors.toSet());
-        Set<String> javadocJarTaskNames = sourceSets.stream().map(SourceSet::getJavadocJarTaskName).collect(Collectors.toSet());
-
-        project.getTasks().withType(Jar.class, jar -> project.afterEvaluate((evaluated) -> {
-            jar.metaInf((metaInf) -> metaInf.from(extractLegalResources));
-            jar.manifest(manifest -> {
-                Map<String, Object> attributes = new TreeMap<>();
-                attributes.put("Automatic-Module-Name", project.getName().replace("-", "."));
-                attributes.put("Build-Jdk-Spec", project.property("sourceCompatibility"));
-                attributes.put("Built-By", "Jcohy");
-                attributes.put("Implementation-Title",
-                        determineImplementationTitle(project, sourceJarTaskNames, javadocJarTaskNames, jar));
-                attributes.put("Implementation-Version", project.getVersion());
-                manifest.attributes(attributes);
+        TaskProvider<ExtractResources> extractLegalResources = project.getTasks().register("extractLegalResources",
+                ExtractResources.class, (task) -> {
+                    task.getDestinationDirectory().set(project.getLayout().getBuildDirectory().dir("legal"));
+                    task.setResourcesNames(Arrays.asList("LICENSE.txt", "NOTICE.txt","README.txt"));
+                    task.property("version", project.getVersion().toString());
+                    task.property("copyright", DateTimeFormatter.ofPattern("yyyy").format(LocalDateTime.now()));
+                });
+        project.afterEvaluate((evaluated) -> {
+            SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
+            Set<String> sourceJarTaskNames = sourceSets.stream().map(SourceSet::getSourcesJarTaskName)
+                    .collect(Collectors.toSet());
+            Set<String> javadocJarTaskNames = sourceSets.stream().map(SourceSet::getJavadocJarTaskName)
+                    .collect(Collectors.toSet());
+            project.getTasks().withType(Jar.class).configureEach((jar) -> {
+                jar.metaInf((metaInf) -> metaInf.from(extractLegalResources));
+                jar.manifest((manifest) -> {
+                    Map<String, Object> attributes = new TreeMap<>();
+                    attributes.put("Automatic-Module-Name", project.getName().replace("-", "."));
+                    attributes.put("Build-Jdk-Spec",  project.property("sourceCompatibility"));
+                    attributes.put("Built-By", "Spring");
+                    attributes.put("Implementation-Title",
+                            determineImplementationTitle(project, sourceJarTaskNames, javadocJarTaskNames, jar));
+                    attributes.put("Implementation-Version", project.getVersion());
+                    manifest.attributes(attributes);
+                });
             });
-        }));
+        });
     }
 
     private String determineImplementationTitle(Project project, Set<String> sourceJarTaskNames,
@@ -209,8 +218,9 @@ class JavaConventions {
         project.getTasks().withType(Test.class, (test) -> {
             test.useJUnitPlatform();
             test.setMaxHeapSize("1024M");
+            test.mustRunAfter(project.getTasks().withType(Checkstyle.class));
+            test.mustRunAfter(project.getTasks().withType(CheckFormat.class));
         });
-
         project.getPlugins().withType(JavaPlugin.class, javaPlugin -> {
             project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME, "org.junit.platform:junit-platform-launcher");
             project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME, "org.junit.jupiter:junit-jupiter");
@@ -220,13 +230,12 @@ class JavaConventions {
 
         project.getPlugins().apply(TestRetryPlugin.class);
 
-        project.getTasks().withType(Test.class, (test -> {
-            project.getPlugins().withType(TestRetryPlugin.class, testRetryPlugin -> {
-                TestRetryTaskExtension testRetry = test.getExtensions().getByType(TestRetryTaskExtension.class);
-                testRetry.getFailOnPassedAfterRetry().set(true);
-                testRetry.getMaxRetries().set(isCi() ? 3 : 0);
-            });
-        }));
+        project.getTasks().withType(Test.class)
+                .configureEach((test) -> project.getPlugins().withType(TestRetryPlugin.class, (testRetryPlugin) -> {
+                    TestRetryTaskExtension testRetry = test.getExtensions().getByType(TestRetryTaskExtension.class);
+                    testRetry.getFailOnPassedAfterRetry().set(true);
+                    testRetry.getMaxRetries().set(isCi() ? 3 : 0);
+                }));
     }
 
     private boolean isCi() {
@@ -239,15 +248,15 @@ class JavaConventions {
      * @param project project
      */
     private void configureJavadocConventions(Project project) {
-        project.getTasks().withType(Javadoc.class, javadoc -> {
-            javadoc.setDescription("Generates project-level javadoc for use in -javadoc jar");
-            javadoc.options((option) -> {
-                option.encoding("UTF-8");
-                option.source("1.8");
-                option.setMemberLevel(JavadocMemberLevel.PROTECTED);
-                option.header(project.getName());
-            });
-        });
+        project.getTasks().withType(Javadoc.class)
+                .configureEach((javadoc) -> {
+                            javadoc.setDescription("Generates project-level javadoc for use in -javadoc jar");
+                            javadoc.getOptions()
+                                    .source("1.8")
+                                    .encoding("UTF-8")
+                                    .header(project.getName())
+                                    .setMemberLevel(JavadocMemberLevel.PROTECTED);
+                        });
     }
 
     /**
@@ -256,7 +265,7 @@ class JavaConventions {
      * @param project project
      */
     private void configureJavaCompileConventions(Project project) {
-        project.getTasks().withType(JavaCompile.class, compile -> {
+        project.getTasks().withType(JavaCompile.class).configureEach(compile -> {
             compile.getOptions().setEncoding("UTF-8");
             compile.setSourceCompatibility("1.8");
             compile.setTargetCompatibility("1.8");
@@ -282,14 +291,26 @@ class JavaConventions {
      */
     private void configureSpringJavaFormat(Project project) {
         project.getPlugins().apply(SpringJavaFormatPlugin.class);
-        project.getTasks().withType(FormatterTask.class, (formatTask -> formatTask.setEncoding("UTF-8")));
-
+        project.getTasks().withType(Format.class)
+                .configureEach((Format) ->
+                        Format.setEncoding("UTF-8"));
         project.getPlugins().apply(CheckstylePlugin.class);
         CheckstyleExtension checkstyle = project.getExtensions().getByType(CheckstyleExtension.class);
-        checkstyle.setToolVersion("8.44");
+        checkstyle.setToolVersion("8.45.1");
+
         checkstyle.getConfigDirectory().set(project.getRootProject().file("src/checkstyle"));
 
         DependencySet checkstyleDependencies = project.getConfigurations().getByName("checkstyle").getDependencies();
         checkstyleDependencies.add(project.getDependencies().create(BomCoordinates.JCOHY_CHECKSTYLE));
     }
+
+//    private void createProhibitedDependenciesCheck(Configuration classpath, Project project) {
+//        TaskProvider<CheckClasspathForProhibitedDependencies> checkClasspathForProhibitedDependencies = project
+//                .getTasks()
+//                .register("check" + StringUtils.capitalize(classpath.getName() + "ForProhibitedDependencies"),
+//                        CheckClasspathForProhibitedDependencies.class);
+//        checkClasspathForProhibitedDependencies.configure((task) -> task.setClasspath(classpath));
+//        project.getTasks().named(JavaBasePlugin.CHECK_TASK_NAME)
+//                .configure((check) -> check.dependsOn(checkClasspathForProhibitedDependencies));
+//    }
 }
