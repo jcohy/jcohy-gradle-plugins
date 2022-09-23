@@ -24,20 +24,20 @@ ext {
 	set('signing.keyId', System.getenv('signing.keyId'))
 	set('signing.password', System.getenv('signing.password'))
 	set('signing.secretKeyRingFile', System.getenv('signing.secretKeyRingFile'))
-	set('deployUsername',System.getenv('NEXUS_OSS_USER_NAME'))
-	set('deployPassword',System.getenv('NEXUS_OSS_PASS_WORD'))
-//	set('deployUsername', NEXUS_OSS_USER_NAME)
-//	set('deployPassword', NEXUS_OSS_PASS_WORD)
+//	set('deployUsername',System.getenv('NEXUS_OSS_USER_NAME'))
+//	set('deployPassword',System.getenv('NEXUS_OSS_PASS_WORD'))
+	set('deployUsername', NEXUS_OSS_USER_NAME)
+	set('deployPassword', NEXUS_OSS_PASS_WORD)
 }
 
-nexusPublishing {
-	repositories {
-		sonatype {
-			username = deployUsername
-			password = deployPassword
-		}
-	}
-}
+//nexusPublishing {
+//	repositories {
+//		sonatype {
+//			username = deployUsername
+//			password = deployPassword
+//		}
+//	}
+//}
 
 configure(allprojects) { project ->
 	apply plugin: 'java'

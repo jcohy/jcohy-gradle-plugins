@@ -15,7 +15,7 @@ public final class PomConstant {
 
     public static final String GIT_URL = "https://github.com/jcohy/jcohy-gradle-plugins.git";
 
-    public static final String POM_ORGANIZATION_NAME = "TD";
+    public static final String POM_ORGANIZATION_NAME = "jcohy";
 
     public static final String POM_ORGANIZATION_URL = "https://github.com/jcohy";
 

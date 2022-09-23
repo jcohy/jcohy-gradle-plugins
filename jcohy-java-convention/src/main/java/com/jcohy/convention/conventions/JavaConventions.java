@@ -11,6 +11,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import com.jcohy.convention.constant.BomCoordinates;
+import com.jcohy.convention.constant.PomConstant;
 import com.jcohy.convention.optional.OptionalDependenciesPlugin;
 import com.jcohy.convention.testing.TestFailuresPlugin;
 import com.jcohy.convention.toolchain.ToolchainPlugin;
@@ -23,6 +24,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.logging.LogLevel;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.quality.CheckstyleExtension;
@@ -43,12 +45,12 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * <p>
  * Description:  当使用 {@link JavaBasePlugin} 时的约定. 当使用此插件时:
  * <ul>
- * <li>{@code sourceCompatibility} 设置为 {@code 1.8}
- * <li>{@code targetCompatibility} 设置为 {@code 1.8}
+ * <li>{@code sourceCompatibility} 设置为 {@code 11}
+ * <li>{@code targetCompatibility} 设置为 {@code 11}
  * <li>应用 {@link SpringJavaFormatPlugin Spring Java Format}, {@link CheckstylePlugin Checkstyle}, {@link TestFailuresPlugin Test Failures}, 和 {@link TestRetryPlugin TestRetry} 插件。
  *  {@link CheckstylePlugin Checkstyle} 插件使用我们自定义的代码规则检查配置对项目进行检查。代码检查规则查看 jcohy-checkstyle.xml 文件
  * <li>{@link Test} 任务使用 JUnit Platform 并且配置最大堆为 1024M
- * <li>{@link JavaCompile}, {@link Javadoc}, 和 {@link FormatTask} 任务编码为 UTF-8
+ * <li>{@link JavaCompile}, {@link Javadoc}, 和 {@link FormatterTask} 任务编码为 UTF-8
  * <li>{@link JavaCompile} 任务配置为使用 {@code -parameters}, 并且当使用 Java8 时
  * <ul>
  * <li> 将警告视为错误
@@ -61,9 +63,7 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * </ul>
  *  <li>自动为项目添加一下依赖管理 BOM </li>
  * <ul>
- * <li> org.springframework.boot:spring-boot-dependencies:2.4.5 </li>
- * <li> com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0 </li>
- * <li> com.alibaba.cloud:spring-cloud-alibaba-dependencies:2.2.2.RELEASE </li>
+ * <li> 请参阅 {@link BomCoordinates} 类</li>
  * </ul>
  * <li>  在使用 {@link JavaPlugin} 插件的项目中添加以下测试相关的依赖, 并且测试最大重试次数为 {@code 3} 次 </li>
  * <ul>
@@ -86,6 +86,7 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * @author jiac
  * @version 0.0.5.1 2021/6/11:15:26
  * @since 0.0.5.1
+ * @since 2.7.3.2
  */
 class JavaConventions {
     void apply(Project project) {
@@ -94,7 +95,7 @@ class JavaConventions {
             project.getPlugins().apply(TestFailuresPlugin.class);
             // 为插件配置 SpringJavaFromat
             configureSpringJavaFormat(project);
-            project.setProperty("sourceCompatibility", "1.8");
+            project.setProperty("sourceCompatibility", "11");
             configureMavenRepository(project);
             configureJavaCompileConventions(project);
             configureJavadocConventions(project);
@@ -243,10 +244,14 @@ class JavaConventions {
             javadoc.setDescription("Generates project-level javadoc for use in -javadoc jar");
             javadoc.options((option) -> {
                 option.encoding("UTF-8");
-                option.source("1.8");
+                option.source("11");
                 option.setMemberLevel(JavadocMemberLevel.PROTECTED);
                 option.header(project.getName());
             });
+            // 跨模块的 @see 和 @link 引用消除警告
+            javadoc.getLogging().captureStandardError(LogLevel.INFO);
+            // 消除 "## warnings" 消息
+            javadoc.getLogging().captureStandardOutput(LogLevel.INFO);
         });
     }
 
