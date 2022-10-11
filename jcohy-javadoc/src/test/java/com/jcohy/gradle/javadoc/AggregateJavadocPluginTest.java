@@ -38,7 +38,6 @@ public class AggregateJavadocPluginTest {
 
         FileCollection classpath = aggregateJavadoc.getClasspath();
         classpath.getFiles().forEach((file) -> System.out.println(file.getName()));
-//        System.out.println();
         assertThat(classpath.getFiles()).extracting(File::getName).contains("reactor-core-3.3.5.RELEASE.jar");
         assertThat(classpath.getFiles()).extracting(File::getName).contains("slf4j-api-1.7.30.jar");
     }

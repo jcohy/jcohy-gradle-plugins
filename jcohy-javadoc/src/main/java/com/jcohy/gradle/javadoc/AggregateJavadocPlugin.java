@@ -52,11 +52,12 @@ public class AggregateJavadocPlugin implements Plugin<Project> {
 
     private Configuration aggregatedConfiguration(Project project) {
         ConfigurationContainer configurations = project.getConfigurations();
+        // 创建 aggregateJavadocClasspath 配置项
         Configuration aggregatedConfiguration = configurations.maybeCreate(AGGREGATE_JAVADOC_CLASSPATH_CONFIGURATION_NAME);
-        // 使 implementation 继承此配置。
+        // 使 implementation 继承 aggregateJavadocClasspath 配置。
         configurations.getByName(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME)
                 .extendsFrom(aggregatedConfiguration);
-        // 配置默认依赖
+        // 配置默认依赖，将使用了 JavadocPlugin 插件的子项目的依赖添加到此配置上
         aggregatedConfiguration.defaultDependencies((dependencies) -> {
             project.getGradle().getRootProject().subprojects((subjectProject) -> {
                 subjectProject.getPlugins().withType(JavadocPlugin.class,(javadoc) -> {
@@ -86,12 +87,7 @@ public class AggregateJavadocPlugin implements Plugin<Project> {
             sourcesPath.outgoing((publications) -> {
                 JavaPluginConvention javaPlugin = project.getConvention().getPlugin(JavaPluginConvention.class);
                 SourceSet mainSrc = javaPlugin.getSourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME);
-                mainSrc.getAllJava().forEach(new Consumer<File>() {
-                    @Override
-                    public void accept(File file) {
-                        publications.artifact(file);
-                    }
-                });
+                mainSrc.getAllJava().forEach(publications::artifact);
             });
         });
     }

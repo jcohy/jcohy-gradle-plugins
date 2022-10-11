@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.logging.LogLevel;
 import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.javadoc.Javadoc;
@@ -42,6 +43,7 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
+        // 定义一个名为 syncJavadocStylesheet 的 Sync 任务，主要用来复制样式文件
         TaskProvider<Sync> syncJavadocStylesheet = project.getTasks().register("syncJavadocStylesheet", Sync.class,
                 (sync) -> {
                     sync.setGroup("Documentation");
@@ -64,6 +66,7 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
 
                 });
 
+        // javadoc 通用配置
         project.getTasks().withType(Javadoc.class, (javadoc) -> {
             javadoc.dependsOn(syncJavadocStylesheet);
             StandardJavadocDocletOptions options = (StandardJavadocDocletOptions) javadoc.getOptions();
@@ -77,7 +80,13 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
             options.setStylesheetFile(project.file(STYLESHEET_FILE_NAME));
             options.setUse(true);
             options.setWindowTitle(title);
+
+            // 跨模块的 @see 和 @link 引用消除警告
+            javadoc.getLogging().captureStandardError(LogLevel.INFO);
+            // 消除  “## warnings” 消息
+            javadoc.getLogging().captureStandardOutput(LogLevel.INFO);
         });
+
     }
 
     /**
@@ -107,12 +116,19 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
         return new String(chars) + " API";
     }
 
-    public File copyJarResources(String path, String resource) throws IOException {
-        if (!path.startsWith("/")) {
+    /**
+     * 从 jar 包获取指定资源
+     * @param resource 资源文件
+     * @param destination 目标路径
+     * @return /
+     * @throws IOException /
+     */
+    public File copyJarResources(String resource, String destination) throws IOException {
+        if (!resource.startsWith("/")) {
             throw new IllegalArgumentException("The path has to be absolute (start with '/').");
         }
 
-        if (path.endsWith("/")) {
+        if (resource.endsWith("/")) {
             throw new IllegalArgumentException("The path has to be absolute (not end with '/').");
         }
 
@@ -128,7 +144,7 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
         }
 
         // Open and check input stream
-        URL url = this.getClass().getResource(path);
+        URL url = this.getClass().getResource(resource);
         URLConnection urlConnection = url.openConnection();
 
         try( InputStream is = urlConnection.getInputStream(); OutputStream os = new FileOutputStream(file)) {

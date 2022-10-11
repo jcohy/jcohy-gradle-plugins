@@ -15,7 +15,7 @@
  */
 
 plugins {
-	id 'io.spring.javadoc-aggregate'
+	id 'com.jcohy.gradle.javadoc-aggregate'
 }
 
 configurations.aggregateJavadocClasspath {

@@ -16,7 +16,7 @@
 
 plugins {
 	id 'java-library'
-	id 'io.spring.javadoc'
+	id 'com.jcohy.gradle.javadoc'
 }
 
 dependencies {
