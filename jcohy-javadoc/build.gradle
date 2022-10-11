@@ -12,7 +12,7 @@ plugins {
 	id 'com.gradle.plugin-publish' version '0.18.0'
 	id 'maven-publish'
 	id "io.spring.nohttp" version "0.0.2.RELEASE"
-	id "nebula.integtest" version "7.0.7"
+	id "nebula.integtest" version "9.6.3"
 }
 
 dependencies {

@@ -1,7 +1,13 @@
 package com.jcohy.gradle.javadoc;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.JarURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 
 import org.gradle.api.Plugin;
@@ -12,6 +18,8 @@ import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.external.javadoc.JavadocMemberLevel;
 import org.gradle.external.javadoc.JavadocOutputLevel;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 描述: 默认 javadoc 配置约定.
@@ -24,6 +32,7 @@ import org.gradle.external.javadoc.StandardJavadocDocletOptions;
  */
 public class JavadocConventionsPlugin implements Plugin<Project> {
 
+    private static final Logger log = LoggerFactory.getLogger(JavadocConventionsPlugin.class);
     /**
      * Spring 的样式表.
      */
@@ -37,13 +46,22 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
                 (sync) -> {
                     sync.setGroup("Documentation");
                     sync.setDescription("Syncs the javadoc stylesheet");
-//                    File resource = new File(project.getBuildDir(),STYLESHEET_RESOURCE_NAME);
-                    URL resource = getClass().getResource(STYLESHEET_RESOURCE_NAME);
-                    sync.from(resource);
                     String relativeToPath = project.relativeProjectPath(new File(STYLESHEET_FILE_NAME).getParent());
-                    System.out.println(resource);
-                    System.out.println(relativeToPath);
-                    sync.into(relativeToPath);
+                    // 在 Gradle 6.4 之前，使用复制操作复制插件资源可以正常工作，而 Gradle 6.5.1 不再有效。
+                    // 主要因为 testkit 将构建资源打成 main.jar 放在缓存中。
+                    try {
+                        URL resource = getClass().getResource(STYLESHEET_RESOURCE_NAME);
+                        URLConnection urlConnection = resource.openConnection();
+                        if (urlConnection instanceof JarURLConnection) {
+                            resource = copyJarResources(STYLESHEET_RESOURCE_NAME, project.getBuildDir()  + "/tmp/stylesheet.css").toURI().toURL();
+                        }
+                        sync.from(resource);
+                        sync.into(relativeToPath);
+                    }
+                    catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 });
 
         project.getTasks().withType(Javadoc.class, (javadoc) -> {
@@ -63,7 +81,8 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
     }
 
     /**
-	 * Javadoc 标题，移除 "-build" 后缀，并且将所有的 "-" 替换成 " "，首字母大写。
+     * Javadoc 标题，移除 "-build" 后缀，并且将所有的 "-" 替换成 " "，首字母大写。
+     *
      * @param project project.
      * @return 整理后的标题.
      */
@@ -86,5 +105,40 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
             }
         }
         return new String(chars) + " API";
+    }
+
+    public File copyJarResources(String path, String resource) throws IOException {
+        if (!path.startsWith("/")) {
+            throw new IllegalArgumentException("The path has to be absolute (start with '/').");
+        }
+
+        if (path.endsWith("/")) {
+            throw new IllegalArgumentException("The path has to be absolute (not end with '/').");
+        }
+
+
+        File file = new File(resource);
+
+        if(!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+
+        if (!file.exists() && !file.createNewFile()) {
+            log.error("create file {} failed.",resource);
+        }
+
+        // Open and check input stream
+        URL url = this.getClass().getResource(path);
+        URLConnection urlConnection = url.openConnection();
+
+        try( InputStream is = urlConnection.getInputStream(); OutputStream os = new FileOutputStream(file)) {
+            // Prepare buffer for data copying
+            byte[] buffer = new byte[1024];
+            int readBytes;
+            while ((readBytes = is.read(buffer)) != -1) {
+                os.write(buffer, 0, readBytes);
+            }
+        }
+        return file;
     }
 }

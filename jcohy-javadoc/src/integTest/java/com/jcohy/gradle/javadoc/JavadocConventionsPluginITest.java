@@ -1,8 +1,6 @@
 package com.jcohy.gradle.javadoc;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
@@ -27,7 +25,7 @@ class JavadocConventionsPluginITest {
     File workingDir;
 
     @Test
-    void syncJavaDocStylesheet() throws Exception {
+    void syncJavaDocStylesheetWithGradle6_5_1() throws Exception {
         CopyUtils.fromResourceNameToDir("javadoc/conventions/simple", this.workingDir);
         String task = ":syncJavadocStylesheet";
 
@@ -38,7 +36,29 @@ class JavadocConventionsPluginITest {
                 .withArguments(task)
                 .withDebug(true)
                 .forwardOutput()
-                .withGradleVersion("6.8.3")
+                .withGradleVersion("6.5.1")
+                .build();
+        // @formatter:on
+
+        assertThat(buildResult.task(task).getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
+        File stylesheet = styleSheet();
+        assertThat(stylesheet).exists();
+        assertThat(stylesheet).isFile();
+    }
+
+    @Test
+    void syncJavaDocStylesheetWithGradle6_4() throws Exception {
+        CopyUtils.fromResourceNameToDir("javadoc/conventions/simple", this.workingDir);
+        String task = ":syncJavadocStylesheet";
+
+        // @formatter:off
+        BuildResult buildResult = GradleRunner.create()
+                .withProjectDir(this.workingDir)
+                .withPluginClasspath()
+                .withArguments(task)
+                .withDebug(true)
+                .forwardOutput()
+                .withGradleVersion("6.4")
                 .build();
         // @formatter:on
 

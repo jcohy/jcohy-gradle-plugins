@@ -28,13 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 2022.0.1
  */
 class JavadocConventionsPluginTest {
-    public static final String STYLESHEET_RESOURCE_NAME = "/com/jcohy/gradle/javadoc/internal/stylesheet.css";
 
-    @Test
-    void test() {
-        URL resource = getClass().getResource(STYLESHEET_RESOURCE_NAME);
-        System.out.println(resource);
-    }
     @Test
     void options() {
         Project project = projectWithPlugins("jcohy-javadoc-build");
