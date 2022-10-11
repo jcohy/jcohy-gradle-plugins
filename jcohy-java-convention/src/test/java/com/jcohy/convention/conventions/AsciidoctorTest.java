@@ -1,4 +1,4 @@
-package com.jcohy.convention.asciidoctor;
+package com.jcohy.convention.conventions;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -27,7 +27,7 @@ public class AsciidoctorTest {
 
     @Test
     void gradleBuild() throws Exception {
-        File projectDir = new File("src/test/gradle");
+        File projectDir = new File("src/test/asciidoctor");
         Map<String, String> environment = new LinkedHashMap<>();
 
         BuildResult result = GradleRunner.create()
@@ -53,9 +53,9 @@ public class AsciidoctorTest {
                 .contains("<p>study-url: <a href=\"https://study.jcohy.com\">study-url</a></p>")
                 .contains("<p>project-url: <a href=\"https://project.jcohy.com\">project-url</a></p>");
 
-        File generatedPdf = new File(projectDir, "build/docs/asciidocPdf");
-        File pdfFile = new File(generatedPdf, "index.pdf");
-        assertThat(pdfFile).exists();
+//        File generatedPdf = new File(projectDir, "build/docs/asciidocPdf");
+//        File pdfFile = new File(generatedPdf, "index.pdf");
+//        assertThat(pdfFile).exists();
 
         File GroovyExample = new File(projectDir, "build/docs/src/asciidoctor/main/groovy/com/jcohy/gradle/GroovyExample.groovy");
         File JavaExample = new File(projectDir, "build/docs/src/asciidoctor/main/java/com/jcohy/gradle/JavaExample.java");

@@ -215,7 +215,8 @@ public class AsciidoctorConventions {
         attributes.put("icons", "font");
         attributes.put("hide-uri-scheme", "font");
         attributes.put("allow-uri-read", true);
-        attributes.put("revnumber", null);
+		attributes.put("version",attributes.get("version") != null ? attributes.get("version"): project.getVersion());
+        attributes.put("revnumber", attributes.get("revnumber") != null ? attributes.get("version"): project.getVersion());
         attributes.put("docinfo", "shared,private");
         attributes.put("attribute-missing", "warn");
 

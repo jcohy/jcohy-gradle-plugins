@@ -25,9 +25,9 @@ import org.gradle.external.javadoc.StandardJavadocDocletOptions;
 public class JavadocConventionsPlugin implements Plugin<Project> {
 
     /**
-     * The resource name for the Spring stylesheet.
+     * Spring 的样式表.
      */
-    public static final String STYLESHEET_RESOURCE_NAME = "resources/main/com/jcohy/gradle/javadoc/internal/stylesheet.css";
+    public static final String STYLESHEET_RESOURCE_NAME = "/com/jcohy/gradle/javadoc/internal/stylesheet.css";
 
     static final String STYLESHEET_FILE_NAME = "build/com.jcohy.gradle.javadoc-conventions/stylesheet.css";
 
@@ -37,9 +37,8 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
                 (sync) -> {
                     sync.setGroup("Documentation");
                     sync.setDescription("Syncs the javadoc stylesheet");
-                    File resource = new File(project.getBuildDir(),STYLESHEET_RESOURCE_NAME);
-//                    URL resource = getClass().getResource(STYLESHEET_RESOURCE_NAME);
-                    System.out.println(resource.getPath());
+//                    File resource = new File(project.getBuildDir(),STYLESHEET_RESOURCE_NAME);
+                    URL resource = getClass().getResource(STYLESHEET_RESOURCE_NAME);
                     sync.from(resource);
                     String relativeToPath = project.relativeProjectPath(new File(STYLESHEET_FILE_NAME).getParent());
                     System.out.println(resource);
@@ -64,10 +63,9 @@ public class JavadocConventionsPlugin implements Plugin<Project> {
     }
 
     /**
-     * Obtains the Javadoc title from the root project by stripping off "-build",
-     * replacing all "-" with " ", and capitalizing each word.
-     * @param project the project to get a Javadoc title for.
-     * @return the title that should be used.
+	 * Javadoc 标题，移除 "-build" 后缀，并且将所有的 "-" 替换成 " "，首字母大写。
+     * @param project project.
+     * @return 整理后的标题.
      */
     private String title(Project project) {
         String BUILD = "-build";
