@@ -1,0 +1,53 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.21")
+	}
+}
+
+plugins {
+	id "java-gradle-plugin"
+	id 'com.gradle.plugin-publish' version '0.18.0'
+	id 'maven-publish'
+	id "io.spring.nohttp" version "0.0.2.RELEASE"
+	id "nebula.integtest" version "9.6.3"
+}
+
+dependencies {
+	implementation gradleApi()
+	implementation("org.springframework:spring-core")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm:3.3.2")
+	testImplementation 'org.assertj:assertj-core'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+pluginBundle {
+	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
+	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
+	description = project.description
+	tags = ['Asciidoctor']
+}
+
+gradlePlugin {
+	plugins {
+		javadocConventionsPlugin {
+			id = 'com.jcohy.gradle.asciidoctor-conventions'
+			displayName = 'Javadoc Conventions Plugin'
+			description = 'Defaults the Javadoc'
+			implementationClass = 'com.jcohy.gradle.javadoc.JavadocConventionsPlugin'
+		}
+	}
+}
+dependencyLocking {
+	lockAllConfigurations()
+}
+
+repositories {
+	mavenCentral()
+}
+tasks.withType(Test).configureEach {
+	useJUnitPlatform()
+}
