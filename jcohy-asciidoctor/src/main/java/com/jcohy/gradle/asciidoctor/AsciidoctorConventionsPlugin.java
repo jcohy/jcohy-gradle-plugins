@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import org.asciidoctor.gradle.jvm.AbstractAsciidoctorTask;
 import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
 import org.asciidoctor.gradle.jvm.AsciidoctorJPlugin;
 import org.asciidoctor.gradle.jvm.AsciidoctorTask;
@@ -25,16 +26,45 @@ import org.springframework.util.StringUtils;
  * 描述: .
  * <p>
  * Copyright © 2022 <a href="https://www.jcohy.com" target= "_blank">https://www.jcohy.com</a>
- *
+ * Description: 在 {@link AsciidoctorJPlugin} 存在的情况下应用的约定。 应用插件时：
+ * <ul>
+ * <li>配置 {@code https://repo.spring.io/release} 仓库，并限制只能引入以下组的依赖:
+ * <ul>
+ * <li>{@code io.spring.asciidoctor}
+ * <li>{@code io.spring.asciidoctor.backends}
+ * <li>{@code io.spring.docresources}
+ * </ul>
+ * <li>设置所有的警告都是致命的.
+ * <li> AsciidoctorJ 版本更新为 2.4.3.
+ * <li>创建一个 {@code asciidoctorExtensions} configuration.
+ * <li>对于每个 {@link AsciidoctorTask} (HTML only):
+ * <ul>
+ * <li>创建一个任务以将文档资源同步到其输出目录。
+ * <li>配置 {@code doctype} {@link AsciidoctorTask#options(Map) option}.
+ * <li>配置 {@code backend}.
+ * </ul>
+ * <li>对于每个 {@link AsciidoctorTask} (PDF only):
+ * <ul>
+ * <li> 添加中文支持。
+ * </ul>
+ * <li>对于每个 {@link AbstractAsciidoctorTask} (HTML 和 PDF):
+ * <ul>
+ * <li>{@link AsciidoctorTask#attributes(Map) Attributes} are configured to enable
+ * warnings for references to missing attributes, etc.
+ * <li>{@link AbstractAsciidoctorTask#baseDirFollowsSourceDir() baseDirFollowsSourceDir()}
+ * is enabled.
+ * <li>{@code asciidoctorExtensions} is added to the task's configurations.
+ * </ul>
+ * </ul>
  * @author jiac
  * @version 2022.0.1 2022/10/12:15:15
  * @since 2022.0.1
  */
-public class AsciidoctorConventionsPlugins implements Plugin<Project> {
+public class AsciidoctorConventionsPlugin implements Plugin<Project> {
 
     private static final String ASCIIDOCTORJ_VERSION = "2.4.3";
 
-    private static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
+    public static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
 
     @Override
     public void apply(Project project) {
@@ -216,6 +246,7 @@ public class AsciidoctorConventionsPlugins implements Plugin<Project> {
     private void createAsciidoctorExtensionsConfiguration(Project project) {
         // asciidoctorExtensions 配置继承 dependencyManagement
         project.getConfigurations().create(EXTENSIONS_CONFIGURATION_NAME,(configuration) -> {
+            // 主要针对 spring-boot-dependencies 的模块依赖管理
            project.getConfigurations().matching((candidate) -> "dependencyManagement".equals(candidate.getName()))
                    .all(configuration::extendsFrom);
            // 添加 spring-asciidoctor-backends 依赖
@@ -237,7 +268,7 @@ public class AsciidoctorConventionsPlugins implements Plugin<Project> {
     }
 
     /**
-     * 添加错误警告
+     * 设置所有的警告都是致命的
      * @param project project
      */
     private void makeAllWarningsFatal(Project project) {

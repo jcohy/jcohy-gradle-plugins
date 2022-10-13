@@ -37,7 +37,7 @@ gradlePlugin {
 			id = 'com.jcohy.gradle.asciidoctor-conventions'
 			displayName = 'Javadoc Conventions Plugin'
 			description = 'Defaults the Javadoc'
-			implementationClass = 'com.jcohy.gradle.javadoc.JavadocConventionsPlugin'
+			implementationClass = 'com.jcohy.gradle.asciidoctor.AsciidoctorConventionsPlugin'
 		}
 	}
 }
