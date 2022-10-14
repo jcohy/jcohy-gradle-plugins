@@ -3,6 +3,7 @@ package com.jcohy.gradle.asciidoctor;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
@@ -27,17 +28,54 @@ public class AsciidoctorConventionsPluginITest {
     File workDir;
 
     @Test
+    void asciidoctorPdfTaskThenSuccess() throws IOException, URISyntaxException {
+        runnerWithTask(":asciidoctorPdf");
+        File generatedPdf = new File(this.workDir, "build/docs/asciidocPdf");
+        assertThat(new File(generatedPdf,"index.pdf")).exists();
+    }
+
+    @Test
     void asciidoctorTaskThenSuccess() throws IOException, URISyntaxException {
+        runnerWithTask(":asciidoctor");
+        File generatedHtml = new File(this.workDir, "build/docs/asciidoc");
+        File htmlFile = new File(generatedHtml, "index.html");
+        assertThat(new File(generatedHtml, "index.html")).exists();
+        assertThat(new File(generatedHtml, "css/site.css")).exists();
+        assertThat(new File(generatedHtml, "js/site.js")).exists();
+        assertThat(Files.readString(htmlFile.toPath()))
+                .contains("<title>Asciidoctor Test Document</title>")
+                .contains("<p>docs-url: <a href=\"https://docs.jcohy.com\">docs-url</a></p>")
+                .contains("<p>resource-url: <a href=\"https://resources.jcohy.com\">resource-url</a></p>")
+                .contains("<p>software-url: <a href=\"https://software.jcohy.com\">software-url</a></p>")
+                .contains("<p>study-url: <a href=\"https://study.jcohy.com\">study-url</a></p>")
+                .contains("<p>project-url: <a href=\"https://project.jcohy.com\">project-url</a></p>");
+        checkCodeFileExist();
+    }
+
+    private void checkCodeFileExist() {
+        File GroovyExample = new File(this.workDir, "build/docs/src/asciidoctor/main/groovy/com/jcohy/gradle/GroovyExample.groovy");
+        File JavaExample = new File(this.workDir, "build/docs/src/asciidoctor/main/java/com/jcohy/gradle/JavaExample.java");
+        File KotlinExample = new File(this.workDir, "build/docs/src/asciidoctor/main/kotlin/com/jcohy/gradle/KotlinExample.kts");
+        File GroovyTestExample = new File(this.workDir, "build/docs/src/asciidoctor/test/groovy/com/jcohy/gradle/GroovyTestExample.groovy");
+        File JavaTestExample = new File(this.workDir, "build/docs/src/asciidoctor/test/java/com/jcohy/gradle/JavaTestExample.java");
+        File KotlinTestExample = new File(this.workDir, "build/docs/src/asciidoctor/test/kotlin/com/jcohy/gradle/KotlinTestExample.kts");
+        assertThat(GroovyExample).exists();
+        assertThat(JavaExample).exists();
+        assertThat(KotlinExample).exists();
+        assertThat(GroovyTestExample).exists();
+        assertThat(JavaTestExample).exists();
+        assertThat(KotlinTestExample).exists();
+    }
+
+    private void runnerWithTask(String task) throws IOException, URISyntaxException {
         CopyUtils.fromResourceNameToDir("asciidoctor/",this.workDir);
-        String task = ":asciidoctor";
-        BuildResult buildResult = GradleRunner.create()
-                .withProjectDir(this.workDir)
+        BuildResult result = GradleRunner.create()
                 .withPluginClasspath()
-                .withArguments(task)
+                .withProjectDir(this.workDir)
                 .withDebug(true)
-                .withGradleVersion("6.4")
                 .forwardOutput()
+                .withArguments(task)
                 .build();
-        assertThat(buildResult.task(task).getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
+        assertThat(result.task(task).getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
     }
 }

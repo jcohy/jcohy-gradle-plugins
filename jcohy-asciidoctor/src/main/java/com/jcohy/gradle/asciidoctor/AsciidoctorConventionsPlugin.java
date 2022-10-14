@@ -121,6 +121,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
     private void replaceLogo(Project project, AsciidoctorTask asciidoctorTask) {
         asciidoctorTask.doLast((replaceLogo) -> {
             try {
+
                 String language = asciidoctorTask.getLanguages().contains("zh-cn") ? "/zh-cn" : "";
                 project.delete(project.getBuildDir() + "/docs/asciidoc/" + language + "/img/banner-logo.svg");
                 Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/data/images/banner-logo.svg")),
@@ -174,6 +175,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncSource).withPathSensitivity(PathSensitivity.RELATIVE)
                 .withPropertyName("synced source");
+        String s = project.relativePath(new File(syncSource, "asciidoc/"));
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncSource,"asciidoc/")));
         return syncDocumentationSource;
     }
@@ -224,8 +226,8 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void createAsciidoctorPdfTask(Project project) {
         project.getTasks().register("asciidoctorPdf", AsciidoctorTask.class,(asciidoctorPdf -> {
-            asciidoctorPdf.sources("*.singleadoc");
-            // 添加属性，解决中文乱码问题
+            asciidoctorPdf.sources("index.adoc");
+            // 添加属性，解决 PDF 中文乱码问题
             try {
                 Map<String,Object> attributes = new HashMap<>();
                 attributes.put("pdf-fontsdir", Objects.requireNonNull(this.getClass().getResource("/data/fonts")).toURI());
@@ -254,7 +256,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
                    .create("io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.3"));
             // 添加 asciidoctorj-pdf 依赖
             configuration.getDependencies().add(project.getDependencies()
-                    .create("org.asciidoctor:asciidoctorj-pdf:1.5.3"));
+                    .create("org.asciidoctor:asciidoctorj-pdf:2.3.0"));
         });
     }
 
