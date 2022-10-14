@@ -37,7 +37,7 @@ import org.springframework.util.StringUtils;
  * <li>设置所有的警告都是致命的.
  * <li> AsciidoctorJ 版本更新为 2.4.3.
  * <li>创建一个 {@code asciidoctorExtensions} configuration.
- * <li>对于每个 {@link AsciidoctorTask} (HTML only):
+ * <li>对于每个 {@link AsciidoctorTask}:
  * <ul>
  * <li>创建一个任务以将文档资源同步到其输出目录。
  * <li>配置 {@code doctype} {@link AsciidoctorTask#options(Map) option}.
@@ -175,7 +175,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncSource).withPathSensitivity(PathSensitivity.RELATIVE)
                 .withPropertyName("synced source");
-        String s = project.relativePath(new File(syncSource, "asciidoc/"));
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncSource,"asciidoc/")));
         return syncDocumentationSource;
     }

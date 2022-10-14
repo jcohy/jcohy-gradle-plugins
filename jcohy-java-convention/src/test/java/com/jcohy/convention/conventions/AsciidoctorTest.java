@@ -36,8 +36,8 @@ public class AsciidoctorTest {
                 .withProjectDir(projectDir)
                 .withDebug(true)
                 .forwardOutput()
-                .withArguments("clean", "asciidoctor", "asciidoctorPdf")
-//                .withArguments("clean","asciidoctorPdf")
+//                .withArguments("clean", "asciidoctor", "asciidoctorPdf")
+                .withArguments("clean","asciidoctorPdf")
                 .build();
         assertThat(result.task(":asciidoctor").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
         File generatedHtml = new File(projectDir, "build/docs/asciidoc");
