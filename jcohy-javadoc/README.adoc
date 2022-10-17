@@ -1,0 +1,108 @@
+= 聚合 Javadoc 的 Gradle 插件
+
+提供生成聚合文档的 Gradle 的最佳实践。
+
+== 下载
+
+下载地址 https://plugins.gradle.org/plugin/com.jcohy.gradle.javadoc-aggregate[Gradle Plugin Portal].
+
+== com.jcohy.gradle.javadoc 插件
+
+将此插件应用到聚合 Javadoc 中应该包含的每个模块。`com.jcohy.gradle.javadoc` 用来标记哪些项目应该包含在聚合文档中。如下所示，还需要将 `JavaPlugin` 应用到项目中。
+
+.build.gradle
+[source,groovy,subs="+attributes"]
+----
+plugins {
+	id 'java-library'
+	id 'com.jcohy.gradle.javadoc' version '{version}'
+}
+----
+
+== com.jcohy.gradle.javadoc-aggregate 插件
+
+接下来，将 `AggregateJavadoc` 插件应用到要生成聚合 Javadoc 的项目中。
+
+.aggregator/build.gradle
+[source,groovy,subs="+attributes"]
+----
+plugins {
+	id 'com.jcohy.gradle.javadoc-aggregate' version '{version}'
+}
+----
+
+=== aggregateJavadocClasspath 配置（Configuration）
+
+这将创建一个名为 `aggregateJavadocClasspath` 的 `Configuration`，用于确定 <<aggregateJavadoc 任务（Task）>> 的类路径。 这个  `Configuration` 默认包括所有应用 `com.jcohy.gradle.javadoc` 的项目。
+
+=== aggregateJavadoc 任务（Task）
+
+创建一个名为 `aggregateJavadoc` 的任务，类型为 https://docs.gradle.org/current/dsl/org.gradle.api.tasks.javadoc.Javadoc.html[`Javadoc`]。
+
+该任务默认聚合包含 `com.jcohy.gradle.javadoc` 插件的所有项目的 https://docs.gradle.org/current/dsl/org.gradle.api.tasks.javadoc.Javadoc.html#org.gradle.api.tasks.javadoc.Javadoc:source[source] 和 https://docs.gradle.org/current/dsl/org.gradle.api.tasks.javadoc.Javadoc.html#org.gradle.api.tasks.javadoc.Javadoc:classpath[classpath]，以基于包含' io.spring. php的所有项目聚合值。javadoc的插件。
+
+最后，执行任务.
+
+[source,bash]
+----
+./gradlew :aggregator:aggregateJavadoc
+----
+
+
+[NOTE]
+====
+对于我们的例子，我们假设 `com.jcohy.gradle.javadoc-aggregate` 应用于 `aggregator` 项目。
+你可以应用到任何模块，但你需要相应地调整任务。
+====
+
+=== 排除默认项目
+
+你可以使用 Gradle 的内置排除机制排除默认包含的项目。 例如，以下语句将排除 `module2`  项目:
+
+[source,groovy]
+----
+configurations.aggregateJavadocClasspath {
+    exclude module: 'module2'
+}
+----
+
+=== 自定义聚合项目
+
+可以显式的通过 `aggregateJavadocClasspath` 配置来自定义应该聚合哪些项目的 Javadoc。
+
+例如，下面的代码显式聚合了 `module1` 和 `module2`，而忽略了他们有没有使用 `com.jcohy.gradle.javadoc` 产检。
+
+[source,groovy]
+----
+plugins {
+    id 'io.spring.javadoc-aggregate'
+}
+
+dependencies {
+    aggregateJavadocClasspath project(':module1')
+    aggregateJavadocClasspath project(':module3')
+}
+----
+
+== com.jcohy.gradle.javadoc-conventions 插件
+
+应用 com.jcohy.gradle.javadoc-conventions 插件会提供一些默认 https://docs.gradle.org/current/dsl/org.gradle.api.tasks.javadoc.Javadoc.html[`Javadoc`] 任务选项。
+
+默认设置如下:
+
+* `author` 默认为 `true`
+* `docTitle`  默认为根项目名称的修改值
+** 如果以 `-build` 结尾, 则会删除 `-build`
+** 任何 `-` 会替换为 ` `
+** 每个单词首字母大写
+* `encoding` 默认为 `UTF-8`
+* `memberLevel` 默认为 `JavadocMemberLevel.PROTECTED`
+* `outputLevel` 默认为 `JavadocOutputLevel.QUIET`
+* `splitIndex` 默认为 `true`
+* `stylesheetFile` 默认使用 Spring 的 stylesheet
+* `use` 默认为 `true`
+* `windowTitle` 默认和 `docTitle` 相同
+
+== License
+
+https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 license].
