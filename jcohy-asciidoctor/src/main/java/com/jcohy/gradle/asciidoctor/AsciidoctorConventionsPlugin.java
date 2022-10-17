@@ -175,7 +175,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         asciidoctorTask.dependsOn(syncDocumentationSource);
         asciidoctorTask.getInputs().dir(syncSource).withPathSensitivity(PathSensitivity.RELATIVE)
                 .withPropertyName("synced source");
-        String s = project.relativePath(new File(syncSource, "asciidoc/"));
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncSource,"asciidoc/")));
         return syncDocumentationSource;
     }

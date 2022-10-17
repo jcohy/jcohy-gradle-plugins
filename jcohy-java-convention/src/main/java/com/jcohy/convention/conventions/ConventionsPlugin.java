@@ -1,5 +1,6 @@
 package com.jcohy.convention.conventions;
 
+import com.jcohy.gradle.asciidoctor.AsciidoctorConventionsPlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
@@ -18,6 +19,6 @@ public class ConventionsPlugin implements Plugin<Project> {
     public void apply(Project project) {
         new JavaConventions().apply(project);
         new MavenPublishingConventions().apply(project);
-        new AsciidoctorConventions().apply(project);
+        new AsciidoctorConventionsPlugin().apply(project);
     }
 }

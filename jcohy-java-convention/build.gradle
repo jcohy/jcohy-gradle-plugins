@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+	implementation(project(":jcohy-asciidoctor"))
 	implementation("org.springframework.boot:spring-boot-gradle-plugin:${SpringBootVersion}")
 	implementation("io.spring.gradle:dependency-management-plugin:${SpringBootDependencyVersion}")
 	implementation('com.fasterxml.jackson.core:jackson-databind')
