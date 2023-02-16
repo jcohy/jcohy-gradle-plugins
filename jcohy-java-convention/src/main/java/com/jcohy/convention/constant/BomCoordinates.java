@@ -16,18 +16,22 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
  */
 public final class BomCoordinates {
 
-    public static final String SPRING_CLOUD_BOM_COORDINATES = "org.springframework.cloud:spring-cloud-dependencies:2021.0.4";
+	// Spring Boot Bom
+	public static final String SPRING_BOM_COORDINATES = SpringBootPlugin.BOM_COORDINATES;
+	// Spring Cloud Bom
+    public static final String SPRING_CLOUD_BOM_COORDINATES = "org.springframework.cloud:spring-cloud-dependencies:2022.0.0";
 
-    public static final String SPRING_BOM_COORDINATES = SpringBootPlugin.BOM_COORDINATES;
+	// https://github.com/pivotal-cf/spring-cloud-services-starters/releases。Spring Cloud Services in a Pivotal Cloud Foundry environment.
+	public static final String PIVOTAL_SPRING_CLOUD = "io.pivotal.spring.cloud:spring-cloud-services-dependencies:4.0.0";
 
-    // https://github.com/pivotal-cf/spring-cloud-services-starters
-    public static final String PIVOTAL_SPRING_CLOUD = "io.pivotal.spring.cloud:spring-cloud-services-dependencies:3.5.0";
+	// https://github.com/codecentric/spring-boot-admin
+    public static final String SPRING_BOOT_ADMIN = "de.codecentric:spring-boot-admin-dependencies:3.0.0";
 
-    public static final String SPRING_BOOT_ADMIN = "de.codecentric:spring-boot-admin-dependencies:2.7.5";
+	// 删除
+//  public static final String ALI_YUN_BOM_COORDINATES = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
 
-    public static final String ALI_YUN_BOM_COORDINATES = "com.alibaba.cloud:aliyun-spring-boot-dependencies:1.0.0";
-
-    public static final String ALI_CLOUD_BOM_COORDINATES = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.0.1.0";
+	// https://github.com/alibaba/spring-cloud-alibaba
+    public static final String ALI_CLOUD_BOM_COORDINATES = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2022.0.0.0-RC1";
 
     public static final String JCOHY_CHECKSTYLE = "com.jcohy.gradle:jcohy-java-checkstyle:" + JcohyVersion.getVersion();
 }
