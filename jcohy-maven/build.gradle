@@ -1,0 +1,36 @@
+plugins {
+	id "java-gradle-plugin"
+	id 'com.gradle.plugin-publish' version '0.18.0'
+}
+
+dependencies {
+	implementation("io.github.gradle-nexus:publish-plugin:1.1.0")
+	implementation("org.apache.maven:maven-embedder:3.8.6")
+	api("org.springframework:spring-core")
+	api("org.springframework:spring-web")
+}
+
+pluginBundle {
+	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
+	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
+	tags = ['JavaConventions', 'Deployed', 'OptionalDependencies', "Asciidoctor"]
+}
+
+gradlePlugin {
+	plugins {
+		conventionsPlugin {
+			id = 'com.jcohy.gradle.maven'
+			displayName = 'JavaConvention,MavenConvention,AsciidoctorConvention'
+			description = 'The plugin provides configuration with MavenPublishPlugin plugin'
+			implementationClass = 'com.jcohy.convention.conventions.ConventionsPlugin'
+		}
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+//repositories {
+//	mavenCentral()
+//}

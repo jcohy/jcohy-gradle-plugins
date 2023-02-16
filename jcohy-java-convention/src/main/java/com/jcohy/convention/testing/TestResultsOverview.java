@@ -1,10 +1,12 @@
 package com.jcohy.convention.testing;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.gradle.api.DefaultTask;
 import org.gradle.api.services.BuildService;
 import org.gradle.api.services.BuildServiceParameters;
 import org.gradle.api.tasks.testing.Test;
@@ -25,8 +27,7 @@ import org.gradle.tooling.events.OperationCompletionListener;
 public abstract class TestResultsOverview
         implements BuildService<BuildServiceParameters.None>, OperationCompletionListener, AutoCloseable {
 
-    private final Map<Test, List<TestFailure>> testFailures = new TreeMap<>(
-            (one, two) -> one.getPath().compareTo(two.getPath()));
+    private final Map<Test, List<TestFailure>> testFailures = new TreeMap<>(Comparator.comparing(DefaultTask::getPath));
 
     private final Object monitor = new Object();
 
@@ -61,23 +62,15 @@ public abstract class TestResultsOverview
         }
     }
 
-    private static final class TestFailure implements Comparable<TestFailure> {
-
-        private final TestDescriptor descriptor;
-
-        private TestFailure(TestDescriptor descriptor) {
-            this.descriptor = descriptor;
-        }
-
-        @Override
-        public int compareTo(TestFailure other) {
-            int comparison = this.descriptor.getClassName().compareTo(other.descriptor.getClassName());
-            if (comparison == 0) {
-                comparison = this.descriptor.getName().compareTo(other.descriptor.getName());
-            }
-            return comparison;
-        }
-
-    }
+	private record TestFailure(TestDescriptor descriptor) implements Comparable<TestFailure> {
+		@Override
+		public int compareTo(TestFailure other) {
+			int comparison = this.descriptor.getClassName().compareTo(other.descriptor.getClassName());
+			if (comparison == 0) {
+				comparison = this.descriptor.getName().compareTo(other.descriptor.getName());
+			}
+			return comparison;
+		}
+	}
 
 }

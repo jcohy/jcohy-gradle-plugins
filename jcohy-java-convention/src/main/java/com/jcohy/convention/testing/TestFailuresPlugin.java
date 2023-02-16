@@ -24,7 +24,8 @@ import org.gradle.api.tasks.testing.TestResult;
 public class TestFailuresPlugin implements Plugin<Project> {
     @Override
     public void apply(Project project) {
-        Provider<TestResultsOverview> testResultsOverview = project.getGradle().getSharedServices()
+        Provider<TestResultsOverview> testResultsOverview = project.getGradle()
+				.getSharedServices()
                 .registerIfAbsent("testResultsOverview", TestResultsOverview.class, (spec) -> {
 
                 });

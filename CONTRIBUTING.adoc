@@ -53,7 +53,7 @@ Jcohy Gradle Plugins 是在 Apache 2.0 许可证下发布。如果你想贡献�
 === 从源码构建
 Jcohy Gradle Plugins 的源码可以使用 Gradle 的命令行构建。我们在项目中包含了 Gradle’s wrapper scripts (./gradlew 或 gradlew.bat)，这样您可以不用下载安装 Gradle 也可以在本地构建。
 
-Jcohy Gradle Plugins 是基于 JDK 1.8 编写的。您应该使用 HotSpot JVM JDK 1.8 或更高的版本构建.
+Jcohy Gradle Plugins 是基于 JDK 17 编写的。您应该使用 HotSpot JVM JDK 17 或更高的版本构建.
 
 可以使用 Gradle 命令从根目录构建项目：
 

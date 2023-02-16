@@ -95,7 +95,7 @@ class JavaConventions {
             project.getPlugins().apply(TestFailuresPlugin.class);
             // 为插件配置 SpringJavaFromat
             configureSpringJavaFormat(project);
-            project.setProperty("sourceCompatibility", "11");
+            project.setProperty("sourceCompatibility", "17");
             configureMavenRepository(project);
             configureJavaCompileConventions(project);
             configureJavadocConventions(project);
@@ -141,7 +141,7 @@ class JavaConventions {
             importsHandler.mavenBom(BomCoordinates.SPRING_BOOT_ADMIN);
             importsHandler.mavenBom(BomCoordinates.SPRING_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.PIVOTAL_SPRING_CLOUD);
-            importsHandler.mavenBom(BomCoordinates.ALI_YUN_BOM_COORDINATES);
+//            importsHandler.mavenBom(BomCoordinates.ALI_YUN_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.ALI_CLOUD_BOM_COORDINATES);
         }));
 
@@ -263,8 +263,8 @@ class JavaConventions {
     private void configureJavaCompileConventions(Project project) {
         project.getTasks().withType(JavaCompile.class, compile -> {
             compile.getOptions().setEncoding("UTF-8");
-            compile.setSourceCompatibility("1.8");
-            compile.setTargetCompatibility("1.8");
+            compile.setSourceCompatibility("17");
+            compile.setTargetCompatibility("17");
             List<String> args = compile.getOptions().getCompilerArgs();
             if (!args.contains("-parameters")) {
                 args.add("-parameters");
