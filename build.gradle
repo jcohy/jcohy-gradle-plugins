@@ -83,38 +83,38 @@ configure(subprojects.findAll { it.name.startsWith('jcohy-') }) {
 
 }
 
-asciidoctor {
-	baseDirFollowsSourceDir()
-	options doctype: 'book'
-	attributes(
-			'idprefix' : '',
-			'idseparator':'-',
-			'toc':'left',
-			'toclevels':4,
-			'tabsize':4,
-			'icons':'font',
-			'source-indent':0,
-			'docinfo':'shared,private',
-	)
-	configurations "asciidoctorExtensions"
-	sourceDir "src/docs/asciidoc"
-	sources {
-		include '*.adoc'
-	}
-	outputOptions {
-		backends "spring-html"
-	}
-
-	resources {
-		from(sourceDir) {
-			include 'img/**'
-		}
-	}
-	doLast {
-		delete(file(buildDir.path + '/docs/asciidoc/img/banner-logo.svg'))
-		copy {
-			from file(projectDir.path + '/src/docs/asciidoc/img/banner-logo.svg')
-			into file(buildDir.path + "/docs/asciidoc//img")
-		}
-	}
-}
+//asciidoctor {
+//	baseDirFollowsSourceDir()
+//	options doctype: 'book'
+//	attributes(
+//			'idprefix' : '',
+//			'idseparator':'-',
+//			'toc':'left',
+//			'toclevels':4,
+//			'tabsize':4,
+//			'icons':'font',
+//			'source-indent':0,
+//			'docinfo':'shared,private',
+//	)
+//	configurations "asciidoctorExtensions"
+//	sourceDir "src/docs/asciidoc"
+//	sources {
+//		include '*.adoc'
+//	}
+//	outputOptions {
+//		backends "spring-html"
+//	}
+//
+//	resources {
+//		from(sourceDir) {
+//			include 'img/**'
+//		}
+//	}
+//	doLast {
+//		delete(file(buildDir.path + '/docs/asciidoc/img/banner-logo.svg'))
+//		copy {
+//			from file(projectDir.path + '/src/docs/asciidoc/img/banner-logo.svg')
+//			into file(buildDir.path + "/docs/asciidoc//img")
+//		}
+//	}
+//}
