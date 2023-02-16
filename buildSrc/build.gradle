@@ -1,0 +1,37 @@
+plugins {
+	id "java-gradle-plugin"
+}
+
+repositories {
+	//加上阿里云镜像
+	maven { url = 'https://maven.aliyun.com/repository/central'}
+	mavenCentral()
+	gradlePluginPortal()
+	maven { url "https://repo.spring.io/release" }
+}
+
+dependencies {
+	implementation("io.spring.dependency-management:io.spring.dependency-management.gradle.plugin:1.1.0")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm:3.3.2")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm-pdf:3.3.2")
+	implementation("com.jcohy.gradle:jcohy-ali-oss:0.0.5.5")
+	implementation("org.springframework:spring-core:5.2.2.RELEASE")
+	implementation("org.springframework:spring-web:5.2.2.RELEASE")
+	implementation("org.apache.maven:maven-embedder:3.6.2")
+	testImplementation("org.assertj:assertj-core:3.11.1")
+	testImplementation("org.apache.logging.log4j:log4j-core:2.12.1")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
+}
+
+gradlePlugin {
+	plugins {
+		gradleModulePlugin {
+			id = "com.jcohy.gradle-plugin-module"
+			implementationClass = "com.jcohy.gradle.build.GradlePluginModulePlugins"
+		}
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
