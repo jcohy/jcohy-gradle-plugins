@@ -10,13 +10,9 @@ dependencies {
 }
 
 gradlePlugin {
-	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
-	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
-
 	plugins {
 		asciidoctorConventionsPlugin {
 			id = 'io.github.jcohy.gradle.asciidoctor-conventions'
-			displayName = 'asciidoctor-conventions'
 			implementationClass = 'com.jcohy.gradle.asciidoctor.AsciidoctorConventionsPlugin'
 			description = project.description
 			tags.set(['asciidoctor', 'docs'])

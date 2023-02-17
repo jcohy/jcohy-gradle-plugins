@@ -1,24 +1,34 @@
-package com.jcohy.gradle.build;
+package com.jcohy.gradle.build.convention;
+
 
 import com.jcohy.gradle.build.publishing.PomConstant;
 import com.jcohy.gradle.build.publishing.Repository;
 import org.gradle.api.Project;
 import org.gradle.api.attributes.Usage;
-import org.gradle.api.plugins.*;
+import org.gradle.api.plugins.ExtraPropertiesExtension;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.VariantVersionMappingStrategy;
-import org.gradle.api.publish.maven.*;
+import org.gradle.api.publish.maven.MavenPom;
+import org.gradle.api.publish.maven.MavenPomDeveloperSpec;
+import org.gradle.api.publish.maven.MavenPomIssueManagement;
+import org.gradle.api.publish.maven.MavenPomLicenseSpec;
+import org.gradle.api.publish.maven.MavenPomOrganization;
+import org.gradle.api.publish.maven.MavenPomScm;
+import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
-import org.gradle.plugins.signing.SigningExtension;
-import org.gradle.plugins.signing.SigningPlugin;
+
 import org.springframework.util.StringUtils;
 
-public class GradlePluginPublishPlugins {
-	void apply(Project project) {
-        configureMavenPublish(project);
+public class MavenPublishConvention {
+	public void apply(Project project) {
+		project.getPlugins().withType(MavenPublishPlugin.class,publishPlugin -> {
+			configureMavenPublish(project);
+		});
     }
 
-    private void configureMavenPublish(Project project) {
+	private void configureMavenPublish(Project project) {
         project.getPlugins().withType(MavenPublishPlugin.class).all((mavenPublishPlugin) -> {
             PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
             publishing.getRepositories().maven(mavenRepository -> {
@@ -34,12 +44,7 @@ public class GradlePluginPublishPlugins {
             });
 
             publishing.getPublications().withType(MavenPublication.class)
-                    .all(((mavenPublication) -> {
-                        customizeMavenPublication(mavenPublication, project);
-//                        SigningExtension extension = project.getExtensions().getByType(SigningExtension.class);
-//                        extension.sign(mavenPublication);
-                            }
-                        ));
+                    .all(((mavenPublication) -> customizeMavenPublication(mavenPublication, project)));
 
             project.getPlugins().withType(JavaPlugin.class).all(javaPlugin -> {
                 JavaPluginExtension extension = project.getExtensions().getByType(JavaPluginExtension.class);
