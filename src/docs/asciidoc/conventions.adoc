@@ -34,8 +34,8 @@ jcohy-java-convention 提供了 5 个可用的插件。致力于提供一致的�
 
 当我们在项目中使用 `JavaBasePlugin` 时，此插件会提供以下配置
 
-. 设置 `sourceCompatibility` 为 1.8
-. 设置 `targetCompatibility` 为 1.8
+. 设置 `sourceCompatibility` 为 17
+. 设置 `targetCompatibility` 为 17
 . 配置 `JavaCompile`,  `Javadoc`, 和 `FormatTask` 任务编码为 UTF-8
 . 为项目添加 `SpringJavaFormatPlugin`, `CheckstylePlugin`, `TestFailuresPlugin`, `TestRetryPlugin` 插件。`CheckstylePlugin` 插件使用我们自定义的代码规则检查配置对项目进行检查。代码检查规则查看  link:checks.adoc#自定义-checkstyle-规则[jcohy-checkstyle.xml] 文件
 . `Test` 任务使用 JUnit Platform，并且配置最大堆为 1G

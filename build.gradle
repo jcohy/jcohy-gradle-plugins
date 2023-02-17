@@ -1,99 +1,57 @@
-buildscript {
-	repositories {
-		maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-		maven { url "https://maven.aliyun.com/repository/spring-plugin" }
-		gradlePluginPortal()
-		mavenCentral()
-		maven { url 'https://plugins.gradle.org/m2/' }
-	}
-	dependencies {
-		classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3"
-	}
-}
-
 plugins {
-	id 'java-library'
-	id 'maven-publish'
-	id 'signing'
-	id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
-	id 'io.spring.dependency-management' version "${SpringBootDependencyVersion}"
-}
-
-ext {
-	set('signing.keyId', System.getenv('signing.keyId'))
-	set('signing.password', System.getenv('signing.password'))
-	set('signing.secretKeyRingFile', System.getenv('signing.secretKeyRingFile'))
-//	set('deployUsername',System.getenv('NEXUS_OSS_USER_NAME'))
-//	set('deployPassword',System.getenv('NEXUS_OSS_PASS_WORD'))
-	set('deployUsername', NEXUS_OSS_USER_NAME)
-	set('deployPassword', NEXUS_OSS_PASS_WORD)
+	id 'org.asciidoctor.jvm.convert' version '3.1.0'
 }
 
 
-//nexusPublishing {
-//	repositories {SpringBootDependencyVersion
-//		sonatype {
-//			username = deployUsername
-//			password = deployPassword
-//		}
-//	}
-//}
+apply plugin: "io.github.gradle-nexus.publish-plugin"
 
-configure(allprojects) { project ->
-	apply plugin: 'java'
+configure(allprojects) {
+	group = "io.github.jcohy"
+	version = "3.0.0.0"
+}
 
-	version = VERSION
-	group = GROUPID
 
+nexusPublishing {
 	repositories {
-		//加上阿里云镜像
-		maven { url 'https://maven.aliyun.com/repository/central' }
-		mavenCentral()
-		maven { url "https://repo.spring.io/release" }
-	}
-}
-
-
-configure(subprojects) { project ->
-	apply plugin: 'io.spring.dependency-management'
-	apply from: "${rootDir}/gradle/publications.gradle"
-
-
-	jar {
-		manifest.attributes["Implementation-Title"] = project.name
-		manifest.attributes["Implementation-Version"] = project.version
-		manifest.attributes["Automatic-Module-Name"] = project.name.replace('-', '.')
-		// for Jigsaw
-		manifest.attributes["Created-By"] =
-				"${System.getProperty("java.version")} (${System.getProperty("java.specification.vendor")})"
-
-		from("${rootDir}/src/docs/dist") {
-			include "license.txt"
-			include "notice.txt"
-			into "META-INF"
-			expand(copyright: new Date().format("yyyy"), version: project.version)
+		sonatype {
+			username = System.getenv("NEXUS_OSS_USER_NAME")
+			password = System.getenv("NEXUS_OSS_PASS_WORD")
 		}
 	}
+}
 
-	javadoc {
-		description = "Generates project-level javadoc for use in -javadoc jar"
-
-		options.encoding = "UTF-8"
-		options.charSet = "UTF-8"
-		options.memberLevel = JavadocMemberLevel.PROTECTED
-		options.author = true
-		options.header = project.name
-		options.use = true
-		options.addStringOption("Xdoclint:none", "-quiet")
-
-		// Suppress warnings due to cross-module @see and @link references.
-		// Note that global 'api' task does display all warnings.
-		logging.captureStandardError LogLevel.INFO
-		logging.captureStandardOutput LogLevel.INFO  // suppress "## warnings" message
+asciidoctor {
+	baseDirFollowsSourceDir()
+	options doctype: 'book'
+	attributes(
+			'idprefix' : '',
+			'idseparator':'-',
+			'toc':'left',
+			'toclevels':4,
+			'tabsize':4,
+			'icons':'font',
+			'source-indent':0,
+			'docinfo':'shared,private',
+	)
+	configurations "asciidoctorExtensions"
+	sourceDir "src/docs/asciidoc"
+	sources {
+		include '*.adoc'
+	}
+	outputOptions {
+		backends "spring-html"
 	}
 
-	test {
-		useJUnitPlatform()
+	resources {
+		from(sourceDir) {
+			include 'img/**'
+		}
 	}
-
+	doLast {
+		delete(file(buildDir.path + '/docs/asciidoc/img/banner-logo.svg'))
+		copy {
+			from file(projectDir.path + '/src/docs/asciidoc/img/banner-logo.svg')
+			into file(buildDir.path + "/docs/asciidoc//img")
+		}
+	}
 }

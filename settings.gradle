@@ -1,22 +1,8 @@
-pluginManagement {
-	repositories {
-		//加上阿里云镜像
-		maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-		maven { url "https://maven.aliyun.com/repository/spring-plugin" }
-		mavenCentral()
-		gradlePluginPortal()
-	}
-	resolutionStrategy {
-		eachPlugin {
-			if (requested.id.id == "io.spring.javaformat") {
-				useModule "io.spring.javaformat:spring-javaformat-gradle-plugin:${requested.version}"
-			}
-		}
-	}
-}
 include 'jcohy-java-convention'
 include 'jcohy-java-checkstyle'
 include 'jcohy-ali-oss'
 include 'jcohy-javadoc'
+include 'bom'
 include 'jcohy-asciidoctor'
+include 'jcohy-maven'
 

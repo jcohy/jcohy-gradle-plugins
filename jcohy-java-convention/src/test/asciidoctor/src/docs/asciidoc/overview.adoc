@@ -57,7 +57,7 @@ plugins {
 
 当项目使用了 `JavaBasePlugin` 插件时，我们会对项目进行如下的配置
 
-* `sourceCompatibility` 设置为  `1.8`
+* `sourceCompatibility` 设置为  `17`
 * 使用 `SpringJavaFormatPlugin` https://github.com/spring-io/spring-javaformat/[Spring Java Format], `Checkstyle`,  `TestFailuresPlugin`, 和 `TestRetryPlugin` 插件
 * `Test` 任务使用 JUnit Platform 并且配置最大堆为 1024M
 * 在使用  `JavaPlugin` 插件的项目中添加依赖于 `testRuntimeOnly(org.junit.platform:junit-platform-launcher)`  依赖

@@ -1,25 +1,16 @@
 package com.jcohy.gradle.build;
 
 
-import java.net.URI;
-import java.util.Collections;
-
-import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
-import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
+import com.gradle.publish.PublishPlugin;
+import com.jcohy.gradle.build.convention.JavaConvention;
+import com.jcohy.gradle.build.convention.MavenPublishConvention;
+import com.jcohy.gradle.build.convention.NexusPublishingConvention;
+import com.jcohy.gradle.build.convention.SigningPublishingConvention;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
-import org.gradle.api.internal.java.DefaultJavaPlatformExtension;
-import org.gradle.api.plugins.ExtensionContainer;
-import org.gradle.api.plugins.JavaLibraryPlugin;
-import org.gradle.api.plugins.JavaPlatformExtension;
-import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
-import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
-import org.gradle.plugin.devel.plugins.JavaGradlePluginPlugin;
+import org.gradle.plugin.devel.GradlePluginDevelopmentExtension;
+import org.gradle.plugins.signing.SigningPlugin;
 
 /**
  * 描述: .
@@ -35,70 +26,29 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		PluginContainer plugins = project.getPlugins();
+
+		new JavaConvention().apply(project);
+		new MavenPublishConvention().apply(project);
+		new NexusPublishingConvention().apply(project);
+		new SigningPublishingConvention().apply(project);
+
 		if(project.getName().startsWith("jcohy-")) {
-			plugins.apply(JavaLibraryPlugin.class);
-			plugins.apply(JavaGradlePluginPlugin.class);
-			plugins.apply(MavenPublishPlugin.class);
-			project.setProperty("sourceCompatibility", "17");
-			project.setProperty("targetCompatibility", "17");
-			configureMavenRepository(project);
-			configureDependencyManagement(project);
+			PluginContainer plugins = project.getPlugins();
+			// PublishingPlugin 自动应用 Java Gradle Development Plugin (java-gradle-plugin) 和 Maven Publish Plugin (maven-publish).
+			// Java Gradle Plugin (java-gradle-plugin) 自动应用 Java Library(java-library),并添加 api gradleApi() 依赖
+			// https://docs.gradle.org/current/userguide/java_gradle_plugin.html
+			plugins.apply(PublishPlugin.class);
+			plugins.apply(SigningPlugin.class);
+			configureCommonAttributes(project);
 		}
-
 	}
 
-	private void configureMavenRepository(Project project) {
-		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/central"));
-			mavenRepo.setName("ali");
-		});
-
-		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/central"));
-			mavenRepo.setName("ali");
-		});
-
-		project.getRepositories().mavenCentral();
-		project.getRepositories().gradlePluginPortal();
-
-		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("https://repo.spring.io/artifactory/release/"));
-			mavenRepo.setName("spring");
+	private void configureCommonAttributes(Project project) {
+		project.getPlugins().withType(PublishPlugin.class,publishPlugin -> {
+			GradlePluginDevelopmentExtension extension = project.getExtensions().getByType(GradlePluginDevelopmentExtension.class);
+			extension.getWebsite().set("https://github.com/jcohy/jcohy-gradle-plugins");
+			extension.getVcsUrl().set("https://github.com/jcohy/jcohy-gradle-plugins");
 		});
 	}
 
-
-	private void configureDependencyManagement(Project project) {
-
-		ConfigurationContainer configurations = project.getConfigurations();
-		Configuration dependencyManagement = configurations.create("dependencyManagement", (configuration) -> {
-			configuration.setVisible(false);
-			configuration.setCanBeConsumed(false);
-			configuration.setCanBeResolved(false);
-		});
-
-		project.getPlugins().apply(DependencyManagementPlugin.class);
-
-		DependencyManagementExtension dependencyManagementExtension = project.getExtensions().getByType(DependencyManagementExtension.class);
-		dependencyManagementExtension.imports((importsHandler -> {
-			importsHandler.mavenBom("org.springframework.boot:spring-boot-dependencies:3.0.0");
-		}));
-
-		configurations
-				.matching((configuration) ->
-						configuration.getName().endsWith("Classpath") || JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME.equals(configuration.getName()))
-				.all((configuration) -> {
-					configuration.extendsFrom(dependencyManagement);
-				});
-
-//		project.getDependencies().getConstraints().add(JavaPlugin.API_CONFIGURATION_NAME,"org.asciidoctor:asciidoctor-gradle-jvm:3.3.2");
-		Dependency parent = project.getDependencies().enforcedPlatform(project.getDependencies()
-				.project(Collections.singletonMap("path", ":bom")));
-
-		project.getConfigurations().getByName("dependencyManagement", (dependency) -> {
-			dependency.getDependencies().add(parent);
-		});
-
-	}
 }
