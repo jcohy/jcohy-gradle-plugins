@@ -1,8 +1,7 @@
 package com.jcohy.gradle.build;
 
-import com.jcohy.gradle.build.deploy.PomConstant;
-import com.jcohy.gradle.build.deploy.Repository;
-import org.gradle.api.Plugin;
+import com.jcohy.gradle.build.publishing.PomConstant;
+import com.jcohy.gradle.build.publishing.Repository;
 import org.gradle.api.Project;
 import org.gradle.api.attributes.Usage;
 import org.gradle.api.plugins.*;
@@ -14,16 +13,10 @@ import org.gradle.plugins.signing.SigningExtension;
 import org.gradle.plugins.signing.SigningPlugin;
 import org.springframework.util.StringUtils;
 
-public class GradlePluginPublishPlugins implements Plugin<Project> {
-    @Override
-    public void apply(Project project) {
-        PluginContainer plugins = project.getPlugins();
-        plugins.apply(JavaLibraryPlugin.class);
-        plugins.apply(MavenPublishPlugin.class);
-        plugins.apply(SigningPlugin.class);
+public class GradlePluginPublishPlugins {
+	void apply(Project project) {
         configureMavenPublish(project);
     }
-
 
     private void configureMavenPublish(Project project) {
         project.getPlugins().withType(MavenPublishPlugin.class).all((mavenPublishPlugin) -> {
@@ -43,8 +36,8 @@ public class GradlePluginPublishPlugins implements Plugin<Project> {
             publishing.getPublications().withType(MavenPublication.class)
                     .all(((mavenPublication) -> {
                         customizeMavenPublication(mavenPublication, project);
-                        SigningExtension extension = project.getExtensions().getByType(SigningExtension.class);
-                        extension.sign(mavenPublication);
+//                        SigningExtension extension = project.getExtensions().getByType(SigningExtension.class);
+//                        extension.sign(mavenPublication);
                             }
                         ));
 

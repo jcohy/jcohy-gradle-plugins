@@ -11,15 +11,6 @@ buildscript {
 	}
 }
 
-plugins {
-	id 'java-library'
-	id 'maven-publish'
-	id 'signing'
-	id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
-//	id 'io.spring.dependency-management' version "${SpringBootDependencyVersion}"
-	id 'org.asciidoctor.jvm.convert'
-}
-
 ext {
 	set('signing.keyId', System.getenv('signing.keyId'))
 	set('signing.password', System.getenv('signing.password'))
@@ -32,7 +23,7 @@ ext {
 
 
 //nexusPublishing {
-//	repositories {SpringBootDependencyVersion
+//	repositories {
 //		sonatype {
 //			username = deployUsername
 //			password = deployPassword
@@ -42,45 +33,8 @@ ext {
 
 configure(subprojects.findAll { it.name.startsWith('jcohy-') }) {
 
-	apply from: "${rootDir}/gradle/publications.gradle"
-
-	jar {
-		manifest.attributes["Implementation-Title"] = project.name
-		manifest.attributes["Implementation-Version"] = project.version
-		manifest.attributes["Automatic-Module-Name"] = project.name.replace('-', '.')
-		// for Jigsaw
-		manifest.attributes["Created-By"] =
-				"${System.getProperty("java.version")} (${System.getProperty("java.specification.vendor")})"
-
-		from("${rootDir}/src/docs/dist") {
-			include "license.txt"
-			include "notice.txt"
-			into "META-INF"
-			expand(copyright: new Date().format("yyyy"), version: project.version)
-		}
-	}
-
-	javadoc {
-		description = "Generates project-level javadoc for use in -javadoc jar"
-
-		options.encoding = "UTF-8"
-		options.charSet = "UTF-8"
-		options.memberLevel = JavadocMemberLevel.PROTECTED
-		options.author = true
-		options.header = project.name
-		options.use = true
-		options.addStringOption("Xdoclint:none", "-quiet")
-
-		// Suppress warnings due to cross-module @see and @link references.
-		// Note that global 'api' task does display all warnings.
-		logging.captureStandardError LogLevel.INFO
-		logging.captureStandardOutput LogLevel.INFO  // suppress "## warnings" message
-	}
-
-	test {
-		useJUnitPlatform()
-	}
-
+	version = VERSION
+	group = GROUPID
 }
 
 //asciidoctor {

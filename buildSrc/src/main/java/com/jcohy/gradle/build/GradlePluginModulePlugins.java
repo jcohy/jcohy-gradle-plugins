@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.gradle.publish.PublishPlugin;
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
 import org.gradle.api.Plugin;
@@ -13,8 +14,6 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.logging.LogLevel;
-import org.gradle.api.plugins.JavaLibraryPlugin;
-import org.gradle.api.plugins.JavaPlatformPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
@@ -23,7 +22,6 @@ import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.external.javadoc.JavadocMemberLevel;
 import org.gradle.jvm.tasks.Jar;
-import org.gradle.plugin.devel.plugins.JavaGradlePluginPlugin;
 
 /**
  * 描述: .
@@ -41,10 +39,12 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 	public void apply(Project project) {
 		PluginContainer plugins = project.getPlugins();
 		if(project.getName().startsWith("jcohy-")) {
-			plugins.apply(JavaLibraryPlugin.class);
-			plugins.apply(JavaGradlePluginPlugin.class);
-			project.setProperty("sourceCompatibility", "17");
-			project.setProperty("targetCompatibility", "17");
+			// PublishingPlugin 自动应用 Java Gradle Development Plugin (java-gradle-plugin) 和 Maven Publish Plugin (maven-publish).
+			// Java Gradle Plugin (java-gradle-plugin) 自动应用 Java Library(java-library),并添加 api gradleApi() 依赖
+			// https://docs.gradle.org/current/userguide/java_gradle_plugin.html
+			plugins.apply(PublishPlugin.class);
+//			plugins.apply(SigningPlugin.class);
+			new GradlePluginPublishPlugins().apply(project);
 			configureTestConventions(project);
 			configureMavenRepository(project);
 			configureJarManifest(project);
@@ -59,6 +59,7 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 			test.useJUnitPlatform();
 			test.setMaxHeapSize("1024M");
 		});
+		// 添加测试依赖
 		project.getPlugins().withType(JavaPlugin.class, javaPlugin -> {
 			project.getDependencies().add(JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME, "org.junit.jupiter:junit-jupiter-engine");
 			project.getDependencies().add(JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME, "org.junit.jupiter:junit-jupiter-api");
@@ -68,6 +69,10 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 
 	}
 	private void configureJarManifest(Project project) {
+
+
+		project.setProperty("sourceCompatibility", "17");
+		project.setProperty("targetCompatibility", "17");
 
 		SourceSetContainer sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
 		Set<String> sourceJarTaskNames = sourceSets.stream().map(SourceSet::getSourcesJarTaskName).collect(Collectors.toSet());
@@ -120,11 +125,6 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 			mavenRepo.setName("ali");
 		});
 
-		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/central"));
-			mavenRepo.setName("ali");
-		});
-
 		project.getRepositories().mavenCentral();
 		project.getRepositories().gradlePluginPortal();
 
@@ -142,12 +142,8 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 			configuration.setVisible(false);
 			configuration.setCanBeConsumed(false);
 			configuration.setCanBeResolved(false);
-			Dependency parent = project.getDependencies().enforcedPlatform(project.getDependencies()
-					.platform(Collections.singletonMap("path", ":bom")));
-			configuration.getDependencies().add(parent);
 		});
 
-		project.getDependencies().add(JavaPlatformPlugin.API_CONFIGURATION_NAME, ":bom");
 		project.getPlugins().apply(DependencyManagementPlugin.class);
 
 		DependencyManagementExtension dependencyManagementExtension = project.getExtensions().getByType(DependencyManagementExtension.class);
@@ -160,9 +156,11 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 					configuration.extendsFrom(dependencyManagement);
 				});
 
-//		project.getDependencies().getConstraints().add(JavaPlugin.API_CONFIGURATION_NAME,"org.asciidoctor:asciidoctor-gradle-jvm:3.3.2");
-//
+		Dependency parent = project.getDependencies().enforcedPlatform(project.getDependencies()
+				.project(Collections.singletonMap("path", ":bom")));
 
-
+		project.getConfigurations().getByName("dependencyManagement", (dependency) -> {
+			dependency.getDependencies().add(parent);
+		});
 	}
 }

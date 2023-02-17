@@ -11,9 +11,15 @@ repositories {
 }
 
 dependencies {
+	// A Gradle plugin that provides Maven-like dependency management functionality
 	implementation("io.spring.dependency-management:io.spring.dependency-management.gradle.plugin:1.1.0")
+	// Publish plugins to the Gradle Plugin Portal. PublishingPlugin
 	implementation("com.gradle.publish:plugin-publish-plugin:1.1.0")
+	// Gradle plugin to setup a responsible Gradle project.
+	implementation("com.netflix.nebula:nebula-project-plugin:9.6.3")
+	// Gradle Plugin for publishing to Nexus that automates creating, closing, and releasing staging repositories
 	implementation("io.github.gradle-nexus:publish-plugin:1.1.0")
+
 	implementation("org.springframework:spring-core:6.0.2")
 	implementation("org.springframework:spring-web:6.0.2")
 	implementation("org.apache.maven:maven-embedder:3.6.2")

@@ -10,26 +10,10 @@ dependencies {
 
 	constraints {
 
-//		// saga-boot-projects
-//		api "com.saga.boot:saga-boot-commons:${VERSION}"
-//
-		// ======================== plugins =========================
-		// Gradle plugin to setup a responsible Gradle project
-		api ("com.netflix.nebula:nebula-project-plugin:9.6.3")
-		// Publish plugins to the Gradle Plugin Portal
-		api ("com.gradle.publish:plugin-publish-plugin:1.1.0")
-		// Gradle Plugin for publishing to Nexus that automates creating, closing, and releasing staging repositories
-		api ("io.github.gradle-nexus:publish-plugin:1.1.0")
-
-
 		// ======================== dependency =========================
 		// asciidoctor
 		api ("org.asciidoctor:asciidoctor-gradle-jvm:3.3.2")
 		api ("org.asciidoctor:asciidoctor-gradle-jvm-pdf:3.3.2")
-		api ("io.spring.nohttp:nohttp-gradle:0.0.11")
 
-		// sms
-		api ("com.github.qcloudsms:qcloudsms:1.0.6")
-		api ("com.yunpian.sdk:yunpian-java-sdk:1.2.7")
 	}
 }

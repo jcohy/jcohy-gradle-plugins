@@ -1,4 +1,4 @@
-package com.jcohy.gradle.build.deploy;
+package com.jcohy.gradle.build.publishing;
 
 /**
  * Copyright: Copyright (c) 2021 <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>

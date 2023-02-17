@@ -1,4 +1,4 @@
-package com.jcohy.gradle.build.deploy;
+package com.jcohy.gradle.build.publishing;
 
 import org.gradle.api.Project;
 import org.springframework.util.Assert;
@@ -57,10 +57,10 @@ public enum Repository {
         Assert.notNull(version, "Version must not be null");
         String deploy = (String)project.getProperties().get("deployRepository");
         Repository repository = Repository.NEXUS_RELEASE_REPOSITORY;
-        switch (deploy) {
-            case "nexus-release" -> repository = Repository.NEXUS_RELEASE_REPOSITORY;
-            case "nexus-snapshots" -> repository = Repository.NEXUS_SNAPSHOTS_REPOSITORY;
-        }
+//        switch (deploy) {
+//            case "nexus-release" -> repository = Repository.NEXUS_RELEASE_REPOSITORY;
+//            case "nexus-snapshots" -> repository = Repository.NEXUS_SNAPSHOTS_REPOSITORY;
+//        }
         return repository;
     }
 }
