@@ -252,7 +252,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
                    .all(configuration::extendsFrom);
            // 添加 spring-asciidoctor-backends 依赖
            configuration.getDependencies().add(project.getDependencies()
-                   .create("io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.3"));
+                   .create("io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.4"));
             // 添加 asciidoctorj-pdf 依赖
             configuration.getDependencies().add(project.getDependencies()
                     .create("org.asciidoctor:asciidoctorj-pdf:2.3.0"));
