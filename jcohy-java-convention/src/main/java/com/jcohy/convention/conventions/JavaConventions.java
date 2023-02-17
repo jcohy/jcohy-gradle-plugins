@@ -45,8 +45,8 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * <p>
  * Description:  当使用 {@link JavaBasePlugin} 时的约定. 当使用此插件时:
  * <ul>
- * <li>{@code sourceCompatibility} 设置为 {@code 11}
- * <li>{@code targetCompatibility} 设置为 {@code 11}
+ * <li>{@code sourceCompatibility} 设置为 {@code 17}
+ * <li>{@code targetCompatibility} 设置为 {@code 17}
  * <li>应用 {@link SpringJavaFormatPlugin Spring Java Format}, {@link CheckstylePlugin Checkstyle}, {@link TestFailuresPlugin Test Failures}, 和 {@link TestRetryPlugin TestRetry} 插件。
  *  {@link CheckstylePlugin Checkstyle} 插件使用我们自定义的代码规则检查配置对项目进行检查。代码检查规则查看 jcohy-checkstyle.xml 文件
  * <li>{@link Test} 任务使用 JUnit Platform 并且配置最大堆为 1024M
@@ -244,7 +244,7 @@ class JavaConventions {
             javadoc.setDescription("Generates project-level javadoc for use in -javadoc jar");
             javadoc.options((option) -> {
                 option.encoding("UTF-8");
-                option.source("11");
+                option.source("17");
                 option.setMemberLevel(JavadocMemberLevel.PROTECTED);
                 option.header(project.getName());
             });

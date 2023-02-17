@@ -1,4 +1,5 @@
 = Jcohy Gradle Plugins
+:version: 3.0.0
 
 此项目包含目前包含了三个项目:
 
@@ -23,7 +24,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("com.jcohy.gradle:jcohy-java-convention:0.0.6")
+		classpath("com.jcohy.gradle:jcohy-java-convention:${version}")
 	}
 }
 
@@ -84,14 +85,10 @@ dependencies {
 </module>
 ----
 
-include::alioss.adoc
-
-include::checks.adoc
-
-include::conventions.adoc
-
-include::alioss.adoc[leveloffset=+1]
-
 include::conventions.adoc[leveloffset=+1]
 
 include::checks.adoc[leveloffset=+1]
+
+include::alioss.adoc[leveloffset=+1]
+
+

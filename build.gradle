@@ -1,5 +1,5 @@
 plugins {
-	id 'org.asciidoctor.jvm.convert' version '3.1.0'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 
@@ -11,47 +11,60 @@ configure(allprojects) {
 }
 
 
-nexusPublishing {
+configure(rootProject) {
+
+	apply plugin: "org.asciidoctor.jvm.convert"
+
 	repositories {
-		sonatype {
-			username = System.getenv("NEXUS_OSS_USER_NAME")
-			password = System.getenv("NEXUS_OSS_PASS_WORD")
+		maven { url = 'https://maven.aliyun.com/repository/central'}
+		mavenCentral()
+		gradlePluginPortal()
+		maven { url "https://repo.spring.io/release" }
+	}
+
+	configurations {
+		asciidoctorExtensions
+	}
+	dependencies {
+		asciidoctorExtensions "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.4"
+	}
+
+	asciidoctor {
+		baseDirFollowsSourceDir()
+		options doctype: 'book'
+		attributes(
+				'idprefix' : '',
+				'idseparator':'-',
+				'toc':'left',
+				'toclevels':4,
+				'tabsize':4,
+				'icons':'font',
+				'source-indent':0,
+				'docinfo':'shared,private',
+		)
+		configurations "asciidoctorExtensions"
+		sourceDir "src/docs/asciidoc"
+		sources {
+			include '*.adoc'
+		}
+		outputOptions {
+			backends "spring-html"
+		}
+
+		resources {
+			from(sourceDir) {
+				include 'img/**'
+			}
+		}
+		doLast {
+			delete(file(buildDir.path + '/docs/asciidoc/img/banner-logo.svg'))
+			copy {
+				from file(projectDir.path + '/src/docs/asciidoc/img/banner-logo.svg')
+				into file(buildDir.path + "/docs/asciidoc//img")
+			}
 		}
 	}
 }
 
-asciidoctor {
-	baseDirFollowsSourceDir()
-	options doctype: 'book'
-	attributes(
-			'idprefix' : '',
-			'idseparator':'-',
-			'toc':'left',
-			'toclevels':4,
-			'tabsize':4,
-			'icons':'font',
-			'source-indent':0,
-			'docinfo':'shared,private',
-	)
-	configurations "asciidoctorExtensions"
-	sourceDir "src/docs/asciidoc"
-	sources {
-		include '*.adoc'
-	}
-	outputOptions {
-		backends "spring-html"
-	}
 
-	resources {
-		from(sourceDir) {
-			include 'img/**'
-		}
-	}
-	doLast {
-		delete(file(buildDir.path + '/docs/asciidoc/img/banner-logo.svg'))
-		copy {
-			from file(projectDir.path + '/src/docs/asciidoc/img/banner-logo.svg')
-			into file(buildDir.path + "/docs/asciidoc//img")
-		}
-	}
-}
+

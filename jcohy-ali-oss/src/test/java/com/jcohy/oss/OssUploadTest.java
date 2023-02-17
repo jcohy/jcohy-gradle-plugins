@@ -31,7 +31,7 @@ public class OssUploadTest {
 
         BuildResult result = GradleRunner.create()
                 .withPluginClasspath()
-                .withGradleVersion("6.8.3")
+                .withGradleVersion("7.6")
                 .withProjectDir(projectDir)
                 .withDebug(true)
                 .forwardOutput()

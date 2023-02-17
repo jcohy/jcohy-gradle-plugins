@@ -36,7 +36,7 @@ class JavadocConventionsPluginITest {
                 .withArguments(task)
                 .withDebug(true)
                 .forwardOutput()
-                .withGradleVersion("6.5.1")
+                .withGradleVersion("7.6")
                 .build();
         // @formatter:on
 
@@ -58,7 +58,7 @@ class JavadocConventionsPluginITest {
                 .withArguments(task)
                 .withDebug(true)
                 .forwardOutput()
-                .withGradleVersion("6.4")
+                .withGradleVersion("7.6")
                 .build();
         // @formatter:on
 
