@@ -2,69 +2,22 @@ plugins {
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
-
-apply plugin: "io.github.gradle-nexus.publish-plugin"
-
 configure(allprojects) {
 	group = "io.github.jcohy"
 	version = "3.0.0.0"
 }
 
-
 configure(rootProject) {
+	apply from: "${rootDir}/gradle/asciidoctor.gradle"
+	apply from: "${rootDir}/gradle/nexusPublications.gradle"
 
-	apply plugin: "org.asciidoctor.jvm.convert"
-
-	repositories {
-		maven { url = 'https://maven.aliyun.com/repository/central'}
-		mavenCentral()
-		gradlePluginPortal()
-		maven { url "https://repo.spring.io/release" }
-	}
-
-	configurations {
-		asciidoctorExtensions
-	}
-	dependencies {
-		asciidoctorExtensions "io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.4"
-	}
-
-	asciidoctor {
-		baseDirFollowsSourceDir()
-		options doctype: 'book'
-		attributes(
-				'idprefix' : '',
-				'idseparator':'-',
-				'toc':'left',
-				'toclevels':4,
-				'tabsize':4,
-				'icons':'font',
-				'source-indent':0,
-				'docinfo':'shared,private',
-		)
-		configurations "asciidoctorExtensions"
-		sourceDir "src/docs/asciidoc"
-		sources {
-			include '*.adoc'
-		}
-		outputOptions {
-			backends "spring-html"
-		}
-
-		resources {
-			from(sourceDir) {
-				include 'img/**'
-			}
-		}
-		doLast {
-			delete(file(buildDir.path + '/docs/asciidoc/img/banner-logo.svg'))
-			copy {
-				from file(projectDir.path + '/src/docs/asciidoc/img/banner-logo.svg')
-				into file(buildDir.path + "/docs/asciidoc//img")
-			}
-		}
-	}
 }
 
+task aggregatePublishGradlePortal {
+	project.rootProject.gradle.projectsEvaluated {
+		Set<Project> pluginsProject = rootProject.subprojects.findAll {  it.name.startsWith("jcohy")}
+		dependsOn pluginsProject.publishPlugins
+	}
+}
 
 
