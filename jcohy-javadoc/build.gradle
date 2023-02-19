@@ -1,7 +1,7 @@
 plugins {
 	id "io.spring.nohttp" version "0.0.10"
 	id "nebula.integtest" version "9.6.3"
-	id 'com.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.gradle-plugin-module'
 }
 
 description = ""
@@ -14,24 +14,24 @@ description "javadoc-conventions"
 gradlePlugin {
 	plugins {
 		javadocConventionsPlugin {
-			id = 'com.jcohy.gradle.javadoc-conventions'
+			id = 'io.github.jcohy.gradle.javadoc-conventions'
 			displayName = 'Javadoc Conventions Plugin'
 			description = 'Defaults the Javadoc'
-			implementationClass = 'com.jcohy.gradle.javadoc.JavadocConventionsPlugin'
+			implementationClass = 'io.github.jcohy.gradle.javadoc.JavadocConventionsPlugin'
 			tags.set{["Javadoc"]}
 		}
 		javadocPlugin {
-			id = 'com.jcohy.gradle.javadoc'
+			id = 'io.github.jcohy.gradle.javadoc'
 			displayName = 'Javadoc Plugin'
 			description = 'Sets up a Project with Javadoc Task. Used by AggregateJavadocPlugin to setup aggregate Javadoc too'
-			implementationClass = 'com.jcohy.gradle.javadoc.JavadocPlugin'
+			implementationClass = 'io.github.jcohy.gradle.javadoc.JavadocPlugin'
 			tags.set{["Javadoc"]}
 		}
 		aggregateJavadocPlugin {
-			id = 'com.jcohy.gradle.javadoc-aggregate'
+			id = 'io.github.jcohy.gradle.javadoc-aggregate'
 			displayName = 'Aggregate Javadoc Plugin'
 			description = 'Sets up a Project with Aggregate Javadoc Task'
-			implementationClass = 'com.jcohy.gradle.javadoc.AggregateJavadocPlugin'
+			implementationClass = 'io.github.jcohy.gradle.javadoc.AggregateJavadocPlugin'
 			tags.set{["Javadoc","javadoc-aggregate"]}
 		}
 	}

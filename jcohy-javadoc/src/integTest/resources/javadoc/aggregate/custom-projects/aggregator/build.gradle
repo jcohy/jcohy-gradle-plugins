@@ -15,7 +15,7 @@
  */
 
 plugins {
-	id 'com.jcohy.gradle.javadoc-aggregate'
+	id 'io.github.jcohy.gradle.javadoc-aggregate'
 }
 
 dependencies {

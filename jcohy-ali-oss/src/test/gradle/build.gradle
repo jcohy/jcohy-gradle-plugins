@@ -1,6 +1,6 @@
 plugins {
 	id "java"
-	id "com.jcohy.oss"
+	id "io.github.jcohy.gradle.oss"
 }
 
 alioss {
@@ -11,12 +11,11 @@ alioss {
 		prefix = "jcohy"
 		ignoreSourceDir = false
 		recursion = true
-//		exclusions = ["JavaExample.java"]
 	}
 }
 
 description = "Jcohy Boot Docs"
 
-group = 'com.jcohy.oss.test'
+group = 'io.github.jcohy.oss.test'
 version = '0.0.1-SNAPSHOT'
 

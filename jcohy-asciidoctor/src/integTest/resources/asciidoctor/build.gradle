@@ -1,7 +1,7 @@
 plugins {
 	id "java"
 	id "org.asciidoctor.jvm.convert"
-	id "com.jcohy.gradle.asciidoctor-conventions"
+	id "io.github.jcohy.gradle.asciidoctor-conventions"
 }
 
 description = "Jcohy Boot Docs"

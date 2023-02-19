@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jcohy.boot;
+package io.github.jcohy.boot;
 
 import java.lang.reflect.Constructor;
 import java.security.AccessControlException;
@@ -30,49 +30,49 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import com.jcohy.beans.BeanUtils;
-import com.jcohy.beans.CachedIntrospectionResults;
-import com.jcohy.beans.factory.groovy.GroovyBeanDefinitionReader;
-import com.jcohy.beans.factory.support.BeanDefinitionRegistry;
-import com.jcohy.beans.factory.support.BeanNameGenerator;
-import com.jcohy.beans.factory.xml.XmlBeanDefinitionReader;
-import com.jcohy.boot.Banner.Mode;
-import com.jcohy.boot.context.properties.bind.Bindable;
-import com.jcohy.boot.context.properties.bind.Binder;
-import com.jcohy.boot.context.properties.source.ConfigurationPropertySources;
-import com.jcohy.context.ApplicationContext;
-import com.jcohy.context.ApplicationContextInitializer;
-import com.jcohy.context.ApplicationListener;
-import com.jcohy.context.ConfigurableApplicationContext;
-import com.jcohy.context.annotation.AnnotatedBeanDefinitionReader;
-import com.jcohy.context.annotation.AnnotationConfigApplicationContext;
-import com.jcohy.context.annotation.AnnotationConfigUtils;
-import com.jcohy.context.annotation.ClassPathBeanDefinitionScanner;
-import com.jcohy.context.support.AbstractApplicationContext;
-import com.jcohy.context.support.GenericApplicationContext;
-import com.jcohy.core.GenericTypeResolver;
-import com.jcohy.core.annotation.AnnotationAwareOrderComparator;
-import com.jcohy.core.env.CommandLinePropertySource;
-import com.jcohy.core.env.CompositePropertySource;
-import com.jcohy.core.env.ConfigurableEnvironment;
-import com.jcohy.core.env.Environment;
-import com.jcohy.core.env.MapPropertySource;
-import com.jcohy.core.env.MutablePropertySources;
-import com.jcohy.core.env.PropertySource;
-import com.jcohy.core.env.SimpleCommandLinePropertySource;
-import com.jcohy.core.env.StandardEnvironment;
-import com.jcohy.core.io.DefaultResourceLoader;
-import com.jcohy.core.io.ResourceLoader;
-import com.jcohy.core.io.support.SpringFactoriesLoader;
-import com.jcohy.util.Assert;
-import com.jcohy.util.ClassUtils;
-import com.jcohy.util.CollectionUtils;
-import com.jcohy.util.ObjectUtils;
-import com.jcohy.util.ReflectionUtils;
-import com.jcohy.util.StopWatch;
-import com.jcohy.util.StringUtils;
-import com.jcohy.web.context.WebApplicationContext;
-import com.jcohy.web.context.support.StandardServletEnvironment;
+import io.github.jcohy.beans.BeanUtils;
+import io.github.jcohy.beans.CachedIntrospectionResults;
+import io.github.jcohy.beans.factory.groovy.GroovyBeanDefinitionReader;
+import io.github.jcohy.beans.factory.support.BeanDefinitionRegistry;
+import io.github.jcohy.beans.factory.support.BeanNameGenerator;
+import io.github.jcohy.beans.factory.xml.XmlBeanDefinitionReader;
+import io.github.jcohy.boot.Banner.Mode;
+import io.github.jcohy.boot.context.properties.bind.Bindable;
+import io.github.jcohy.boot.context.properties.bind.Binder;
+import io.github.jcohy.boot.context.properties.source.ConfigurationPropertySources;
+import io.github.jcohy.context.ApplicationContext;
+import io.github.jcohy.context.ApplicationContextInitializer;
+import io.github.jcohy.context.ApplicationListener;
+import io.github.jcohy.context.ConfigurableApplicationContext;
+import io.github.jcohy.context.annotation.AnnotatedBeanDefinitionReader;
+import io.github.jcohy.context.annotation.AnnotationConfigApplicationContext;
+import io.github.jcohy.context.annotation.AnnotationConfigUtils;
+import io.github.jcohy.context.annotation.ClassPathBeanDefinitionScanner;
+import io.github.jcohy.context.support.AbstractApplicationContext;
+import io.github.jcohy.context.support.GenericApplicationContext;
+import io.github.jcohy.core.GenericTypeResolver;
+import io.github.jcohy.core.annotation.AnnotationAwareOrderComparator;
+import io.github.jcohy.core.env.CommandLinePropertySource;
+import io.github.jcohy.core.env.CompositePropertySource;
+import io.github.jcohy.core.env.ConfigurableEnvironment;
+import io.github.jcohy.core.env.Environment;
+import io.github.jcohy.core.env.MapPropertySource;
+import io.github.jcohy.core.env.MutablePropertySources;
+import io.github.jcohy.core.env.PropertySource;
+import io.github.jcohy.core.env.SimpleCommandLinePropertySource;
+import io.github.jcohy.core.env.StandardEnvironment;
+import io.github.jcohy.core.io.DefaultResourceLoader;
+import io.github.jcohy.core.io.ResourceLoader;
+import io.github.jcohy.core.io.support.SpringFactoriesLoader;
+import io.github.jcohy.util.Assert;
+import io.github.jcohy.util.ClassUtils;
+import io.github.jcohy.util.CollectionUtils;
+import io.github.jcohy.util.ObjectUtils;
+import io.github.jcohy.util.ReflectionUtils;
+import io.github.jcohy.util.StopWatch;
+import io.github.jcohy.util.StringUtils;
+import io.github.jcohy.web.context.WebApplicationContext;
+import io.github.jcohy.web.context.support.StandardServletEnvironment;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -147,21 +147,21 @@ public class SpringApplication {
      * The class name of application context that will be used by default for non-web
      * environments.
      */
-    public static final String DEFAULT_CONTEXT_CLASS = "com.jcohy.context."
+    public static final String DEFAULT_CONTEXT_CLASS = "io.github.jcohy.context."
             + "annotation.AnnotationConfigApplicationContext";
 
     /**
      * The class name of application context that will be used by default for web
      * environments.
      */
-    public static final String DEFAULT_WEB_CONTEXT_CLASS = "com.jcohy.boot."
+    public static final String DEFAULT_WEB_CONTEXT_CLASS = "io.github.jcohy.boot."
             + "web.servlet.context.AnnotationConfigServletWebServerApplicationContext";
 
     /**
      * The class name of application context that will be used by default for reactive web
      * environments.
      */
-    public static final String DEFAULT_REACTIVE_WEB_CONTEXT_CLASS = "com.jcohy."
+    public static final String DEFAULT_REACTIVE_WEB_CONTEXT_CLASS = "io.github.jcohy."
             + "boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext";
 
     /**
@@ -175,12 +175,12 @@ public class SpringApplication {
     public static final String BANNER_LOCATION_PROPERTY = SpringApplicationBannerPrinter.BANNER_LOCATION_PROPERTY;
 
     private static final String[] WEB_ENVIRONMENT_CLASSES = { "javax.servlet.Servlet",
-            "com.jcohy.web.context.ConfigurableWebApplicationContext" };
+            "io.github.jcohy.web.context.ConfigurableWebApplicationContext" };
 
-    private static final String REACTIVE_WEB_ENVIRONMENT_CLASS = "com.jcohy."
+    private static final String REACTIVE_WEB_ENVIRONMENT_CLASS = "io.github.jcohy."
             + "web.reactive.DispatcherHandler";
 
-    private static final String MVC_WEB_ENVIRONMENT_CLASS = "com.jcohy."
+    private static final String MVC_WEB_ENVIRONMENT_CLASS = "io.github.jcohy."
             + "web.servlet.DispatcherServlet";
 
     private static final String SYSTEM_PROPERTY_JAVA_AWT_HEADLESS = "java.awt.headless";
@@ -608,7 +608,7 @@ public class SpringApplication {
      * @param environment this application's environment
      * @param args arguments passed to the {@code run} method
      * @see #configureEnvironment(ConfigurableEnvironment, String[])
-     * @see com.jcohy.boot.context.config.ConfigFileApplicationListener
+     * @see io.github.jcohy.boot.context.config.ConfigFileApplicationListener
      */
     protected void configureProfiles(ConfigurableEnvironment environment, String[] args) {
         environment.getActiveProfiles(); // ensure they are initialized

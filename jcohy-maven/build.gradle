@@ -1,5 +1,5 @@
 plugins {
-	id 'com.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.gradle-plugin-module'
 }
 
 dependencies {
@@ -20,10 +20,10 @@ pluginBundle {
 gradlePlugin {
 	plugins {
 		conventionsPlugin {
-			id = 'com.jcohy.gradle.maven'
+			id = 'io.github.jcohy.gradle.maven'
 			displayName = 'JavaConvention,MavenConvention,AsciidoctorConvention'
 			description = project.description
-			implementationClass = 'com.jcohy.convention.conventions.ConventionsPlugin'
+			implementationClass = 'io.github.jcohy.convention.conventions.ConventionsPlugin'
 			tags.set{['JavaConventions', 'Deployed', 'OptionalDependencies', "Asciidoctor"]}
 		}
 	}

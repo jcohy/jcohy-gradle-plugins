@@ -1,4 +1,4 @@
-package com.jcohy.gradle.asciidoctor;
+package io.github.jcohy.gradle.asciidoctor;
 
 import java.io.File;
 import java.io.IOException;

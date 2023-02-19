@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jcohy.checkstyle;
+package io.github.jcohy.checkstyle;
 
 /**
  * Copyright: Copyright (c) 2021.

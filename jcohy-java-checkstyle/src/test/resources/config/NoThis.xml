@@ -5,8 +5,8 @@
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<!-- TreeWalker Checks -->
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.filter.RequiresOuterThisFilter"/>
-		<module name="com.jcohy.checkstyle.filter.IdentCheckFilter">
+		<module name="io.github.jcohy.gradle.checkstyle.filter.RequiresOuterThisFilter"/>
+		<module name="io.github.jcohy.gradle.checkstyle.filter.IdentCheckFilter">
 			<property name="names" value="logger"/>
 			<module
 					name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
@@ -14,7 +14,7 @@
 				<property name="validateOnlyOverlapping" value="false"/>
 			</module>
 		</module>
-		<module name="com.jcohy.checkstyle.check.SpringNoThisCheck">
+		<module name="io.github.jcohy.gradle.checkstyle.check.SpringNoThisCheck">
 			<property name="names" value="logger"/>
 		</module>
 	</module>

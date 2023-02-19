@@ -1,5 +1,5 @@
 plugins {
-	id 'com.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.gradle-plugin-module'
 }
 
 description "The plugin provides configuration with three conventions. Conventions when using the JavaBasePlugin, conventions when using the MavenPublishPlugin plugin, conventions when using the AsciidoctorJPlugin plugin"
@@ -31,15 +31,15 @@ pluginBundle {
 gradlePlugin {
 	plugins {
 		conventionsPlugin {
-			id = 'com.jcohy.convention'
+			id = 'io.github.jcohy.convention'
 			description = project.description
-			implementationClass = 'com.jcohy.convention.conventions.ConventionsPlugin'
+			implementationClass = 'io.github.jcohy.convention.conventions.ConventionsPlugin'
 			tags.set {['JavaConventions', 'Deployed', "Asciidoctor"]}
 		}
 		optionalPlugin {
-			id = 'com.jcohy.optional-dependencies'
+			id = 'io.github.jcohy.optional-dependencies'
 			description = 'Added support for Maven-style optional dependencies.'
-			implementationClass = 'com.jcohy.convention.optional.OptionalDependenciesPlugin'
+			implementationClass = 'io.github.jcohy.convention.optional.OptionalDependenciesPlugin'
 			tags.set {['dependencies', 'optional', 'OptionalDependencies']}
 		}
 	}

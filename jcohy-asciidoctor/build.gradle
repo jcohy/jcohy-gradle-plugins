@@ -1,5 +1,5 @@
 plugins {
-	id 'com.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.gradle-plugin-module'
 }
 
 description "A Gradle plugin that provides some conventions when use AsciidoctorJPlugin"
@@ -13,7 +13,7 @@ gradlePlugin {
 	plugins {
 		asciidoctorConventionsPlugin {
 			id = 'io.github.jcohy.gradle.asciidoctor-conventions'
-			implementationClass = 'com.jcohy.gradle.asciidoctor.AsciidoctorConventionsPlugin'
+			implementationClass = 'io.github.jcohy.gradle.asciidoctor.AsciidoctorConventionsPlugin'
 			description = project.description
 			tags.set(['asciidoctor', 'docs'])
 		}

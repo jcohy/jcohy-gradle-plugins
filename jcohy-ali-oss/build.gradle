@@ -1,5 +1,5 @@
 plugins {
-	id 'com.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.gradle-plugin-module'
 }
 
 description "A Gradle plugin that transform file to aliyun oss when use OssUploadPlugin"
@@ -8,16 +8,15 @@ description "A Gradle plugin that transform file to aliyun oss when use OssUploa
 dependencies {
 	implementation("com.aliyun.oss:aliyun-sdk-oss")
 	testImplementation("org.apache.logging.log4j:log4j-core")
-	testImplementation("org.assertj:assertj-core")
-	testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 
 gradlePlugin {
 	plugins {
-		simplePlugin {
-			id = 'com.jcohy.oss'
-			implementationClass = 'com.jcohy.oss.OssUploadPlugin'
+		aliOssPlugin {
+			id = 'io.github.jcohy.gradle.oss'
+			implementationClass = 'io.github.jcohy.gradle.oss.OssUploadPlugin'
+			displayName = 'oss'
 			description = project.description
 			tags.set{['OSS', 'AliYun', 'AliYunOss']}
 		}

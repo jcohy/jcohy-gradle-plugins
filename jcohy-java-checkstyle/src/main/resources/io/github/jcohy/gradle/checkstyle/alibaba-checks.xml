@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+		"https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="com.puppycrawl.tools.checkstyle.Checker">
+	<!-- TreeWalker Checks -->
+	<!-- 3.5. 【强制】采用 4 个空格缩进，禁止使用 tab 字符。 -->
+	<!--	<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.FileTabCharacterCheck">-->
+	<!--		<property name="eachLine" value="true"/>-->
+	<!--	</module>-->
+
+	<!-- 3.7. 【强制】单行字符数限不超过 120 个，超出需要换行时 -->
+	<module name="com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck">
+		<property name="fileExtensions" value="java"/>
+		<property name="max" value="120"/>
+		<property name="ignorePattern"
+				  value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+	</module>
+
+	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
+		<!-- 参考阿里巴巴 Java 开发手册 1.3.0 -->
+
+		<!-- 一、命名风格 -->
+		<!-- 1. 【强制】代码中的命名均不能以下划线或美元符号开始，也不能以下划线或美元符号结束。-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.naming.IllegalIdentifierNameCheck">
+			<property name="format" value="^(?!(_|\$))(?!.*?(_|\$)$)"/>
+		</module>
+		<!-- 2. 【强制】代码中的命名严禁使用拼音与英文混合的方式，更不允许直接使用中文的方式。(暂无)-->
+		<!-- 3. 【强制】类名使用UpperCamelCase风格，必须遵从驼峰形式，但以下情形例外：DO / BO / DTO / VO / AO -->
+		<module name="io.github.jcohy.gradle.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
+		</module>
+		<!-- 4. 【强制】方法名、参数名、成员变量、局部变量都统一使用lowerCamelCase风格，必须遵从驼峰形式。（暂无） -->
+		<!-- 5. 【强制】常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。（暂无）-->
+		<!-- 6. 【强制】抽象类命名使用 Abstract 或 Base 开头；异常类命名使用 Exception 结尾；测试类命名以它要测试的类的名称开始，以 Test 结尾。目前仅支持抽象类。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.naming.AbstractClassNameCheck">
+			<!-- 指定连续大写字母的数量-->
+			<property name="format" value="^(Abstract|Base).+$"/>
+		</module>
+		<!-- 7、【强制】中括号是数组类型的一部分，数组定义如下：String[] args; -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.ArrayTypeStyleCheck"/>
+		<!-- 8. 【强制】POJO 类中布尔类型的变量，都不要加is，否则部分框架解析会引起序列化错误。 -->
+		<!-- 9. 【强制】包名统一使用小写，点分隔符之间有且仅有一个自然语义的英语单词。包名统一使用单数形式，但是类名如果有复数含义，类名可以使用复数形式。 -->
+		<!-- 10. 【强制】杜绝完全不规范的缩写，避免望文不知义。 -->
+		<!-- 15. 【参考】枚举类名建议带上 Enum 后缀，枚举成员名称需要全大写，单词间用下划线隔开。 -->
+
+		<!-- 二、常量命名 -->
+		<!-- 1. 【强制】不允许任何魔法值（即未经定义的常量）直接出现在代码中。忽略 hashCode 和 注解上的魔法值-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MagicNumberCheck">
+			<property name="ignoreHashCodeMethod" value="true"/>
+			<property name="ignoreAnnotationElementDefaults" value="true"/>
+		</module>
+		<!-- 2. 【强制】long 或者 Long 初始赋值时，使用大写的L，不能是小写的l，小写容易跟数字1混淆，造成误解。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.UpperEllCheck"/>
+		<!-- 3. 【推荐】不要使用一个常量类维护所有常量，按常量功能进行归类，分开维护。 -->
+
+		<!-- 三、代码格式 -->
+		<!-- 1. 【强制】大括号的使用约定。如果是大括号内为空，则简洁地写成{}即可，不需要换行；如果是非空代码块则(暂无)：
+				1） 左大括号前不换行。
+				2） 左大括号后换行。
+				3） 右大括号前换行。
+				4） 右大括号后还有 else 等代码则不换行；表示终止的右大括号后必须换行。
+		-->
+		<!-- 检查空代码块。要求代码块中有文本 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.blocks.EmptyBlockCheck">
+			<property name="option" value="text"/>
+		</module>
+		<module name="com.puppycrawl.tools.checkstyle.checks.blocks.LeftCurlyCheck">
+			<property name="ignoreEnums" value="false"/>
+		</module>
+		<module name="com.puppycrawl.tools.checkstyle.checks.blocks.RightCurlyCheck"/>
+		<!-- 检查是否应该使用括号的地方没有加括号。tokens: 定义检查的类型 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+		<!-- 2. 【强制】 左小括号和字符之间不出现空格；同样，右小括号和字符之间也不出现空格。 -->
+		<!-- 3. 【强制】 if/for/while/switch/do 等保留字与括号之间都必须加空格。 -->
+		<!-- 4. 【强制】任何二目、三目运算符的左右两边都需要加一个空格。-->
+		<!-- 8. 【强制】方法参数在定义和传入时，多个参数逗号后边必须加空格。-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.GenericWhitespaceCheck"/>
+		<!-- Whitespace -->
+		<!-- 检查泛型标记 < 和 > 的周围的空格是否遵守标准规约 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.GenericWhitespaceCheck"/>
+		<!-- 检查方法定义、构造器定义、方法调用、构造器调用的标识符和参数列表的左圆括号之间的填充符。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.MethodParamPadCheck"/>
+		<!-- 检查指定标记之后没有空格。若要禁用指定标记之后的换行符，将 allowLineBreaks 属性设为 false 即可。-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceAfterCheck">
+			<property name="tokens"
+					  value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS, ARRAY_DECLARATOR"/>
+		</module>
+		<!-- 检查指定标记之前没有空格。若要允许指定标记之前的换行符，将 allowLineBreaks 属性设为 true 即可。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.NoWhitespaceBeforeCheck"/>
+		<!-- 检查圆括号的填充符策略，也就是在左圆括号之后和右圆括号之前是否需要有一个空格。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.ParenPadCheck"/>
+		<!-- 检查类型转换的圆括号的填充符策略。也就是，在左圆括号之后和右圆括号之前是否需要有一个空格。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.TypecastParenPadCheck"/>
+		<!-- 检查指定标记之后是否紧跟了空格。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAfterCheck"/>
+		<!-- 检查指定标记的周围是否有空格 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.whitespace.WhitespaceAroundCheck"/>
+		<!-- 检查是否有嵌套的代码块。allowInSwitchCase: 定义是否允许 switch case 中使用嵌套的代码块 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.blocks.AvoidNestedBlocksCheck"/>
+
+		<module name="io.github.jcohy.gradle.checkstyle.check.SpringLeadingWhitespaceCheck">
+			<property name="indentationStyle" value="spaces"/>
+		</module>
+
+		<!-- 9. 【强制】IDE的 text file encoding 设置为 UTF-8; IDE 中文件的换行符使用 Unix 格式，不要使用 Windows 格式。-->
+
+		<!-- (四) OOP 规约 -->
+		<!-- 5. 【强制】不能使用过时的类或方法。-->
+		<!-- 6. 【强制】Object 的 equals 方法容易抛空指针异常，应使用常量或确定有值的对象来调用equals。-->
+		<!-- String的比较不能用 != 和 == -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.StringLiteralEqualityCheck"/>
+		<!-- 检查 equals 语句，文字位于左侧，变量在右侧。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EqualsAvoidNullCheck"/>
+		<!-- 7. 【强制】所有的相同类型的包装类对象之间值的比较，全部使用equals方法比较。-->
+		<!-- 9. 【强制】定义DO/DTO/VO等POJO类时，不要设定任何属性默认值。-->
+
+
+		<!-- (五) 集合处理。-->
+		<!-- 1. 只要重写equals，就必须重写hashCode。-->
+		<!-- 检查在重写了equals方法后是否重写了hashCode方法 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EqualsHashCodeCheck"/>
+
+		<!-- (六) 并发处理。-->
+		<!-- 5. 【强制】SimpleDateFormat 是线程不安全的类，一般不要定义为 static 变量，如果定义为 static，必须加锁，或者使用 DateUtils 工具类。可以使用Instant代替Date，LocalDateTime代替Calendar，DateTimeFormatter代替SimpleDateFormat-->
+
+		<!-- (七) 控制语句。-->
+		<!-- 1、1. 【强制】在一个 switch 块内，每个 case 要么通过 break/return 等来终止，要么注释说明程序将继续执行到哪一个 case 为止；
+			在一个 switch 块内，都必须包含一个 default 语句并且放在最后，即使它什么代码也没有。-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MissingSwitchDefaultCheck"/>
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.DefaultComesLastCheck"/>
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.FallThroughCheck"/>
+		<!-- 4. 【推荐】除常用方法（如getXxx/isXxx）等外，不要在条件判断中执行其它复杂的语句，将复杂逻辑判断的结果赋值给一个有意义的布尔变量名，以提高可读性。 -->
+		<!-- 检查是否有过于复杂的布尔表达式。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanExpressionCheck"/>
+		<!-- 检查是否有过于复杂的布尔类型 return 语句 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.SimplifyBooleanReturnCheck"/>
+		<!-- 2. 【强制】在 if/else/for/while/do 语句中必须使用大括号。即使只有一行代码，避免采用单行的编码方式.参考上述 NeedBracesCheck-->
+		<!-- 3. 【推荐】表达异常的分支时，超过3层的 if-else 的逻辑判断代码可以使用卫语句、策略模式、状态模式等来实现，-->
+		<!-- 限制 for 循环的嵌套层数为 3 层 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.NestedForDepthCheck">
+			<property name="max" value="3"/>
+		</module>
+		<!-- 限制 if 循环的嵌套层数为 3 层 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.NestedIfDepthCheck">
+			<property name="max" value="3"/>
+		</module>
+		<!-- 限制 try 代码块的嵌套层数为 3 层  -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.NestedTryDepthCheck">
+			<property name="max" value="3"/>
+		</module>
+
+		<!-- (八) 注释规约-->
+		<!-- 1. 【强制】类、类属性、类方法的注释必须使用Javadoc规范， -->
+		<!-- 2. 【强制】所有的抽象方法（包括接口中的方法）必须要用Javadoc注释、除了返回值、参数、异常说明外，还必须指出该方法做什么事情，实现什么功能。-->
+		<!-- 3. 【强制】所有的类都必须添加创建者和创建日期。-->
+		<!-- 5. 【强制】所有的枚举类型字段必须要有注释，说明每个数据项的用途。-->
+		<!-- 检查类或者接口的 javadoc 注解 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck">
+			<property name="scope" value="package"/>
+			<property name="authorFormat" value="^[a-zA-Z0-9]{2,20}"/>
+		</module>
+		<!-- 检查方法的 javadoc 注解 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck"/>
+		<!-- 检查 public 变量的 javadoc 注解 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck">
+			<property name="scope" value="public"/>
+		</module>
+		<!-- javadoc 风格。checkEmptyJavadoc：检查 javadoc 是否缺少描述文本-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
+			<property name="checkEmptyJavadoc" value="true"/>
+		</module>
+		<!-- 检查块标签后面是否具有描述 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck"/>
+		<!-- 检查块标签后的描述如果具有多行，指定连续行之间的缩进 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck">
+			<property name="offset" value="0"/>
+		</module>
+		<!-- 检查 javadoc 块标签或 javadoc 标签的顺序 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
+			<property name="tagOrder"
+					  value="@param, @author, @version, @since, @see, @serial, @deprecated"/>
+			<property name="target" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF"/>
+		</module>
+		<!-- 检查 javadoc 块标签或 javadoc 标签的顺序 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
+			<property name="tagOrder"
+					  value="@param, @return, @throws, @since, @deprecated, @see"/>
+			<property name="target" value="METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
+		</module>
+
+
+		<!-- Annotations-->
+		<!-- 检查注解风格，这项检查可以控制要使用的注解的样式。-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationUseStyleCheck">
+			<property name="elementStyle" value="compact"/>
+		</module>
+		<!-- 当出现 @inheritDoc 的 Javadoc 标签时，验证 java.lang.Override 注解是否出现。-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.annotation.MissingOverrideCheck"/>
+		<!-- 这项检查可以确保所有包的注解都在 package-info.java 文件中。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.annotation.PackageAnnotationCheck"/>
+		<!-- 检查注解的位置。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.annotation.AnnotationLocationCheck">
+			<property name="allowSamelineSingleParameterlessAnnotation"
+					  value="false"/>
+		</module>
+
+
+		<!-- Class Design -->
+		<!-- 只有私有构造器的类必须声明为 final -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck"/>
+		<!-- 检查接口是否只定义了变量而没有定义方法，因为接口应该用来描述一个类型，所以只定义变量而不定义方法是不恰当的.allowMarkerInterfaces: 是否检查空接口-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck"/>
+		<!-- 查看文档 -->
+		<module name="io.github.jcohy.gradle.checkstyle.check.SpringHideUtilityClassConstructor"/>
+		<!-- 检查异常是不可变的 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck"/>
+		<!-- 检查嵌套/内部的类型是否在当前类的最底部声明（在所有的方法/字段的声明之后）。-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.design.InnerTypeLastCheck"/>
+		<!-- 检查每个顶级类、接口、枚举或注解是否位于其自己的源文件中。-->
+		<module name="com.puppycrawl.tools.checkstyle.checks.design.OneTopLevelClassCheck"/>
+
+		<!-- Coding -->
+		<!-- 检查是否 equals 的重载，如果有必须明确指定Object类型。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.CovariantEqualsCheck"/>
+		<!-- 检查空语句。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.EmptyStatementCheck"/>
+		<!-- 检查子表达式中是否有赋值语句 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.InnerAssignmentCheck"/>
+		<!-- 检查子表达式中是否有赋值语句 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.NoEnumTrailingCommaCheck"/>
+		<!-- 同一行不能有多个声明 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.MultipleVariableDeclarationsCheck"/>
+		<!-- 检查每行是否只有一个语句。 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.coding.OneStatementPerLineCheck"/>
+
+		<!-- Imports -->
+		<!-- 检查 import 语句是否使用 * 符号 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+		<!-- 检查是否导入了不必显示导入的类 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.imports.RedundantImportCheck"/>
+		<!-- 检查是否导入的包没有使用. processJavadoc: 检查是否处理 Javadoc 注解 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.imports.UnusedImportsCheck">
+			<property name="processJavadoc" value="true"/>
+		</module>
+		<!-- 检查导入顺序是否遵循 jcohy 约定 -->
+		<module name="io.github.jcohy.gradle.checkstyle.check.SpringImportOrderCheck">
+			<property name="projectRootPackage" value="${projectRootPackage}"/>
+		</module>
+
+		<!-- Miscellaneous -->
+		<!-- 控制注释和周围代码之间的缩进 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.indentation.CommentsIndentationCheck">
+			<property name="tokens" value="BLOCK_COMMENT_BEGIN"/>
+		</module>
+
+
+		<!-- 检查外部类型名称和文件名是否匹配 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.OuterTypeFilenameCheck"/>
+
+		<!-- Modifiers -->
+		<!-- 检查是否有多余的修饰符 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.modifier.RedundantModifierCheck"/>
+		<!-- 检查修饰符的顺序 -->
+		<module name="com.puppycrawl.tools.checkstyle.checks.modifier.ModifierOrderCheck"/>
+	</module>
+</module>
