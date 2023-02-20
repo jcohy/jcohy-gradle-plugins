@@ -4,7 +4,7 @@
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringTernaryCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringTernaryCheck">
 			<property name="equalsTest" value="any"/>
 		</module>
 	</module>

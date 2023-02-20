@@ -1,6 +1,6 @@
-apply plugin: "com.jcohy.docs"
-apply plugin: "com.jcohy.oss-upload"
-apply plugin: "com.jcohy.module"
+apply plugin: "io.github.jcohy.docs"
+apply plugin: "io.github.jcohy.oss-upload"
+apply plugin: "io.github.jcohy.module"
 
 description = "Jcohy Study Docs"
 

@@ -1,5 +1,5 @@
 plugins {
-	id 'com.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.gradle-plugin-module'
 }
 
 dependencies {
@@ -9,22 +9,16 @@ dependencies {
 	implementation("org.springframework:spring-web")
 }
 
-description = 'The plugin provides configuration with MavenPublishPlugin plugin'
-
-pluginBundle {
-	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
-	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
-
-}
+description = 'The plugin provides maven convention with MavenPublishPlugin plugin'
 
 gradlePlugin {
 	plugins {
 		conventionsPlugin {
-			id = 'com.jcohy.gradle.maven'
-			displayName = 'JavaConvention,MavenConvention,AsciidoctorConvention'
+			id = 'io.github.jcohy.gradle.maven-conventions'
+			displayName = 'maven-conventions'
 			description = project.description
-			implementationClass = 'com.jcohy.convention.conventions.ConventionsPlugin'
-			tags.set{['JavaConventions', 'Deployed', 'OptionalDependencies', "Asciidoctor"]}
+			implementationClass = 'io.github.jcohy.gradle.maven.MavenPublishingConventions'
+			tags.set{['JavaConvention', 'MavenConvention','maven']}
 		}
 	}
 }

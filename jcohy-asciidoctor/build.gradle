@@ -1,5 +1,6 @@
 plugins {
-	id 'com.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.gradle-plugin-module'
+	id "nebula.integtest" version "9.6.3"
 }
 
 description "A Gradle plugin that provides some conventions when use AsciidoctorJPlugin"
@@ -13,7 +14,8 @@ gradlePlugin {
 	plugins {
 		asciidoctorConventionsPlugin {
 			id = 'io.github.jcohy.gradle.asciidoctor-conventions'
-			implementationClass = 'com.jcohy.gradle.asciidoctor.AsciidoctorConventionsPlugin'
+			displayName = "asciidoctor-conventions"
+			implementationClass = 'io.github.jcohy.gradle.asciidoctor.AsciidoctorConventionsPlugin'
 			description = project.description
 			tags.set(['asciidoctor', 'docs'])
 		}

@@ -29,8 +29,8 @@ dependencies {
 gradlePlugin {
 	plugins {
 		gradleModulePlugin {
-			id = "com.jcohy.gradle-plugin-module"
-			implementationClass = "com.jcohy.gradle.build.GradlePluginModulePlugins"
+			id = "io.github.jcohy.gradle-plugin-module"
+			implementationClass = "io.github.jcohy.gradle.build.GradlePluginModulePlugins"
 		}
 	}
 }
