@@ -4,7 +4,7 @@
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="io.github.jcohy.gradle.checkstyle.check.SpringLeadingWhitespaceCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringLeadingWhitespaceCheck">
 			<property name="indentationStyle" value="spaces"/>
 		</module>
 	</module>

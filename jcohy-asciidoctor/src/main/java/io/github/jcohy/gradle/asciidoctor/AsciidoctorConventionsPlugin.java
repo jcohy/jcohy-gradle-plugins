@@ -62,7 +62,7 @@ import org.springframework.util.StringUtils;
  */
 public class AsciidoctorConventionsPlugin implements Plugin<Project> {
 
-    private static final String ASCIIDOCTORJ_VERSION = "2.4.3";
+    private static final String ASCIIDOCTORJ_VERSION = "2.5.7";
 
     public static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
 

@@ -5,8 +5,8 @@
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<!-- TreeWalker Checks -->
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="io.github.jcohy.gradle.checkstyle.filter.RequiresOuterThisFilter"/>
-		<module name="io.github.jcohy.gradle.checkstyle.filter.IdentCheckFilter">
+		<module name="io.github.jcohy.checkstyle.filter.RequiresOuterThisFilter"/>
+		<module name="io.github.jcohy.checkstyle.filter.IdentCheckFilter">
 			<property name="names" value="logger"/>
 			<module name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
 				<property name="checkMethods" value="false"/>

@@ -42,13 +42,13 @@ public class MethodOrderInvalid {
     interface Nested {
 
         @Override
-        int hashCode();
+        String toString();
 
         @Override
         boolean equals(Object obj);
 
         @Override
-        String toString();
+        int hashCode();
 
     }
 
