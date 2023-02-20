@@ -16,8 +16,8 @@
 
 plugins {
 	id 'java-library'
-	id 'com.jcohy.gradle.javadoc'
-	id 'com.jcohy.gradle.javadoc-conventions'
+	id 'io.github.jcohy.gradle.javadoc'
+	id 'io.github.jcohy.gradle.javadoc-conventions'
 }
 
 dependencies {

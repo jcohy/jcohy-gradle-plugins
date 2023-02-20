@@ -5,7 +5,7 @@
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<!-- TreeWalker Checks -->
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
+		<module name="io.github.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
 			<property name="suffix" value="DDD"/>
 			<property name="allowedAbbreviationLength" value="0"/>
 		</module>

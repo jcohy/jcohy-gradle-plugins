@@ -24,7 +24,6 @@ public class JavadocBadCase<T> {
 
     /**
      * Do something.
-     *
      * @param something A bad thing
      * @return Naughty
      * @throws RuntimeException I fail
