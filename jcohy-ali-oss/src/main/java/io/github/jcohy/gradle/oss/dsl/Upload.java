@@ -8,7 +8,42 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 
 /**
- * <p> 描述: .
+ * <p> 描述:
+ * 上传到 oss 指定的 prefix 目录下。文件路径为 {oss-bucket}/{prefix}/{source}/{other}.
+ * 其中默认忽略 source 目录，如果需要添加 source 目录，请将 ignoreSourceDir 属性设置为 false。
+ * 例如:
+ * 假设 Test.txt 文件在如下路径中
+ * <pre>
+ * -- src
+ * --- main
+ * ---- com
+ * ----- jcohy
+ * ------ oss
+ * ------- Test.txt
+ *    alioss {
+ * 	    upload {
+ * 	        source = "src/main"
+ * 	        prefix = "jcohy"
+ *        }
+ *    }
+ * </pre>
+ * 此设置会将 src/main 目录下的文件递归上传至 {oss-bucket}/jcohy/com/jcohy/oss/Test.txt
+ * <pre>
+ * -- src
+ * --- main
+ * ---- com
+ * ----- jcohy
+ * ------ oss
+ * ------- Test.txt
+ *    alioss {
+ * 	    upload {
+ * 	        source = "src/main"
+ * 	        prefix = "jcohy"
+ * 	        ignoreSourceDir = false
+ *        }
+ *    }
+ * </pre>
+ * 此设置会将 src/main 目录下的文件递归上传至 {oss-bucket}/jcohy/src/main/com/jcohy/oss/Test.txt
  * Copyright: Copyright (c) 2021.
  * <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
  *
@@ -25,61 +60,22 @@ public class Upload {
     private String source;
 
     /**
-     * 忽略那些要上传的文件。如果指定了 ignoreSourceDir 属性为 {@code false}. 请注意文件名不能重复。
+     * 忽略那些要上传的文件。如果指定了 ignoreSourceDir 属性为 {@code true}. 请注意文件名不能重复。
      */
     @Input
     private List<String> exclusions = new ArrayList<>();
 
     /**
-     * 上传到 oss 指定的 prefix 目录下。
-     * 例如:
-     * 假设 Test.txt 文件在如下路径中
-     * <pre>
-     * -- src
-     * --- main
-     * ---- com
-     * ----- jcohy
-     * ------ oss
-     * ------- Test.txt
-     *    alioss {
-     * 	    upload {
-     * 	        source = "src/main"
-     * 	        prefix = "jcohy"
-     *        }
-     *    }
-     * </pre>
-     * 此设置会将 src/main 目录中的文件上传至指定的 bucket，下 jcohy 目录下。其路径不包含 source 指定的目录：
-     * <a href="http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy-test/com/jcohy/oss/Test.txt">...</a>
+     * 指定文件前缀
      */
     @Input
     private String prefix;
 
     /**
-     * 是否忽略 source 下的目录递归上传。默认为 {@code false}。如果设置为  {@code true}。则会忽略 {@code source} 属性，将所有文件上传至 prefix 指定的目录中
-     * 例如:
-     * 假设 Test.txt 文件在如下路径中
-     * <pre>
-     * -- src
-     * --- main
-     * ---- com
-     * ----- jcohy
-     * ------ oss
-     * ------- Test.txt
-     *    alioss {
-     * 	    upload {
-     * 	        source = "src/main"
-     * 	        prefix = "jcohy"
-     * 	        ignoreSourceDir = "true"
-     *        }
-     *    }
-     * </pre>
-     * 此设置会将 src/main 目录中的文件上传至指定的 bucket，下 jcohy 目录下。其路径为
-     * <a href="http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy/Test.txt">...</a>
-     * 如果 ignoreSourceDir 为 {@code false} ,则上传的路径为:
-     * <a href="http://jcohy.oss-cn-beijing.aliyuncs.com/jcohy-test/src/main/Test.txt">...</a>
+     * 是否忽略 source 下的目录递归上传。默认为 {@code true}。如果设置为  {@code false}。则会将所有文件上传至 prefix 指定的目录中.
      */
     @Input
-    private boolean ignoreSourceDir = false;
+    private boolean ignoreSourceDir = true;
 
     /**
      * 是否递归目录上传

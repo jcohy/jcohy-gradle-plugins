@@ -41,7 +41,7 @@ public class AliOssTemplate {
     }
 
     private OSSClient createClient(AliOssExtension extension) {
-        // 创建ClientConfiguration。ClientConfiguration是OSSClient的配置类，可配置代理、连接超时、最大连接数等参数。
+        // 创建ClientConfiguration。ClientConfiguration是OSSClient的配置类，可配置代理、连接超时、最大连接数等参数 。
         ClientConfiguration conf = new ClientConfiguration();
         // 设置OSSClient允许打开的最大HTTP连接数，默认为1024个。
         conf.setMaxConnections(1024);

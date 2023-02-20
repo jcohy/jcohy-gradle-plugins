@@ -10,7 +10,6 @@ alioss {
 		source = "src/main"
 		prefix = "jcohy"
 		ignoreSourceDir = false
-		recursion = true
 	}
 }
 
