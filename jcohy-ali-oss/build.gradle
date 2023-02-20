@@ -14,9 +14,9 @@ dependencies {
 gradlePlugin {
 	plugins {
 		aliOssPlugin {
-			id = 'io.github.jcohy.gradle.oss'
+			id = 'io.github.jcohy.gradle.aliyun-oss'
+			displayName = 'aliyun-oss'
 			implementationClass = 'io.github.jcohy.gradle.oss.OssUploadPlugin'
-			displayName = 'oss'
 			description = project.description
 			tags.set{['OSS', 'AliYun', 'AliYunOss']}
 		}

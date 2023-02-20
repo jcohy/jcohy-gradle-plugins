@@ -22,24 +22,20 @@ dependencies {
 	testImplementation('org.apache.logging.log4j:log4j-core')
 }
 
-pluginBundle {
-	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
-	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
-
-}
-
 gradlePlugin {
 	plugins {
 		conventionsPlugin {
-			id = 'io.github.jcohy.convention'
-			description = project.description
+			id = 'io.github.jcohy.gradle.convention'
+			displayName = "convention-plugins"
 			implementationClass = 'io.github.jcohy.convention.conventions.ConventionsPlugin'
-			tags.set {['JavaConventions', 'Deployed', "Asciidoctor"]}
+			description = project.description
+			tags.set {['Java', 'Deployed', "Asciidoctor"]}
 		}
 		optionalPlugin {
-			id = 'io.github.jcohy.optional-dependencies'
-			description = 'Added support for Maven-style optional dependencies.'
+			id = 'io.github.jcohy.gradle.optional-dependencies'
+			displayName = "optional-dependencies"
 			implementationClass = 'io.github.jcohy.convention.optional.OptionalDependenciesPlugin'
+			description = 'Added support for Maven-style optional dependencies.'
 			tags.set {['dependencies', 'optional', 'OptionalDependencies']}
 		}
 	}

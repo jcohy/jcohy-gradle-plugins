@@ -15,23 +15,23 @@ gradlePlugin {
 	plugins {
 		javadocConventionsPlugin {
 			id = 'io.github.jcohy.gradle.javadoc-conventions'
-			displayName = 'Javadoc Conventions Plugin'
-			description = 'Defaults the Javadoc'
+			displayName = 'javadoc-conventions'
 			implementationClass = 'io.github.jcohy.gradle.javadoc.JavadocConventionsPlugin'
+			description = 'Defaults the Javadoc'
 			tags.set{["Javadoc"]}
 		}
 		javadocPlugin {
 			id = 'io.github.jcohy.gradle.javadoc'
-			displayName = 'Javadoc Plugin'
-			description = 'Sets up a Project with Javadoc Task. Used by AggregateJavadocPlugin to setup aggregate Javadoc too'
+			displayName = 'javadoc-convention'
 			implementationClass = 'io.github.jcohy.gradle.javadoc.JavadocPlugin'
+			description = 'Sets up a Project with Javadoc Task. Used by AggregateJavadocPlugin to setup aggregate Javadoc too'
 			tags.set{["Javadoc"]}
 		}
 		aggregateJavadocPlugin {
 			id = 'io.github.jcohy.gradle.javadoc-aggregate'
-			displayName = 'Aggregate Javadoc Plugin'
-			description = 'Sets up a Project with Aggregate Javadoc Task'
+			displayName = 'javadoc-aggregate'
 			implementationClass = 'io.github.jcohy.gradle.javadoc.AggregateJavadocPlugin'
+			description = 'Sets up a Project with Aggregate Javadoc Task'
 			tags.set{["Javadoc","javadoc-aggregate"]}
 		}
 	}

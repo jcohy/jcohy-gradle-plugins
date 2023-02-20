@@ -14,6 +14,7 @@ gradlePlugin {
 	plugins {
 		asciidoctorConventionsPlugin {
 			id = 'io.github.jcohy.gradle.asciidoctor-conventions'
+			displayName = "asciidoctor-conventions"
 			implementationClass = 'io.github.jcohy.gradle.asciidoctor.AsciidoctorConventionsPlugin'
 			description = project.description
 			tags.set(['asciidoctor', 'docs'])
