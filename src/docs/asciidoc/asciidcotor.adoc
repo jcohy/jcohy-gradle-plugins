@@ -1,21 +1,22 @@
+[[jcohy-plugins-asciidoctor]]
 = Asciidoctor 插件约定配置
 
 提供 asciidoctor 通用属性以及 spring 风格的文档样式。此插件主要使用了 Spring 官方提供的 https://github.com/spring-io/spring-asciidoctor-backends[spring-asciidoctor-backends] 文档生成器。详情可查看此项目地址
 
 == 下载
 
-下载地址 https://plugins.gradle.org/plugin/com.jcohy.gradle.javadoc-aggregate[Gradle Plugin Portal].
+下载地址 https://plugins.gradle.org/plugin/io.github.jcohy.gradle.asciidoctor-conventions[Gradle Plugin Portal].
 
-== com.jcohy.gradle.asciidoctor-conventions 插件
+== io.github.jcohy.gradle.asciidoctor-conventions 插件
 
-应用 `com.jcohy.gradle.asciidoctor-conventions` 插件会提供一些默认 AsciidoctorTask 任务选项。当然前提还是要先使用 AsciidoctorPlugin
+应用 `io.github.jcohy.gradle.asciidoctor-conventions` 插件会提供一些默认 AsciidoctorTask 任务选项。当然前提还是要先使用 AsciidoctorPlugin
 
 [source,groovy]
 ----
 plugins {
 	id "java"
 	id "org.asciidoctor.jvm.convert"
-	id "com.jcohy.gradle.asciidoctor-conventions"
+	id "io.github.jcohy.gradle.asciidoctor-conventions"
 }
 ----
 
@@ -47,7 +48,7 @@ plugins {
 ** io.spring.asciidoctor.backends
 ** io.spring.docresources
 * 设置所有的警告都是致命的.
-* AsciidoctorJ 版本更新为 2.4.3.
+* AsciidoctorJ 版本更新为 2.5.7.
 * 对于每个 AsciidoctorTask:
 ** 创建一个任务以将文档资源同步到其输出目录（project.getBuildDir() + "/docs/src/" + asciidoctorTask.getName()）。主要同步的目录如下
 *** src/docs
@@ -64,6 +65,8 @@ plugins {
 ** 添加中文支持。
 ** 添加 Mono 字体
 * 配置 backend 为 spring-html 或 spring-pdf.
+** io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.4
+** org.asciidoctor:asciidoctorj-pdf:2.3.0
 * 替换默认 logo
 * 对于每个 AbstractAsciidoctorTask (HTML 和 PDF):
 ** 属性引用丢失发出 warn 警告.

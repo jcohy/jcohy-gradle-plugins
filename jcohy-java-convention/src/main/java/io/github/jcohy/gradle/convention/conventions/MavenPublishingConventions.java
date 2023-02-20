@@ -8,6 +8,7 @@ import org.gradle.api.Project;
 import org.gradle.api.attributes.Usage;
 import org.gradle.api.component.AdhocComponentWithVariants;
 import org.gradle.api.component.ConfigurationVariantDetails;
+import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.JavaPluginExtension;
@@ -20,6 +21,7 @@ import org.gradle.api.publish.maven.MavenPomOrganization;
 import org.gradle.api.publish.maven.MavenPomScm;
 import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.springframework.util.StringUtils;
 
 /**
  * Copyright: Copyright (c) 2021
@@ -46,17 +48,17 @@ class MavenPublishingConventions {
         project.getPlugins().withType(MavenPublishPlugin.class).all((mavenPublishPlugin) -> {
             PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
 
-            if (project.hasProperty("deploymentRepository")) {
-                publishing.getRepositories().maven(mavenRepository -> {
-                    Repository repository = Repository.of(ReleaseStatus.ofProject(project));
-                    mavenRepository.setUrl(repository.getUrl());
-                    mavenRepository.setName(repository.getName());
-                    mavenRepository.credentials((passwordCredentials -> {
-                        passwordCredentials.setUsername(PomConstant.NEXUS_USER_NAME);
-                        passwordCredentials.setPassword(PomConstant.NEXUS_PASSWORD);
-                    }));
-                });
-            }
+            publishing.getRepositories().maven(mavenRepository -> {
+                Repository repository = Repository.of(ReleaseStatus.ofProject(project));
+                mavenRepository.setUrl(repository.getUrl());
+                mavenRepository.setName(repository.getName());
+                mavenRepository.credentials((passwordCredentials -> {
+                    String username = StringUtils.hasText(getExtraProperties(project,"USERNAME")) ? getExtraProperties(project,"username") : PomConstant.NEXUS_USER_NAME;
+                    String password = StringUtils.hasText(getExtraProperties(project,"PASSWORD")) ? getExtraProperties(project,"password") : PomConstant.NEXUS_PASSWORD;
+                    passwordCredentials.setUsername(username);
+                    passwordCredentials.setPassword(password);
+                }));
+            });
 
             publishing.getPublications().withType(MavenPublication.class)
                     .all((mavenPublication ->
@@ -68,6 +70,12 @@ class MavenPublishingConventions {
                 extension.withSourcesJar();
             });
         });
+    }
+
+
+    public String getExtraProperties(Project project,String property){
+        ExtraPropertiesExtension extra = project.getExtensions().getExtraProperties();
+        return extra.has(property) ? (String) extra.get(property) : "";
     }
 
     /**

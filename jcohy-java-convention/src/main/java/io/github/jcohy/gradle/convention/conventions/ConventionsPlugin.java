@@ -19,6 +19,5 @@ public class ConventionsPlugin implements Plugin<Project> {
     public void apply(Project project) {
         new JavaConventions().apply(project);
         new MavenPublishingConventions().apply(project);
-        new AsciidoctorConventionsPlugin().apply(project);
     }
 }

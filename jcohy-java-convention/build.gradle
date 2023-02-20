@@ -38,5 +38,12 @@ gradlePlugin {
 			description = 'Added support for Maven-style optional dependencies.'
 			tags.set {['dependencies', 'optional', 'OptionalDependencies']}
 		}
+		testFailuresPlugin {
+			id = 'io.github.jcohy.gradle.test-failures'
+			displayName = "test-failures"
+			implementationClass = 'io.github.jcohy.convention.testing.TestFailuresPlugin'
+			description = 'Added support for Maven-style optional dependencies.'
+			tags.set {['test']}
+		}
 	}
 }
