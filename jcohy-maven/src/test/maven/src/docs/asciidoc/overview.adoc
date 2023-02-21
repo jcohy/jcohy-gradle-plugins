@@ -1,0 +1,228 @@
+[[flight-overview]]
+= 概述
+
+include::./features/features-1.0.9.adoc[]
+
+include::./features/features-1.0.7.adoc[]
+
+== 要求
+
+此项目需要 gradle 6.7 或更高的版本。支持 JDK11
+
+== 版本命名规则
+
+* 主要版本：以数字命名，例如 `1.0.0`
+* 预发布版本：以 `M+数字` 或 `RC+数字` 结尾。例如 `1.0.0-RC2`
+* 快照版本：以 SNAPSHOT 结尾。例如： `2.3.0-SNAPSHOT`
+
+== 插件
+
+在开发框架的时候，框架提供了以下几个插件来约束和配置项目
+
+|===
+|name |id
+
+|deployedPlugin
+|io.github.jcohy.gradle.deployed
+
+|conventionsPlugin
+|io.github.jcohy.gradle.conventions
+
+|testFailuresPlugin
+|io.github.jcohy.gradle.test-failures
+
+|optionalDependenciesPlugin
+|io.github.jcohy.gradle.optional-dependencies
+|===
+
+如何使用，我们只需要将插件的 `id` 包含在 `plugins` 块中引入即可。如下:
+
+----
+plugins {
+    id "java-library"
+	id "io.github.jcohy.gradle.conventions"
+	id "io.github.jcohy.gradle.optional-dependencies"
+	id "io.github.jcohy.gradle.deployed"
+}
+----
+
+=== deployedPlugin
+
+此插件提供了将我们生成的 jar 包发布到仓库的动作
+
+=== conventionsPlugin
+
+此插件主要是对项目进行一些配置和约束，且这些配置是不可更改的，你只能去适应它。主要有两个方面的约定
+
+
+当项目使用了 `JavaBasePlugin` 插件时，我们会对项目进行如下的配置
+
+* `sourceCompatibility` 设置为  `17`
+* 使用 `SpringJavaFormatPlugin` https://github.com/spring-io/spring-javaformat/[Spring Java Format], `Checkstyle`,  `TestFailuresPlugin`, 和 `TestRetryPlugin` 插件
+* `Test` 任务使用 JUnit Platform 并且配置最大堆为 1024M
+* 在使用  `JavaPlugin` 插件的项目中添加依赖于 `testRuntimeOnly(org.junit.platform:junit-platform-launcher)`  依赖
+* `JavaCompile`, `Javadoc`, 和 `FormatTask` 任务编码为 `UTF-8`
+* `JavaCompile` 任务配置为使用  `-parameters`, 并且当使用 `Java8` 时
+**  将警告视为错误
+** 启用 `unchecked`, `deprecation`, `rawtypes`, 和 `varags` 警告
+* `Jar` 任务的生成带有 LICENSE.txt 和 NOTICE.txt README.txt 和以下清单属性:
+** Automatic-Module-Name
+** Build-Jdk-Spec
+** Built-By
+** Implementation-Title
+** Implementation-Version
+
+当项目使用了 `MavenPublishPlugin` 插件时，我们会对项目进行如下的配置
+
+* 设置 `MavenArtifactRepository` 仓库.
+* 所有的 `MavenPublication` 都满足 Maven Central 的要求.
+** 创建  Javadoc 和 source jars。
+** 发布元数据 (poms 和 Gradle module metadata),配置为使用解析的版本.
+
+=== testFailuresPlugin
+
+此插件用于记录测试失败并在构建结束时生成报告。
+
+=== optionalDependenciesPlugin
+
+增加了对 Maven 风格的可选依赖的支持.创建一个  `optional` 配置
+`optional` 配置是项目 `compile` 和 `runtime` 时 `classpath` 的一部分，但是不影响依赖项目的 `classpath`
+
+[[flight-overview-module]]
+== 模块一览
+
+[[flight-overview-module-tbl]]
+.模块说明
+|===
+| 模块           | 说明 | 章节
+
+| flight-framework-auto     | 自动配置 | <<flight-module-auto>>
+
+| flight-framework-boot | Boot核心 | <<flight-module-bom>>
+
+| flight-framework-launch | 启动相关 | <<flight-module-bom>>
+
+| flight-framework-utils    | 工具类 | <<flight-module-bom>>
+
+| flight-starter-mybatis    | mybatis starter | <<flight-module-bom>>
+
+| flight-starter-redis | redis starter | <<flight-module-bom>>
+
+| flight-starter-rabbitmq | rabbitmq starter | <<flight-module-bom>>
+|===
+
+有关工具类的使用可以参考相关的 {javadocUrl}[javadoc]
+
+[[flight-overview-mysql]]
+== mysql 连接参数说明
+
+[[flight-overview-mysql-params-tbl]]
+.mysql 连接参数说明
+|===
+| 参数 | 值 | 说明
+
+| useSSL     | false      | 与服务器进行通信时使用SSL（真／假）
+
+| useUnicode | true | 处理字符串时，驱动程序是否应使用Unicode字符编码
+
+| characterEncoding    | utf-8   | 如果 "useUnicode" 被设置为 "真"，处理字符串时，驱动程序应使用什么字符编码？
+
+| zeroDateTimeBehavior   |   null  | 当驱动程序遇到全由0组成的DATETIME值时，应出现什么？
+
+| transformedBitIsBoolean   | true  | 如果驱动程序将TINYINT(1)转换为不同的类型，驱动程序是否应使用BOOLEAN取代BIT
+
+| tinyInt1isBit   | false   | 驱动程序是否应将数据类型TINYINT(1)当作BIT类型对待？创建表时，服务器会执行BIT -> TINYINT(1)操作。
+
+| allowMultiQueries   | true  | 在一条语句中，允许使用“;”来分隔多条查询
+
+| allowPublicKeyRetrieval   | true   | 允许客户端从服务器获取公钥
+|===
+
+[[flight-overview-promise]]
+== 项目约束
+
+. 所有的包命名都以 `com.td.flight` 开头。
+. controller 重要方法加上 `ConsoleLog` 注解。
+. 所有涉及到的枚举类迁移至 flight-common 模块 com.td.flight.enums 包下，可根据需求在此包下再创建包
+. 所有涉及到的枚举类迁移至 flight-common 模块 com.td.flight.exception 包下，可根据需求在此包下再创建包
+. 注释的统一。严格使用 javadoc 支持的注解。类注释模板如下:
++
+====
+[source,java]
+----
+/**
+ * Copyright: Copyright (c) 2021 TD
+ *
+ * <p>
+ * Description:
+ *
+ * @author jiac
+ * @version 0.0.5.1 2020/6/12:16:32
+ * @since 0.0.5.1
+ */
+----
+
+`@since` 表示此功能第一次出现的版本
+
+`@version` 表示 当前版本+时间
+
+注意注解后面需要加上空格
+====
+
+[[flight-overview-run]]
+== 项目运行
+
+. 创建 flight 数据库
+. 修改 `flight-main` 模块下的 `application.yml` 数据库,redis 等配置信息
+. `./gradlew bootrun`
+
+== 版本依赖
+
+[[flight-overview-version-dependency-tbl]]
+.版本依赖
+|===
+| groupId           | artifactId     | 版本号     |  说明
+
+|    org.flywaydb  |  flyway-core     | 6.0.8 |    ..
+|===
+
+[[flight-overview-build-tbl]]
+== 文档构建
+
+* 构建参考文档
+
+[source,shell]
+----
+./gradlew clean asciidoctor
+----
+
+构建的文档在 `build/docs/ref-docs` 目录下。
+
+* 构建 API 文档
+
+[source,shell]
+----
+./gradlew clean api
+----
+
+构建的文档在 `build/docs/javadoc` 目录下。
+
+* 打包 API 文档和参考文档
+
+[source,shell]
+----
+./gradlew clean docsZip
+----
+
+构建的文档在 `build/distributions` 目录下。
+
+[source,java]
+----
+-PdeploymentRepository=${repository}
+
+gradlew.bat -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false --no-daemon --max-workers=4 build publish
+
+-PdeploymentRepository=${repository}
+
+  ./gradlew -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false --no-daemon --max-workers=4 -PdeploymentRepository=${repository} build publishAllPublicationsToDeploymentRepository
+----

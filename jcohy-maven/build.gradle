@@ -1,5 +1,6 @@
 plugins {
 	id 'io.github.jcohy.gradle-plugin-module'
+	id "nebula.integtest" version "9.6.3"
 }
 
 dependencies {
@@ -9,15 +10,15 @@ dependencies {
 	implementation("org.springframework:spring-web")
 }
 
-description = 'The plugin provides maven convention with MavenPublishPlugin plugin'
+description = 'support nexus ,gradle portal,custom repository publish'
 
 gradlePlugin {
 	plugins {
 		conventionsPlugin {
-			id = 'io.github.jcohy.gradle.maven-conventions'
-			displayName = 'maven-conventions'
+			id = 'io.github.jcohy.gradle.archives-publishing'
+			displayName = 'archives-publishing'
 			description = project.description
-			implementationClass = 'io.github.jcohy.gradle.maven.MavenPublishingConventions'
+			implementationClass = 'io.github.jcohy.gradle.maven.ArchivesPublishingPlugins'
 			tags.set{['JavaConvention', 'MavenConvention','maven']}
 		}
 	}
@@ -27,6 +28,6 @@ test {
 	useJUnitPlatform()
 }
 
-//repositories {
-//	mavenCentral()
-//}
+repositories {
+	mavenCentral()
+}
