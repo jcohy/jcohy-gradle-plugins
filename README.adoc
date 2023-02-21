@@ -1,5 +1,6 @@
 = Jcohy Gradle Plugins
 
+[cols="2,2,4,4"]
 |===
 | 项目名 |插件 | 插件 ID | 描述
 
@@ -15,21 +16,32 @@
 请参考 <<jcohy-plugins-asciidoctor>> 获取更多信息
 
 | jcohy-javadoc
-| * JavadocConventionsPlugin
-* JavadocPlugin
-* AggregateJavadocPlugin
-| * io.github.jcohy.gradle.javadoc-conventions
-* io.github.jcohy.gradle.javadoc
-* io.github.jcohy.gradle.javadoc-aggregate
+| JavadocConventionsPlugin
+
+JavadocPlugin
+
+AggregateJavadocPlugin
+
+| io.github.jcohy.gradle.javadoc-conventions
+
+io.github.jcohy.gradle.javadoc
+
+io.github.jcohy.gradle.javadoc-aggregate
+
 | 提供生成聚合文档的 Gradle 的最佳实践。请参考 <<jcohy-plugins-javadoc>> 获取更多信息
 
 | jcohy-java-convention
-| * ConventionsPlugin
-* OptionalDependenciesPlugin
-* TestFailuresPlugin
-| * io.github.jcohy.gradle.convention
-* io.github.jcohy.gradle.optional-dependencies
-* io.github.jcohy.gradle.test-failures
+| ConventionsPlugin
+
+OptionalDependenciesPlugin
+
+TestFailuresPlugin
+
+| io.github.jcohy.gradle.convention
+
+io.github.jcohy.gradle.optional-dependencies
+
+io.github.jcohy.gradle.test-failures
 | 可以应用于任何 Java 项目的一组插件，以提供一致的风格样式。请参考 <<jcohy-plugins-conventions>> 获取更多信息
 
 | jcohy-java-checkstyle

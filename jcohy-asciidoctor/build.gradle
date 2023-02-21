@@ -1,5 +1,6 @@
 plugins {
 	id 'io.github.jcohy.gradle-plugin-module'
+	id "nebula.integtest" version "9.6.3"
 }
 
 description "A Gradle plugin that provides some conventions when use AsciidoctorJPlugin"

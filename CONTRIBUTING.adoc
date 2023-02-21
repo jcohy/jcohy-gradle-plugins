@@ -51,6 +51,7 @@ Jcohy Gradle Plugins 是在 Apache 2.0 许可证下发布。如果你想贡献�
 == 构建源码
 
 === 从源码构建
+
 Jcohy Gradle Plugins 的源码可以使用 Gradle 的命令行构建。我们在项目中包含了 Gradle’s wrapper scripts (./gradlew 或 gradlew.bat)，这样您可以不用下载安装 Gradle 也可以在本地构建。
 
 Jcohy Gradle Plugins 是基于 JDK 17 编写的。您应该使用 HotSpot JVM JDK 17 或更高的版本构建.
@@ -59,7 +60,7 @@ Jcohy Gradle Plugins 是基于 JDK 17 编写的。您应该使用 HotSpot JVM JD
 
 [indent=0]
 ----
-$ ./gradlew build
+./gradlew build
 ----
 
 === 构建参考文档
@@ -68,12 +69,22 @@ $ ./gradlew build
 
 [indent=0]
 ----
-$ ./gradlew asciidoc
+./gradlew asciidoctor -Dfile.encoding=UTF-8
 ----
 
 [NOTE]
 ====
-生成的 HTML , Api Doc 和 PDF 文档在 `jcohy-gradle-plugins/build/docs/` 目录中对应的文件夹中。
+在 PowerShell 中，file.encoding 需要加上单引号。
+
+[indent=0]
+----
+./gradlew asciidoctor -D'file.encoding'=UTF-8
+----
+====
+
+[NOTE]
+====
+生成的 HTML , Api Doc 和 PDF 文档在 `jcohy-gradle-plugins/build/docs/asciidoctor` 目录中对应的文件夹中。
 ====
 
 === 发布
@@ -102,7 +113,7 @@ $ ./gradlew asciidoc
 
 [NOTE]
 ====
-注意，在 jcohy-java-convention 项目中，在发布组件的时候不要发布生成的插件的 `pom` 文件。您可以执行  `publishMavenJavaPublicationToSonatypeRepository` 任务。或者在执行 `publishToSonatype` 任务是跳过 `publishPluginMavenPublicationToSonatypeRepository` 任务。
+注意，在发布组件的时候不要发布生成的插件的 `pom` 文件。您可以执行  `publishMavenJavaPublicationToSonatypeRepository` 任务。或者在执行 `publishToSonatype` 任务是跳过 `publishPluginMavenPublicationToSonatypeRepository` 任务。
 
 [source]
 ----
@@ -115,8 +126,7 @@ $ ./gradlew clean publishToSonatype -x publishPluginMavenPublicationToSonatypeRe
 ----
 ====
 
-最后，调用 `closeAndReleaseSonatypeStagingRepository` 就可以关闭并发布到中央仓库了。当然，您也可以手动的关闭和发布此组件。 当执行 `publishToSonatype` 任务将项目上传到 sonatype 仓库后，访问 https://oss.sonatype.org/#stagingRepositories[https://oss.sonatype.org/#stagingRepositories] 进行查看。可以手动关闭和发布
-
+最后，调用 `closeAndReleaseSonatypeStagingRepository` 就可以关闭并发布到中央仓库了。当然，您也可以手动的关闭和发布此组件。 当执行 `publishToSonatype` 任务将项目上传到 sonatype 仓库后，访问 https://s01.oss.sonatype.org/#stagingRepositories[https://s01.oss.sonatype.org/#stagingRepositories] 进行查看。可以手动关闭和发布
 
 === 发布到 Gradle Portal
 

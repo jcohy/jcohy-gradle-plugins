@@ -2,11 +2,12 @@ package io.github.jcohy.gradle.build.convention;
 
 
 import io.github.jcohy.gradle.build.publishing.PomConstant;
-import io.github.jcohy.gradle.build.publishing.Repository;
 import org.gradle.api.Project;
 import org.gradle.api.attributes.Usage;
-import org.gradle.api.plugins.ExtraPropertiesExtension;
+import org.gradle.api.component.AdhocComponentWithVariants;
+import org.gradle.api.component.ConfigurationVariantDetails;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.publish.PublishingExtension;
 import org.gradle.api.publish.VariantVersionMappingStrategy;
@@ -18,8 +19,8 @@ import org.gradle.api.publish.maven.MavenPomOrganization;
 import org.gradle.api.publish.maven.MavenPomScm;
 import org.gradle.api.publish.maven.MavenPublication;
 import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
+import org.gradle.api.tasks.bundling.Jar;
 
-import org.springframework.util.StringUtils;
 
 public class MavenPublishConvention {
 	public void apply(Project project) {
@@ -29,20 +30,19 @@ public class MavenPublishConvention {
 	private void configureMavenPublish(Project project) {
         project.getPlugins().withType(MavenPublishPlugin.class).all((mavenPublishPlugin) -> {
             PublishingExtension publishing = project.getExtensions().getByType(PublishingExtension.class);
-            publishing.getRepositories().maven(mavenRepository -> {
-                Repository repository = Repository.ofProject(project);
-                mavenRepository.setUrl(repository.getUrl());
-                mavenRepository.setName(repository.getName());
-                mavenRepository.credentials((passwordCredentials -> {
-                    String username = StringUtils.hasText(getExtraProperties(project,"NEXUS_USERNAME")) ? getExtraProperties(project,"username") : PomConstant.NEXUS_USER_NAME;
-                    String password = StringUtils.hasText(getExtraProperties(project,"NEXUS_PASSWORD")) ? getExtraProperties(project,"password") : PomConstant.NEXUS_PASSWORD;
-                    passwordCredentials.setUsername(username);
-                    passwordCredentials.setPassword(password);
-                }));
-            });
 
             publishing.getPublications().withType(MavenPublication.class)
                     .all(((mavenPublication) -> customizeMavenPublication(mavenPublication, project)));
+
+            MavenPublication mavenPublication = publishing.getPublications().create("mavenJava", MavenPublication.class);
+            project.afterEvaluate((evaluated) -> {
+                project.getPlugins().withType(JavaPlugin.class).all((javaPlugin) -> {
+                    if (((Jar) project.getTasks().getByName(JavaPlugin.JAR_TASK_NAME)).isEnabled()) {
+                        project.getComponents().matching((component) -> "java".equals(component.getName()))
+                                .all(mavenPublication::from);
+                    }
+                });
+            });
 
             project.getPlugins().withType(JavaPlugin.class).all(javaPlugin -> {
                 JavaPluginExtension extension = project.getExtensions().getByType(JavaPluginExtension.class);
@@ -50,11 +50,6 @@ public class MavenPublishConvention {
                 extension.withSourcesJar();
             });
         });
-    }
-
-    public String getExtraProperties(Project project,String property){
-        ExtraPropertiesExtension extra = project.getExtensions().getExtraProperties();
-        return extra.has(property) ? (String) extra.get(property) : "";
     }
 
     /**
@@ -87,10 +82,30 @@ public class MavenPublishConvention {
      * @param project project
      */
     private void customizeJavaMavenPublication(MavenPublication publication, Project project) {
+        addMavenOptionalFeature(project);
         publication.versionMapping((strategy) -> strategy.usage(Usage.JAVA_API, (mappingStrategy) -> mappingStrategy
                 .fromResolutionOf(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME)));
         publication.versionMapping((strategy) -> strategy.usage(Usage.JAVA_RUNTIME,
                 VariantVersionMappingStrategy::fromResolutionResult));
+    }
+
+    /**
+     * 允许在 pom 中添加 optional 依赖，这是使 Eclipse 中的 m2e 所必需的。
+     *
+     * @param project 要添加功能的项目
+     */
+    private void addMavenOptionalFeature(Project project) {
+        JavaPluginExtension extension = project.getExtensions().getByType(JavaPluginExtension.class);
+        JavaPluginConvention convention = project.getConvention().getPlugin(JavaPluginConvention.class);
+        extension.registerFeature("mavenOptional", (feature) -> {
+            feature.usingSourceSet(convention.getSourceSets().getByName("main"));
+        });
+
+        AdhocComponentWithVariants javaComponent = (AdhocComponentWithVariants) project.getComponents()
+                .findByName("java");
+        javaComponent.addVariantsFromConfiguration(
+                project.getConfigurations().findByName("mavenOptionalRuntimeElements"),
+                ConfigurationVariantDetails::mapToOptional);
     }
 
     /**
