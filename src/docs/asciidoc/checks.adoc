@@ -1,4 +1,4 @@
-[[checkstyles]]
+[[jcohy-checkstyles]]
 = CheckStyle
 
 使用 jcohy-java-checkstyle 进行代码检查
@@ -9,7 +9,7 @@ plugins {
 	id "checkstyle"
 }
 
-checkstyle "jcohy-gradle-plugins:jcohy-java-checkstyle:0.0.3"
+checkstyle "io.github.jcohy:jcohy-java-checkstyle:${version}"
 ----
 
 == SpringCatchCheck
@@ -28,7 +28,7 @@ checkstyle "jcohy-gradle-plugins:jcohy-java-checkstyle:0.0.3"
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -197,7 +197,7 @@ public class CatchWord {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks">
+	<module name="io.github.jcohy.checkstyle.JcohyChecks">
 		<property name="headerCopyrightPattern" value="2011-20\d\d"/>
 	</module>
 </module>
@@ -246,7 +246,7 @@ public class HeaderDate {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks">
+	<module name="io.github.jcohy.checkstyle.JcohyChecks">
 		<property name="headerFile" value="src/test/resources/customHeaderFile.txt"/>
 	</module>
 </module>
@@ -287,7 +287,7 @@ public class HeaderFile {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks">
+	<module name="io.github.jcohy.checkstyle.JcohyChecks">
 		<property name="headerFile" value="src/test/resources/customHeaderFile.txt"/>
 	</module>
 </module>
@@ -321,7 +321,7 @@ public class HeaderMissingBlankLine {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks">
+	<module name="io.github.jcohy.checkstyle.JcohyChecks">
 		<property name="headerType" value="none"/>
 	</module>
 </module>
@@ -357,7 +357,7 @@ public class HeaderMustBeMissing {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks">
+	<module name="io.github.jcohy.checkstyle.JcohyChecks">
 		<property name="headerType" value="none"/>
 	</module>
 </module>
@@ -394,7 +394,7 @@ public class HeaderMustBeMissingButIsNot {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks">
+	<module name="io.github.jcohy.checkstyle.JcohyChecks">
 		<property name="headerType" value="unchecked"/>
 	</module>
 </module>
@@ -432,7 +432,7 @@ public class HeaderUnchecked {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
- 	<module name="io.spring.javaformat.checkstyle.check.SpringHeaderCheck">
+ 	<module name="io.github.jcohy.checkstyle.check.SpringHeaderCheck">
  		<property name="fileExtensions" value="java" />
 		<property name="headerType" value="apache2"/>
  		<property name="headerCopyrightPattern" value="20\n\n-20\n\n"/>
@@ -477,7 +477,7 @@ package com.example; // OK
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
- 	<module name="io.spring.javaformat.checkstyle.check.SpringHeaderCheck">
+ 	<module name="io.github.jcohy.checkstyle.check.SpringHeaderCheck">
  		<property name="fileExtensions" value="java" />
 		<property name="headerType" value="apache2"/>
  		<property name="headerCopyrightPattern" value="20\n\n-20\n\n"/>
@@ -518,7 +518,7 @@ package com.example; // OK
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -598,7 +598,7 @@ public class HideUtilityClassConstructorSpringConfiguration {
 
 == SpringImportOrderCheck
 
-检查导入顺序是否遵循 jcohy 约定. 定义了 `projectRootPackage` 属性。配置项目的根包。默认为 `com.jcohy`.定义了如下属性。
+检查导入顺序是否遵循 jcohy 约定. 定义了 `projectRootPackage` 属性。配置项目的根包。默认为 `io.github.jcohy`.定义了如下属性。
 
 |===
 |属性 |描述 |类型 |默认值
@@ -606,7 +606,7 @@ public class HideUtilityClassConstructorSpringConfiguration {
 | projectRootPackage
 | 指定的包始终在最底部
 | String
-| com.jcohy
+| io.github.jcohy
 
 | ordered
 | 是否排序
@@ -636,7 +636,7 @@ public class HideUtilityClassConstructorSpringConfiguration {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks">
+	<module name="io.github.jcohy.checkstyle.JcohyChecks">
 		<property name="projectRootPackage" value="com.example"/>
 	</module>
 </module>
@@ -688,7 +688,7 @@ public final class ImportOrderCustomPackageInvalid {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks">
+	<module name="io.github.jcohy.checkstyle.JcohyChecks">
 		<property name="projectRootPackage" value="com.example"/>
 	</module>
 </module>
@@ -772,7 +772,7 @@ public final class ImportOrderCustomPackageValid {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -806,7 +806,7 @@ public class JavadocAuthorWithoutSpace {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -849,7 +849,7 @@ public class JavadocBadCase<T> {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -891,7 +891,7 @@ public class JavadocMethodEmptyLineBeforeTag<T> {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringJavadocCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringJavadocCheck">
 			<property name="publicOnlySinceTags" value="true" />
 			<property name="requireSinceTag" value="true" />
 		</module>
@@ -935,7 +935,7 @@ public class JavadocMissingSince {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -981,7 +981,7 @@ public class JavadocNonJavadocComment {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringJavadocCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringJavadocCheck">
 			<property name="publicOnlySinceTags" value="true"/>
 		</module>
 	</module>
@@ -1029,7 +1029,7 @@ class JavadocNonPublicSince {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringJavadocCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringJavadocCheck">
 			<property name="publicOnlySinceTags" value="true"/>
 		</module>
 	</module>
@@ -1078,7 +1078,7 @@ public interface JavadocNonPublicSinceInsideInterface {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -1114,7 +1114,7 @@ public class JavadocSoundtrack<T> {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -1180,7 +1180,7 @@ public class JavadocValid<T> {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringJUnit5Check">
+		<module name="io.github.jcohy.checkstyle.check.SpringJUnit5Check">
 		</module>
  	</module>
 </module>
@@ -1223,7 +1223,7 @@ public class JUnit5BadAnnotation {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringJUnit5Check">
+		<module name="io.github.jcohy.checkstyle.check.SpringJUnit5Check">
 		</module>
  	</module>
 </module>
@@ -1272,7 +1272,7 @@ public class JUnit5BadImport {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringJUnit5Check">
+		<module name="io.github.jcohy.checkstyle.check.SpringJUnit5Check">
 			<property name="unlessImports" value="com.example.OptOutRunner"/>
 		</module>
  	</module>
@@ -1320,7 +1320,7 @@ public class JUnit5BadImportWithOptOut {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringJUnit5Check">
+		<module name="io.github.jcohy.checkstyle.check.SpringJUnit5Check">
 		</module>
  	</module>
 </module>
@@ -1423,7 +1423,7 @@ public class JUnit5BadModifier {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringJUnit5Check">
+		<module name="io.github.jcohy.checkstyle.check.SpringJUnit5Check">
 		</module>
  	</module>
 </module>
@@ -1472,7 +1472,7 @@ Lambda 表达式检查。一个参数的 lambda 应该有括号。 单语句实�
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringLambdaCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringLambdaCheck">
 			<property name="singleArgumentParentheses" value="false"/>
 		</module>
  	</module>
@@ -1527,7 +1527,7 @@ public class LambdaExtraParens {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -1824,7 +1824,7 @@ public class LambdaValid {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringLeadingWhitespaceCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringLeadingWhitespaceCheck">
 			<property name="indentationStyle" value="spaces"/>
 		</module>
  	</module>
@@ -1869,7 +1869,7 @@ public class LeadingWhitespaceSpaces {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -1913,7 +1913,7 @@ public class LeadingWhitespaceTabs {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2014,7 +2014,7 @@ public class MethodOrderValid {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2135,7 +2135,7 @@ public class MethodVisibilityWithOverride {
 ----
 // header ignore
 
-package io.spring.javaformat.checkstyle;
+package io.github.jcohy.javaformat.checkstyle;
 
 /**
  * Interface with implicit public elements.
@@ -2192,8 +2192,8 @@ public class NewlineAtEndOfFile {
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<!-- TreeWalker Checks -->
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.filter.RequiresOuterThisFilter" />
-		<module name="com.jcohy.checkstyle.filter.IdentCheckFilter">
+		<module name="io.github.jcohy.checkstyle.filter.RequiresOuterThisFilter" />
+		<module name="io.github.jcohy.checkstyle.filter.IdentCheckFilter">
 			<property name="names" value="logger" />
 			<module
 				name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
@@ -2201,7 +2201,7 @@ public class NewlineAtEndOfFile {
 				<property name="validateOnlyOverlapping" value="false" />
 			</module>
 		</module>
-		<module name="com.jcohy.checkstyle.check.SpringNoThisCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringNoThisCheck">
 			<property name="names" value="logger" />
 		</module>
 	</module>
@@ -2276,7 +2276,7 @@ public class NotThis {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2324,7 +2324,7 @@ public class TernaryEqualsEquals {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringTernaryCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringTernaryCheck">
 			<property name="equalsTest" value="any"/>
 		</module>
  	</module>
@@ -2372,7 +2372,7 @@ public class TernaryEqualsEqualsAlways {
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.SpringTernaryCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringTernaryCheck">
 			<property name="equalsTest" value="never"/>
 		</module>
  	</module>
@@ -2414,7 +2414,7 @@ public class TernaryEqualsEqualsNever {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2454,7 +2454,7 @@ public class TernaryInArray {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2495,7 +2495,7 @@ public class TernaryInIf {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2536,7 +2536,7 @@ public class TernaryInWhile {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2575,7 +2575,7 @@ public class TernaryParensAndPlus {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2616,7 +2616,7 @@ public class TernaryParensInvalid {
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
+	<module name="io.github.jcohy.checkstyle.JcohyChecks" />
 </module>
 ----
 
@@ -2669,7 +2669,7 @@ public class TernaryParensValid { // OK
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks"/>
+	<module name="io.github.jcohy.checkstyle.JcohyChecks"/>
 </module>
 ----
 
@@ -2679,7 +2679,7 @@ public class TernaryParensValid { // OK
 ----
 // header ignore
 
-package com.jcohy.checkstyle;
+package io.github.jcohy.checkstyle;
 
 /**
  * Copyright: Copyright (c) 2021.
@@ -2728,7 +2728,7 @@ public class AbbreviationInValidDT { // violation, abbreviation.as.word
 		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
 		"https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks"/>
+	<module name="io.github.jcohy.checkstyle.JcohyChecks"/>
 </module>
 ----
 
@@ -2738,7 +2738,7 @@ public class AbbreviationInValidDT { // violation, abbreviation.as.word
 ----
 // header ignore
 
-package com.jcohy.checkstyle;
+package io.github.jcohy.checkstyle;
 
 /**
  * Copyright: Copyright (c) 2021.
@@ -2790,7 +2790,7 @@ public class AbbreviationValidDTO { // OK
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<!-- TreeWalker Checks -->
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
+		<module name="io.github.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
 			<property name="suffix" value="DDD" />
 		</module>
 	</module>
@@ -2803,7 +2803,7 @@ public class AbbreviationValidDTO { // OK
 ----
 // header ignore
 
-package com.jcohy.checkstyle;
+package io.github.jcohy.checkstyle;
 
 /**
  * Copyright: Copyright (c) 2021.
@@ -2857,8 +2857,8 @@ public class AbbreviationValidWithDDD { // OK
 <module name="com.puppycrawl.tools.checkstyle.Checker">
 	<!-- TreeWalker Checks -->
 	<module name="com.puppycrawl.tools.checkstyle.TreeWalker">
-		<module name="com.jcohy.checkstyle.filter.RequiresOuterThisFilter" />
-		<module name="com.jcohy.checkstyle.filter.IdentCheckFilter">
+		<module name="io.github.jcohy.checkstyle.filter.RequiresOuterThisFilter" />
+		<module name="io.github.jcohy.checkstyle.filter.IdentCheckFilter">
 			<property name="names" value="logger" />
 			<module name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
 				<property name="checkMethods" value="false" />
@@ -2920,7 +2920,7 @@ public class FiltersToSkipThis {
 	<property name="localeCountry" value="CN"/>
 	<property name="localeLanguage" value="cn"/>
 	<!-- Root Checks -->
-	<module name="com.jcohy.checkstyle.check.SpringHeaderCheck">
+	<module name="io.github.jcohy.checkstyle.check.SpringHeaderCheck">
 		<property name="fileExtensions" value="java"/>
 		<property name="headerType" value="${headerType}"/>
 		<property name="headerFile" value="${headerFile}" default=""/>
@@ -2984,7 +2984,7 @@ public class FiltersToSkipThis {
 		<!-- 检查接口是否只定义了变量而没有定义方法，因为接口应该用来描述一个类型，所以只定义变量而不定义方法是不恰当的.allowMarkerInterfaces: 是否检查空接口-->
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck"/>
 		<!-- 查看文档 -->
-		<module name="com.jcohy.checkstyle.check.SpringHideUtilityClassConstructor"/>
+		<module name="io.github.jcohy.checkstyle.check.SpringHideUtilityClassConstructor"/>
 		<!-- 检查异常是不可变的 -->
 		<module name="com.puppycrawl.tools.checkstyle.checks.design.MutableExceptionCheck"/>
 		<!-- 检查嵌套/内部的类型是否在当前类的最底部声明（在所有的方法/字段的声明之后）。-->
@@ -3048,7 +3048,7 @@ public class FiltersToSkipThis {
 			<property name="processJavadoc" value="true"/>
 		</module>
 		<!-- 检查导入顺序是否遵循 jcohy 约定 -->
-		<module name="com.jcohy.checkstyle.check.SpringImportOrderCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringImportOrderCheck">
 			<property name="projectRootPackage" value="${projectRootPackage}"/>
 		</module>
 
@@ -3170,27 +3170,27 @@ public class FiltersToSkipThis {
 
 		<!-- Spring Conventions -->
 		<!--  -->
-		<module name="com.jcohy.checkstyle.check.SpringAvoidStaticImportCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringAvoidStaticImportCheck">
 			<property name="excludes" value="${avoidStaticImportExcludes}"/>
 		</module>
 		<!--  -->
-		<module name="com.jcohy.checkstyle.check.SpringLambdaCheck"/>
+		<module name="io.github.jcohy.checkstyle.check.SpringLambdaCheck"/>
 		<!--  -->
-		<module name="com.jcohy.checkstyle.check.SpringTernaryCheck"/>
+		<module name="io.github.jcohy.checkstyle.check.SpringTernaryCheck"/>
 		<!--  -->
-		<module name="com.jcohy.checkstyle.check.SpringCatchCheck"/>
+		<module name="io.github.jcohy.checkstyle.check.SpringCatchCheck"/>
 		<!--  -->
-		<module name="com.jcohy.checkstyle.check.SpringJavadocCheck"/>
+		<module name="io.github.jcohy.checkstyle.check.SpringJavadocCheck"/>
 		<!--  -->
-		<module name="com.jcohy.checkstyle.check.SpringLeadingWhitespaceCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringLeadingWhitespaceCheck">
 			<property name="indentationStyle" value="spaces"/>
 		</module>
 		<!--  -->
-		<module name="com.jcohy.checkstyle.check.SpringMethodOrderCheck"/>
+		<module name="io.github.jcohy.checkstyle.check.SpringMethodOrderCheck"/>
 		<!--  -->
-		<module name="com.jcohy.checkstyle.check.SpringMethodVisibilityCheck"/>
-		<module name="com.jcohy.checkstyle.filter.RequiresOuterThisFilter"/>
-		<module name="com.jcohy.checkstyle.filter.IdentCheckFilter">
+		<module name="io.github.jcohy.checkstyle.check.SpringMethodVisibilityCheck"/>
+		<module name="io.github.jcohy.checkstyle.filter.RequiresOuterThisFilter"/>
+		<module name="io.github.jcohy.checkstyle.filter.IdentCheckFilter">
 			<property name="names" value="logger"/>
 			<!-- 检查代码是否使用了“this.”. checkMethods: 是否检查方法调用.validateOnlyOverlapping 是否检查变量或参数的重叠 -->
 			<module name="com.puppycrawl.tools.checkstyle.checks.coding.RequireThisCheck">
@@ -3198,10 +3198,10 @@ public class FiltersToSkipThis {
 				<property name="validateOnlyOverlapping" value="false"/>
 			</module>
 		</module>
-		<module name="com.jcohy.checkstyle.check.SpringNoThisCheck">
+		<module name="io.github.jcohy.checkstyle.check.SpringNoThisCheck">
 			<property name="names" value="logger"/>
 		</module>
-		<module name="com.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
+		<module name="io.github.jcohy.checkstyle.check.naming.JcohyAbbreviationAsWordInNameCheck">
 			<property name="allowedAbbreviationLength" value="0"/>
 		</module>
 

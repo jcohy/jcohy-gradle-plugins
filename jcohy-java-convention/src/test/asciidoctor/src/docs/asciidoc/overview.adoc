@@ -23,16 +23,16 @@ include::./features/features-1.0.7.adoc[]
 |name |id
 
 |deployedPlugin
-|com.jcohy.deployed
+|io.github.jcohy.gradle.deployed
 
 |conventionsPlugin
-|com.jcohy.conventions
+|io.github.jcohy.gradle.conventions
 
 |testFailuresPlugin
-|com.jcohy.test-failures
+|io.github.jcohy.gradle.test-failures
 
 |optionalDependenciesPlugin
-|com.jcohy.optional-dependencies
+|io.github.jcohy.gradle.optional-dependencies
 |===
 
 如何使用，我们只需要将插件的 `id` 包含在 `plugins` 块中引入即可。如下:
@@ -40,9 +40,9 @@ include::./features/features-1.0.7.adoc[]
 ----
 plugins {
     id "java-library"
-	id "com.jcohy.conventions"
-	id "com.jcohy.optional-dependencies"
-	id "com.jcohy.deployed"
+	id "io.github.jcohy.gradle.conventions"
+	id "io.github.jcohy.gradle.optional-dependencies"
+	id "io.github.jcohy.gradle.deployed"
 }
 ----
 

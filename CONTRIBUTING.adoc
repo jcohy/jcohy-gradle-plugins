@@ -78,6 +78,26 @@ $ ./gradlew asciidoc
 
 === 发布
 
+== 环境变量设置
+
+当发布组件时，都需要对组件进行签名，需要提供以下环境变量
+
+* SIGNING_KEYID
+* SIGNING_PASSWORD
+* SIGNING_SECRETKEYRINGFILE
+
+当发布插件到 Gradle Portal 时，还需要设置以下环境变量
+
+* GRADLE_PUBLISH_KEY
+* GRADLE_PUBLISH_SECRET
+
+当发布到 Maven Center 时，需要设置以下环境变量
+
+* NEXUS_USERNAME
+* NEXUS_PASSWORD
+
+== 发布到 Maven Center
+
 项目使用了 `io.github.gradle-nexus.publish-plugin` 插件来向中央仓库发布组件。
 
 [NOTE]
@@ -96,6 +116,23 @@ $ ./gradlew clean publishToSonatype -x publishPluginMavenPublicationToSonatypeRe
 ====
 
 最后，调用 `closeAndReleaseSonatypeStagingRepository` 就可以关闭并发布到中央仓库了。当然，您也可以手动的关闭和发布此组件。 当执行 `publishToSonatype` 任务将项目上传到 sonatype 仓库后，访问 https://oss.sonatype.org/#stagingRepositories[https://oss.sonatype.org/#stagingRepositories] 进行查看。可以手动关闭和发布
+
+
+=== 发布到 Gradle Portal
+
+您可以选择指定项目发布到 Gradle Portal 插件门户网站上，如下:
+
+[source]
+----
+$ ./gradlew clean :jcohy-asciidoctor:publishPlugins
+----
+
+或者，执行 aggregatePublishGradlePortal 任务来发布。此任务默认只执行子项目中以 `jcohy` 开头的项目。
+
+[source]
+----
+$ ./gradlew clean aggregatePublishGradlePortal
+----
 
 === 使用 IDE
 

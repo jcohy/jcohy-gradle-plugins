@@ -50,7 +50,7 @@ import org.gradle.testretry.TestRetryTaskExtension;
  *  {@link CheckstylePlugin Checkstyle} 插件使用我们自定义的代码规则检查配置对项目进行检查。代码检查规则查看 jcohy-checkstyle.xml 文件
  * <li>{@link Test} 任务使用 JUnit Platform 并且配置最大堆为 1024M
  * <li>{@link JavaCompile}, {@link Javadoc}, 和 {@link FormatterTask} 任务编码为 UTF-8
- * <li>{@link JavaCompile} 任务配置为使用 {@code -parameters}, 并且当使用 Java8 时
+ * <li>{@link JavaCompile} 任务配置为使用 {@code -parameters}, 并且当使用 Java17 时
  * <ul>
  * <li> 将警告视为错误
  * <li>启用 {@code unchecked}, {@code deprecation}, {@code rawtypes}, 和 {@code varags} 警告
@@ -94,7 +94,6 @@ class JavaConventions {
             project.getPlugins().apply(TestFailuresPlugin.class);
             // 为插件配置 SpringJavaFromat
             configureSpringJavaFormat(project);
-            project.setProperty("sourceCompatibility", "17");
             configureMavenRepository(project);
             configureJavaCompileConventions(project);
             configureJavadocConventions(project);
@@ -110,6 +109,8 @@ class JavaConventions {
             mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/central"));
             mavenRepo.setName("ali");
         });
+
+        project.getRepositories().mavenCentral();
 
         project.getRepositories().maven((mavenRepo) -> {
             mavenRepo.setUrl(URI.create("https://repo.spring.io/artifactory/release/"));
@@ -140,7 +141,6 @@ class JavaConventions {
             importsHandler.mavenBom(BomCoordinates.SPRING_BOOT_ADMIN);
             importsHandler.mavenBom(BomCoordinates.SPRING_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.PIVOTAL_SPRING_CLOUD);
-//            importsHandler.mavenBom(BomCoordinates.ALI_YUN_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.ALI_CLOUD_BOM_COORDINATES);
         }));
 
@@ -268,15 +268,15 @@ class JavaConventions {
             if (!args.contains("-parameters")) {
                 args.add("-parameters");
             }
-            if (buildingWithJava8(project)) {
+            if (buildingWithJava17(project)) {
                 args.addAll(Arrays.asList("-Werror", "-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:rawtypes",
                         "-Xlint:varargs"));
             }
         });
     }
 
-    private boolean buildingWithJava8(Project project) {
-        return !project.hasProperty("toolchainVersion") && JavaVersion.current() == JavaVersion.VERSION_1_8;
+    private boolean buildingWithJava17(Project project) {
+        return !project.hasProperty("toolchainVersion") && JavaVersion.current() == JavaVersion.VERSION_17;
     }
 
     /**
