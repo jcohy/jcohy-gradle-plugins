@@ -117,16 +117,21 @@ Jcohy Gradle Plugins 是基于 JDK 17 编写的。您应该使用 HotSpot JVM JD
 
 [source]
 ----
-$ ./gradlew clean publishMavenJavaPublicationToSonatypeRepository
+$ ./gradlew clean publishMavenJavaPublicationToSonatypeRepository closeAndReleaseSonatypeStagingRepository
 ----
 
 [source]
 ----
-$ ./gradlew clean publishToSonatype -x publishPluginMavenPublicationToSonatypeRepository
+$ ./gradlew clean publishToSonatype -x publishPluginMavenPublicationToSonatypeRepository closeAndReleaseSonatypeStagingRepository
 ----
 ====
 
-最后，调用 `closeAndReleaseSonatypeStagingRepository` 就可以关闭并发布到中央仓库了。当然，您也可以手动的关闭和发布此组件。 当执行 `publishToSonatype` 任务将项目上传到 sonatype 仓库后，访问 https://s01.oss.sonatype.org/#stagingRepositories[https://s01.oss.sonatype.org/#stagingRepositories] 进行查看。可以手动关闭和发布
+[IMPORTANT]
+====
+`closeAndReleaseSonatypeStagingRepository` 必须和 `publishToSonatype` 或 `publishMavenJavaPublicationToSonatypeRepository` 在同一个命名行中执行，否则会出现如下错误: No staging repository with name sonatype created.
+====
+
+当执行 `publishToSonatype` 任务将项目上传到 sonatype 仓库后，访问 https://s01.oss.sonatype.org/#stagingRepositories[https://s01.oss.sonatype.org/#stagingRepositories] 进行查看。可以手动关闭和发布
 
 === 发布到 Gradle Portal
 
