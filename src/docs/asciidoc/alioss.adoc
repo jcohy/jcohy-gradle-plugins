@@ -1,4 +1,4 @@
-[[jcohy-ali-oss]]
+[[jcohy-plugins-ali-oss]]
 = AliOss
 
 下面展示了如何使用 gradle 使用此插件
@@ -10,11 +10,11 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("com.jcohy.gradle:jcohy-ali-oss:0.0.6")
+		classpath("io.github.jcohy.gradle:jcohy-ali-oss:${version}")
 	}
 }
 
-apply plugin: "com.jcohy.oss"
+apply plugin: "io.github.jcohy.gradle.aliyun-oss"
 ----
 
 == DSL 配置
@@ -91,7 +91,7 @@ alioss {
 | Upload.ignoreSourceDir
 | boolean
 | 是否忽略 source 指定的目录。
-| false
+| true
 
 | Upload.recursion
 | boolean

@@ -1,89 +1,53 @@
 = Jcohy Gradle Plugins
 
-此项目包含目前包含了三个项目:
+[cols="2,2,4,4"]
+|===
+| 项目名 |插件 | 插件 ID | 描述
 
-* jcohy-java-convention：可以应用于任何 Java 项目的一组插件，以提供一致的风格样式。请参考 https://github.com/jcohy/jcohy-gradle-plugins/tree/main/src/docs/asciidoc/conventions.adoc[jcohy-java-convention] 获取更多信息
-* jcohy-java-checkstyle：一个 checkstyle 插件。集成 alibaba,sun,google,spring 和 jcohy（此项目自定义提供） 代码检查规范。请参考 https://github.com/jcohy/jcohy-gradle-plugins/tree/main/src/docs/asciidoc/checks.adoc[jcohy-java-checkstyle]  获取更多信息
-* jcohy-ali-oss: 用于向 ali oss 上传文件的插件. 请参考 https://github.com/jcohy/jcohy-gradle-plugins/tree/main/src/docs/asciidoc/alioss.adoc[jcohy-ali-oss] 获取更多信息
+| jcohy-ali-oss
+| OssUploadPlugin
+| io.github.jcohy.gradle.aliyun-oss
+| 用于向 ali oss 上传文件的插件. 请参考 <<jcohy-plugins-ali-oss>> 获取更多信息
 
-前两个项目的目的是提供一致性，因此每个插件通常都不可配置。 您需要更改代码以匹配所需的约定。 您无法配置插件约定以匹配您的风格！
+| jcohy-asciidoctor
+| AsciidoctorConventionsPlugin
+| io.github.jcohy.gradle.asciidoctor-conventions
+| 使用 https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc]，并且使用 https://github.com/spring-io/spring-asciidoctor-backends[spring-asciidoctor-backends] 依赖添加 Spring 风格的样式.
+请参考 <<jcohy-plugins-asciidoctor>> 获取更多信息
 
-== 如何使用
+| jcohy-javadoc
+| JavadocConventionsPlugin
 
-=== Gradle
+JavadocPlugin
 
-==== Conventions
+AggregateJavadocPlugin
 
-将 jcohy-java-convention 添加到您的构建插件中，如下所示：
+| io.github.jcohy.gradle.javadoc-conventions
 
-[source,groovy]
-----
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("com.jcohy.gradle:jcohy-java-convention:0.0.6")
-	}
-}
+io.github.jcohy.gradle.javadoc
 
+io.github.jcohy.gradle.javadoc-aggregate
 
-apply plugin: "com.jcohy.conventions"
-apply plugin: "com.jcohy.optional-dependencies"
-apply plugin: "com.jcohy.deployed"
-----
+| 提供生成聚合文档的 Gradle 的最佳实践。请参考 <<jcohy-plugins-javadoc>> 获取更多信息
 
-如果使用多项目构建，您可以在 `buildSrc` 的 `build.gradle` 文件先依赖此插件，然后只需要在具体的子项目中使用即可。
+| jcohy-java-convention
+| ConventionsPlugin
 
-[source,groovy]
-.buildSrc build.gradle
-----
-dependencies {
-	implementation("com.jcohy.gradle:jcohy-java-convention:0.0.6")
-}
-----
+OptionalDependenciesPlugin
 
-[source,groovy]
-.project A build.gradle
-----
-plugins {
-    id "java-library"
-	id "com.jcohy.conventions"
-	id "com.jcohy.optional-dependencies"
-	id "com.jcohy.deployed"
-}
-----
+TestFailuresPlugin
 
-==== CheckStyle
+| io.github.jcohy.gradle.convention
 
-要强制执行 checkstyle 约定，请添加 checkstyle 插件，并包含 `jcohy-java-checkstyle` 依赖:
+io.github.jcohy.gradle.optional-dependencies
 
-[source,groovy]
-----
-apply plugin: 'checkstyle'
+io.github.jcohy.gradle.test-failures
+| 可以应用于任何 Java 项目的一组插件，以提供一致的风格样式。请参考 <<jcohy-plugins-conventions>> 获取更多信息
 
-checkstyle {
-	toolVersion = "8.32"
-}
+| jcohy-java-checkstyle
+|
+|
+| 一个 checkstyle 插件。集成 alibaba,sun,google,spring 和 jcohy（此项目自定义提供） 代码检查规范。请参考 <<jcohy-checkstyles>>  获取更多信息
+|===
 
-dependencies {
-	checkstyle("com.jcohy.gradle:jcohy-java-checkstyle:0.0.6")
-}
-----
-
-您的 `checkstyle.xml` 文件应如下所示：
-
-[source,xml]
-----
-<?xml version="1.0"?>
-<!DOCTYPE module PUBLIC
-   		"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
-   		"https://checkstyle.org/dtds/configuration_1_3.dtd">
-<module name="com.puppycrawl.tools.checkstyle.Checker">
-	<module name="com.jcohy.checkstyle.JcohyChecks" />
-</module>
-----
-
-
-git pull https://github.com/jcohy/jcohy-gradle-plugins.git
 

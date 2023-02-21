@@ -1,0 +1,34 @@
+[[flight-module-bom]]
+== flight-framework-bom
+
+flight-framework-bom 可以简化依赖和依赖版本统一处理，避免 jar 冲突。
+
+=== 使用 Maven
+
+[source,pom]
+----
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>com.flight.framework</groupId>
+      <artifactId>flight-framework-bom</artifactId>
+      <version>${flightVersion}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+----
+
+=== 使用 Gradle
+
+[source,groovy]
+----
+dependencyManagement {
+    imports {
+        mavenBom "com.flight.framework:flight-framework-bom:${flightVersion}"
+    }
+}
+----
+
+有关 flight 的依赖版本列表可以参考

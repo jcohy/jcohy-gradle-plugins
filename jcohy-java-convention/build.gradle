@@ -1,54 +1,49 @@
 plugins {
-	id "java-gradle-plugin"
-	id 'com.gradle.plugin-publish' version '0.18.0'
+	id 'io.github.jcohy.gradle-plugin-module'
 }
+
+description "The plugin provides configuration with three conventions. Conventions when using the JavaBasePlugin, conventions when using the MavenPublishPlugin plugin, conventions when using the AsciidoctorJPlugin plugin"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-gradle-plugin:${SpringBootVersion}")
-	implementation("io.spring.gradle:dependency-management-plugin:${SpringBootDependencyVersion}")
+	implementation(project(":jcohy-asciidoctor"))
+	implementation("org.springframework.boot:spring-boot-gradle-plugin")
+	implementation("io.spring.gradle:dependency-management-plugin")
 	implementation('com.fasterxml.jackson.core:jackson-databind')
 	implementation("commons-codec:commons-codec")
-	implementation("org.apache.maven:maven-embedder:3.8.6")
-	implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
-	implementation("org.asciidoctor:asciidoctor-gradle-jvm:3.3.2")
-	implementation("org.gradle:test-retry-gradle-plugin:1.1.9")
+	implementation("org.apache.maven:maven-embedder")
+	implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm")
+	implementation("org.gradle:test-retry-gradle-plugin")
 	implementation("org.springframework:spring-core")
 	implementation("org.springframework:spring-web")
-	implementation("io.spring.javaformat:spring-javaformat-gradle-plugin:${JavaFormatVersion}")
-	testImplementation("org.assertj:assertj-core")
-	testImplementation('com.alibaba:fastjson:2.0.13')
+	implementation("io.spring.javaformat:spring-javaformat-gradle-plugin")
+	testImplementation('com.alibaba:fastjson')
 	testImplementation("com.google.code.gson:gson")
 	testImplementation('org.apache.logging.log4j:log4j-core')
-	testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-pluginBundle {
-	website = 'https://github.com/jcohy/jcohy-gradle-plugins'
-	vcsUrl = 'https://github.com/jcohy/jcohy-gradle-plugins'
-	tags = ['JavaConventions', 'Deployed', 'OptionalDependencies', "Asciidoctor"]
 }
 
 gradlePlugin {
 	plugins {
 		conventionsPlugin {
-			id = 'com.jcohy.convention'
-			displayName = 'JavaConvention,MavenConvention,AsciidoctorConvention'
-			description = 'The plugin provides configuration with three conventions. Conventions when using the JavaBasePlugin, conventions when using the MavenPublishPlugin plugin, conventions when using the AsciidoctorJPlugin plugin'
-			implementationClass = 'com.jcohy.convention.conventions.ConventionsPlugin'
+			id = 'io.github.jcohy.gradle.convention'
+			displayName = "convention-plugins"
+			implementationClass = 'io.github.jcohy.convention.conventions.ConventionsPlugin'
+			description = project.description
+			tags.set {['Java', 'Deployed', "Asciidoctor"]}
 		}
-		greetingsPlugin {
-			id = 'com.jcohy.optional-dependencies'
-			displayName = 'Optional Dependencies Plugins'
+		optionalPlugin {
+			id = 'io.github.jcohy.gradle.optional-dependencies'
+			displayName = "optional-dependencies"
+			implementationClass = 'io.github.jcohy.convention.optional.OptionalDependenciesPlugin'
 			description = 'Added support for Maven-style optional dependencies.'
-			implementationClass = 'com.jcohy.convention.optional.OptionalDependenciesPlugin'
+			tags.set {['dependencies', 'optional', 'OptionalDependencies']}
+		}
+		testFailuresPlugin {
+			id = 'io.github.jcohy.gradle.test-failures'
+			displayName = "test-failures"
+			implementationClass = 'io.github.jcohy.convention.testing.TestFailuresPlugin'
+			description = 'Added support for Maven-style optional dependencies.'
+			tags.set {['test']}
 		}
 	}
-}
-
-test {
-	useJUnitPlatform()
-}
-
-repositories {
-	mavenCentral()
 }

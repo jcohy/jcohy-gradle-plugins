@@ -1,0 +1,13 @@
+plugins {
+	id "java"
+	id "io.github.jcohy.gradle.archives-publishing"
+}
+
+description = "Jcohy Boot Docs"
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+archivesPublishing {
+	sonatype2()
+}

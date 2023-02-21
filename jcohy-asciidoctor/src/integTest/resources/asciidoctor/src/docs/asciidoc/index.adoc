@@ -1,0 +1,13 @@
+[[flight-document]]
+= Asciidoctor Test Document
+Jcohy
+
+docs-url: {docs-url}[docs-url]
+
+resource-url: {resource-url}[resource-url]
+
+software-url: {software-url}[software-url]
+
+study-url: {study-url}[study-url]
+
+project-url: {project-url}[project-url]

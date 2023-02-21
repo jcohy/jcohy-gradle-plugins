@@ -1,0 +1,40 @@
+plugins {
+	id "java-gradle-plugin"
+}
+
+repositories {
+	//加上阿里云镜像
+	maven { url = 'https://maven.aliyun.com/repository/central'}
+	mavenCentral()
+	gradlePluginPortal()
+	maven { url "https://repo.spring.io/release" }
+}
+
+dependencies {
+	// A Gradle plugin that provides Maven-like dependency management functionality
+	implementation("io.spring.dependency-management:io.spring.dependency-management.gradle.plugin:1.1.0")
+	// Publish plugins to the Gradle Plugin Portal. PublishingPlugin
+	implementation("com.gradle.publish:plugin-publish-plugin:1.1.0")
+	// Gradle Plugin for publishing to Nexus that automates creating, closing, and releasing staging repositories
+	implementation("io.github.gradle-nexus:publish-plugin:1.1.0")
+
+	implementation("org.springframework:spring-core:6.0.2")
+	implementation("org.springframework:spring-web:6.0.2")
+	implementation("org.apache.maven:maven-embedder:3.6.2")
+	testImplementation("org.assertj:assertj-core:3.23.1")
+	testImplementation("org.apache.logging.log4j:log4j-core:2.12.1")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
+}
+
+gradlePlugin {
+	plugins {
+		gradleModulePlugin {
+			id = "io.github.jcohy.gradle-plugin-module"
+			implementationClass = "io.github.jcohy.gradle.build.GradlePluginModulePlugins"
+		}
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

@@ -1,0 +1,37 @@
+plugins {
+	id 'java-platform'
+}
+
+javaPlatform {
+	allowDependencies()
+}
+
+dependencies {
+
+	constraints {
+
+
+		// ======================== plugins =========================
+		api ("org.springframework.boot:spring-boot-gradle-plugin:3.0.0")
+		api ("io.spring.gradle:dependency-management-plugin:3.0.0")
+		api ("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.35")
+		api ("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
+		api ("org.gradle:test-retry-gradle-plugin:1.4.1")
+		api ("io.github.gradle-nexus:publish-plugin:1.1.0")
+		api ("com.gradle.publish:plugin-publish-plugin:1.1.0")
+
+		// ======================== dependency =========================
+		// asciidoctor
+		api ("org.asciidoctor:asciidoctor-gradle-jvm:3.3.2")
+		api ("org.asciidoctor:asciidoctor-gradle-jvm-pdf:3.3.2")
+		api ("org.asciidoctor:asciidoctor-gradle-jvm:3.3.2")
+		api ("org.apache.maven:maven-embedder:3.8.6")
+		api ('com.alibaba:fastjson:2.0.13')
+
+		// sms
+		api ("com.aliyun.oss:aliyun-sdk-oss:3.16.1")
+
+
+		api ("com.puppycrawl.tools:checkstyle:8.44")
+	}
+}
