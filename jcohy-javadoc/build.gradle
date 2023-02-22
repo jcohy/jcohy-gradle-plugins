@@ -18,21 +18,21 @@ gradlePlugin {
 			displayName = 'javadoc-conventions'
 			implementationClass = 'io.github.jcohy.gradle.javadoc.JavadocConventionsPlugin'
 			description = 'Defaults the Javadoc'
-			tags.set{["Javadoc"]}
+			tags.set(["Javadoc"])
 		}
 		javadocPlugin {
 			id = 'io.github.jcohy.gradle.javadoc'
 			displayName = 'javadoc-convention'
 			implementationClass = 'io.github.jcohy.gradle.javadoc.JavadocPlugin'
 			description = 'Sets up a Project with Javadoc Task. Used by AggregateJavadocPlugin to setup aggregate Javadoc too'
-			tags.set{["Javadoc"]}
+			tags.set(["Javadoc"])
 		}
 		aggregateJavadocPlugin {
 			id = 'io.github.jcohy.gradle.javadoc-aggregate'
 			displayName = 'javadoc-aggregate'
 			implementationClass = 'io.github.jcohy.gradle.javadoc.AggregateJavadocPlugin'
 			description = 'Sets up a Project with Aggregate Javadoc Task'
-			tags.set{["Javadoc","javadoc-aggregate"]}
+			tags.set(["Javadoc","javadoc-aggregate"])
 		}
 	}
 }
