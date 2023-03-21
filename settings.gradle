@@ -4,5 +4,5 @@ include 'jcohy-ali-oss'
 include 'jcohy-javadoc'
 include 'bom'
 include 'jcohy-asciidoctor'
-//include 'jcohy-maven'
+include 'jcohy-maven'
 

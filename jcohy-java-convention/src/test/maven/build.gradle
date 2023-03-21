@@ -1,7 +1,7 @@
 plugins {
 	id "java"
 	id "maven-publish"
-	id "io.github.jcohy.gradle.conventions"
+	id "io.github.jcohy.gradle.convention"
 }
 
 description = "Jcohy Boot MavenPublish"
