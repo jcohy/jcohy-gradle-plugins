@@ -1,4 +1,4 @@
-package io.github.jcohy.gradle.maven.version;
+package io.github.jcohy.gradle.build.version;
 
 /**
  * Copyright: Copyright (c) 2021 <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
@@ -14,13 +14,13 @@ public enum AliYunRepository {
      * 快照版本对应的仓库.
      */
     SNAPSHOT("jcohy-aliyun-snapshots", "JcohyAliyun",
-            "https://packages.aliyun.com/maven/repository/2114765-release-sAPkIv/", true),
+            "https://packages.aliyun.com/maven/repository/2114765-snapshot-6mT705/", true),
 
     /**
      * 发布版本对应的仓库.
      */
     RELEASE("jcohy-aliyun-releases", "JcohyAliyun",
-            "https://packages.aliyun.com/maven/repository/2114765-snapshot-6mT705/", false);
+            "https://packages.aliyun.com/maven/repository/2114765-release-sAPkIv/", false);
 
     private final String id;
 

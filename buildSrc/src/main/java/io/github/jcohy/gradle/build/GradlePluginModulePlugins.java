@@ -2,10 +2,7 @@ package io.github.jcohy.gradle.build;
 
 
 import com.gradle.publish.PublishPlugin;
-import io.github.jcohy.gradle.build.convention.JavaConvention;
-import io.github.jcohy.gradle.build.convention.MavenPublishConvention;
-import io.github.jcohy.gradle.build.convention.NexusPublishingConvention;
-import io.github.jcohy.gradle.build.convention.SigningPublishingConvention;
+import io.github.jcohy.gradle.build.convention.*;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.PluginContainer;
@@ -38,6 +35,7 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 			// Java Gradle Plugin (java-gradle-plugin) 自动应用 Java Library(java-library),并添加 api gradleApi() 依赖
 			// https://docs.gradle.org/current/userguide/java_gradle_plugin.html
 			plugins.apply(PublishPlugin.class);
+			new AliYunPublishConvention().apply(project);
 			plugins.apply(SigningPlugin.class);
 			configureCommonAttributes(project);
 		}

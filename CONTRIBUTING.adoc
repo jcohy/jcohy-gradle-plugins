@@ -107,6 +107,11 @@ Jcohy Gradle Plugins 是基于 JDK 17 编写的。您应该使用 HotSpot JVM JD
 * NEXUS_USERNAME
 * NEXUS_PASSWORD
 
+当发布到 aliyun 时，需要以下环境变量
+
+* ALIYUN_USERNAME
+* ALIYUN_PASSWORD
+
 == 发布到 Maven Center
 
 项目使用了 `io.github.gradle-nexus.publish-plugin` 插件来向中央仓库发布组件。
@@ -148,6 +153,14 @@ $ ./gradlew clean :jcohy-asciidoctor:publishPlugins
 ----
 $ ./gradlew clean aggregatePublishGradlePortal
 ----
+
+=== 发布到 ALIYUN
+
+[source]
+----
+$ ./gradlew clean aggregatePublishAliyun -Pusername=xxx -Ppassword=xxx
+----
+
 
 === 使用 IDE
 
