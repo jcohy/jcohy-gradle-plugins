@@ -27,23 +27,23 @@ gradlePlugin {
 		conventionsPlugin {
 			id = 'io.github.jcohy.gradle.convention'
 			displayName = "convention-plugins"
-			implementationClass = 'io.github.jcohy.convention.conventions.ConventionsPlugin'
+			implementationClass = 'io.github.jcohy.gradle.conventions.ConventionsPlugin'
 			description = project.description
-			tags.set {['Java', 'Deployed', "Asciidoctor"]}
+			tags.set (['Java', 'Deployed', "Asciidoctor"])
 		}
 		optionalPlugin {
 			id = 'io.github.jcohy.gradle.optional-dependencies'
 			displayName = "optional-dependencies"
-			implementationClass = 'io.github.jcohy.convention.optional.OptionalDependenciesPlugin'
+			implementationClass = 'io.github.jcohy.gradle.optional.OptionalDependenciesPlugin'
 			description = 'Added support for Maven-style optional dependencies.'
-			tags.set {['dependencies', 'optional', 'OptionalDependencies']}
+			tags.set (['dependencies', 'optional', 'OptionalDependencies'])
 		}
 		testFailuresPlugin {
 			id = 'io.github.jcohy.gradle.test-failures'
 			displayName = "test-failures"
-			implementationClass = 'io.github.jcohy.convention.testing.TestFailuresPlugin'
+			implementationClass = 'io.github.jcohy.gradle.testing.TestFailuresPlugin'
 			description = 'Added support for Maven-style optional dependencies.'
-			tags.set {['test']}
+			tags.set (['test'])
 		}
 	}
 }
