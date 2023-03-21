@@ -8,25 +8,19 @@ package io.github.jcohy.gradle.maven.version;
  * @version 0.0.5.1 2021/3/5:12:47
  * @since 0.0.5.1
  */
-public enum Repository {
+public enum AliYunRepository {
 
     /**
      * 快照版本对应的仓库.
      */
-    SNAPSHOT("jcohy-snapshots", "JcohySnapshots",
-            "https://oss.sonatype.org/content/repositories/snapshots", true),
-
-    /**
-     * 预发布版本对应的仓库.
-     */
-    MILESTONE("jcohy-milestones", "JcohyMilestones",
-            "https://oss.sonatype.org/content/repositories/snapshots", false),
+    SNAPSHOT("jcohy-aliyun-snapshots", "JcohySnapshots",
+            "https://packages.aliyun.com/maven/repository/2114765-release-sAPkIv/", true),
 
     /**
      * 发布版本对应的仓库.
      */
-    RELEASE("jochy-releases", "JcohyReleases",
-            "https://oss.sonatype.org/service/local/staging/deploy/maven2", false);
+    RELEASE("jcohy-aliyun-releases", "JcohyReleases",
+            "https://packages.aliyun.com/maven/repository/2114765-snapshot-6mT705/", false);
 
     private final String id;
 
@@ -36,7 +30,7 @@ public enum Repository {
 
     private final boolean snapshotsEnabled;
 
-    Repository(String id, String name, String url, Boolean snapshotsEnabled) {
+    AliYunRepository(String id, String name, String url, Boolean snapshotsEnabled) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -49,17 +43,11 @@ public enum Repository {
      * @param status the release status
      * @return the artifact repository
      */
-    public static Repository of(ReleaseStatus status) {
-        switch (status) {
-            case GENERAL_AVAILABILITY:
-                return RELEASE;
-            case PRERELEASE:
-                return MILESTONE;
-            case SNAPSHOT:
-                return SNAPSHOT;
-            default:
-                return RELEASE;
-        }
+    public static AliYunRepository of(ReleaseStatus status) {
+        return switch (status) {
+            case PRERELEASE, SNAPSHOT -> SNAPSHOT;
+            case GENERAL_AVAILABILITY -> RELEASE;
+        };
     }
 
     public String getId() {

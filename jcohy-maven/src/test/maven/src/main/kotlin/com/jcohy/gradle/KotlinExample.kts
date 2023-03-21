@@ -8,5 +8,5 @@
  * @since 0.0.5.1
  */
 fun main() {
-	println("Hello, world!!!")
+    println("Hello, world!!!")
 }

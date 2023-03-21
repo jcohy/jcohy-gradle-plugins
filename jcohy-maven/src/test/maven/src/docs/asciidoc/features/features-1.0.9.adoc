@@ -9,7 +9,7 @@
 . 放开对 wx 前缀的路径的认证
 . 新增用户密码失效判断
 . 新增小程序登录认证逻辑
-. 修改 AbstractUserDetailService  的 `retrieveUser` 方法签名，使其返回值为 User
+. 修改 AbstractUserDetailService 的 `retrieveUser` 方法签名，使其返回值为 User
 . FlightUserDetailService 接口新增 默认   `getAuthentication()` 方法。获取用户授权
 . 添加用户第三方绑定，解绑事件。`SocialUnbindEvent`  `SocialBindEvent`
 . UserFactory 新增创建 第三方匿名用户方法

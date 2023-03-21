@@ -10,9 +10,9 @@ package io.github.jcohy.gradle.maven.constant;
  */
 public final class PomConstant {
 
-    public static final String NEXUS_USER_NAME = System.getenv("nexus_user_name");
+    public static final String NEXUS_USER_NAME = System.getenv("username");
 
-    public static final String NEXUS_PASSWORD = System.getenv("nexus_password");
+    public static final String NEXUS_PASSWORD = System.getenv("password");
 
     public static final String GIT_URL = "https://github.com/jcohy/jcohy-gradle-plugins.git";
 
