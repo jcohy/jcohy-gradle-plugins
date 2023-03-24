@@ -29,9 +29,10 @@ public class AsciidoctorConventionsPluginTest {
         Project project = projectWithPlugins("jcohy-asciidoctor");
         Configuration configuration = project.getConfigurations().getByName(AsciidoctorConventionsPlugin.EXTENSIONS_CONFIGURATION_NAME);
         DependencySet dependencies = configuration.getDependencies();
-        assertThat(dependencies.size()).isEqualTo(2);
+        assertThat(dependencies.size()).isEqualTo(3);
         assertThat(dependencies).extracting(Dependency::getName).contains("spring-asciidoctor-backends");
         assertThat(dependencies).extracting(Dependency::getName).contains("asciidoctorj-pdf");
+        assertThat(dependencies).extracting(Dependency::getName).contains("asciidoctorj");
     }
 
     @Test

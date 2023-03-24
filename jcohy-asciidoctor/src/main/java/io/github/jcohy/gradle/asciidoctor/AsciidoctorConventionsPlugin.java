@@ -91,6 +91,10 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
                 mavenContent.includeGroup("io.spring.docresources");
             });
         }));
+        project.getRepositories().maven((mavenArtifactRepository) -> {
+            mavenArtifactRepository.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/snapshot"));
+            mavenArtifactRepository.setAllowInsecureProtocol(true);
+        });
     }
 
     /**
@@ -105,9 +109,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
             asciidoctorTask.baseDirFollowsSourceDir();
             createSyncDocumentationSourceTask(project,asciidoctorTask);
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
-            if(!pdf) {
-                replaceLogo(project,asciidoctorTask);
-            }
             String backend = (!pdf) ? "spring-html" : "spring-pdf";
             asciidoctorTask.outputOptions(outputOptions -> outputOptions.backends(backend));
         });
@@ -121,7 +122,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
     private void replaceLogo(Project project, AsciidoctorTask asciidoctorTask) {
         asciidoctorTask.doLast((replaceLogo) -> {
             try {
-
                 String language = asciidoctorTask.getLanguages().contains("zh-cn") ? "/zh-cn" : "";
                 project.delete(project.getBuildDir() + "/docs/asciidoc/" + language + "/img/banner-logo.svg");
                 Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/data/images/banner-logo.svg")),
@@ -252,10 +252,12 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
                    .all(configuration::extendsFrom);
            // 添加 spring-asciidoctor-backends 依赖
            configuration.getDependencies().add(project.getDependencies()
-                   .create("io.spring.asciidoctor.backends:spring-asciidoctor-backends:0.0.4"));
+                   .create("com.jcohy.asciidoctor.backends:spring-asciidoctor-backends:0.0.6.2-SNAPSHOT"));
             // 添加 asciidoctorj-pdf 依赖
             configuration.getDependencies().add(project.getDependencies()
-                    .create("org.asciidoctor:asciidoctorj-pdf:2.3.0"));
+                    .create("org.asciidoctor:asciidoctorj-pdf:2.3.4"));
+            configuration.getDependencies().add(project.getDependencies()
+                    .create("org.asciidoctor:asciidoctorj:2.5.7"));
         });
     }
 
