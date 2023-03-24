@@ -6,6 +6,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -195,6 +197,15 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void configureCommonAttributes(Project project, AsciidoctorTask asciidoctorTask) {
         Map<String, Object> attributes = new HashMap<>();
+        // https://docs.asciidoctor.org/asciidoc/latest/attributes
+        // 文档元数据
+        attributes.put("author", "Author：Jcohy");
+        attributes.put("email","Email：jia_chao23@126.com");
+        attributes.put("revnumber", attributes.get("revnumber") != null ? attributes.get("version"): project.getVersion());
+        attributes.put("revdate", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
+        attributes.put("revremark", "");
+
+        // 章节，标题和目录属性
         attributes.put("idprefix", "");
         attributes.put("idseparator", "-");
         attributes.put("toc", "left");
@@ -203,14 +214,23 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         attributes.put("numbered", "");
         attributes.put("source-indent", 0);
         attributes.put("sectanchors", "");
-        attributes.put("icons", "font");
         attributes.put("hide-uri-scheme", "font");
         attributes.put("allow-uri-read", true);
-        attributes.put("version",attributes.get("version") != null ? attributes.get("version"): project.getVersion());
-        attributes.put("revnumber", attributes.get("revnumber") != null ? attributes.get("version"): project.getVersion());
         attributes.put("docinfo", "shared,private");
+        attributes.put("doctype", "book");
+
+        // Image and icon attributes
+        attributes.put("icons", "font");
+
+        // Compliance attributes
         attributes.put("attribute-missing", "warn");
 
+        // Custom attributes
+        attributes.put("version",attributes.get("version") != null ? attributes.get("version"): project.getVersion());
+        attributes.put("image-resource", project.getBuildDir() + "/docs/src/"+ asciidoctorTask.getName() + "/images");
+        attributes.put("docs-java", project.getProjectDir() + "/src/main/java/com/jcohy");
+        attributes.put("docs-kotlin", project.getProjectDir() + "/src/main/kotlin/com/jcohy");
+        attributes.put("docs-groovy", project.getProjectDir() + "/src/main/groovy/com/jcohy");
         attributes.put("docs-url", "https://docs.jcohy.com");
         attributes.put("resource-url", "https://resources.jcohy.com");
         attributes.put("software-url", "https://software.jcohy.com");
@@ -230,8 +250,8 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
             try {
                 Map<String,Object> attributes = new HashMap<>();
                 attributes.put("pdf-fontsdir", Objects.requireNonNull(this.getClass().getResource("/data/fonts")).toURI());
-                attributes.put("pdf-stylesdir", Objects.requireNonNull(this.getClass().getResource("/data/themes")).toURI());
-                attributes.put("pdf-style","Chinese");
+                attributes.put("pdf-themesdir", Objects.requireNonNull(this.getClass().getResource("/data/themes")).toURI());
+                attributes.put("pdf-theme","Chinese");
                 asciidoctorPdf.attributes(attributes);
             }
             catch (URISyntaxException e) {
