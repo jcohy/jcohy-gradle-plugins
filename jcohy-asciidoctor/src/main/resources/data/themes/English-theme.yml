@@ -84,14 +84,14 @@ horizontal_rhythm: $base_line_height_length
 vertical_spacing: $vertical_rhythm
 link:
   font_color: 428bca
-# literal is currently used for inline monospaced in prose and table cells
-literal:
+# codespan is currently used for inline monospaced in prose and table cells
+codespan:
   font_color: b12146
   font_family: Mono
 button:
   content: "[\u2009%s\u2009]"
   font_style: bold
-key:
+kbd:
   background_color: f5f5f5
   border_color: cccccc
   border_offset: 1.5
@@ -177,7 +177,7 @@ admonition:
   label:
     text_transform: uppercase
     font_style: bold
-blockquote:
+quote:
   font_color: $base_font_color
   font_size: $base_font_size
   border_color: $base_border_color
@@ -240,7 +240,7 @@ description_list:
   term_font_style: bold
   term_spacing: $vertical_rhythm / 4
   description_indent: $horizontal_rhythm * 1.25
-outline_list:
+list:
   indent: $horizontal_rhythm * 1.5
   #marker_font_color: 404040
   # NOTE outline_list_item_spacing applies to list items that do not have complex content

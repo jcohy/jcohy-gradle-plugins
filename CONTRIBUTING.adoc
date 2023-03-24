@@ -138,7 +138,7 @@ $ ./gradlew clean publishToSonatype -x publishPluginMavenPublicationToSonatypeRe
 
 当执行 `publishToSonatype` 任务将项目上传到 sonatype 仓库后，访问 https://s01.oss.sonatype.org/#stagingRepositories[https://s01.oss.sonatype.org/#stagingRepositories] 进行查看。可以手动关闭和发布
 
-=== 发布到 Gradle Portal
+== 发布到 Gradle Portal
 
 您可以选择指定项目发布到 Gradle Portal 插件门户网站上，如下:
 
@@ -154,13 +154,19 @@ $ ./gradlew clean :jcohy-asciidoctor:publishPlugins
 $ ./gradlew clean aggregatePublishGradlePortal
 ----
 
-=== 发布到 ALIYUN
+== 发布到 ALIYUN
 
 [source]
 ----
-$ ./gradlew clean aggregatePublishAliyun -Pusername=xxx -Ppassword=xxx
+$ ./gradlew clean aggregatePublishAliyun
 ----
 
+== 发布到 XW 私服
+
+[source,shell]
+----
+./gradlew clean publishMavenJavaPublicationToXwRepository
+----
 
 === 使用 IDE
 

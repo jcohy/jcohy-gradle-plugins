@@ -1,5 +1,5 @@
 include 'jcohy-java-convention'
-//include 'jcohy-java-checkstyle'
+include 'jcohy-java-checkstyle'
 include 'jcohy-ali-oss'
 include 'jcohy-javadoc'
 include 'bom'

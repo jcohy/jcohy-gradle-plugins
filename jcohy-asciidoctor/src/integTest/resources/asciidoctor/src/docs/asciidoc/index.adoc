@@ -1,4 +1,4 @@
-[[flight-document]]
+[[index]]
 = Asciidoctor Test Document
 Jcohy
 
@@ -12,9 +12,7 @@ study-url: {study-url}[study-url]
 
 project-url: {project-url}[project-url]
 
-你好，世界。
+参考文档包括以下章节:
 
-[source]
-----
-你好，世界。
-----
+[horizontal]
+<<legal#legal,Legal>> :: 版权信息.

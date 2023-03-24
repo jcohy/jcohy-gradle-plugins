@@ -37,7 +37,7 @@ import org.springframework.util.StringUtils;
  * <li>{@code io.spring.docresources}
  * </ul>
  * <li>设置所有的警告都是致命的.
- * <li> AsciidoctorJ 版本更新为 2.4.3.
+ * <li> AsciidoctorJ 版本更新为 2.5.7.
  * <li>创建一个 {@code asciidoctorExtensions} configuration.
  * <li>对于每个 {@link AsciidoctorTask}:
  * <ul>
@@ -64,8 +64,6 @@ import org.springframework.util.StringUtils;
  */
 public class AsciidoctorConventionsPlugin implements Plugin<Project> {
 
-    private static final String ASCIIDOCTORJ_VERSION = "2.5.7";
-
     public static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
 
     @Override
@@ -73,7 +71,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         project.getPlugins().withType(AsciidoctorJPlugin.class,(asciidoctorJPlugin -> {
             configureDocumentationDependenciesRepository(project);
             makeAllWarningsFatal(project);
-            upgradeAsciidoctorJVersion(project);
             createAsciidoctorExtensionsConfiguration(project);
             createAsciidoctorPdfTask(project);
             configurationAsciidoctorTask(project);
@@ -105,10 +102,21 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void configurationAsciidoctorTask(Project project) {
         project.getTasks().withType(AsciidoctorTask.class,(asciidoctorTask) -> {
+            asciidoctorTask.setGroup("documentation");
             asciidoctorTask.configurations(EXTENSIONS_CONFIGURATION_NAME);
-            configureCommonAttributes(project,asciidoctorTask);
+            // 设置属性
+            project.afterEvaluate( p -> configureCommonAttributes(project,asciidoctorTask));
             configureOptions(asciidoctorTask);
             asciidoctorTask.baseDirFollowsSourceDir();
+            // 设置 asciidoctor 和 asciidoctorPdf sources 为 index.singleadoc
+            if(asciidoctorTask.getName().equals("asciidoctor") || asciidoctorTask.getName().equals("asciidoctorPdf")) {
+                asciidoctorTask.sources("index.singleadoc");
+            }
+
+            if(asciidoctorTask.getName().equals("asciidoctorMultiPage")) {
+                asciidoctorTask.sources("*.adoc");
+            }
+
             createSyncDocumentationSourceTask(project,asciidoctorTask);
             boolean pdf = asciidoctorTask.getName().toLowerCase().contains("pdf");
             String backend = (!pdf) ? "spring-html" : "spring-pdf";
@@ -117,31 +125,12 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
     }
 
     /**
-     * 替换 spring logo 为自己的 logo.
-     * @param project project
-     * @param asciidoctorTask asciidoctorTask
-     */
-    private void replaceLogo(Project project, AsciidoctorTask asciidoctorTask) {
-        asciidoctorTask.doLast((replaceLogo) -> {
-            try {
-                String language = asciidoctorTask.getLanguages().contains("zh-cn") ? "/zh-cn" : "";
-                project.delete(project.getBuildDir() + "/docs/asciidoc/" + language + "/img/banner-logo.svg");
-                Files.copy(Objects.requireNonNull(this.getClass().getResourceAsStream("/data/images/banner-logo.svg")),
-                        Paths.get(project.getBuildDir() + "/docs/asciidoc/" + language + "/img/banner-logo.svg"));
-            }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-    }
-
-    /**
      * 复制源文件
-     * @param project project
+     *
+     * @param project         project
      * @param asciidoctorTask asciidoctorTask
      */
-    private Sync createSyncDocumentationSourceTask(Project project, AsciidoctorTask asciidoctorTask) {
+    private void createSyncDocumentationSourceTask(Project project, AsciidoctorTask asciidoctorTask) {
         Sync syncDocumentationSource = project.getTasks()
                 .create("syncDocumentationSourceFor" + StringUtils.capitalize(asciidoctorTask.getName()), Sync.class);
         File syncSource = new File(project.getBuildDir(),"docs/src/" + asciidoctorTask.getName());
@@ -178,7 +167,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         asciidoctorTask.getInputs().dir(syncSource).withPathSensitivity(PathSensitivity.RELATIVE)
                 .withPropertyName("synced source");
         asciidoctorTask.setSourceDir(project.relativePath(new File(syncSource,"asciidoc/")));
-        return syncDocumentationSource;
     }
 
     /**
@@ -197,7 +185,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void configureCommonAttributes(Project project, AsciidoctorTask asciidoctorTask) {
         Map<String, Object> attributes = new HashMap<>();
-        // https://docs.asciidoctor.org/asciidoc/latest/attributes
+        // https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/
         // 文档元数据
         attributes.put("author", "Author：Jcohy");
         attributes.put("email","Email：jia_chao23@126.com");
@@ -217,7 +205,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         attributes.put("hide-uri-scheme", "font");
         attributes.put("allow-uri-read", true);
         attributes.put("docinfo", "shared,private");
-        attributes.put("doctype", "book");
 
         // Image and icon attributes
         attributes.put("icons", "font");
@@ -245,7 +232,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void createAsciidoctorPdfTask(Project project) {
         project.getTasks().register("asciidoctorPdf", AsciidoctorTask.class,(asciidoctorPdf -> {
-            asciidoctorPdf.sources("index.adoc");
+            asciidoctorPdf.sources("index.singleadoc");
             // 添加属性，解决 PDF 中文乱码问题
             try {
                 Map<String,Object> attributes = new HashMap<>();
@@ -272,22 +259,13 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
                    .all(configuration::extendsFrom);
            // 添加 spring-asciidoctor-backends 依赖
            configuration.getDependencies().add(project.getDependencies()
-                   .create("com.jcohy.asciidoctor.backends:spring-asciidoctor-backends:0.0.6.2-SNAPSHOT"));
+                   .create(AsciidoctorVersion.SPRING_ASCIIDOCTOR_BACKENDS));
             // 添加 asciidoctorj-pdf 依赖
             configuration.getDependencies().add(project.getDependencies()
-                    .create("org.asciidoctor:asciidoctorj-pdf:2.3.4"));
+                    .create(AsciidoctorVersion.ASCIIDOCTORJ_PDF));
             configuration.getDependencies().add(project.getDependencies()
-                    .create("org.asciidoctor:asciidoctorj:2.5.7"));
+                    .create(AsciidoctorVersion.ASCIIDOCTORJ));
         });
-    }
-
-    /**
-     * 升级版本 {@code ASCIIDOCTORJ_VERSION}
-     * @param project project
-     */
-    private void upgradeAsciidoctorJVersion(Project project) {
-        project.getExtensions().getByType(AsciidoctorJExtension.class).setVersion(ASCIIDOCTORJ_VERSION);
-
     }
 
     /**

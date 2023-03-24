@@ -17,5 +17,5 @@ font:
 
 base:
   font_family: Mono
-literal:
+codespan:
   font_family: Mono
