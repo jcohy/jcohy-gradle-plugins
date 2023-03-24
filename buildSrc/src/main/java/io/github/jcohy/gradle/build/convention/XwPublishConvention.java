@@ -26,9 +26,10 @@ public class XwPublishConvention {
             XwRepository repository = XwRepository.of(ReleaseStatus.ofProject(project));
             mavenRepository.setUrl(repository.getUrl());
             mavenRepository.setName(repository.getName());
+            mavenRepository.setAllowInsecureProtocol(true);
             mavenRepository.credentials((passwordCredentials -> {
-                passwordCredentials.setUsername(Utils.getProperties(project, "xw-developer", PomConstant.NEXUS_USER_NAME));
-                passwordCredentials.setPassword(Utils.getProperties(project, "xxx", PomConstant.NEXUS_USER_NAME));
+                passwordCredentials.setUsername("xw-developer");
+                passwordCredentials.setPassword("xx");
             }));
         });
     }
