@@ -18,6 +18,8 @@ font:
       bold: RobotoMono-Bold.ttf
       italic: RobotoMono-Italic.ttf
       bold_italic: RobotoMono-BoldItalic.ttf
+    Unifont:
+      normal: unifont-15.0.01.ttf
     # JetBrains Mono https://www.jetbrains.com/zh-cn/lp/mono/#font-family
     Mono:
       normal: JetBrainsMono-Regular.ttf
@@ -28,6 +30,7 @@ font:
     - Noto Serif
     - M+ 1mn
     - Monospace
+    - Unifont
 
 page:
   background_color: ffffff

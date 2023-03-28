@@ -91,14 +91,15 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
                 mavenContent.includeGroup("io.spring.docresources");
             });
         }));
-        project.getRepositories().maven((mavenArtifactRepository) -> {
-            mavenArtifactRepository.setUrl(URI.create("https://packages.aliyun.com/maven/repository/2114765-snapshot-6mT705/"));
-            mavenArtifactRepository.credentials(repository -> {
-                repository.setUsername(System.getenv("ALIYUN_USERNAME"));
-                repository.setPassword(System.getenv("ALIYUN_PASSWORD"));
-            });
-            mavenArtifactRepository.setAllowInsecureProtocol(true);
-        });
+        project.getRepositories().mavenCentral();
+//        project.getRepositories().maven((mavenArtifactRepository) -> {
+//            mavenArtifactRepository.setUrl(URI.create("https://packages.aliyun.com/maven/repository/2114765-snapshot-6mT705/"));
+//            mavenArtifactRepository.credentials(repository -> {
+//                repository.setUsername(System.getenv("ALIYUN_USERNAME"));
+//                repository.setPassword(System.getenv("ALIYUN_PASSWORD"));
+//            });
+//            mavenArtifactRepository.setAllowInsecureProtocol(true);
+//        });
     }
 
     /**
