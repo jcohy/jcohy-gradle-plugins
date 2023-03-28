@@ -14,8 +14,9 @@ font:
     - Noto Serif
     - M+ 1mn
     - Monospace
+    - Unifont
 
 base:
   font_family: Mono
-literal:
+codespan:
   font_family: Mono

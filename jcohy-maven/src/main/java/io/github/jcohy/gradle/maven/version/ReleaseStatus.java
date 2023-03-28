@@ -1,10 +1,9 @@
 package io.github.jcohy.gradle.maven.version;
 
-import java.util.regex.Pattern;
-
 import org.gradle.api.Project;
-
 import org.springframework.util.Assert;
+
+import java.util.regex.Pattern;
 
 /**
  * Copyright: Copyright (c) 2021

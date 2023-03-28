@@ -1,33 +1,63 @@
 plugins {
-	id 'io.github.jcohy.gradle-plugin-module'
-	id "nebula.integtest" version "9.6.3"
+    id 'io.github.jcohy.gradle-plugin-module'
+    id "nebula.integtest" version "9.6.3"
 }
 
 dependencies {
-	implementation("io.github.gradle-nexus:publish-plugin")
-	implementation("org.apache.maven:maven-embedder")
-	implementation("org.springframework:spring-core")
-	implementation("org.springframework:spring-web")
+    // Publish plugins to the Gradle Plugin Portal. PublishingPlugin
+    implementation("com.gradle.publish:plugin-publish-plugin")
+    // Gradle Plugin for publishing to Nexus that automates creating, closing, and releasing staging repositories
+    implementation("io.github.gradle-nexus:publish-plugin")
+    implementation("org.apache.maven:maven-embedder")
+    implementation("org.springframework:spring-core")
+    implementation("org.springframework:spring-web")
 }
 
 description = 'support nexus ,gradle portal,custom repository publish'
 
 gradlePlugin {
-	plugins {
-		conventionsPlugin {
-			id = 'io.github.jcohy.gradle.archives-publishing'
-			displayName = 'archives-publishing'
-			description = project.description
-			implementationClass = 'io.github.jcohy.gradle.maven.ArchivesPublishingPlugins'
-			tags.set{['JavaConvention', 'MavenConvention','maven']}
-		}
-	}
+    plugins {
+        aliyunPublishPlugin {
+            id = 'io.github.jcohy.gradle.aliyun-publishing'
+            displayName = 'aliyun-publishing'
+            description = project.description
+            implementationClass = 'io.github.jcohy.gradle.maven.AliyunPublishPlugin'
+            tags.set { ['Aliyun', 'publishing', 'maven'] }
+        }
+    }
+    plugins {
+        gradlePublishPlugin {
+            id = 'io.github.jcohy.gradle.gradle-plugin-publishing'
+            displayName = 'gradle-plugin-publishing'
+            description = project.description
+            implementationClass = 'io.github.jcohy.gradle.maven.GradlePluginPublishPlugin'
+            tags.set { ['gradle', 'publishing', 'maven'] }
+        }
+    }
+    plugins {
+        nexusPublishPlugin {
+            id = 'io.github.jcohy.gradle.nexus-publishing'
+            displayName = 'nexus-publishing'
+            description = project.description
+            implementationClass = 'io.github.jcohy.gradle.maven.NexusPublishingPlugin'
+            tags.set { ['nexus', 'publishing', 'maven'] }
+        }
+    }
+    plugins {
+        nexusS01PublishPlugin {
+            id = 'io.github.jcohy.gradle.nexus-s01-publishing'
+            displayName = 'nexus-s01-publishing'
+            description = project.description
+            implementationClass = 'io.github.jcohy.gradle.maven.NexusS01PublishingPlugin'
+            tags.set { ['nexus-s01', 'publishing', 'maven'] }
+        }
+    }
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }

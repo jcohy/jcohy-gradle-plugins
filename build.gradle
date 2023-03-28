@@ -4,7 +4,7 @@ plugins {
 
 configure(allprojects) {
 	group = "io.github.jcohy"
-	version = "3.0.0.0"
+	version = "3.0.0.2"
 }
 
 configure(rootProject) {
@@ -17,6 +17,13 @@ task aggregatePublishGradlePortal {
 	project.rootProject.gradle.projectsEvaluated {
 		Set<Project> pluginsProject = rootProject.subprojects.findAll {  it.name.startsWith("jcohy")}
 		dependsOn pluginsProject.publishPlugins
+	}
+}
+
+task aggregatePublishAliyun {
+	project.rootProject.gradle.projectsEvaluated {
+		Set<Project> subProject = rootProject.subprojects.findAll {  it.name.startsWith("jcohy")}
+		dependsOn subProject.publishMavenJavaPublicationToJcohyAliyunRepository
 	}
 }
 

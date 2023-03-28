@@ -107,6 +107,11 @@ Jcohy Gradle Plugins 是基于 JDK 17 编写的。您应该使用 HotSpot JVM JD
 * NEXUS_USERNAME
 * NEXUS_PASSWORD
 
+当发布到 aliyun 时，需要以下环境变量
+
+* ALIYUN_USERNAME
+* ALIYUN_PASSWORD
+
 == 发布到 Maven Center
 
 项目使用了 `io.github.gradle-nexus.publish-plugin` 插件来向中央仓库发布组件。
@@ -128,12 +133,12 @@ $ ./gradlew clean publishToSonatype -x publishPluginMavenPublicationToSonatypeRe
 
 [IMPORTANT]
 ====
-`closeAndReleaseSonatypeStagingRepository` 必须和 `publishToSonatype` 或 `publishMavenJavaPublicationToSonatypeRepository` 在同一个命名行中执行，否则会出现如下错误: No staging repository with name sonatype created.
+`closeAndReleaseSonatypeStagingRepository` 必须和 `publishToSonatype` 或 `publishMavenJavaPublicationToSonatypeRepository` 在同一个命名行中执行，否则会出现如下错误: No staging aliYunRepository with name sonatype created.
 ====
 
 当执行 `publishToSonatype` 任务将项目上传到 sonatype 仓库后，访问 https://s01.oss.sonatype.org/#stagingRepositories[https://s01.oss.sonatype.org/#stagingRepositories] 进行查看。可以手动关闭和发布
 
-=== 发布到 Gradle Portal
+== 发布到 Gradle Portal
 
 您可以选择指定项目发布到 Gradle Portal 插件门户网站上，如下:
 
@@ -147,6 +152,20 @@ $ ./gradlew clean :jcohy-asciidoctor:publishPlugins
 [source]
 ----
 $ ./gradlew clean aggregatePublishGradlePortal
+----
+
+== 发布到 ALIYUN
+
+[source]
+----
+$ ./gradlew clean aggregatePublishAliyun
+----
+
+== 发布到 XW 私服
+
+[source,shell]
+----
+./gradlew clean publishMavenJavaPublicationToXwRepository
 ----
 
 === 使用 IDE

@@ -8,7 +8,7 @@
  * @since 0.0.5.1
  */
 class GroovyTestExample {
-	static void main(args) {
-		println "Test Hello, world!!!"
-	}
+    static void main(args) {
+        println "Test Hello, world!!!"
+    }
 }

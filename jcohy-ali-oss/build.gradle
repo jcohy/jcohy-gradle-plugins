@@ -18,7 +18,7 @@ gradlePlugin {
 			displayName = 'aliyun-oss'
 			implementationClass = 'io.github.jcohy.gradle.oss.OssUploadPlugin'
 			description = project.description
-			tags.set{['OSS', 'AliYun', 'AliYunOss']}
+			tags.set(['oss', 'aliyun','upload'])
 		}
 	}
 }

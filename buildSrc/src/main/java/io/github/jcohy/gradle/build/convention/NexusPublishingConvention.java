@@ -23,8 +23,8 @@ public class NexusPublishingConvention {
 			NexusPublishExtension extension = project.getExtensions().getByType(NexusPublishExtension.class);
 			extension.repositories(repository -> {
 				repository.sonatype((sonatype) ->{
-					sonatype.getUsername().set(System.getenv("NEXUS_OSS_USER_NAME"));
-					sonatype.getPassword().set(System.getenv("NEXUS_OSS_PASS_WORD"));
+					sonatype.getUsername().set(System.getenv("NEXUS_USERNAME"));
+					sonatype.getPassword().set(System.getenv("NEXUS_PASSWORD"));
 					sonatype.getNexusUrl().set(URI.create("https://oss.sonatype.org/service/local/staging/deploy/maven2"));
 					sonatype.getSnapshotRepositoryUrl().set(URI.create("https://oss.sonatype.org/content/repositories/snapshots"));
 				});

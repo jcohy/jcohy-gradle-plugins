@@ -54,7 +54,6 @@ plugins {
 
 此插件主要是对项目进行一些配置和约束，且这些配置是不可更改的，你只能去适应它。主要有两个方面的约定
 
-
 当项目使用了 `JavaBasePlugin` 插件时，我们会对项目进行如下的配置
 
 * `sourceCompatibility` 设置为  `17`
@@ -63,7 +62,7 @@ plugins {
 * 在使用  `JavaPlugin` 插件的项目中添加依赖于 `testRuntimeOnly(org.junit.platform:junit-platform-launcher)`  依赖
 * `JavaCompile`, `Javadoc`, 和 `FormatTask` 任务编码为 `UTF-8`
 * `JavaCompile` 任务配置为使用  `-parameters`, 并且当使用 `Java8` 时
-**  将警告视为错误
+** 将警告视为错误
 ** 启用 `unchecked`, `deprecation`, `rawtypes`, 和 `varags` 警告
 * `Jar` 任务的生成带有 LICENSE.txt 和 NOTICE.txt README.txt 和以下清单属性:
 ** Automatic-Module-Name
@@ -76,7 +75,7 @@ plugins {
 
 * 设置 `MavenArtifactRepository` 仓库.
 * 所有的 `MavenPublication` 都满足 Maven Central 的要求.
-** 创建  Javadoc 和 source jars。
+** 创建 Javadoc 和 source jars。
 ** 发布元数据 (poms 和 Gradle module metadata),配置为使用解析的版本.
 
 === testFailuresPlugin

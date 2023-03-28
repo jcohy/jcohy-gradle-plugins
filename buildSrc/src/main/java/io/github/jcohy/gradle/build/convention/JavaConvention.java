@@ -105,14 +105,14 @@ public class JavaConvention {
 
 	private void configureMavenRepository(Project project) {
 		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/central"));
+			mavenRepo.setUrl(URI.create("https://maven.aliyun.com/nexus/content/groups/public"));
 			mavenRepo.setName("ali");
 		});
-		project.getRepositories().mavenCentral();
 		project.getRepositories().maven((mavenRepo) -> {
 			mavenRepo.setUrl(URI.create("https://repo.spring.io/artifactory/release/"));
 			mavenRepo.setName("spring");
 		});
+		project.getRepositories().mavenCentral();
 		project.getRepositories().gradlePluginPortal();
 	}
 

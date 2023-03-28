@@ -1,12 +1,11 @@
 package io.github.jcohy.gradle.maven;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,8 +31,8 @@ class ArchivesPublishingPluginsTest {
                 .withProjectDir(projectDir)
                 .withDebug(true)
                 .forwardOutput()
-                .withArguments("clean","build")
+                .withArguments("clean", "publish")
                 .build();
-        assertThat(result.task(":build").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
+        assertThat(result.task(":publish").getOutcome()).isEqualTo(TaskOutcome.SUCCESS);
     }
 }
