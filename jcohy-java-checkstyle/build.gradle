@@ -2,7 +2,7 @@ plugins {
 	id 'io.github.jcohy.gradle-plugin-module'
 }
 
-description ""
+description "custom checkstyle"
 
 dependencies {
 	implementation "com.puppycrawl.tools:checkstyle"

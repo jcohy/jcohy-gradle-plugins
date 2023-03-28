@@ -4,7 +4,7 @@ plugins {
 	id 'io.github.jcohy.gradle-plugin-module'
 }
 
-description = ""
+description = "Sets up a Project with Javadoc Task"
 
 dependencies {
 }
