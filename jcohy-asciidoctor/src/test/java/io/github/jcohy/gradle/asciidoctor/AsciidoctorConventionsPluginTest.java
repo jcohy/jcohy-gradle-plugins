@@ -56,7 +56,7 @@ public class AsciidoctorConventionsPluginTest {
         assertThat(attributes.get("version")).isEqualTo("1.0");
         assertThat(attributes.get("revnumber")).isEqualTo("1.0");
         assertThat(attributes.get("docinfo")).isEqualTo("shared,private");
-        assertThat(attributes.get("attribute-missing")).isEqualTo("warn");
+        assertThat(attributes.get("attribute-missing")).isNull();
         assertThat(attributes.get("docs-url")).isEqualTo("https://docs.jcohy.com");
         assertThat(attributes.get("resource-url")).isEqualTo("https://resources.jcohy.com");
         assertThat(attributes.get("software-url")).isEqualTo("https://software.jcohy.com");

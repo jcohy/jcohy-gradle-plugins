@@ -109,16 +109,6 @@ public class JavaConvention {
 			mavenRepo.setName("ali");
 		});
 		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/release"));
-			mavenRepo.setName("jcohy-release");
-			mavenRepo.setAllowInsecureProtocol(true);
-		});
-		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/snapshot"));
-			mavenRepo.setName("jcohy-snapshot");
-			mavenRepo.setAllowInsecureProtocol(true);
-		});
-		project.getRepositories().maven((mavenRepo) -> {
 			mavenRepo.setUrl(URI.create("https://repo.spring.io/artifactory/release/"));
 			mavenRepo.setName("spring");
 		});

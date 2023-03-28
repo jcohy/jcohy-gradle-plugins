@@ -73,6 +73,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
             makeAllWarningsFatal(project);
             createAsciidoctorExtensionsConfiguration(project);
             createAsciidoctorPdfTask(project);
+            createAsciidoctorMultiPageTask(project);
             configurationAsciidoctorTask(project);
         }));
     }
@@ -91,7 +92,11 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
             });
         }));
         project.getRepositories().maven((mavenArtifactRepository) -> {
-            mavenArtifactRepository.setUrl(URI.create("http://3b7t671894.zicp.vip:53740/repository/snapshot"));
+            mavenArtifactRepository.setUrl(URI.create("https://packages.aliyun.com/maven/repository/2114765-snapshot-6mT705/"));
+            mavenArtifactRepository.credentials(repository -> {
+                repository.setUsername(System.getenv("ALIYUN_USERNAME"));
+                repository.setPassword(System.getenv("ALIYUN_PASSWORD"));
+            });
             mavenArtifactRepository.setAllowInsecureProtocol(true);
         });
     }
@@ -105,9 +110,10 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
             asciidoctorTask.setGroup("documentation");
             asciidoctorTask.configurations(EXTENSIONS_CONFIGURATION_NAME);
             // 设置属性
-            project.afterEvaluate( p -> configureCommonAttributes(project,asciidoctorTask));
+            configureCommonAttributes(project,asciidoctorTask);
             configureOptions(asciidoctorTask);
             asciidoctorTask.baseDirFollowsSourceDir();
+
             // 设置 asciidoctor 和 asciidoctorPdf sources 为 index.singleadoc
             if(asciidoctorTask.getName().equals("asciidoctor") || asciidoctorTask.getName().equals("asciidoctorPdf")) {
                 asciidoctorTask.sources("index.singleadoc");
@@ -175,6 +181,9 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void configureOptions(AsciidoctorTask asciidoctorTask) {
         asciidoctorTask.options(Collections.singletonMap("doctype","book"));
+        asciidoctorTask.forkOptions(fork -> {
+            fork.jvmArgs("--add-opens","java.base/sun.nio.ch=ALL-UNNAMED","--add-opens","java.base/java.io=ALL-UNNAMED");
+        });
         asciidoctorTask.setLogDocuments(true);
     }
 
@@ -210,14 +219,14 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         attributes.put("icons", "font");
 
         // Compliance attributes
-        attributes.put("attribute-missing", "warn");
+//        attributes.put("attribute-missing", "warn");
 
         // Custom attributes
         attributes.put("version",attributes.get("version") != null ? attributes.get("version"): project.getVersion());
         attributes.put("image-resource", project.getBuildDir() + "/docs/src/"+ asciidoctorTask.getName() + "/images");
-        attributes.put("docs-java", project.getProjectDir() + "/src/main/java/com/jcohy");
-        attributes.put("docs-kotlin", project.getProjectDir() + "/src/main/kotlin/com/jcohy");
-        attributes.put("docs-groovy", project.getProjectDir() + "/src/main/groovy/com/jcohy");
+        attributes.put("docs-java", project.getProjectDir() + "/src/main/java");
+        attributes.put("docs-kotlin", project.getProjectDir() + "/src/main/kotlin");
+        attributes.put("docs-groovy", project.getProjectDir() + "/src/main/groovy");
         attributes.put("docs-url", "https://docs.jcohy.com");
         attributes.put("resource-url", "https://resources.jcohy.com");
         attributes.put("software-url", "https://software.jcohy.com");
@@ -232,7 +241,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void createAsciidoctorPdfTask(Project project) {
         project.getTasks().register("asciidoctorPdf", AsciidoctorTask.class,(asciidoctorPdf -> {
-            asciidoctorPdf.sources("index.singleadoc");
             // 添加属性，解决 PDF 中文乱码问题
             try {
                 Map<String,Object> attributes = new HashMap<>();
@@ -244,6 +252,11 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
             catch (URISyntaxException e) {
                 throw new RuntimeException(e);
             }
+        }));
+    }
+
+    private void createAsciidoctorMultiPageTask(Project project) {
+        project.getTasks().register("asciidoctorMultiPage", AsciidoctorTask.class,(asciidoctorMultiPage -> {
         }));
     }
 
