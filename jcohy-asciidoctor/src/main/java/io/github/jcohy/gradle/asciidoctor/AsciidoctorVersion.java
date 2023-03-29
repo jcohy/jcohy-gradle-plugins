@@ -16,5 +16,5 @@ public interface AsciidoctorVersion {
 
     String ASCIIDOCTORJ_PDF = "org.asciidoctor:asciidoctorj-pdf:2.3.4";
 
-    String SPRING_ASCIIDOCTOR_BACKENDS = "com.jcohy.asciidoctor.backends:spring-asciidoctor-backends:0.0.6.2-SNAPSHOT";
+    String SPRING_ASCIIDOCTOR_BACKENDS = "com.jcohy.asciidoctor.backends:spring-asciidoctor-backends:0.0.6.3";
 }
