@@ -37,7 +37,6 @@ jcohy-java-convention 提供了 3 个可用的插件。致力于提供一致的�
 . 为每个项目配置以下 maven 仓库。
 .. https://maven.aliyun.com/repository/central
 .. mavenCentral()
-.. https://repo.spring.io/artifactory/release
 . 自动为项目添加以下依赖管理 BOM
 .. org.springframework.boot:spring-boot-dependencies:3.0.0
 .. org.springframework.cloud:spring-cloud-dependencies:2022.0.0

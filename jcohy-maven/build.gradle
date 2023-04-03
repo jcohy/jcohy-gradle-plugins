@@ -22,7 +22,7 @@ gradlePlugin {
             displayName = 'aliyun-publishing'
             description = project.description
             implementationClass = 'io.github.jcohy.gradle.maven.AliyunPublishPlugin'
-            tags.set { ['Aliyun', 'publishing', 'maven'] }
+            tags.set(["aliyun","publishing","maven"])
         }
     }
     plugins {
@@ -31,7 +31,7 @@ gradlePlugin {
             displayName = 'gradle-plugin-publishing'
             description = project.description
             implementationClass = 'io.github.jcohy.gradle.maven.GradlePluginPublishPlugin'
-            tags.set { ['gradle', 'publishing', 'maven'] }
+            tags.set(["publishing","maven"])
         }
     }
     plugins {
@@ -40,7 +40,7 @@ gradlePlugin {
             displayName = 'nexus-publishing'
             description = project.description
             implementationClass = 'io.github.jcohy.gradle.maven.NexusPublishingPlugin'
-            tags.set { ['nexus', 'publishing', 'maven'] }
+            tags.set(["publishing","maven","nexus"])
         }
     }
     plugins {
@@ -49,7 +49,7 @@ gradlePlugin {
             displayName = 'nexus-s01-publishing'
             description = project.description
             implementationClass = 'io.github.jcohy.gradle.maven.NexusS01PublishingPlugin'
-            tags.set { ['nexus-s01', 'publishing', 'maven'] }
+            tags.set(["publishing","maven","nexus01"])
         }
     }
 }

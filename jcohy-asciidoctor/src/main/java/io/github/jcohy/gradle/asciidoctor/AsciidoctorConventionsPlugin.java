@@ -84,7 +84,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void configureDocumentationDependenciesRepository(Project project) {
         project.getRepositories().maven((mavenArtifactRepository -> {
-            mavenArtifactRepository.setUrl(URI.create("https://repo.spring.io/release"));
+            mavenArtifactRepository.setUrl(URI.create("https://maven.aliyun.com/repository/public"));
             mavenArtifactRepository.mavenContent((mavenContent) -> {
                 mavenContent.includeGroup("io.spring.asciidoctor");
                 mavenContent.includeGroup("io.spring.asciidoctor.backends");
@@ -92,14 +92,6 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
             });
         }));
         project.getRepositories().mavenCentral();
-//        project.getRepositories().maven((mavenArtifactRepository) -> {
-//            mavenArtifactRepository.setUrl(URI.create("https://packages.aliyun.com/maven/repository/2114765-snapshot-6mT705/"));
-//            mavenArtifactRepository.credentials(repository -> {
-//                repository.setUsername(System.getenv("ALIYUN_USERNAME"));
-//                repository.setPassword(System.getenv("ALIYUN_PASSWORD"));
-//            });
-//            mavenArtifactRepository.setAllowInsecureProtocol(true);
-//        });
     }
 
     /**
