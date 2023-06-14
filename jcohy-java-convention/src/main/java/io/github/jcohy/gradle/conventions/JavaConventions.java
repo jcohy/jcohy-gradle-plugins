@@ -136,6 +136,7 @@ class JavaConventions {
             importsHandler.mavenBom(BomCoordinates.SPRING_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.PIVOTAL_SPRING_CLOUD);
             importsHandler.mavenBom(BomCoordinates.ALI_CLOUD_BOM_COORDINATES);
+            importsHandler.mavenBom(BomCoordinates.TENCENT_CLOUD_BOM_COORDINATES);
         }));
 
 

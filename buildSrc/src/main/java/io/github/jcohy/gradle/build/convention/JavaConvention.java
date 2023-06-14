@@ -125,7 +125,7 @@ public class JavaConvention {
 		project.getPlugins().apply(DependencyManagementPlugin.class);
 
 		DependencyManagementExtension dependencyManagementExtension = project.getExtensions().getByType(DependencyManagementExtension.class);
-		dependencyManagementExtension.imports((importsHandler -> importsHandler.mavenBom("org.springframework.boot:spring-boot-dependencies:3.0.0")));
+		dependencyManagementExtension.imports((importsHandler -> importsHandler.mavenBom("org.springframework.boot:spring-boot-dependencies:3.0.2")));
 
 		configurations
 				.matching((configuration) ->
