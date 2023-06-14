@@ -57,8 +57,7 @@ import org.gradle.testretry.TestRetryTaskExtension;
  * </ul>
  * <li> 为每个项目配置以下 maven 仓库。
  * <ul>
- * <li> https://maven.aliyun.com/repository/central </li>
- * <li> https://repo.spring.io/artifactory/release </li>
+ * <li> https://maven.aliyun.com/repository/public </li>
  * </ul>
  *  <li>自动为项目添加一下依赖管理 BOM </li>
  * <ul>
@@ -110,11 +109,6 @@ class JavaConventions {
             mavenRepo.setName("ali");
         });
 
-        project.getRepositories().maven((mavenRepo) -> {
-            mavenRepo.setUrl(URI.create("https://repo.spring.io/artifactory/release/"));
-            mavenRepo.setName("spring");
-        });
-
         project.getRepositories().mavenCentral();
     }
 
@@ -142,6 +136,7 @@ class JavaConventions {
             importsHandler.mavenBom(BomCoordinates.SPRING_BOM_COORDINATES);
             importsHandler.mavenBom(BomCoordinates.PIVOTAL_SPRING_CLOUD);
             importsHandler.mavenBom(BomCoordinates.ALI_CLOUD_BOM_COORDINATES);
+            importsHandler.mavenBom(BomCoordinates.TENCENT_CLOUD_BOM_COORDINATES);
         }));
 
 

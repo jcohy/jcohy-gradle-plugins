@@ -105,12 +105,8 @@ public class JavaConvention {
 
 	private void configureMavenRepository(Project project) {
 		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("https://maven.aliyun.com/nexus/content/groups/public"));
+			mavenRepo.setUrl(URI.create("https://maven.aliyun.com/repository/public"));
 			mavenRepo.setName("ali");
-		});
-		project.getRepositories().maven((mavenRepo) -> {
-			mavenRepo.setUrl(URI.create("https://repo.spring.io/artifactory/release/"));
-			mavenRepo.setName("spring");
 		});
 		project.getRepositories().mavenCentral();
 		project.getRepositories().gradlePluginPortal();
@@ -129,7 +125,7 @@ public class JavaConvention {
 		project.getPlugins().apply(DependencyManagementPlugin.class);
 
 		DependencyManagementExtension dependencyManagementExtension = project.getExtensions().getByType(DependencyManagementExtension.class);
-		dependencyManagementExtension.imports((importsHandler -> importsHandler.mavenBom("org.springframework.boot:spring-boot-dependencies:3.0.0")));
+		dependencyManagementExtension.imports((importsHandler -> importsHandler.mavenBom("org.springframework.boot:spring-boot-dependencies:3.0.2")));
 
 		configurations
 				.matching((configuration) ->
