@@ -109,11 +109,11 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
 
             // 设置 asciidoctor 和 asciidoctorPdf sources 为 index.singleadoc
             if(asciidoctorTask.getName().equals("asciidoctor") || asciidoctorTask.getName().equals("asciidoctorPdf")) {
-                asciidoctorTask.sources("index.singleadoc");
+                asciidoctorTask.sources("index.adoc");
             }
 
             if(asciidoctorTask.getName().equals("asciidoctorMultiPage")) {
-                asciidoctorTask.sources("*.adoc");
+                asciidoctorTask.sources("*.adoc","index.multiadoc");
             }
 
             createSyncDocumentationSourceTask(project,asciidoctorTask);
