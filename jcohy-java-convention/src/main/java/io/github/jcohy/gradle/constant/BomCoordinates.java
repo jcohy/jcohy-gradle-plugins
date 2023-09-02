@@ -23,7 +23,7 @@ public final class BomCoordinates {
     public static final String SPRING_CLOUD_BOM_COORDINATES = "org.springframework.cloud:spring-cloud-dependencies:2022.0.1";
 
 	//
-	public static final String ALI_CLOUD_BOM_COORDINATES = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2022.0.0.0-RC2";
+	public static final String ALI_CLOUD_BOM_COORDINATES = "com.alibaba.cloud:spring-cloud-alibaba-dependencies:2022.0.0.0";
 
 	// https://github.com/Tencent/spring-cloud-tencent/wiki/Spring-Cloud-Tencent-版本管理#2022-系列
 	public static final String TENCENT_CLOUD_BOM_COORDINATES = "com.tencent.cloud:spring-cloud-tencent-dependencies:1.9.0-2022.0.1";
