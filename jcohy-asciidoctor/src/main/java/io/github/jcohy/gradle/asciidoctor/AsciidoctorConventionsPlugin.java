@@ -1,11 +1,8 @@
 package io.github.jcohy.gradle.asciidoctor;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -114,6 +111,10 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
 
             if(asciidoctorTask.getName().equals("asciidoctorMultiPage")) {
                 asciidoctorTask.sources("*.adoc","index.multiadoc");
+                asciidoctorTask.sources(pattern -> {
+                    pattern.include("*.adoc","index.multiadoc");
+                    pattern.exclude("index.adoc");
+                });
             }
 
             createSyncDocumentationSourceTask(project,asciidoctorTask);
@@ -249,8 +250,13 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
     }
 
     private void createAsciidoctorMultiPageTask(Project project) {
-        project.getTasks().register("asciidoctorMultiPage", AsciidoctorTask.class,(asciidoctorMultiPage -> {
-        }));
+        project.getTasks().withType(AsciidoctorTask.class,asciidoctorTask -> {
+            File multiFile = new File(asciidoctorTask.getSourceDir().getPath() + "/index.multiadoc");
+            if(multiFile.exists()) {
+                project.getTasks().register("asciidoctorMultiPage", AsciidoctorTask.class,(asciidoctorMultiPage -> {
+                }));
+            }
+        });
     }
 
     /**

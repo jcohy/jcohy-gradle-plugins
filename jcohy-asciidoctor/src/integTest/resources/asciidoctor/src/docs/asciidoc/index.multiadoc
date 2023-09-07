@@ -1,0 +1,21 @@
+[[spring-boot-reference-documentation]]
+= AsciidoctorMultiPage Test Document
+
+include::legal.adoc[leveloffset=+1]
+
+docs-url: {docs-url}[docs-url]
+
+resource-url: {resource-url}[resource-url]
+
+software-url: {software-url}[software-url]
+
+study-url: {study-url}[study-url]
+
+project-url: {project-url}[project-url]
+
+image::{image-resource}/aop-proxy-call.png[]
+
+[[core.aot.hints.import-runtime-hints]]
+== sample
+
+include::code:SpellCheckService[]
