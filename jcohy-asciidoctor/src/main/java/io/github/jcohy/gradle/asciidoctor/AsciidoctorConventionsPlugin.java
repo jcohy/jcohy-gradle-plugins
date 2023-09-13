@@ -5,10 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import org.asciidoctor.gradle.jvm.AbstractAsciidoctorTask;
 import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
@@ -250,12 +247,20 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
     }
 
     private void createAsciidoctorMultiPageTask(Project project) {
-        project.getTasks().withType(AsciidoctorTask.class,asciidoctorTask -> {
-            File multiFile = new File(asciidoctorTask.getSourceDir().getPath() + "/index.multiadoc");
-            if(multiFile.exists()) {
-                project.getTasks().register("asciidoctorMultiPage", AsciidoctorTask.class,(asciidoctorMultiPage -> {
-                }));
-            }
+        project.afterEvaluate(p -> {
+            p.getTasks().withType(AsciidoctorTask.class,asciidoctorTask -> {
+                Optional<File> multiFile = asciidoctorTask.getLanguages()
+                        .stream()
+                        .map(language -> new File(asciidoctorTask.getSourceDir().getPath() + "/" + language + "/index.multiadoc"))
+                        .filter(File::exists)
+                        .findAny()
+                        .or(() -> Optional.of(new File(asciidoctorTask.getSourceDir().getPath() + "/index.multiadoc")));
+
+                if(multiFile.get().exists()) {
+                    p.getTasks().register("asciidoctorMultiPage", AsciidoctorTask.class,(asciidoctorMultiPage -> {
+                    }));
+                }
+            });
         });
     }
 
