@@ -4,7 +4,7 @@ plugins {
 
 configure(allprojects) {
 	group = "io.github.jcohy"
-	version = "3.0.0.7"
+	version = "3.0.0.9"
 }
 
 configure(rootProject) {

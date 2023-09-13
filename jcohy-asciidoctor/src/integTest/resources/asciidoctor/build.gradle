@@ -17,4 +17,5 @@ asciidoctor {
 	sources {
 		include "index.adoc"
 	}
+	languages "zh-cn"
 }

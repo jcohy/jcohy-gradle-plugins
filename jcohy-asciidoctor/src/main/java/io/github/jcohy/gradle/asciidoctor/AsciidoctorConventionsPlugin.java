@@ -245,23 +245,28 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
             }
         }));
     }
-
     private void createAsciidoctorMultiPageTask(Project project) {
-        project.afterEvaluate(p -> {
-            p.getTasks().withType(AsciidoctorTask.class,asciidoctorTask -> {
-                Optional<File> multiFile = asciidoctorTask.getLanguages()
+
+        project.getTasks().withType(AsciidoctorTask.class,asciidoctor -> {
+
+            String sourcePath = asciidoctor.getSourceDir().getPath();
+
+            project.afterEvaluate(p -> p.getTasks().withType(AsciidoctorTask.class, asciidoctorTask -> {
+                List<String> languages = asciidoctorTask.getLanguages();
+                Optional<File> multiFile = languages
                         .stream()
-                        .map(language -> new File(asciidoctorTask.getSourceDir().getPath() + "/" + language + "/index.multiadoc"))
+                        .map(language -> new File(sourcePath + "/" + language + "/index.multiadoc"))
                         .filter(File::exists)
                         .findAny()
-                        .or(() -> Optional.of(new File(asciidoctorTask.getSourceDir().getPath() + "/index.multiadoc")));
+                        .or(() -> Optional.of(new File(sourcePath + "/index.multiadoc")));
 
                 if(multiFile.get().exists()) {
-                    p.getTasks().register("asciidoctorMultiPage", AsciidoctorTask.class,(asciidoctorMultiPage -> {
+                    project.getTasks().register("asciidoctorMultiPage", AsciidoctorTask.class,(asciidoctorMultiPage -> {
                     }));
                 }
-            });
+            }));
         });
+
     }
 
     /**
