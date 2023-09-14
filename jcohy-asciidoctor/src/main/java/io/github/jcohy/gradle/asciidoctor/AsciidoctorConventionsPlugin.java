@@ -1,13 +1,16 @@
 package io.github.jcohy.gradle.asciidoctor;
 
+import org.asciidoctor.gradle.base.AbstractAsciidoctorBaseTask;
 import org.asciidoctor.gradle.jvm.AbstractAsciidoctorTask;
 import org.asciidoctor.gradle.jvm.AsciidoctorJExtension;
 import org.asciidoctor.gradle.jvm.AsciidoctorJPlugin;
 import org.asciidoctor.gradle.jvm.AsciidoctorTask;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.Sync;
+import org.gradle.internal.impldep.com.google.common.collect.Lists;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
@@ -60,6 +63,8 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
 
     public static final String EXTENSIONS_CONFIGURATION_NAME = "asciidoctorExtensions";
 
+    private final List<String> languages = List.of("","zh-cn","en-us");
+
     @Override
     public void apply(Project project) {
         project.getPlugins().withType(AsciidoctorJPlugin.class, (asciidoctorJPlugin -> {
@@ -97,6 +102,7 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
      */
     private void configurationAsciidoctorTask(Project project) {
         project.getTasks().withType(AsciidoctorTask.class, (asciidoctorTask) -> {
+            asciidoctorTask.setLanguages(languages);
             asciidoctorTask.setGroup("documentation");
             asciidoctorTask.configurations(EXTENSIONS_CONFIGURATION_NAME);
             // 设置属性
@@ -253,23 +259,20 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
 
     private void createAsciidoctorMultiPageTask(Project project) {
 
-        project.getTasks().withType(AsciidoctorTask.class, asciidoctor -> {
+        project.getTasks().withType(AbstractAsciidoctorBaseTask.class, asciidoctor -> {
 
             String sourcePath = asciidoctor.getSourceDir().getPath();
+            Optional<File> multiFile = languages
+                    .stream()
+                    .map(language -> new File(sourcePath + "/" + language + "/index.multiadoc"))
+                    .filter(File::exists)
+                    .findAny()
+                    .or(() -> Optional.of(new File(sourcePath + "/index.multiadoc")));
 
-            project.afterEvaluate(p -> p.getTasks().withType(AsciidoctorTask.class, asciidoctorTask -> {
-                List<String> languages = asciidoctorTask.getLanguages();
-                Optional<File> multiFile = languages
-                        .stream()
-                        .map(language -> new File(sourcePath + "/" + language + "/index.multiadoc"))
-                        .filter(File::exists)
-                        .findAny()
-                        .or(() -> Optional.of(new File(sourcePath + "/index.multiadoc")));
-
-                if (multiFile.get().exists()) {
-                    project.getTasks().maybeCreate("asciidoctorMultiPage", AsciidoctorTask.class);
-                }
-            }));
+            if (multiFile.get().exists()) {
+                AsciidoctorTask asciidoctorMultiPage = project.getTasks().maybeCreate("asciidoctorMultiPage", AsciidoctorTask.class);
+                asciidoctorMultiPage.setLanguages(languages);
+            }
         });
 
     }

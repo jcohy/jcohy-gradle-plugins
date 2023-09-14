@@ -1,6 +1,6 @@
-[[index]]
-= Asciidoctor Test Document
-Jcohy
+[[spring-boot-reference-documentation]]
+= AsciidoctorMultiPage Language Test Document
+
 
 docs-url: {docs-url}[docs-url]
 
@@ -14,4 +14,5 @@ project-url: {project-url}[project-url]
 
 参考文档包括以下章节:
 
-include::legal.adoc[leveloffset=+1]
+[horizontal]
+<<legal#legal,Legal>> :: 版权信息.
