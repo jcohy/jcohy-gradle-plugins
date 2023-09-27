@@ -198,8 +198,8 @@ public class AsciidoctorConventionsPlugin implements Plugin<Project> {
         Map<String, Object> attributes = new HashMap<>();
         // https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/
         // 文档元数据
-        attributes.put("author", "Author：Jcohy");
-        attributes.put("email", "Email：jia_chao23@126.com");
+        attributes.put("author", " Author：Jcohy ");
+        attributes.put("email", " Email：jia_chao23@126.com ");
         attributes.put("revnumber", attributes.get("revnumber") != null ? attributes.get("version") : project.getVersion());
         attributes.put("revdate", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
         attributes.put("revremark", "");
