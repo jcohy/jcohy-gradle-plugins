@@ -33,6 +33,7 @@ import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
+import org.gradle.external.javadoc.CoreJavadocOptions;
 import org.gradle.external.javadoc.JavadocMemberLevel;
 import org.gradle.jvm.tasks.Jar;
 import org.gradle.testretry.TestRetryPlugin;
@@ -236,19 +237,16 @@ class JavaConventions {
      * @param project project
      */
     private void configureJavadocConventions(Project project) {
-        project.getTasks().withType(Javadoc.class, javadoc -> {
-            javadoc.setDescription("Generates project-level javadoc for use in -javadoc jar");
-            javadoc.options((option) -> {
-                option.encoding("UTF-8");
-                option.source("17");
-                option.setMemberLevel(JavadocMemberLevel.PROTECTED);
-                option.header(project.getName());
-            });
-            // 跨模块的 @see 和 @link 引用消除警告
-            javadoc.getLogging().captureStandardError(LogLevel.INFO);
-            // 消除 "## warnings" 消息
-            javadoc.getLogging().captureStandardOutput(LogLevel.INFO);
-        });
+
+		project.getTasks().withType(Javadoc.class, (javadoc) -> {
+			javadoc.setDescription("Generates project-level javadoc for use in -javadoc jar");
+			CoreJavadocOptions options = (CoreJavadocOptions) javadoc.getOptions();
+			options.source("17");
+			options.encoding("UTF-8");
+			options.addStringOption("Xdoclint:none", "-quiet");
+			options.setMemberLevel(JavadocMemberLevel.PROTECTED);
+			options.setHeader(project.getName());
+		});
     }
 
     /**

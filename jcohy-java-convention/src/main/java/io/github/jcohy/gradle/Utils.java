@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class Utils {
 
-    public static File getResourceAsFile(Class clazz, String Path) {
+    public static File getResourceAsFile(Class<?> clazz, String Path) {
         File file = null;
         URL resource = clazz.getResource(Path);
         try {

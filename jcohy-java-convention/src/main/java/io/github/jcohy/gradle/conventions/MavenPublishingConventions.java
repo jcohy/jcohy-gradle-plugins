@@ -1,5 +1,7 @@
 package io.github.jcohy.gradle.conventions;
 
+import java.util.Objects;
+
 import io.github.jcohy.gradle.constant.PomConstant;
 import io.github.jcohy.gradle.version.ReleaseStatus;
 import io.github.jcohy.gradle.version.Repository;
@@ -122,17 +124,19 @@ class MavenPublishingConventions {
      */
     private void addMavenOptionalFeature(Project project) {
         JavaPluginExtension extension = project.getExtensions().getByType(JavaPluginExtension.class);
-        JavaPluginConvention convention = project.getConvention().getPlugin(JavaPluginConvention.class);
+//        JavaPluginConvention convention = project.getConvention().getPlugin(JavaPluginConvention.class);
         extension.registerFeature("mavenOptional", (feature) -> {
-            feature.usingSourceSet(convention.getSourceSets().getByName("main"));
+            feature.usingSourceSet(extension.getSourceSets().getByName("main"));
         });
 
         AdhocComponentWithVariants javaComponent = (AdhocComponentWithVariants) project.getComponents()
                 .findByName("java");
-        javaComponent.addVariantsFromConfiguration(
-                project.getConfigurations().findByName("mavenOptionalRuntimeElements"),
-                ConfigurationVariantDetails::mapToOptional);
-    }
+		if (javaComponent != null) {
+			javaComponent.addVariantsFromConfiguration(
+					Objects.requireNonNull(project.getConfigurations().findByName("mavenOptionalRuntimeElements")),
+					ConfigurationVariantDetails::mapToOptional);
+		}
+	}
 
     /**
      * 定义 pom 文件

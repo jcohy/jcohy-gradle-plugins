@@ -51,7 +51,7 @@ public class SonarScannerPlugin implements Plugin<Project> {
 //            properties.property("sonar.scm.provider",valueFunction.apply(projectProperties.get("sonar.links.homepage"),LINKS_HOMEPAGE));
             properties.property("sonar.host.url", valueFunction.apply(projectProperties.get("sonar.host.url"), HOST_URL));
             properties.property("sonar.projectVersion", valueFunction.apply(project.getVersion(), "Sample"));
-            properties.property("sonar.projectDescription", project.getDescription());
+            properties.property("sonar.projectDescription", Objects.requireNonNull(project.getDescription()));
             properties.property("sonar.login", valueFunction.apply(projectProperties.get("sonar.login"), LOGIN));
             properties.property("sonar.jacoco.reportPath", project.getBuildDir() + "/jacoco/test.exec");
             properties.property("sonar.links.homepage", valueFunction.apply(projectProperties.get("sonar.links.homepage"), LINKS_HOMEPAGE));

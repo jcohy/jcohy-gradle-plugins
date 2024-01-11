@@ -3,6 +3,7 @@ package io.github.jcohy.gradle.testing;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -65,7 +66,7 @@ public abstract class TestResultsOverview
 	private record TestFailure(TestDescriptor descriptor) implements Comparable<TestFailure> {
 		@Override
 		public int compareTo(TestFailure other) {
-			int comparison = this.descriptor.getClassName().compareTo(other.descriptor.getClassName());
+			int comparison = this.descriptor.getClassName().compareTo(Objects.requireNonNull(other.descriptor.getClassName()));
 			if (comparison == 0) {
 				comparison = this.descriptor.getName().compareTo(other.descriptor.getName());
 			}

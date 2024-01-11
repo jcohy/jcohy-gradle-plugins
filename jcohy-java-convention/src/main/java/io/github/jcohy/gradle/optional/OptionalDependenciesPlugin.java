@@ -6,6 +6,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.attributes.Usage;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -35,7 +36,7 @@ public class OptionalDependenciesPlugin implements Plugin<Project> {
         });
 
         project.getPlugins().withType(JavaPlugin.class, javaPlugin -> {
-            SourceSetContainer sourceSets = project.getConvention().getPlugin(JavaPluginConvention.class).getSourceSets();
+            SourceSetContainer sourceSets = project.getExtensions().getByType(JavaPluginExtension.class).getSourceSets();
             sourceSets.all(sourceSet -> {
                 sourceSet.setCompileClasspath(sourceSet.getCompileClasspath().plus(optional));
                 sourceSet.setRuntimeClasspath(sourceSet.getRuntimeClasspath().plus(optional));

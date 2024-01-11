@@ -34,7 +34,7 @@ public class TestFailuresPlugin implements Plugin<Project> {
         );
     }
 
-    private final class FailureRecordingTestListener implements TestListener {
+    private static final class FailureRecordingTestListener implements TestListener {
 
         private final List<TestDescriptor> failures = new ArrayList<>();
 

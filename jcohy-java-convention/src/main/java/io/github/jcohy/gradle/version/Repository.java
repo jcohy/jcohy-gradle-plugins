@@ -50,16 +50,12 @@ public enum Repository {
      * @return the artifact repository
      */
     public static Repository of(ReleaseStatus status) {
-        switch (status) {
-            case GENERAL_AVAILABILITY:
-                return RELEASE;
-            case PRERELEASE:
-                return MILESTONE;
-            case SNAPSHOT:
-                return SNAPSHOT;
-            default:
-                return RELEASE;
-        }
+		return switch (status) {
+			case GENERAL_AVAILABILITY -> RELEASE;
+			case PRERELEASE -> MILESTONE;
+			case SNAPSHOT -> SNAPSHOT;
+			default -> RELEASE;
+		};
     }
 
     public String getId() {
