@@ -1,0 +1,128 @@
+= 适用于 Gradle 的 Antora 插件
+
+该项目是对官方 https://gitlab.com/antora/gradle-antora-plugin[Antora Plugin for Gradle] 的补充，
+提供了 Antora 和 Gradle 配合使用的插件和任务。
+
+目前有一个插件，但将来可能会添加更多插件。
+
+== io.github.jcohy.gradle.antora.generate-antora-yml
+
+此任务会生成一个 `antora.yml` 文件，这个文件可以在 https://gitlab.com/antora/antora-collector-extension[Antora Collector Extension] 构建中使用。
+
+第一步是将插件添加到 `build.gradle` 中：
+
+.build.gradle
+[,groovy,subs=attributes+]
+----
+plugins {
+    id 'io.spring.antora' version '{version}'
+}
+----
+
+接下来设置您的配置:
+
+最简单的方法是将任何静态配置添加到 `antora.yml` 文件中，该文件将用作生成文档的起点。 例如，如果将其与 Spring Framework 一起使用，则可以使用以下内容:
+
+.antora.yml
+[,yaml]
+----
+name: framework
+version: HEAD
+nav:
+  - modules/ROOT/nav.adoc
+ext:
+  collector:
+  - run:
+      command: 'gradlew -q -PbuildSrc.skipTests=true "-Dorg.gradle.jvmargs=-Xmx3g -XX:+HeapDumpOnOutOfMemoryError" :framework-docs:generateAntoraYml'
+      local: true
+    scan:
+      dir: ./build/generated-antora-resources
+asciidoc:
+  attributes:
+    include-java: 'example$docs-src/main/java/org/springframework/docs'
+    docs-site: 'https://docs.spring.io'
+    docs-spring-framework: '{docs-site}/spring-framework/docs/{spring-version}'
+----
+
+接下来，您可以添加要生成的动态内容。 例如，以下代码将添加一个以项目当前版本 即 `project-version` 属性，为 Gradle 项目命名的 `asciidoc` 属性.
+
+.build.gradle
+[,groovy]
+----
+tasks.named('generateAntoraYml') {
+    asciidocAttributes['spring-version'] = project.version
+}
+----
+
+对于更高级的内容，如果您希望从 `testRuntimeClasspath` 配置添加所有版本，如下：
+
+.build.gradle
+[,groovy]
+----
+tasks.named("generateAntoraYml") {
+	asciidocAttributes = ['spring-version' : project.version]
+	asciidocAttributes.putAll(providers.provider( { resolvedVersions(project.configurations.testRuntimeClasspath).call() }))
+}
+
+def resolvedVersions(Configuration configuration) {
+	return {
+		configuration.resolvedConfiguration
+				.resolvedArtifacts
+				.collectEntries { [(it.name + '-version'): it.moduleVersion.id.version] }
+	}
+}
+----
+
+接下来，通过运行任务来测试任务:
+
+ $ ./gradle generateAntoraYml
+
+您的文件可能如下所示:
+
+.build/generated-antora-resources/antora.yml
+[,yaml]
+----
+name: framework
+version: 6.0.3
+prerelease: -SNAPSHOT
+nav:
+- modules/ROOT/nav.adoc
+ext:
+  collector:
+  - run:
+      command: gradlew -q -PbuildSrc.skipTests=true "-Dorg.gradle.jvmargs=-Xmx3g -XX:+HeapDumpOnOutOfMemoryError"
+        :framework-docs:generateAntoraYml
+      local: true
+    scan:
+      dir: ./build/generated-antora-resources
+asciidoc:
+  attributes:
+    spring-version: 6.0.3-SNAPSHOT
+    include-java: example$docs-src/main/java/org/springframework/docs
+    docs-site: https://docs.spring.io
+    docs-spring-framework: '{docs-site}/spring-framework/docs/{spring-version}'
+----
+
+== `GenerateAntoraYmlTask` 参考
+
+[,groovy]
+----
+tasks.named("generateAntoraYml") {
+	// the file to write to (default is build/generated-antora-resources/antora.yml)
+	outputFile = project.layout.buildDirectory.file("generated-antora-resources/antora.yml")
+	// the asciidoc attributes to write (default is empty)
+	asciidocAttributes = ['spring-version' : project.version]
+	// you can lazily add properties to the asciidoc attributes too
+	asciidocAttributes.putAll(providers.provider( { resolvedVersions(project.configurations.testRuntimeClasspath).call() }))
+	// configures the version and prerelease based on your project.version (default is project.version)
+	version = project.version
+	// configures the asciidoc properties (default is empty)
+	asciidoc = ['docyear' : '2000']
+	// allows generating any content within antora.yml file (default is empty)
+	yml = ['nav' : ['modules/ROOT/nav.adoc']]
+	// The file that is typically used for any static content to be in the generated antora file
+	baseAntoraYmlFile = file('antora.yml')
+	// configures the name property if not found in any other configuration
+	componentName = project.name
+}
+----
