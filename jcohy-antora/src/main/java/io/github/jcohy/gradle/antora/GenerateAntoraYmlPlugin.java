@@ -1,5 +1,6 @@
 package io.github.jcohy.gradle.antora;
 
+import org.antora.gradle.AntoraPlugin;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -7,7 +8,7 @@ import org.gradle.api.file.RegularFile;
 
 /**
  * Copyright: Copyright (c) 2023 <a href="https://www.jcohy.com" target="_blank">jcohy.com</a>
- * <p> Description:
+ * <p> Description: https://resources.jcohy.com/antora/ui-bundle.zip
  *
  * @author jiac
  * @version 2024.0.1 2024/1/16 11:22
@@ -16,6 +17,15 @@ import org.gradle.api.file.RegularFile;
 public class GenerateAntoraYmlPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
+		project.getPlugins().apply(AntoraPlugin.class);
+
+		configurationGenerateAntoraYmlTask(project);
+
+
+
+	}
+
+	private void configurationGenerateAntoraYmlTask(Project project) {
 		project.getTasks().register("generateAntoraYml", GenerateAntoraYmlTask.class, new Action<GenerateAntoraYmlTask>() {
 			@Override
 			public void execute(GenerateAntoraYmlTask generateAntoraYmlTask) {
@@ -34,5 +44,6 @@ public class GenerateAntoraYmlPlugin implements Plugin<Project> {
 				generateAntoraYmlTask.getOutputFile().convention(project.getLayout().getBuildDirectory().file("generated-antora-resources/antora.yml"));
 			}
 		});
+
 	}
 }

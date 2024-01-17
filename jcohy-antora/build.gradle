@@ -5,7 +5,11 @@ plugins {
 
 description "Adds task for generating an antora.yml with information from the Gradle build"
 
+repositories {
+	gradlePluginPortal()
+}
 dependencies {
+	implementation 'org.antora:gradle-antora-plugin:1.0.0'
 	implementation 'org.yaml:snakeyaml:2.0'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 	testImplementation 'org.assertj:assertj-core:3.21.0'
