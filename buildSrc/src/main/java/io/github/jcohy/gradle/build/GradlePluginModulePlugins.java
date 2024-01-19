@@ -36,7 +36,6 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 			// https://docs.gradle.org/current/userguide/java_gradle_plugin.html
 			plugins.apply(PublishPlugin.class);
 			new AliYunPublishConvention().apply(project);
-			new XwPublishConvention().apply(project);
 			plugins.apply(SigningPlugin.class);
 			configureCommonAttributes(project);
 		}

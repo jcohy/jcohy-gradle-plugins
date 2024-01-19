@@ -1,0 +1,23 @@
+plugins {
+	id 'io.github.jcohy.gradle-plugin-module'
+}
+
+description "A Plugin for checking the classpath for prohibited dependencies."
+
+
+dependencies {
+	implementation "io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.31"
+}
+
+
+gradlePlugin {
+	plugins {
+		aliOssPlugin {
+			id = 'io.github.jcohy.gradle.checkstyle'
+			displayName = 'checkstyle'
+			implementationClass = 'io.github.jcohy.gradle.checkstyle.JcohyJavaCheckStylePlugin'
+			description = project.description
+			tags.set(['format', 'checkstyle','java'])
+		}
+	}
+}

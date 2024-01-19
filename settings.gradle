@@ -6,4 +6,12 @@ include 'bom'
 include 'jcohy-asciidoctor'
 include 'jcohy-maven'
 include 'jcohy-antora'
+include 'jcohy-plugins-utils'
 
+file("${rootDir}/projects").eachDir {
+	include ":projects:${it.name}"
+}
+
+file("${rootDir}/plugins").eachDir {
+	include ":plugins:${it.name}"
+}

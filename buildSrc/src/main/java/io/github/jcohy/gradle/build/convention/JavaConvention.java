@@ -36,7 +36,7 @@ import org.gradle.jvm.tasks.Jar;
 public class JavaConvention {
 
 	public void apply(Project project) {
-		project.getPlugins().withType(JavaBasePlugin.class, (java) -> {
+		project.getPlugins().withType(JavaPlugin.class, (java) -> {
 			configureTestConventions(project);
 			configureMavenRepository(project);
 			configureJarManifest(project);
@@ -63,6 +63,10 @@ public class JavaConvention {
 			project.getDependencies().add(JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME, "org.springframework.boot:spring-boot-starter-test");
 		});
 
+		if (!project.getName().equals("jcohy-plugins-utils")) {
+			project.getDependencies().add(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME, project.getDependencies().project(Collections.singletonMap("path",
+					":projects:jcohy-plugins-utils")));
+		}
 	}
 
 	/**
@@ -136,7 +140,7 @@ public class JavaConvention {
 				});
 
 		Dependency parent = project.getDependencies().enforcedPlatform(project.getDependencies()
-				.project(Collections.singletonMap("path", ":bom")));
+				.project(Collections.singletonMap("path", ":projects:bom")));
 
 		project.getConfigurations().getByName("dependencyManagement", (dependency) -> {
 			dependency.getDependencies().add(parent);

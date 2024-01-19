@@ -13,21 +13,22 @@ configure(rootProject) {
 
 }
 
-task aggregatePublishGradlePortal {
-	project.rootProject.gradle.projectsEvaluated {
+//task aggregatePublishGradlePortal {
+//	project.rootProject.gradle.projectsEvaluated {
+//
+//		Set<Project> pluginsProject = rootProject.subprojects
+//				.findAll {  it.name.startsWith("jcohy")}
+//				.findAll { (it.name != "jcohy-java-checkstyle")}
+//				.findAll { (it.name != "jcohy-plugins-utils")}
+//		dependsOn pluginsProject.publishPlugins
+//	}
+//}
 
-		Set<Project> pluginsProject = rootProject.subprojects
-				.findAll {  it.name.startsWith("jcohy")}
-				.findAll { (it.name != "jcohy-java-checkstyle") }
-		dependsOn pluginsProject.publishPlugins
-	}
-}
-
-task aggregatePublishAliyun {
-	project.rootProject.gradle.projectsEvaluated {
-		Set<Project> subProject = rootProject.subprojects.findAll {  it.name.startsWith("jcohy")}
-		dependsOn subProject.publishMavenJavaPublicationToJcohyAliyunRepository
-	}
-}
+//task aggregatePublishAliyun {
+//	project.rootProject.gradle.projectsEvaluated {
+//		Set<Project> subProject = rootProject.subprojects.findAll {  it.name.startsWith("jcohy")}
+//		dependsOn subProject.publishMavenJavaPublicationToJcohyAliyunRepository
+//	}
+//}
 
 
