@@ -6,18 +6,17 @@ description "A Plugin for checking the classpath for prohibited dependencies."
 
 
 dependencies {
-	implementation "io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.31"
 }
 
 
 gradlePlugin {
 	plugins {
-		aliOssPlugin {
-			id = 'io.github.jcohy.gradle.checkstyle'
+		checkClasspathForProhibitedDependenciesPlugin {
+			id = 'io.github.jcohy.gradle.classpath'
 			displayName = 'checkstyle'
-			implementationClass = 'io.github.jcohy.gradle.checkstyle.JcohyJavaCheckStylePlugin'
+			implementationClass = 'io.github.jcohy.gradle.classpath.CheckClasspathForProhibitedDependenciesPlugin'
 			description = project.description
-			tags.set(['format', 'checkstyle','java'])
+			tags.set(['format', 'classpath','java'])
 		}
 	}
 }

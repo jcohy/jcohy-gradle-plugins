@@ -5,7 +5,7 @@ plugins {
 description "The plugin provides configuration with three conventions. Conventions when using the JavaBasePlugin, conventions when using the MavenPublishPlugin plugin, conventions when using the AsciidoctorJPlugin plugin"
 
 dependencies {
-	implementation(project(":plugins:jcohy-asciidoctor"))
+	implementation(project(":plugins:jcohy-plugin-asciidoctor"))
 	implementation("org.springframework.boot:spring-boot-gradle-plugin")
 	implementation("io.spring.gradle:dependency-management-plugin")
 	implementation('com.fasterxml.jackson.core:jackson-databind')

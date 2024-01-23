@@ -30,11 +30,11 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
  * @author Andy Wilkinson
  * @author Rob Winch
  */
-public class SpringCheckClasspathForProhibitedDependenciesPlugin implements Plugin<Project> {
+public class CheckClasspathForProhibitedDependenciesPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		project.getPlugins().apply(SpringCheckProhibitedDependenciesLifecyclePlugin.class);
+		project.getPlugins().apply(CheckProhibitedDependenciesLifecyclePlugin.class);
 		project.getPlugins().withType(JavaBasePlugin.class, (javaBasePlugin) ->
 				configureProhibitedDependencyChecks(project));
 	}
@@ -61,6 +61,6 @@ public class SpringCheckClasspathForProhibitedDependenciesPlugin implements Plug
 					checkClasspath.setDescription("Checks " + classpath.getName() + " for prohibited dependencies");
 					checkClasspath.setClasspath(classpath);
 				});
-		project.getTasks().named(SpringCheckProhibitedDependenciesLifecyclePlugin.CHECK_PROHIBITED_DEPENDENCIES_TASK_NAME, (checkProhibitedTask) -> checkProhibitedTask.dependsOn(checkClasspathTask));
+		project.getTasks().named(CheckProhibitedDependenciesLifecyclePlugin.CHECK_PROHIBITED_DEPENDENCIES_TASK_NAME, (checkProhibitedTask) -> checkProhibitedTask.dependsOn(checkClasspathTask));
 	}
 }

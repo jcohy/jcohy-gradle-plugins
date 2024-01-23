@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import io.github.jcohy.gradle.constant.BomCoordinates;
 import io.github.jcohy.gradle.optional.OptionalDependenciesPlugin;
 import io.github.jcohy.gradle.testing.TestFailuresPlugin;
-import io.github.jcohy.gradle.toolchain.ToolchainPlugin;
+//import io.github.jcohy.gradle.toolchain.ToolchainPlugin;
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
 import io.spring.javaformat.gradle.SpringJavaFormatPlugin;
@@ -100,7 +100,7 @@ class JavaConventions {
             configureTestConventions(project);
             configureJarManifestConventions(project);
             configureDependencyManagement(project);
-            configureToolchain(project);
+//            configureToolchain(project);
         });
     }
 
@@ -113,9 +113,9 @@ class JavaConventions {
         project.getRepositories().mavenCentral();
     }
 
-    private void configureToolchain(Project project) {
-        project.getPlugins().apply(ToolchainPlugin.class);
-    }
+//    private void configureToolchain(Project project) {
+//        project.getPlugins().apply(ToolchainPlugin.class);
+//    }
 
     /**
      * 配置项目依赖

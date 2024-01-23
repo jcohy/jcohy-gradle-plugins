@@ -1,0 +1,24 @@
+= io.github.jcohy.gradle.checkstyle.JcohyJavaCheckStylePlugin
+
+检查项目根目录下 `etc/checkstyle` 文件夹是否存在，如果存在，则使用 CheckstylePlugin 插件。
+
+自动配置 nohttpCheckstyle，javaformatVersion。
+
+属性配置
+
+
+|===
+|属性 | 描述
+
+| javaformatVersion
+| 设置 SpringJavaFormat 版本
+
+| nohttpCheckstyleVersion
+| 设置 NoHttpCheckstyle 版本
+
+| checkstyleToolVersion
+| 设置 checkstyle 版本
+
+| javaformatExcludePackages
+| 设置 SpringJavaFormat 排除的包
+|===
