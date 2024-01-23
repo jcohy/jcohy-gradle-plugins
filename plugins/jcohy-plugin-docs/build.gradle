@@ -1,0 +1,27 @@
+plugins {
+	id 'io.github.jcohy.gradle-plugin-module'
+	id "nebula.integtest" version "9.6.3"
+	id 'org.jetbrains.kotlin.jvm'
+}
+
+description "A Gradle plugin that provides some conventions when use AsciidoctorJPlugin"
+
+dependencies {
+	implementation("org.springframework:spring-core")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm")
+	implementation("org.asciidoctor:asciidoctor-gradle-jvm-pdf")
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+gradlePlugin {
+	plugins {
+		asciidoctorPlugin {
+			id = 'io.github.jcohy.gradle.asciidoctor'
+			displayName = "asciidoctor"
+			implementationClass = 'io.github.jcohy.gradle.asciidoctor.JcohyAsciidoctorPlugin'
+			description = project.description
+			tags.set(['asciidoctor', 'docs'])
+		}
+	}
+}
+
