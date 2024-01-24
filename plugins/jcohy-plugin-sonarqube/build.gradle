@@ -1,0 +1,22 @@
+plugins {
+	id 'io.github.jcohy.gradle-plugin-module'
+}
+
+description "Creates a Management configuration that is appropriate for adding a platform to that is not exposed externally."
+
+dependencies {
+	implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin")
+}
+
+gradlePlugin {
+	plugins {
+		managementPlugin {
+			id = 'io.github.jcohy.gradle.management'
+			displayName = "asciidoctor"
+			implementationClass = 'io.github.jcohy.gradle.management.JcohyManagementConfigurationPlugin'
+			description = project.description
+			tags.set(['java'])
+		}
+	}
+}
+

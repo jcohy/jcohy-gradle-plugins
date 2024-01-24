@@ -30,7 +30,9 @@ dependencies {
 		// sms
 		api ("com.aliyun.oss:aliyun-sdk-oss:3.16.1")
 
-
+		//
+		api("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1")
+		//
 		api ("com.puppycrawl.tools:checkstyle:8.44")
 	}
 }

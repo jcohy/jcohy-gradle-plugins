@@ -1,0 +1,27 @@
+plugins {
+	id 'io.github.jcohy.gradle-plugin-module'
+}
+
+description "Creates a Management configuration that is appropriate for adding a platform to that is not exposed externally."
+
+dependencies {
+	api(project(":plugins:jcohy-plugin-management"))
+	api(project(":plugins:jcohy-plugin-javadoc"))
+	api(project(":plugins:jcohy-plugin-checkstyle"))
+	api(project(":plugins:jcohy-plugin-jacoco"))
+	implementation("io.spring.javaformat:spring-javaformat-gradle-plugin")
+	implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
+}
+
+gradlePlugin {
+	plugins {
+		managementPlugin {
+			id = 'io.github.jcohy.gradle.management'
+			displayName = "asciidoctor"
+			implementationClass = 'io.github.jcohy.gradle.management.JcohyManagementConfigurationPlugin'
+			description = project.description
+			tags.set(['java'])
+		}
+	}
+}
+
