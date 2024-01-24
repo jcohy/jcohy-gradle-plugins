@@ -1,6 +1,0 @@
-[[flight-module]]
-= 模块说明
-
-include::auto.adoc[]
-
-include::bom.adoc[]

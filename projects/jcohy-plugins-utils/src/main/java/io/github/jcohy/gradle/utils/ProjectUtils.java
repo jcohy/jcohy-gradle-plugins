@@ -1,6 +1,7 @@
 package io.github.jcohy.gradle.utils;
 
 import org.gradle.api.Project;
+import org.gradle.api.plugins.ExtraPropertiesExtension;
 
 /**
  * Copyright: Copyright (c) 2023 <a href="https://www.jcohy.com" target="_blank">jcohy.com</a>
@@ -23,21 +24,33 @@ public class ProjectUtils {
 		return projectName;
 	}
 
-	public static boolean isSnapshot(Project project) {
-		String projectVersion = projectVersion(project);
-		return projectVersion.matches("^.*([.-]BUILD)?-SNAPSHOT$");
+	public static String getProjectProperties(Project project, String key) {
+		return getProjectProperties(project, key, "");
 	}
 
-	public static boolean isMilestone(Project project) {
-		String projectVersion = projectVersion(project);
-		return projectVersion.matches("^.*[.-]M\\d+$") || projectVersion.matches("^.*[.-]RC\\d+$");
+//	public static String getProperties(Project project, String key) {
+//		return getProperties(project,key,"");
+//	}
+
+	public static String getProjectProperties(Project project, String key, String defaultValue) {
+		var ref = new Object() {
+			String value = defaultValue;
+		};
+
+		if (StringUtils.isNotEmpty(System.getenv(key))) {
+			ref.value = System.getenv(key);
+		}
+
+		project.afterEvaluate(project1 -> {
+			Object o = project1.getExtensions().getByType(ExtraPropertiesExtension.class).getProperties()
+					.get(key);
+			ref.value = (String) o;
+		});
+
+		if (project.hasProperty(key)) {
+			ref.value = (String) project.findProperty(key);
+		}
+		return ref.value;
 	}
 
-	public static boolean isRelease(Project project) {
-		return !(isSnapshot(project) || isMilestone(project));
-	}
-
-	private static String projectVersion(Project project) {
-		return String.valueOf(project.getVersion());
-	}
 }
