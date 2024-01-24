@@ -1,4 +1,4 @@
-package io.github.jcohy.gradle.maven.version;
+package io.github.jcohy.gradle.maven.repository;
 
 /**
  * Copyright: Copyright (c) 2021 <a href="http://www.jcohy.com" target="_blank">jcohy.com</a>
@@ -38,16 +38,13 @@ public enum AliYunRepository {
     }
 
     /**
-     * 根据  {@link ReleaseStatus} 获取仓库地址
+     * 根据获取仓库地址
      *
      * @param status the release status
      * @return the artifact repository
      */
-    public static AliYunRepository of(ReleaseStatus status) {
-        return switch (status) {
-            case PRERELEASE, SNAPSHOT -> SNAPSHOT;
-            case GENERAL_AVAILABILITY -> RELEASE;
-        };
+    public static AliYunRepository of(Boolean status) {
+        return status ? AliYunRepository.RELEASE : AliYunRepository.SNAPSHOT;
     }
 
     public String getId() {

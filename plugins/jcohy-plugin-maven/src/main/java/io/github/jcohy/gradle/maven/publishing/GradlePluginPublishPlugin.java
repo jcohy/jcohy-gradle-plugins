@@ -1,8 +1,7 @@
-package io.github.jcohy.gradle.maven;
+package io.github.jcohy.gradle.maven.publishing;
 
 import com.gradle.publish.PublishPlugin;
-import io.github.jcohy.gradle.maven.convention.JavaConvention;
-import io.github.jcohy.gradle.maven.convention.MavenPublishConvention;
+import io.github.jcohy.gradle.maven.JcohySigningPlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
@@ -25,8 +24,6 @@ public class GradlePluginPublishPlugin implements Plugin<Project> {
         PluginManager pluginManager = project.getPluginManager();
         pluginManager.apply(PublishPlugin.class);
         pluginManager.apply(JcohySigningPlugin.class);
-        new JavaConvention().apply(project);
-        new MavenPublishConvention().apply(project);
         configureCommonAttribute(project);
     }
 

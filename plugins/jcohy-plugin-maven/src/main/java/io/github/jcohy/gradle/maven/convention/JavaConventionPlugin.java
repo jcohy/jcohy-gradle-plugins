@@ -1,5 +1,11 @@
 package io.github.jcohy.gradle.maven.convention;
 
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.logging.LogLevel;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -8,23 +14,19 @@ import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.jvm.tasks.Jar;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-
 /**
  * 描述: .
  *
  * <p>
- * Copyright © 2023 <a href="https://www.jcohy.com" target= "_blank">https://www.jcohy.com</a>
+ * Copyright © 2024 <a href="https://www.jcohy.com" target= "_blank">https://www.jcohy.com</a>
  *
  * @author jiac
- * @version 1.0.0 2023/2/17 17:24
+ * @version 2024.0.1 2023/2/17 17:24
  * @since 1.0.0
  */
-public class JavaConvention {
+public class JavaConventionPlugin implements Plugin<Project> {
 
+	@Override
     public void apply(Project project) {
         project.getPlugins().withType(JavaBasePlugin.class, (java) -> {
             configureJarManifest(project);
