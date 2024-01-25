@@ -5,6 +5,8 @@ plugins {
 description "Plugins Utils"
 
 dependencies {
+	implementation("org.springframework.boot:spring-boot-gradle-plugin:3.2.0")
+	implementation("io.spring.gradle:dependency-management-plugin:3.2.0")
 }
 
 test {

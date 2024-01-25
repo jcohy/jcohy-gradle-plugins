@@ -2,6 +2,7 @@ package io.github.jcohy.gradle.build.convention;
 
 
 import io.github.jcohy.gradle.build.publishing.PomConstant;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.attributes.Usage;
 import org.gradle.api.component.AdhocComponentWithVariants;
@@ -22,8 +23,13 @@ import org.gradle.api.publish.maven.plugins.MavenPublishPlugin;
 import org.gradle.api.tasks.bundling.Jar;
 
 
-public class MavenPublishConvention {
+public class MavenPublishConvention implements Plugin<Project> {
+
+	@Override
 	public void apply(Project project) {
+
+		project.getPlugins().apply(MavenPublishPlugin.class);
+
 		project.getPlugins().withType(MavenPublishPlugin.class,publishPlugin -> configureMavenPublish(project));
     }
 

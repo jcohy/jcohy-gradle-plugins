@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
@@ -33,9 +34,12 @@ import org.gradle.jvm.tasks.Jar;
  * @version 2024.0.1 2023/2/17 17:24
  * @since 1.0.0
  */
-public class JavaConvention {
+public class JavaConvention implements Plugin<Project> {
 
+	@Override
 	public void apply(Project project) {
+		project.getPlugins().apply(JavaPlugin.class);
+
 		project.getPlugins().withType(JavaPlugin.class, (java) -> {
 			configureTestConventions(project);
 			configureMavenRepository(project);

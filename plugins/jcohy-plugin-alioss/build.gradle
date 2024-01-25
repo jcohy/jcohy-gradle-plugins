@@ -1,5 +1,5 @@
 plugins {
-	id 'io.github.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.plugin-module'
 }
 
 description "A Gradle plugin that transform file to aliyun oss when use OssUploadPlugin"

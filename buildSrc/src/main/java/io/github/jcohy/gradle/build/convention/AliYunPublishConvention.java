@@ -4,6 +4,7 @@ import io.github.jcohy.gradle.build.Utils;
 import io.github.jcohy.gradle.build.publishing.PomConstant;
 import io.github.jcohy.gradle.build.version.AliYunRepository;
 import io.github.jcohy.gradle.build.version.ReleaseStatus;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.publish.PublishingExtension;
@@ -18,8 +19,9 @@ import org.gradle.api.publish.PublishingExtension;
  * @version 2022.04.0 2023/3/21:18:13
  * @since 2022.04.0
  */
-public class AliYunPublishConvention {
+public class AliYunPublishConvention implements Plugin<Project> {
 
+	@Override
     public void apply(Project project) {
         PublishingExtension publishingExtension = project.getExtensions().getByType(PublishingExtension.class);
         publishingExtension.getRepositories().maven(mavenRepository -> {

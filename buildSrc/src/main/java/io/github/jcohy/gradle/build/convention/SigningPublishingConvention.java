@@ -1,5 +1,6 @@
 package io.github.jcohy.gradle.build.convention;
 
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.publish.PublishingExtension;
@@ -17,9 +18,13 @@ import org.gradle.plugins.signing.SigningPlugin;
  * @version 2024.0.1 2023/2/17 17:18
  * @since 1.0.0
  */
-public class SigningPublishingConvention {
+public class SigningPublishingConvention implements Plugin<Project> {
 
+	@Override
 	public void apply(Project project) {
+
+		project.getPlugins().apply(SigningPlugin.class);
+
 		project.getPlugins().withType(SigningPlugin.class,sign -> {
 			configureCommonAttribute(project);
 			configureSigning(project);

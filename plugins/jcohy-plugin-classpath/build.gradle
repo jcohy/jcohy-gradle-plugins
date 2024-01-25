@@ -1,5 +1,5 @@
 plugins {
-	id 'io.github.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.plugin-module'
 }
 
 description "A Plugin for checking the classpath for prohibited dependencies."

@@ -24,21 +24,14 @@ public class GradlePluginModulePlugins implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 
-		new JavaConvention().apply(project);
-		new MavenPublishConvention().apply(project);
-		new NexusPublishingConvention().apply(project);
-		new SigningPublishingConvention().apply(project);
+		PluginContainer plugins = project.getPlugins();
+		plugins.apply(JavaModulePlugins.class);
 
-		if(project.getName().startsWith("jcohy-")) {
-			PluginContainer plugins = project.getPlugins();
-			// PublishingPlugin 自动应用 Java Gradle Development Plugin (java-gradle-plugin) 和 Maven Publish Plugin (maven-publish).
-			// Java Gradle Plugin (java-gradle-plugin) 自动应用 Java Library(java-library),并添加 api gradleApi() 依赖
-			// https://docs.gradle.org/current/userguide/java_gradle_plugin.html
-			plugins.apply(PublishPlugin.class);
-			new AliYunPublishConvention().apply(project);
-			plugins.apply(SigningPlugin.class);
-			configureCommonAttributes(project);
-		}
+		// PublishingPlugin 自动应用 Java Gradle Development Plugin (java-gradle-plugin) 和 Maven Publish Plugin (maven-publish).
+		// Java Gradle Plugin (java-gradle-plugin) 自动应用 Java Library(java-library),并添加 api gradleApi() 依赖
+		// https://docs.gradle.org/current/userguide/java_gradle_plugin.html
+		plugins.apply(PublishPlugin.class);
+		configureCommonAttributes(project);
 	}
 
 	private void configureCommonAttributes(Project project) {

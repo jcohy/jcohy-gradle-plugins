@@ -4,6 +4,7 @@ import java.net.URI;
 
 import io.github.gradlenexus.publishplugin.NexusPublishExtension;
 import io.github.gradlenexus.publishplugin.NexusPublishPlugin;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
 /**
@@ -16,9 +17,13 @@ import org.gradle.api.Project;
  * @version 2024.0.1 2023/2/17 16:43
  * @since 1.0.0
  */
-public class NexusPublishingConvention {
+public class NexusPublishingConvention implements Plugin<Project> {
 
+	@Override
 	public void apply(Project project) {
+
+//		project.getPlugins().apply(NexusPublishPlugin.class);
+
 		project.getPlugins().withType(NexusPublishPlugin.class,nexusPublishPlugin -> {
 			NexusPublishExtension extension = project.getExtensions().getByType(NexusPublishExtension.class);
 			extension.repositories(repository -> {

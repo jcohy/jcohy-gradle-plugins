@@ -1,5 +1,5 @@
 plugins {
-	id 'io.github.jcohy.gradle-plugin-module'
+	id 'io.github.jcohy.plugin-module'
 }
 
 description "Creates a Management configuration that is appropriate for adding a platform to that is not exposed externally."
