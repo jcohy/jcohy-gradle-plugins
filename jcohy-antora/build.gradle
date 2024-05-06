@@ -1,0 +1,29 @@
+plugins {
+	id 'io.github.jcohy.gradle-plugin-module'
+}
+
+
+description "Adds task for generating an antora.yml with information from the Gradle build"
+
+repositories {
+	gradlePluginPortal()
+}
+dependencies {
+	implementation 'org.antora:gradle-antora-plugin:1.0.0'
+	implementation 'org.yaml:snakeyaml:2.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testImplementation 'org.assertj:assertj-core:3.21.0'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+gradlePlugin {
+	plugins {
+		JcohyAntoraPlugin {
+			id = 'io.github.jcohy.gradle.generate-antora-yml'
+			displayName = " antora.yml generator plugin"
+			implementationClass = 'io.github.jcohy.gradle.antora.GenerateAntoraYmlPlugin'
+			description = project.description
+			tags.set(['antora', 'asciidoctor', 'asciidoc', 'documentation'])
+		}
+	}
+}

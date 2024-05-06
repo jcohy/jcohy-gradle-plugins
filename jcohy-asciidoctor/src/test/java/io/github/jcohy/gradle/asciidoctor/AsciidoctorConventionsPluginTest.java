@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @version 2022.0.1 2022/10/13:16:38
  * @since 2022.0.1
  */
+@SuppressWarnings("unchecked")
 public class AsciidoctorConventionsPluginTest {
 
     @Test

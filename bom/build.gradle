@@ -12,8 +12,8 @@ dependencies {
 
 
 		// ======================== plugins =========================
-		api ("org.springframework.boot:spring-boot-gradle-plugin:3.0.0")
-		api ("io.spring.gradle:dependency-management-plugin:3.0.0")
+		api ("org.springframework.boot:spring-boot-gradle-plugin:3.2.0")
+		api ("io.spring.gradle:dependency-management-plugin:3.2.0")
 		api ("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.35")
 		api ("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
 		api ("org.gradle:test-retry-gradle-plugin:1.4.1")

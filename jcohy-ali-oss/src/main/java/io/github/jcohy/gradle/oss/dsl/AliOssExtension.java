@@ -16,6 +16,7 @@ import org.gradle.util.ConfigureUtil;
  * @version 0.0.5.1 2021/7/23:10:41
  * @since 0.0.5.1
  */
+@SuppressWarnings("deprecation")
 public class AliOssExtension {
 
     public static final String OSS_EXTENSION_NAME = "alioss";
