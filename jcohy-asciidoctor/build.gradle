@@ -19,6 +19,13 @@ gradlePlugin {
 			description = project.description
 			tags.set(['asciidoctor', 'docs'])
 		}
+		asciidoctorAggregatedPlugins {
+			id = 'io.github.jcohy.gradle.asciidoctor-aggregate'
+			displayName = "asciidoctor-aggregate"
+			implementationClass = 'io.github.jcohy.gradle.asciidoctor.AsciidoctorAggregatedPlugins'
+			description = project.description
+			tags.set(['asciidoctor', 'docs','aggregate'])
+		}
 	}
 }
 

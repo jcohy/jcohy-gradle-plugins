@@ -13,6 +13,9 @@ configure(rootProject) {
 
 }
 
+asciidoctor {
+	languages()
+}
 task aggregatePublishGradlePortal {
 	project.rootProject.gradle.projectsEvaluated {
 

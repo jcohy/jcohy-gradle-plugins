@@ -1,15 +1,15 @@
 package io.github.jcohy.gradle.asciidoctor;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @version 2022.0.1 2022/10/13:16:35
  * @since 2022.0.1
  */
-public class AsciidoctorConventionsPluginITest {
+public class AsciidoctorConventionsWithLanguagePluginITest {
 
     @TempDir
     File workDir;
@@ -30,14 +30,14 @@ public class AsciidoctorConventionsPluginITest {
     @Test
     void asciidoctorPdfTaskThenSuccess() throws IOException, URISyntaxException {
         runnerWithTask(":asciidoctorPdf");
-        File generatedPdf = new File(this.workDir, "build/docs/asciidocPdf");
+        File generatedPdf = new File(this.workDir, "build/docs/asciidocPdf/zh-cn");
         assertThat(new File(generatedPdf,"index.pdf")).exists();
     }
 
     @Test
     void asciidoctorTaskThenSuccess() throws IOException, URISyntaxException {
         runnerWithTask(":asciidoctor");
-        File generatedHtml = new File(this.workDir, "build/docs/asciidoc");
+        File generatedHtml = new File(this.workDir, "build/docs/asciidoc/zh-cn");
         File htmlFile = new File(generatedHtml, "index.html");
         assertThat(new File(generatedHtml, "index.html")).exists();
         assertThat(new File(generatedHtml, "css/site.css")).exists();
@@ -55,14 +55,14 @@ public class AsciidoctorConventionsPluginITest {
     @Test
     void asciidoctorMultiTaskThenSuccess() throws IOException, URISyntaxException {
         runnerWithTask(":asciidoctorMultiPage");
-        File generatedHtml = new File(this.workDir, "build/docs/asciidocMultiPage");
+        File generatedHtml = new File(this.workDir, "build/docs/asciidocMultiPage/zh-cn");
         File htmlFile = new File(generatedHtml, "index.html");
         assertThat(new File(generatedHtml, "index.html")).exists();
         assertThat(new File(generatedHtml, "legal.html")).exists();
         assertThat(new File(generatedHtml, "css/site.css")).exists();
         assertThat(new File(generatedHtml, "js/site.js")).exists();
         assertThat(Files.readString(htmlFile.toPath()))
-                .contains("<title>AsciidoctorMultiPage Test Document</title>")
+                .contains("<title>AsciidoctorMultiPage Language Test Document</title>")
                 .contains("<p>docs-url: <a href=\"https://docs.jcohy.com\">docs-url</a></p>")
                 .contains("<p>resource-url: <a href=\"https://resources.jcohy.com\">resource-url</a></p>")
                 .contains("<p>software-url: <a href=\"https://software.jcohy.com\">software-url</a></p>")
@@ -87,7 +87,7 @@ public class AsciidoctorConventionsPluginITest {
     }
 
     private void runnerWithTask(String task) throws IOException, URISyntaxException {
-        CopyUtils.fromResourceNameToDir("asciidoctor/",this.workDir);
+        CopyUtils.fromResourceNameToDir("asciidoctorWithLanguage/",this.workDir);
         BuildResult result = GradleRunner.create()
                 .withPluginClasspath()
                 .withProjectDir(this.workDir)
