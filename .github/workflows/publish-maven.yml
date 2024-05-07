@@ -32,10 +32,10 @@ jobs:
           echo "${{secrets.SIGNING_SECRETKEYRINGFILE}}" > secring.gpg.b64
           base64 -d secring.gpg.b64 > secring.gpg
       - name: Publish To Maven Center
-        run: ./gradlew clean publishToSonatype -x publishPluginMavenPublicationToSonatypeRepository closeAndReleaseSonatypeStagingRepository -x test -Psigning.keyId=${{secrets.SIGNING_KEYID}} -Psigning.password=${{secrets.SIGNING_PASSWORD}} -Psigning.secretKeyRingFile=$(echo secring.gpg)
+        run: ./gradlew clean publishToSonatype -x publishPluginMavenPublicationToSonatypeRepository closeAndReleaseSonatypeStagingRepository -x test -Psigning.keyId=${{secrets.SIGNING_KEYID}} -Psigning.password=${{secrets.SIGNING_PASSWORD}} -Psigning.secretKeyRingFile=secring.gpg
         env:
           NEXUS_USERNAME: ${{secrets.NEXUS_USERNAME}}
           NEXUS_PASSWORD: ${{secrets.NEXUS_PASSWORD}}
           SIGNING_KEYID: ${{secrets.SIGNING_KEYID}}
           SIGNING_PASSWORD: ${{secrets.SIGNING_PASSWORD}}
-          SIGNING_SECRETKEYRINGFILE: $(echo secring.gpg)
+          SIGNING_SECRETKEYRINGFILE: secring.gpg
