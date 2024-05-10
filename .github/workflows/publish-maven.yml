@@ -17,22 +17,18 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
       - name: Cache Gradle Package
         uses: actions/cache@v4.0.2
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Decode Gpg
-        run: |
-          echo "${{secrets.SIGNING_SECRETKEYRINGFILE}}" > ~/.gradle/jcohy.gpg.b64
-          base64 -d ~/.gradle/jcohy.gpg.b64 > ~/.gradle/jcohy.gpg
-          ls ~/.gradle/jcohy.gpg >/dev/null 2>&1; echo $?
-          du -k ~/.gradle/jcohy.gpg
+        run: echo "${{secrets.SIGNING_SECRETKEYRINGFILE}}" > ~/.gradle/jcohy.gpg.b64
+      - name: Generate Signing Secret key Ring File
+        run: base64 -d ~/.gradle/jcohy.gpg.b64 > ~/.gradle/jcohy.gpg
       - name: Publish To Maven Center
         run: ./gradlew clean publishMavenJavaPublicationToSonatypeRepository closeAndReleaseSonatypeStagingRepository -x test
         env:
