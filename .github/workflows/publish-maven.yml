@@ -1,4 +1,4 @@
-name: Publish To Maven Center
+name: Publish Gradle Plugins
 
 on:
   push:
@@ -26,14 +26,18 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Decode Gpg
-        run: echo "${{ secrets.SIGNING_SECRETKEYRINGFILE }}" > $GITHUB_WORKSPACE/jcohy.gpg.b64
+        run: echo "${{secrets.SIGNING_SECRETKEYRINGFILE}}" > ${{ github.workspace }}/jcohy.gpg.b64
       - name: Generate Signing Secret key Ring File
-        run: base64 -d $GITHUB_WORKSPACE/jcohy.gpg.b64 > $GITHUB_WORKSPACE/jcohy.gpg
+        run: base64 -d ${{ github.workspace }}/jcohy.gpg.b64 > ${{ github.workspace }}/jcohy.gpg
       - name: Publish To Maven Center
         run: ./gradlew clean publishMavenJavaPublicationToSonatypeRepository closeAndReleaseSonatypeStagingRepository -x test
         env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME}}
+          NEXUS_USERNAME: ${{secrets.NEXUS_USERNAME}}
           NEXUS_PASSWORD: ${{secrets.NEXUS_PASSWORD}}
           SIGNING_KEYID: ${{secrets.SIGNING_KEYID}}
           SIGNING_PASSWORD: ${{secrets.SIGNING_PASSWORD}}
-          SIGNING_SECRETKEYRINGFILE: $GITHUB_WORKSPACE/jcohy.gpg
+          SIGNING_SECRETKEYRINGFILE: ${{ github.workspace }}/jcohy.gpg
+      - name: Publish To Gradle Portal
+        run: ./gradlew clean aggregatePublishGradlePortal -x test
+      - name: Publish To Aliyun
+        run: ./gradlew clean aggregatePublishAliyun -x test
