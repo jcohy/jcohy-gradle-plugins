@@ -22,7 +22,7 @@ gradlePlugin {
 		asciidoctorAggregatedPlugins {
 			id = 'io.github.jcohy.gradle.asciidoctor-aggregate'
 			displayName = "asciidoctor-aggregate"
-			implementationClass = 'io.github.jcohy.gradle.asciidoctor.AsciidoctorAggregatedPlugins'
+			implementationClass = 'io.github.jcohy.gradle.asciidoctor.AsciidoctorAggregatePlugins'
 			description = project.description
 			tags.set(['asciidoctor', 'docs','aggregate'])
 		}
