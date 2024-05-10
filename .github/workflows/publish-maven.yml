@@ -39,5 +39,11 @@ jobs:
           SIGNING_SECRETKEYRINGFILE: ${{ github.workspace }}/jcohy.gpg
       - name: Publish To Gradle Portal
         run: ./gradlew clean aggregatePublishGradlePortal -x test
+        env:
+          GRADLE_PUBLISH_KEY: ${{secrets.GRADLE_PUBLISH_KEY}}
+          GRADLE_PUBLISH_SECRET: ${{secrets.GRADLE_PUBLISH_SECRET}}
       - name: Publish To Aliyun
         run: ./gradlew clean aggregatePublishAliyun -x test
+        env:
+          ALIYUN_USERNAME: ${{secrets.ALIYUN_USERNAME}}
+          ALIYUN_PASSWORD: ${{secrets.ALIYUN_PASSWORD}}
