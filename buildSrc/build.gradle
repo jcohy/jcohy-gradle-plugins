@@ -14,7 +14,7 @@ dependencies {
 	// A Gradle plugin that provides Maven-like dependency management functionality
 	implementation("io.spring.dependency-management:io.spring.dependency-management.gradle.plugin:1.1.0")
 	// Publish plugins to the Gradle Plugin Portal. PublishingPlugin
-	implementation("com.gradle.publish:plugin-publish-plugin:1.1.0")
+	implementation("com.gradle.publish:plugin-publish-plugin:1.2.1")
 	// Gradle Plugin for publishing to Nexus that automates creating, closing, and releasing staging repositories
 	implementation("io.github.gradle-nexus:publish-plugin:1.1.0")
 
