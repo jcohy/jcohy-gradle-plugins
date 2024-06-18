@@ -15,13 +15,13 @@
 [,groovy,subs=attributes+]
 ----
 plugins {
-    id 'io.spring.antora' version '{version}'
+    id 'io.github.jcohy.gradle.generate-antora-yml' version '{version}'
 }
 ----
 
 接下来设置您的配置:
 
-最简单的方法是将任何静态配置添加到 `antora.yml` 文件中，该文件将用作生成文档的起点。 例如，如果将其与 Spring Framework 一起使用，则可以使用以下内容:
+可以将任何静态配置添加到 `antora.yml` 文件中，该文件将用作生成文档的起点。 例如，如果将其与 Spring Framework 一起使用，则可以使用以下内容:
 
 .antora.yml
 [,yaml]
@@ -44,7 +44,7 @@ asciidoc:
     docs-spring-framework: '{docs-site}/spring-framework/docs/{spring-version}'
 ----
 
-接下来，您可以添加要生成的动态内容。 例如，以下代码将添加一个以项目当前版本 即 `project-version` 属性，为 Gradle 项目命名的 `asciidoc` 属性.
+接下来，您可以添加一些动态内容。 例如，以下代码将添加一个以项目当前版本 即 `project-version` 属性，为 Gradle 项目命名的 `asciidoc` 属性.
 
 .build.gradle
 [,groovy]
@@ -126,3 +126,10 @@ tasks.named("generateAntoraYml") {
 	componentName = project.name
 }
 ----
+
+== 什么是 Antora Collector Extension
+
+Antora Collector Extension 是 Antora 文档生成器的一个扩展插件。Antora 是一个用于构建技术文档站点的工具，支持使用 AsciiDoc 格式的文档。Collector Extension 扩展了 Antora 的功能，允许用户从多个源收集文档片段并组合成一个完整的文档站点。这个扩展特别适合需要从不同来源汇总内容的复杂文档项目。
+
+* https://gitlab.com/antora/antora-collector-extension[Antora / Antora Collector Extension · GitLab]
+

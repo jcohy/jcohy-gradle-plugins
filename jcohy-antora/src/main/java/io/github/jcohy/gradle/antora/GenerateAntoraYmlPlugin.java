@@ -38,26 +38,23 @@ public class GenerateAntoraYmlPlugin implements Plugin<Project> {
 
 
 	private void configurationGenerateAntoraYmlTask(Project project) {
-		project.getTasks().register("generateAntoraYml", GenerateAntoraYmlTask.class, new Action<GenerateAntoraYmlTask>() {
-			@Override
-			public void execute(GenerateAntoraYmlTask generateAntoraYmlTask) {
-				generateAntoraYmlTask.setGroup("Documentation");
-				generateAntoraYmlTask.setDescription("Generates an antora.yml file with information from the build");
-				String name = project.getName();
-				generateAntoraYmlTask.getComponentName().convention(name);
-                project.getVersion();
-                String projectVersion = project.getVersion().toString();
-				if (!Project.DEFAULT_VERSION.equals(projectVersion)) {
-					generateAntoraYmlTask.getVersion().convention(projectVersion);
-				}
-				RegularFile defaultBaseAntoraYmlFile = project.getLayout().getProjectDirectory().file("antora.yml");
-				if (defaultBaseAntoraYmlFile.getAsFile().exists()) {
-					generateAntoraYmlTask.getBaseAntoraYmlFile().convention(defaultBaseAntoraYmlFile);
-				}
-				generateAntoraYmlTask.getAsciidocAttributes().convention(addAttribute(project));
-				generateAntoraYmlTask.getOutputFile().convention(project.getLayout().getBuildDirectory().file("generated-antora-resources/antora.yml"));
-			}
-		});
+		project.getTasks().register("generateAntoraYml", GenerateAntoraYmlTask.class, generateAntoraYmlTask -> {
+            generateAntoraYmlTask.setGroup("Documentation");
+            generateAntoraYmlTask.setDescription("Generates an antora.yml file with information from the build");
+            String name = project.getName();
+            generateAntoraYmlTask.getComponentName().convention(name);
+            project.getVersion();
+            String projectVersion = project.getVersion().toString();
+            if (!Project.DEFAULT_VERSION.equals(projectVersion)) {
+                generateAntoraYmlTask.getVersion().convention(projectVersion);
+            }
+            RegularFile defaultBaseAntoraYmlFile = project.getLayout().getProjectDirectory().file("antora.yml");
+            if (defaultBaseAntoraYmlFile.getAsFile().exists()) {
+                generateAntoraYmlTask.getBaseAntoraYmlFile().convention(defaultBaseAntoraYmlFile);
+            }
+            generateAntoraYmlTask.getAsciidocAttributes().convention(addAttribute(project));
+            generateAntoraYmlTask.getOutputFile().convention(project.getLayout().getBuildDirectory().file("generated-antora-resources/antora.yml"));
+        });
 	}
 
 	private Map<String,String> addAttribute(Project project) {

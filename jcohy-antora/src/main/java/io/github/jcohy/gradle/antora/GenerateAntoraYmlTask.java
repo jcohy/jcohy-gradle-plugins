@@ -12,6 +12,7 @@ import java.util.Map;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.file.RegularFileProperty;
+import org.gradle.api.internal.file.FileOperations;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
@@ -176,12 +177,12 @@ public abstract class GenerateAntoraYmlTask extends DefaultTask {
 		Yaml yaml = new Yaml();
 		return yaml.loadAs(new FileInputStream(antoraYmlFile), LinkedHashMap.class);
 	}
-//
-//	/**
-//	 * Returns the output file to write the properties to.
-//	 */
-//	@OutputFile
-//	public File getOutputFile() {
-//		return getServices().get(FileOperations.class).file(this.outputFile);
-//	}
+
+	// /**
+	//  * Returns the output file to write the properties to.
+	//  */
+	// @OutputFile
+	// public File getOutputFile() {
+	// 	return getServices().get(FileOperations.class).file(this.outputFile);
+	// }
 }
